@@ -84,7 +84,7 @@ public final class Emails {
      * @author jitendra.pisal
      */
     public EmailMethods accessEmail(String username, String password, HostName server, MailClient mailClient, EmailFolder emailFolder) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing mail " + mailClient);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing mail " + mailClient);
         try {
             Properties props = getMailClientProp(mailClient);
             Session session = Session.getInstance(props);

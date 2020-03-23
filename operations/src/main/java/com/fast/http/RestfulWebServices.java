@@ -165,8 +165,8 @@ public final class RestfulWebServices {
                               String authToken) {
 
         // Print pre-request logs
-        i.perform().report().write(LogLevel.FAST_INFO, "Executing " + callType.name() + " Api");
-        i.perform().report().write(LogLevel.FAST_INFO, "End Point is " + endPoint);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Executing " + callType.name() + " Api");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "End Point is " + endPoint);
 
         // Make sure that GET calls do not use relaxed HTTPS validation
         RequestSpecification request;
@@ -186,11 +186,11 @@ public final class RestfulWebServices {
             request.auth().oauth2(authToken);
         }
         if (jsonBody != null) {
-            i.perform().report().write(LogLevel.FAST_INFO, "Json is " + jsonBody);
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Json is " + jsonBody);
             request.body(gsonToJson(jsonBody));
         }
         if (stringBody != null) {
-            i.perform().report().write(LogLevel.FAST_INFO, "Json is " + stringBody);
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Json is " + stringBody);
             request.body(stringBody);
         }
 
@@ -233,8 +233,8 @@ public final class RestfulWebServices {
                               String authToken) {
 
         // Print pre-request logs
-        i.perform().report().write(LogLevel.FAST_INFO, "Executing " + callType.name() + " Api");
-        i.perform().report().write(LogLevel.FAST_INFO, "End Point is " + endPoint);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Executing " + callType.name() + " Api");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "End Point is " + endPoint);
 
         // Make sure that GET calls do not use relaxed HTTPS validation
         RequestSpecification request;
@@ -254,7 +254,7 @@ public final class RestfulWebServices {
             request.auth().oauth2(authToken);
         }
         if (jsonArray != null) {
-            i.perform().report().write(LogLevel.FAST_INFO, "Json is " + jsonArray);
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Json is " + jsonArray);
             request.body(gson.toJson(jsonArray));
         }
 
@@ -292,9 +292,9 @@ public final class RestfulWebServices {
     }
 
     private void reportsLogger(CallTypes callType, Response response) {
-        i.perform().report().write(LogLevel.FAST_INFO, callType.name() + " Api call Response details:");
-        i.perform().report().write(LogLevel.EMPTY_LABEL, "1 - Response status: " + response.statusLine());
-        i.perform().report().write(LogLevel.EMPTY_LABEL, "2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
-        i.perform().report().write(LogLevel.EMPTY_LABEL, "3 - Response body: " + response.body().asString());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, callType.name() + " Api call Response details:");
+        i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "1 - Response status: " + response.statusLine());
+        i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
+        i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "3 - Response body: " + response.body().asString());
     }
 }

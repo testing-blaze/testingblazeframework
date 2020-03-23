@@ -30,29 +30,29 @@ import java.io.InputStreamReader;
 public final class DockerController {
     public static void startDocker() {
         if (!isAlive()) {
-            i.perform().report().write(LogLevel.FAST_INFO, "Trying to start Docker container " + getContainerId());
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Trying to start Docker container " + getContainerId());
             runCommand("docker start " + getContainerId());
 
             long startTime = System.currentTimeMillis() / 1000;
             while (!isAlive() && (startTime + 15 > System.currentTimeMillis() / 1000)) {
-                i.perform().report().write(LogLevel.FAST_INFO, "Waiting for Docker container " + getContainerId() + " to start");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Waiting for Docker container " + getContainerId() + " to start");
             }
         } else {
-            i.perform().report().write(LogLevel.FAST_INFO, "Docker container " + getContainerId() + " is already started");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Docker container " + getContainerId() + " is already started");
         }
     }
 
     public static void stopDocker() {
         if (isAlive()) {
-            i.perform().report().write(LogLevel.FAST_INFO, "Trying to stop Docker container " + getContainerId());
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Trying to stop Docker container " + getContainerId());
             runCommand("docker stop " + getContainerId());
 
             long startTime = System.currentTimeMillis() / 1000;
             while (isAlive() && (startTime + 15 > System.currentTimeMillis() / 1000)) {
-                i.perform().report().write(LogLevel.FAST_INFO, "Waiting for Docker container " + getContainerId() + " to stop");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Waiting for Docker container " + getContainerId() + " to stop");
             }
         } else {
-            i.perform().report().write(LogLevel.FAST_INFO, "Docker container " + getContainerId() + " is already stopped");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Docker container " + getContainerId() + " is already stopped");
         }
     }
 
@@ -91,7 +91,7 @@ public final class DockerController {
 
             // read any errors from the attempted command
             while ((s = stdError.readLine()) != null) {
-                i.perform().report().write(LogLevel.FAST_INFO, s);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, s);
                 result = false;
             }
         } catch (IOException e) {

@@ -134,7 +134,7 @@ public final class Ng {
                 fetchElement = getElementsWithOptions(refinedLocator);
                 break;
             case "PARTIAL_BUTTON_TEXT":
-                i.perform().report().write(LogLevel.FAST_INFO, "Inside partial buttone text :"+refinedLocator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Inside partial buttone text :"+refinedLocator);
                 fetchElement = getElementsWithpartialButtonText(refinedLocator);
                 break;
             case "REPEATER":
@@ -155,7 +155,7 @@ public final class Ng {
      * @return
      */
     private WebElement getElementWithModel(String model) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + model);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + model);
         return driver.findElement(model(model));
     }
 
@@ -166,7 +166,7 @@ public final class Ng {
      * @return
      */
     private WebElement getElementWithBinding(String binding) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + binding);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + binding);
         return driver.findElement(binding(binding));
     }
 
@@ -177,7 +177,7 @@ public final class Ng {
      * @return WebElement
      */
     private WebElement getElementWithButtonText(String buttonText) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + buttonText);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + buttonText);
         return driver.findElement(buttonText(buttonText));
     }
 
@@ -186,7 +186,7 @@ public final class Ng {
      * @return WebElement
      */
     private WebElement getElementWithExactBidning(String exactBinding) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + exactBinding);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + exactBinding);
         return driver.findElement(exactBinding(exactBinding));
     }
 
@@ -196,7 +196,7 @@ public final class Ng {
      * @return WebElement
      */
     private WebElement getElementWithCssContainingText(String cssSelector, String searchText) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + cssSelector);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + cssSelector);
         return driver.findElement(cssContainingText(cssSelector, searchText));
     }
 
@@ -205,7 +205,7 @@ public final class Ng {
      * @return WebElement
      */
     private WebElement getElementWithOptions(String options) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + options);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + options);
         return driver.findElement(options(options));
     }
 
@@ -214,7 +214,7 @@ public final class Ng {
      * @return WebElement
      */
     private WebElement getElementWithpartialButtonText(String partialButtonText) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + partialButtonText);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + partialButtonText);
         return driver.findElement(partialButtonText(partialButtonText));
     }
 
@@ -223,7 +223,7 @@ public final class Ng {
      * @return WebElement
      */
     private WebElement getElementWithRepeater(String repeater) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + repeater);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + repeater);
         return driver.findElement(repeater(repeater));
     }
 
@@ -232,7 +232,7 @@ public final class Ng {
      * @return WebElement
      */
     private WebElement getElementWithexactRepeater(String exactRepeater) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + exactRepeater);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + exactRepeater);
         return driver.findElement(exactRepeater(exactRepeater));
     }
 
@@ -243,7 +243,7 @@ public final class Ng {
      * @return
      */
     private List<WebElement> getElementsWithModel(String model) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + model);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + model);
         return driver.findElements(model(model));
     }
 
@@ -254,7 +254,7 @@ public final class Ng {
      * @return
      */
     private List<WebElement> getElementsWithBinding(String binding) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + binding);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + binding);
         return driver.findElements(binding(binding));
     }
 
@@ -265,7 +265,7 @@ public final class Ng {
      * @return WebElement
      */
     private List<WebElement> getElementsWithButtonText(String buttonText) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + buttonText);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + buttonText);
         return driver.findElements(buttonText(buttonText));
     }
 
@@ -274,7 +274,7 @@ public final class Ng {
      * @return WebElement
      */
     private List<WebElement> getElementsWithExactBidning(String exactBinding) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + exactBinding);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + exactBinding);
         return driver.findElements(exactBinding(exactBinding));
     }
 
@@ -284,7 +284,7 @@ public final class Ng {
      * @return WebElement
      */
     private List<WebElement> getElementsWithCssContainingText(String cssSelector, String searchText) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + cssSelector);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + cssSelector);
         return driver.findElements(cssContainingText(cssSelector, searchText));
     }
 
@@ -293,7 +293,7 @@ public final class Ng {
      * @return WebElement
      */
     private List<WebElement> getElementsWithOptions(String options) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + options);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + options);
         return driver.findElements(options(options));
     }
 
@@ -302,7 +302,7 @@ public final class Ng {
      * @return WebElement
      */
     private List<WebElement> getElementsWithpartialButtonText(String partialButtonText) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + partialButtonText);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + partialButtonText);
         return driver.findElements(partialButtonText(partialButtonText));
     }
 
@@ -311,7 +311,7 @@ public final class Ng {
      * @return WebElement
      */
     private List<WebElement> getElementsWithRepeater(String repeater) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + repeater);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + repeater);
         return driver.findElements(repeater(repeater));
     }
 
@@ -320,7 +320,7 @@ public final class Ng {
      * @return WebElement
      */
     private List<WebElement> getElementsWithexactRepeater(String exactRepeater) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + exactRepeater);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + exactRepeater);
         return driver.findElements(exactRepeater(exactRepeater));
     }
     /**
@@ -328,7 +328,7 @@ public final class Ng {
      * @return Angular control to receive a locator
      */
     public Factory rootSelector(String rootSelector) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Accessing ng element " + rootSelector);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Accessing ng element " + rootSelector);
         return ByAngular.withRootSelector(rootSelector);
     }
 

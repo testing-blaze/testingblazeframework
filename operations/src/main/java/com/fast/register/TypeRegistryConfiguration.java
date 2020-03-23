@@ -161,47 +161,47 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             sb.append(fromValue, last, matcher.start());
 
             if ("SavedValue".equalsIgnoreCase(parameter1)) {
-                if (i.perform().Properties().getValue(parameter2) != null) {
-                    convertedValue = i.perform().Properties().getValue(parameter2);
-                    i.perform().report().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into saved value '%s'", toConvert, convertedValue));
+                if (i.amPerforming().propertiesFileOperationsTo().getValue(parameter2) != null) {
+                    convertedValue = i.amPerforming().propertiesFileOperationsTo().getValue(parameter2);
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into saved value '%s'", toConvert, convertedValue));
                 } else {
-                    i.perform().report().write(LogLevel.FAST_IMPORTANT, String.format("Failed to find saved value '%s'", parameter2));
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, String.format("Failed to find saved value '%s'", parameter2));
                 }
             } else if ("Username".equalsIgnoreCase(parameter1)) {
                 convertedValue = TestSetupController.usersController.getUserName(parameter2);
-                i.perform().report().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into username value '%s'", toConvert, convertedValue));
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into username value '%s'", toConvert, convertedValue));
             } else if ("Password".equalsIgnoreCase(parameter1)) {
                 convertedValue = TestSetupController.usersController.getPassword(parameter2);
-                i.perform().report().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into password value '%s'", toConvert, convertedValue));
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into password value '%s'", toConvert, convertedValue));
             } else if ("Email".equalsIgnoreCase(parameter1)) {
                 if (TestSetupController.usersController.getEmail(parameter2) == null) {
-                    i.perform().report().write(LogLevel.FAST_INFO, String.format("Failed to find email value '%s'. Check that getEmail(String) is defined in local UsersController file", parameter2));
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("Failed to find email value '%s'. Check that getEmail(String) is defined in local UsersController file", parameter2));
                 } else {
                     convertedValue = TestSetupController.usersController.getEmail(parameter2);
-                    i.perform().report().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into email value '%s'", toConvert, convertedValue));
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into email value '%s'", toConvert, convertedValue));
                 }
             } else if ("Date".equalsIgnoreCase(parameter1)) {
                 try {
                     convertedValue = parseDate(parameter2);
-                    i.perform().report().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into date value '%s'", toConvert, convertedValue));
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into date value '%s'", toConvert, convertedValue));
                 } catch (Error e) {
-                    i.perform().report().write(LogLevel.FAST_IMPORTANT, String.format("Failed to convert '%s' into date value because %s", toConvert, e.getMessage()));
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, String.format("Failed to convert '%s' into date value because %s", toConvert, e.getMessage()));
                 }
             } else {
                 try {
-                    if (i.perform().Properties().ReadPropertyFile(parameter1 + ".properties", parameter2) != null) {
-                        convertedValue = i.perform().Properties().ReadPropertyFile(parameter1 + ".properties", parameter2);
-                        i.perform().report().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into property value '%s'", toConvert, convertedValue));
+                    if (i.amPerforming().propertiesFileOperationsTo().ReadPropertyFile(parameter1 + ".properties", parameter2) != null) {
+                        convertedValue = i.amPerforming().propertiesFileOperationsTo().ReadPropertyFile(parameter1 + ".properties", parameter2);
+                        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("Converted value '%s' into property value '%s'", toConvert, convertedValue));
                     } else {
-                        i.perform().report().write(LogLevel.FAST_IMPORTANT, String.format("Failed to read property '%s' from file '%s'", parameter2, parameter1));
+                        i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, String.format("Failed to read property '%s' from file '%s'", parameter2, parameter1));
                     }
                 } catch (Exception e) {
-                    i.perform().report().write(LogLevel.FAST_IMPORTANT, String.format("Failed to find property file '%s'", parameter1));
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, String.format("Failed to find property file '%s'", parameter1));
                 }
             }
 
             if (toConvert.equals(convertedValue)) {
-                i.perform().report().write(LogLevel.FAST_IMPORTANT, String.format("'%s' has been left unchanged", toConvert));
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, String.format("'%s' has been left unchanged", toConvert));
             }
 
             sb.append(convertedValue);
@@ -268,7 +268,7 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             // Remove the old
             typeMap.remove("string");
         } catch (Exception e) {
-            i.perform().report().write(LogLevel.FAST_ERROR, e.getMessage());
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, e.getMessage());
         }
 
         typeRegistry.defineParameterType(new ParameterType<>("string", singletonList(Pattern.compile("\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"|'([^'\\\\]*(\\\\.[^'\\\\]*)*)'").pattern()), String.class,
@@ -308,7 +308,7 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             typeMapByContent.remove("");
             typeMapByClass.remove(String.class);
         } catch (Exception e) {
-            i.perform().report().write(LogLevel.FAST_ERROR, e.getMessage());
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, e.getMessage());
         }
 
         typeRegistry.defineDocStringType(new DocStringType(String.class, "", this::convertString));

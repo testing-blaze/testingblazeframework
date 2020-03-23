@@ -65,7 +65,7 @@ public class Tfs {
     private static void associateSuiteIdsToPlanId(String planId) {
         List<String> temporarySuiteBucket = new ArrayList<>();
         // Collect all suites in each plan and push to
-        List<Map<String, Object>> getSuitesList = i.perform().apiCall().getCall(tfsUrl + "/test/plans/" + planId + "/suites?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
+        List<Map<String, Object>> getSuitesList = i.amPerforming().restHttp().getCall(tfsUrl + "/test/plans/" + planId + "/suites?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
         for (var suite : getSuitesList) {
             temporarySuiteBucket.add(suite.get("id").toString());
         }
@@ -78,7 +78,7 @@ public class Tfs {
             Map<String, String> tempTestIdsToTestResultIdsMapping = new LinkedHashMap<>();
             for (String suiteId : suitesToPlansMapping.get(planId)) {
                 // Fetch all test points for in question plan at the moment
-                List<Map<String, Object>> testPoints = i.perform().apiCall().getCall(tfsUrl + "/test/plans/" + planId + "/suites/" + suiteId + "/points?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
+                List<Map<String, Object>> testPoints = i.amPerforming().restHttp().getCall(tfsUrl + "/test/plans/" + planId + "/suites/" + suiteId + "/points?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
                 for (Map pointsInfo : testPoints) {
                     testPointIds.add(pointsInfo.get("id").toString());
                 }
@@ -87,10 +87,10 @@ public class Tfs {
             testPointIds.stream().forEach(testPoints -> testPointIdsContainer.add(testPoints));
 
             // create a run for all the test points
-            var runId = i.perform().apiCall().postCall(getTestRunCreationPayLoad(planId, testPointIdsContainer), null, tfsUrl + "/test/runs?" + apiVersion, "Authorization", authType + " " + pat, null).jsonPath().get("id").toString();
+            var runId = i.amPerforming().restHttp().postCall(getTestRunCreationPayLoad(planId, testPointIdsContainer), null, tfsUrl + "/test/runs?" + apiVersion, "Authorization", authType + " " + pat, null).jsonPath().get("id").toString();
             runIds.add(runId);
             //get all test result ends against test cases
-            List<Map<String, Object>> testResultsIds = i.perform().apiCall().getCall(tfsUrl + "/test/Runs/" + runId + "/results?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
+            List<Map<String, Object>> testResultsIds = i.amPerforming().restHttp().getCall(tfsUrl + "/test/Runs/" + runId + "/results?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
 
             for (Map testResultInfo : testResultsIds) {
                 Map<String, Object> testCaseInfo = (Map<String, Object>) testResultInfo.get("testCase");
@@ -101,7 +101,7 @@ public class Tfs {
     }
 
     private static void setUpTestPlanIdsInfo() {
-        List<Map<String, Object>> getAllTestPlanIds = i.perform().apiCall().getCall(tfsUrl + "/test/plans?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
+        List<Map<String, Object>> getAllTestPlanIds = i.amPerforming().restHttp().getCall(tfsUrl + "/test/plans?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
         for (var plan : getAllTestPlanIds) {
             planIds.add(plan.get("id").toString());
         }
@@ -146,7 +146,7 @@ public class Tfs {
         for (String runId : runIds) {
             JsonObject completeState = new JsonObject();
             completeState.addProperty("state", "Completed");
-            i.perform().apiCall().patchCall(completeState, null, tfsUrl + "/test/runs/" + runId + "?" + apiVersion, "Authorization", authType + " " + pat, null).jsonPath().prettyPrint();
+            i.amPerforming().restHttp().patchCall(completeState, null, tfsUrl + "/test/runs/" + runId + "?" + apiVersion, "Authorization", authType + " " + pat, null).jsonPath().prettyPrint();
         }
     }
 
@@ -167,7 +167,7 @@ public class Tfs {
     }
 
     private static void patchTestResult(JsonArray testCaseResultPayLoadHolder, String testRun) {
-        i.perform().apiCall().patchCall(testCaseResultPayLoadHolder, tfsUrl + "/test/runs/" + testRun + "/results?" + apiVersion, "Authorization", authType + " " + pat, null).jsonPath().prettyPrint();
+        i.amPerforming().restHttp().patchCall(testCaseResultPayLoadHolder, tfsUrl + "/test/runs/" + testRun + "/results?" + apiVersion, "Authorization", authType + " " + pat, null).jsonPath().prettyPrint();
     }
 
     private static JsonObject getTestCaseResultPayload(String resultId, String result) {
@@ -182,10 +182,10 @@ public class Tfs {
 
     /******************* Generic settings and Configurations  ***************************************/
     private static void loadTfsConfiguration() {
-        tfsUrl = i.perform().file().json().getDataFromJson("tfs.json", "profile", "tfsUrl") + "/_apis";
-        pat = i.perform().file().json().getDataFromJson("tfs.json", "profile", "pat");
-        authType = i.perform().file().json().getDataFromJson("tfs.json", "profile", "authType");
-        apiVersion = "api-version=" + i.perform().file().json().getDataFromJson("tfs.json", "profile", "apiVersion");
+        tfsUrl = i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "tfsUrl") + "/_apis";
+        pat = i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "pat");
+        authType = i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "authType");
+        apiVersion = "api-version=" + i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "apiVersion");
         loadTfsConfig = false;
     }
 }

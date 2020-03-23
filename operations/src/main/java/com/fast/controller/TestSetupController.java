@@ -114,10 +114,10 @@ public final class TestSetupController {
         List<LogEntry> performanceEntries = device.getDriver().manage().logs().get(LogType.PERFORMANCE).getAll();
         List<LogEntry> browserEntries = device.getDriver().manage().logs().get(LogType.PERFORMANCE).getAll();
         for (LogEntry entry : performanceEntries) {
-            i.perform().file().writeInFile(System.getProperty("user.dir") + "/target/Automation-Report/performance.txt", entry.toString());
+            i.amPerforming().fileHandlingTo().writeInFile(System.getProperty("user.dir") + "/target/Automation-Report/performance.txt", entry.toString());
         }
         for (LogEntry entry : browserEntries) {
-            i.perform().file().writeInFile(System.getProperty("user.dir") + "/target/Automation-Report/browser.txt", entry.toString());
+            i.amPerforming().fileHandlingTo().writeInFile(System.getProperty("user.dir") + "/target/Automation-Report/browser.txt", entry.toString());
         }
     }
 
@@ -129,7 +129,7 @@ public final class TestSetupController {
     private void captureScreenshot() {
         try {
             if (System.getProperty("enableFullScreenShot") != null && "true".equalsIgnoreCase(System.getProperty("enableFullScreenShot"))) {
-                ScenarioController.getScenario().embed((i.perform().convert().imageToByteArray(i.perform().screenCapture().captureFullScreenShot(), "PNG")), "image/png");
+                ScenarioController.getScenario().embed((i.amPerforming().conversionOf().imageToByteArray(i.amPerforming().snapShot().captureFullScreenShot(), "PNG")), "image/png");
             } else {
                 ScenarioController.getScenario().embed(((TakesScreenshot) device.getDriver()).getScreenshotAs(OutputType.BYTES), "image/png");
             }

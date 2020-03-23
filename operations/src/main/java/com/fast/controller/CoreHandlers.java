@@ -103,33 +103,33 @@ public final class CoreHandlers {
         return select;
     }
 
-    public SoftAssertions assertion() {
-        if(softAssertions == null) {
+    public SoftAssertions assertionsTo() {
+        if (softAssertions == null) {
             softAssertions = new SoftAssertions();
         }
         return softAssertions;
     }
 
-    public Mobile.MobileAccessories mobileAccessories() {
-        if(mobile == null) mobile = InstanceRecording.getInstance(Mobile.class);
+    public Mobile.MobileAccessories mobileOperations() {
+        if (mobile == null) mobile = InstanceRecording.getInstance(Mobile.class);
         return mobile.MobileAccessories();
     }
 
-    public AddOns addOns() {
+    public AddOns addOnsTo() {
         if (miscellaneous == null) {
             miscellaneous = InstanceRecording.getInstance(AddOns.class);
         }
         return miscellaneous;
     }
 
-    public Is is() {
+    public Is check() {
         if (is == null) {
             is = InstanceRecording.getInstance(Is.class);
         }
         return is;
     }
 
-    public ElementReference elementReference() {
+    public ElementReference getElementReference() {
         if (elementRef == null) {
             elementRef = InstanceRecording.getInstance(ElementReference.class);
         }
@@ -142,7 +142,7 @@ public final class CoreHandlers {
      * @return string
      * @author nauman.shahid
      */
-    public Sanitize xpath() {
+    public Sanitize sanitizeXpathWith() {
         if (sanitize == null) {
             sanitize = new Sanitize();
         }
@@ -155,7 +155,7 @@ public final class CoreHandlers {
      * @return differennt waits
      * @author nauman.shahid
      */
-    public Waits WaitFor() {
+    public Waits waitFor() {
         if (wait == null) {
             wait = InstanceRecording.getInstance(Waits.class);
         }
@@ -167,7 +167,7 @@ public final class CoreHandlers {
      *
      * @author nauman.shahid
      */
-    public RestfulWebServices apiCall() {
+    public RestfulWebServices restHttp() {
         if (rWebServices == null) rWebServices = new RestfulWebServices();
         return rWebServices;
     }
@@ -191,7 +191,7 @@ public final class CoreHandlers {
      * @return report
      * @author nauman.shahid
      */
-    public ReportController report() {
+    public ReportController updatingReportWith() {
         if (reportController == null) {
             reportController = new ReportController();
         }
@@ -204,7 +204,7 @@ public final class CoreHandlers {
      * @return
      * @author nauman.shahid
      */
-    public Properties_Logs Properties() {
+    public Properties_Logs propertiesFileOperationsTo() {
         if (pl == null) {
             pl = new Properties_Logs();
         }
@@ -217,7 +217,7 @@ public final class CoreHandlers {
      * @return
      * @author nauman.shahid
      */
-    public RobotActions RobotActions() {
+    public RobotActions robotActionsTo() {
         if (ra == null) {
             ra = new RobotActions();
         }
@@ -229,7 +229,7 @@ public final class CoreHandlers {
      *
      * @return
      */
-    public ScreenCapture screenCapture() {
+    public ScreenCapture snapShot() {
         if (sc == null) {
             sc = new ScreenCapture();
         }
@@ -255,14 +255,14 @@ public final class CoreHandlers {
      * @return
      * @author nauman.shahid
      */
-    public Cookies eatCookies() {
+    public Cookies cookiesOperationsTo() {
         if (cookies == null) {
             cookies = new Cookies();
         }
         return cookies;
     }
 
-    public Convert convert() {
+    public Convert conversionOf() {
         if (convert == null) {
             convert = new Convert();
         }
@@ -275,7 +275,7 @@ public final class CoreHandlers {
      * @return different file handling including excel,adobe ,json, image.
      * @author nauman.shahid
      */
-    public FileHandler file() {
+    public FileHandler fileHandlingTo() {
         if (fileHandler == null) {
             fileHandler = new FileHandler();
         }
@@ -288,7 +288,7 @@ public final class CoreHandlers {
      * @return
      * @author nauman.shahid
      */
-    public Compare compare() {
+    public Compare comparisonOf() {
         if (compare == null) {
             compare = new Compare();
         }
@@ -301,7 +301,7 @@ public final class CoreHandlers {
      * @return email library
      * @author jitendra.pisal
      */
-    public Emails email() {
+    public Emails emailOperationsTo() {
         if (email == null) {
             email = new Emails();
         }

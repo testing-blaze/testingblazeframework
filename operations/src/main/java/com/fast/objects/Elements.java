@@ -43,7 +43,7 @@ public class Elements {
     }
 
     public void clearText() {
-        InstanceRecording.getInstance(EnterText.class).clear(element);
+        InstanceRecording.getInstance(EnterText.class).toClear(element);
     }
 
     public String getAttributes(String attributeName) {
@@ -75,7 +75,7 @@ public class Elements {
     }
 
     public void switchFrame() {
-        i.perform().switchTo().switchToFrame(element);
+        i.amPerforming().switchTo().frame(element);
     }
 
     public WebElement nestedElement(By locator) {

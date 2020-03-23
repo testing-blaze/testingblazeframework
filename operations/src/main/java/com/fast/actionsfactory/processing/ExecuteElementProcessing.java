@@ -60,11 +60,11 @@ public class ExecuteElementProcessing implements ElementProcessing {
 
     @Override
     public WebElement forSingleElement(By locator) {
-        i.perform().switchTo().acceptAlert();
+        i.amPerforming().switchTo().acceptAlert();
         WebElement element = elementWaitProcessing(locator);
         javaScript.scrollElementToPageDetailCenter(element);
         isViewPort(element);
-        i.perform().report().write(LogLevel.FAST_INFO, CHECKERED_FLAG, "Element Processing Ends");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, CHECKERED_FLAG, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
                 if (FastGlobal.getVariable("highlightElements") != null && ((String) FastGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
@@ -84,11 +84,11 @@ public class ExecuteElementProcessing implements ElementProcessing {
 
     @Override
     public List<WebElement> forListOfElements(By locator) {
-        i.perform().switchTo().acceptAlert();
+        i.amPerforming().switchTo().acceptAlert();
         List<WebElement> listOfElements = listOfElementsWaitProcessing(locator);
         javaScript.scrollElementToPageDetailCenter(locator);
         if (listOfElements != null) isViewPort(listOfElements.get(0));
-        i.perform().report().write(LogLevel.FAST_INFO, CHECKERED_FLAG, "List of Elements Processing Ends");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, CHECKERED_FLAG, "List of Elements Processing Ends");
         if (listOfElements == null)
             return new ArrayList<>();
         return listOfElements;
@@ -96,11 +96,11 @@ public class ExecuteElementProcessing implements ElementProcessing {
 
     @Override
     public WebElement forNestedElement(WebElement element, By locator) {
-        i.perform().switchTo().acceptAlert();
+        i.amPerforming().switchTo().acceptAlert();
         WebElement finalElement = elementWaitProcessing(element.findElement(locator));
         javaScript.scrollElementToPageDetailCenter(finalElement);
         isViewPort(element);
-        i.perform().report().write(LogLevel.FAST_INFO, CHECKERED_FLAG, "Element Processing Ends");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, CHECKERED_FLAG, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
                 if (FastGlobal.getVariable("highlightElements") != null && ((String) FastGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
@@ -121,15 +121,15 @@ public class ExecuteElementProcessing implements ElementProcessing {
     private <T> List<WebElement> listOfElementsWaitProcessing(T locatorOrElement) {
         double reportStartTime = (System.currentTimeMillis() / 1000.0);
         List<WebElement> listOfElements = null;
-        long elementWaitTime = i.perform().WaitFor().getWaitTime();
-        while (elementWaitTime > i.perform().WaitFor().getCurrentTimeInSecs() && listOfElements == null) {
+        long elementWaitTime = i.amPerforming().waitFor().getWaitTime();
+        while (elementWaitTime > i.amPerforming().waitFor().getCurrentTimeInSecs() && listOfElements == null) {
             if (getElementsForMagicWait((By) locatorOrElement).size() > 0) {
                 listOfElements = getElementsForMagicWait((By) locatorOrElement);
                 break;
             }
         }
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        i.perform().report().write(LogLevel.FAST_INFO, THUMBS_UP, String.format("List of Elements Presence Check Completed in %.1f seconds", reportEndTime));
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, THUMBS_UP, String.format("List of Elements Presence Check Completed in %.1f seconds", reportEndTime));
         return listOfElements;
     }
 
@@ -148,8 +148,8 @@ public class ExecuteElementProcessing implements ElementProcessing {
 
         WebElement element = null;
         if (locatorOrElement instanceof By) {
-            long elementWaitTime = i.perform().WaitFor().getWaitTime();
-            while (elementWaitTime > i.perform().WaitFor().getCurrentTimeInSecs() && element == null && displayedFlag) {
+            long elementWaitTime = i.amPerforming().waitFor().getWaitTime();
+            while (elementWaitTime > i.amPerforming().waitFor().getCurrentTimeInSecs() && element == null && displayedFlag) {
                 for (WebElement ele : getElementsForMagicWait((By) locatorOrElement)) {
                     try {
                         if (isElementDrawn(ele)) {
@@ -157,14 +157,14 @@ public class ExecuteElementProcessing implements ElementProcessing {
                             if (ele.isDisplayed()) {
                                 element = ele;
                                 isElementDrawnValidated = true;
-                                i.perform().report().write(LogLevel.FAST_IMPORTANT, THUMBS_UP, "Element is Displayed & Enabled on page");
+                                i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, THUMBS_UP, "Element is Displayed & Enabled on page");
                             }
                             break;
                         }
                     } catch (StaleElementReferenceException e) {
                         if (magicWaitRetry == 0) {
                             magicWaitRetry++;
-                            i.perform().report().write(LogLevel.FAST_CRITICAL, THUMBS_DOWN, "Element is stale so re-trying one more time");
+                            i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, THUMBS_DOWN, "Element is stale so re-trying one more time");
                             elementWaitProcessing(locatorOrElement);
                         } else {
                             displayedFlag = false;
@@ -178,7 +178,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
                 try {
                     element = getElementForMagicWait((By) locatorOrElement);
                 } catch (Exception e) {
-                    i.perform().report().write(LogLevel.FAST_ERROR, THUMBS_DOWN, "Element does not exist in DOM");
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, THUMBS_DOWN, "Element does not exist in DOM");
                     throw e;
                 }
             }
@@ -186,22 +186,22 @@ public class ExecuteElementProcessing implements ElementProcessing {
             element = (WebElement) locatorOrElement;
         }
 
-        long elementVisibilityWaitTime = i.perform().WaitFor().getWaitTime();
+        long elementVisibilityWaitTime = i.amPerforming().waitFor().getWaitTime();
 
-        while ((elementVisibilityWaitTime > i.perform().WaitFor().getCurrentTimeInSecs() && displayedFlag) && !isElementDrawnValidated) {
+        while ((elementVisibilityWaitTime > i.amPerforming().waitFor().getCurrentTimeInSecs() && displayedFlag) && !isElementDrawnValidated) {
             try {
                 if (isElementDrawn(element)) {
                     javaScript.scrollpageToSpecificElement(element);
                     if (element.isDisplayed()) {
                         isElementDrawnValidated = true;
-                        i.perform().report().write(LogLevel.FAST_IMPORTANT, THUMBS_UP, "Element is Displayed & Enabled on page");
+                        i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, THUMBS_UP, "Element is Displayed & Enabled on page");
                     }
                     break;
                 }
             } catch (StaleElementReferenceException e) {
                 if (magicWaitRetry == 0) {
                     magicWaitRetry++;
-                    i.perform().report().write(LogLevel.FAST_CRITICAL, "Element is stale so re-trying one more time");
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, "Element is stale so re-trying one more time");
                     elementWaitProcessing(locatorOrElement);
                 } else {
                     displayedFlag = false;
@@ -211,7 +211,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
 
         magicWaitRetry = 0;
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        i.perform().report().write(LogLevel.FAST_INFO, THUMBS_UP, String.format("Element Presence/Creation Completed in %.1f seconds", reportEndTime));
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, THUMBS_UP, String.format("Element Presence/Creation Completed in %.1f seconds", reportEndTime));
         return element;
     }
 
@@ -233,13 +233,13 @@ public class ExecuteElementProcessing implements ElementProcessing {
     }
 
     private void completeElementCreationOnUi(WebElement element) {
-        double waitTime = i.perform().WaitFor().getCurrentTimeInSecs() + (Waits.STANDARD_WAIT_TIME * 0.5);
+        double waitTime = i.amPerforming().waitFor().getCurrentTimeInSecs() + (Waits.STANDARD_WAIT_TIME * 0.5);
         int iSize = element.getRect().getHeight() + element.getRect().getWidth();
-        while (i.perform().WaitFor().getCurrentTimeInSecs() < waitTime) {
+        while (i.amPerforming().waitFor().getCurrentTimeInSecs() < waitTime) {
             int newSize = element.getRect().getHeight() + element.getRect().getWidth();
             if (newSize > iSize) iSize = newSize;
             else {
-                i.perform().report().write(LogLevel.FAST_IMPORTANT, TICK, "Element Creation on UI completed");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, TICK, "Element Creation on UI completed");
                 break;
             }
         }
@@ -248,9 +248,9 @@ public class ExecuteElementProcessing implements ElementProcessing {
     private void countMatchingNodesOnPage(By locator) {
         int nodes = driver.findElements(locator).size();
         if (nodes != 1) {
-            i.perform().report().write(LogLevel.FAST_CRITICAL, THUMBS_DOWN, "Total element matching nodes in DOM --> " + nodes);
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, THUMBS_DOWN, "Total element matching nodes in DOM --> " + nodes);
         } else {
-            i.perform().report().write(LogLevel.FAST_INFO, THUMBS_UP, "Total element matching nodes in DOM --> " + nodes);
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, THUMBS_UP, "Total element matching nodes in DOM --> " + nodes);
         }
     }
 
@@ -261,9 +261,9 @@ public class ExecuteElementProcessing implements ElementProcessing {
         } else if (driver.findElements(locator).size() == 0) {
             iframeAnalyzer.evaluatePossibleIFrameToSwitch();
             if (IframeAnalyzer.setFlagForFrameSwitch) {
-                i.perform().WaitFor().makeThreadSleep(200);
+                i.amPerforming().waitFor().makeThreadSleep(200);
                 if (EnvironmentFetcher.getSlowDownExecutionTime() > 0) {
-                    i.perform().WaitFor().makeThreadSleep(1000 * EnvironmentFetcher.getSlowDownExecutionTime());
+                    i.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFetcher.getSlowDownExecutionTime());
                 }
                 projectProcessingWrapper();
                 try {
@@ -284,15 +284,15 @@ public class ExecuteElementProcessing implements ElementProcessing {
             turnOnProcessingHoldOnScreen = processingHoldOnScreen != null;
         }
         if (driver.findElements(processingHoldOnScreen).size() > 0)
-            i.perform().WaitFor().makeThreadSleep(500);
+            i.amPerforming().waitFor().makeThreadSleep(500);
         else return;
         try {
             if (turnOnProcessingHoldOnScreen && (driver.findElements(processingHoldOnScreen).get(0).getRect().getDimension().getWidth() > 0 || driver.findElement(processingHoldOnScreen).isEnabled())) {
                 long startTime = System.currentTimeMillis() / 1000;
-                i.perform().WaitFor().waitToDisappearForProcessing(processingHoldOnScreen, 120);
-                i.perform().WaitFor().makeThreadSleep(400);
+                i.amPerforming().waitFor().waitToDisappearForProcessing(processingHoldOnScreen, 120);
+                i.amPerforming().waitFor().makeThreadSleep(400);
                 long endTime = (System.currentTimeMillis() / 1000) - startTime;
-                i.perform().report().write(LogLevel.FAST_INFO, PURPLE, HOURGLASS, String.format("Waited for hold on screen to fade away for %s seconds", endTime));
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, PURPLE, HOURGLASS, String.format("Waited for hold on screen to fade away for %s seconds", endTime));
             }
         } catch (Exception e) {
             /* Ignore Exception */
@@ -333,13 +333,13 @@ public class ExecuteElementProcessing implements ElementProcessing {
                                     (bottom <= Double.parseDouble(windowHeightOpt1.toString()) || bottom <= Double.parseDouble(windowHeightOpt2.toString())))
             ) {
                 isViewPortCounter = 0;
-                i.perform().report().write(LogLevel.FAST_INFO, OVERLAPPING_FRAME, "Element ViewPort confirmed");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, OVERLAPPING_FRAME, "Element ViewPort confirmed");
             } else {
                 if (isViewPortCounter < 5) {
                     isViewPortCounter++;
                     isViewPort((element));
                 }
-                i.perform().report().write(LogLevel.FAST_IMPORTANT, THUMBS_DOWN, "Element ViewPort not confirmed");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_IMPORTANT, THUMBS_DOWN, "Element ViewPort not confirmed");
             }
         } catch (Exception e) {
             //Only to handle unexpected error of JS

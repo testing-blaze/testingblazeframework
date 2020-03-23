@@ -38,7 +38,7 @@ public final class EnvironmentFetcher {
     public static String getEnvironmentUrl() {
         if (environmentUrl == null) {
             try {
-                environmentUrl = i.perform().Properties().ReadPropertyFile("environment.properties", EnvironmentFetcher.getEnvironmentName());
+                environmentUrl = i.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("environment.properties", EnvironmentFetcher.getEnvironmentName());
             } catch (IOException e) {
                 e.printStackTrace();
             }

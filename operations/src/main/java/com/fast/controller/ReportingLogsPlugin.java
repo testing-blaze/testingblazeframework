@@ -139,7 +139,7 @@ public class ReportingLogsPlugin implements ConcurrentEventListener {
         allErrorsFromLastCompletedStep.clear();
         allErrorsFromLastCompletedStep.addAll(getErrors().stream().filter(el -> !allErrorsFromEntireScenario.contains(el)).collect(Collectors.toList()));
         if (allErrorsFromLastCompletedStep.size() > 0) {
-            i.perform().report().write(LogLevel.FAST_ERROR, "The following soft assertions failed during the step:\n" + String.join("\n", getErrorsFromPreviousStep()));
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "The following soft assertions failed during the step:\n" + String.join("\n", getErrorsFromPreviousStep()));
 
             if ("true".equalsIgnoreCase(System.getProperty("softAssertScreenshot"))) {
                 ScenarioController.getScenario().embed(((TakesScreenshot) InstanceRecording.getInstance(DeviceBucket.class).getDriver()).getScreenshotAs(OutputType.BYTES), "image/png");
@@ -272,7 +272,7 @@ public class ReportingLogsPlugin implements ConcurrentEventListener {
             proxies.setAccessible(true);
 
             @SuppressWarnings("unchecked")
-            List<Throwable> toReturn = (List<Throwable>) getErrors.invoke(proxies.get(i.perform().assertion()));
+            List<Throwable> toReturn = (List<Throwable>) getErrors.invoke(proxies.get(i.amPerforming().assertionsTo()));
 
             return toReturn;
 

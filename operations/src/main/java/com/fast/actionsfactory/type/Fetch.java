@@ -62,7 +62,7 @@ public final class Fetch {
      */
     public void ToUrl(String url) {
         driver.navigate().to(url);
-        i.perform().report().write(LogLevel.FAST_INFO, "Navigated to URL " + url);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Navigated to URL " + url);
     }
 
     /**
@@ -175,7 +175,7 @@ public final class Fetch {
      */
     public void navigateBack() {
         driver.navigate().back();
-        i.perform().report().write(LogLevel.FAST_INFO, "Navigated Back");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Navigated Back");
     }
 
     /**
@@ -185,7 +185,7 @@ public final class Fetch {
      */
     public void navigateForward() {
         driver.navigate().forward();
-        i.perform().report().write(LogLevel.FAST_INFO, "Navigated Forward");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Navigated Forward");
     }
 
     /**
@@ -195,7 +195,7 @@ public final class Fetch {
      */
     public void pageRefresh() {
         driver.navigate().refresh();
-        i.perform().report().write(LogLevel.FAST_INFO, "Refreshed page");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Refreshed page");
     }
 
     /**
@@ -205,7 +205,7 @@ public final class Fetch {
      */
     public void newURL(String url) {
         driver.get(url);
-        i.perform().report().write(LogLevel.FAST_INFO, "Entered URL " + url);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Entered URL " + url);
     }
 
     /**
@@ -214,7 +214,7 @@ public final class Fetch {
      * @author nauman.shahid
      */
     public String pageTitle() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Fetched title " + driver.getTitle());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Fetched title " + driver.getTitle());
         return driver.getTitle();
     }
 
@@ -224,7 +224,7 @@ public final class Fetch {
      * @author nauman.shahid
      */
     public String pageSource() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Fetching complete page source");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Fetching complete page source");
         return driver.getPageSource();
     }
 
@@ -234,7 +234,7 @@ public final class Fetch {
      * @author nauman.shahid
      */
     public String currentURL() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Current url is " + driver.getCurrentUrl());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Current url is " + driver.getCurrentUrl());
         return driver.getCurrentUrl();
     }
 
@@ -300,7 +300,7 @@ public final class Fetch {
      */
     public String dateWithOffsetFromGivenDate(String date, int offset, DateTimeFormatter formatter) {
         String receivedDate = LocalDate.parse(date, formatter).plusDays(offset).format(formatter);
-        i.perform().report().write(LogLevel.FAST_INFO, "Fetched date is : " + receivedDate);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Fetched date is : " + receivedDate);
         return receivedDate;
     }
 
@@ -327,7 +327,7 @@ public final class Fetch {
      */
     public String dateTimeWithOffsetFromGivenDate(String date, int offset, DateTimeFormatter formatter) {
         String receivedDate = LocalDateTime.parse(date, formatter).plusDays(offset).format(formatter);
-        i.perform().report().write(LogLevel.FAST_INFO, "Fetched date is : " + receivedDate);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Fetched date is : " + receivedDate);
         return receivedDate;
     }
 
@@ -337,7 +337,7 @@ public final class Fetch {
      * @author nauman.shahid
      */
     public void closeBrowserOrTab() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Closed Tab " + driver.getTitle());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Closed Tab " + driver.getTitle());
         driver.close();
     }
 

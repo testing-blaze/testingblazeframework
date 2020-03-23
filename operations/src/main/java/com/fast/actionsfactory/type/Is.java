@@ -201,7 +201,7 @@ public final class Is {
      * @author Monu.Kumar
      */
     public Boolean isTableSorted(List<Elements> rows_table, String sorting) {
-        return i.perform().compare().sortAndCompareOneTableColumn(rows_table, sorting);
+        return i.amPerforming().comparisonOf().sortAndCompareOneTableColumn(rows_table, sorting);
     }
 
     /**

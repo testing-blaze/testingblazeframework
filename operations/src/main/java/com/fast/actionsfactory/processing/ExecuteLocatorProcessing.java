@@ -51,16 +51,16 @@ public class ExecuteLocatorProcessing {
     public <T> T getRefinedLocator(T locator) {
         T finalRefinedLocator = null;
         if (locator instanceof By) {
-            finalRefinedLocator = (T) i.perform().convert().stringToBy(getLocatorParameters(locator.toString()));
+            finalRefinedLocator = (T) i.amPerforming().conversionOf().stringToBy(getLocatorParameters(locator.toString()));
             iframe.setUpLocator((By) finalRefinedLocator);
         } else if (locator instanceof String) {
             finalRefinedLocator = (T) getLocatorParameters(locator.toString().split(":")[1]);
         }
-        i.perform().report().newLine();
-        i.perform().report().write(LogLevel.FAST_INFO, CYAN, HORSE, "Locator and Element Processing Starts");
+        i.amPerforming().updatingReportWith().newLine();
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, CYAN, HORSE, "Locator and Element Processing Starts");
         if (finalRefinedLocator == null)
             throw new FastRunTimeException("Locator processing failed: " + locator.toString());
-        i.perform().report().write(LogLevel.FAST_INFO, THUMBS_UP, "Locator = " + finalRefinedLocator);
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, THUMBS_UP, "Locator = " + finalRefinedLocator);
         return finalRefinedLocator;
     }
 
@@ -85,16 +85,16 @@ public class ExecuteLocatorProcessing {
         String[] parameters = parameter.split(":-:");
         if (parameters[0].equalsIgnoreCase("SavedValue")) {
             try {
-                finalParameter = i.perform().Properties().getValue(parameters[1]);
+                finalParameter = i.amPerforming().propertiesFileOperationsTo().getValue(parameters[1]);
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "Key :" + parameters[0] + " not found");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Key :" + parameters[0] + " not found");
                 Assert.fail("Scenario Failed: Key was not found.");
             }
         } else {
             try {
-                finalParameter = i.perform().Properties().ReadPropertyFile(parameters[0] + ".properties", parameters[1]);
+                finalParameter = i.amPerforming().propertiesFileOperationsTo().ReadPropertyFile(parameters[0] + ".properties", parameters[1]);
             } catch (IOException e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "Properties file name :" + parameters[0] + " not found");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Properties file name :" + parameters[0] + " not found");
                 Assert.fail("Scenario Failed: properties file was not found.");
             }
         }

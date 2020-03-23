@@ -56,7 +56,7 @@ public interface PageLoadProcessing<T> {
 
         }
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        i.perform().report().write(LogLevel.FAST_INFO, BRIGHT_BLUE, WEB, "Level 2 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, BRIGHT_BLUE, WEB, "Level 2 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
     };
 
     PageLoadProcessing<String> documentLoad = (reportMessage) -> {
@@ -69,13 +69,13 @@ public interface PageLoadProcessing<T> {
             if ("complete".equalsIgnoreCase(pageLoadStatus)) {
                 break;
             } else if("Failed to get any status".equalsIgnoreCase(pageLoadStatus)) {
-                i.perform().WaitFor().makeThreadSleep(200);
+                i.amPerforming().waitFor().makeThreadSleep(200);
                 break;
             }
         } } catch (Exception e) {
 
         }
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        i.perform().report().write(LogLevel.FAST_INFO, BRIGHT_CYAN, WEB, "Level 1 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, BRIGHT_CYAN, WEB, "Level 1 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
     };
 }

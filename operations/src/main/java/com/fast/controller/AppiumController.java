@@ -49,7 +49,7 @@ public final class AppiumController {
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "error")
                 .build();
         service.start();
-        i.perform().report().write(LogLevel.FAST_INFO, "Appium Server is running: " + service.isRunning());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Appium Server is running: " + service.isRunning());
     }
 
     /**
@@ -67,7 +67,7 @@ public final class AppiumController {
         try {
             new ServerSocket(DEFAULT_PORT).close();
         } catch (IOException e) {
-            i.perform().report().write(LogLevel.FAST_INFO, "Socket closed");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Socket closed");
         }
     }
 }

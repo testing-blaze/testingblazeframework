@@ -38,7 +38,7 @@ public final class Convert {
      * @author john.phillips
      * @warning upgrade to io.cucumber gave error on List<List<String>> tableCells = tableToConvert.cells(0); Hence it is udpated. Sanity testing to be done
      */
-    public Map<String, Map<String, String>> convertListOfListsToMapOfMaps(List<List<String>> tableToConvert) {
+    public Map<String, Map<String, String>> listOfListsToMapOfMaps(List<List<String>> tableToConvert) {
         Map<String, Map<String, String>> convertedTable = new LinkedHashMap<>();
         for (int i = 1; i < tableToConvert.size(); i++) {
             Map<String, String> convertedRow = new LinkedHashMap<>();

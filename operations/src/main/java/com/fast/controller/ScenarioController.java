@@ -110,13 +110,13 @@ public class ScenarioController {
             failedScenarioCount++;
         }
 
-        i.perform().report().newLine();
-        i.perform().report().write(LogLevel.FAST_INFO, GREEN, CLOCK, "Scenario Result Analysis:");
-        i.perform().report().write(LogLevel.EMPTY_LABEL, CYAN, TICK, "Total time taken by Fast action processing in this scenario: " + getFastClickProcessingTime() + " Seconds");
-        i.perform().report().write(LogLevel.EMPTY_LABEL, CYAN, TICK, "Total time taken by Element & locator creation in this scenario: " + getElementCreationPresenceTime() + " Seconds");
-        i.perform().report().write(LogLevel.EMPTY_LABEL, CYAN, TICK, "                          Successful / Failed / Total scenarios: "
+        i.amPerforming().updatingReportWith().newLine();
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, GREEN, CLOCK, "Scenario Result Analysis:");
+        i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, CYAN, TICK, "Total time taken by Fast action processing in this scenario: " + getFastClickProcessingTime() + " Seconds");
+        i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, CYAN, TICK, "Total time taken by Element & locator creation in this scenario: " + getElementCreationPresenceTime() + " Seconds");
+        i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, CYAN, TICK, "                          Successful / Failed / Total scenarios: "
                 + (executedScenarioCount - failedScenarioCount) + " / "  + failedScenarioCount + " / " + totalNumberOfScenarios);
-        i.perform().report().newLine();
+        i.amPerforming().updatingReportWith().newLine();
 
         if ("false".equalsIgnoreCase(System.getProperty("printConsoleLogs"))) {
             System.out.println();
@@ -137,7 +137,7 @@ public class ScenarioController {
         try {
             totalNumberOfScenarios = Objects.requireNonNull((new File(System.getProperty("user.dir") + "/target/parallel/features")).list()).length;
         } catch (NullPointerException e) {
-            i.perform().report().write(LogLevel.FAST_ERROR,
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR,
                     "The directory '" + System.getProperty("user.dir") + "/target/parallel/features' was not found, or is not a directory."
             );
         }

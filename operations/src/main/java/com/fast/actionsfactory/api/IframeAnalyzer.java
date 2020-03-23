@@ -60,7 +60,7 @@ public class IframeAnalyzer {
             switchedFrameInfo = getFrameId(iframes, "id");
             switchToFrame(iframes);
             if (device.getDriver().findElements(locator).size() > 0) {
-                i.perform().report().write(LogLevel.FAST_INFO, BRIGHT_CYAN, DOLPHIN, String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, BRIGHT_CYAN, DOLPHIN, String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
                 setFlagForFrameSwitch = true;
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
@@ -92,7 +92,7 @@ public class IframeAnalyzer {
     private void switchToDefaultContent() {
         try {
             device.getDriver().switchTo().defaultContent();
-            i.perform().report().write(LogLevel.FAST_INFO, BLUE, CYCLONE, "Default Context Enabled");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, BLUE, CYCLONE, "Default Context Enabled");
         } catch (Exception e) {
         }
 

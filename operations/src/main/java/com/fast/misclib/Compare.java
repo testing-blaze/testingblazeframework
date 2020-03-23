@@ -80,8 +80,8 @@ public final class Compare {
             runtimeSortedList.add(new TwoColumnSorting(rows_table1.get(i).getText(), Integer.parseInt(rows_table2.get(i).getText())));
         }
         orignalTwoColumnList.addAll(runtimeSortedList);
-        i.perform().report().write(LogLevel.FAST_INFO,"Below is the original table received from web");
-        orignalTwoColumnList.stream().forEach(myList -> i.perform().report().write(LogLevel.FAST_INFO, myList.getPair()));
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO,"Below is the original table received from web");
+        orignalTwoColumnList.stream().forEach(myList -> i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, myList.getPair()));
         if ("Descending".equalsIgnoreCase(sortingOrder)) {
             Comparator<TwoColumnSorting> customComparison = Comparator.comparingInt(sort -> sort.value);
             Collections.sort(runtimeSortedList, customComparison.reversed());
@@ -91,8 +91,8 @@ public final class Compare {
             Collections.sort(runtimeSortedList,customComparison);
 
         }
-        i.perform().report().write(LogLevel.FAST_INFO,"Below is the sorted table by Fast");
-        runtimeSortedList.stream().forEach(myList -> i.perform().report().write(LogLevel.FAST_INFO, myList.getPair()));
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO,"Below is the sorted table by Fast");
+        runtimeSortedList.stream().forEach(myList -> i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, myList.getPair()));
 
         flag = runtimeSortedList.equals(orignalTwoColumnList);
         return flag;
@@ -155,7 +155,7 @@ public final class Compare {
          * @throws IOException
          */
         public boolean isElementImage(WebElement element, String imageName, Integer tolerance) throws IOException {
-            return compareTwoImages(ImageIO.read(new AddOns().getResources(imageName)), new AddOns().convertImageFileToBufferedImage(i.perform().screenCapture().getlementScreenShot(element)), tolerance);
+            return compareTwoImages(ImageIO.read(new AddOns().getResources(imageName)), new AddOns().convertImageFileToBufferedImage(i.amPerforming().snapShot().getlementScreenShot(element)), tolerance);
         }
 
         /**
@@ -177,7 +177,7 @@ public final class Compare {
          * @throws IOException
          */
         public boolean isFullImage(String imageName, int tolerance) throws IOException {
-            return compareTwoImages(ImageIO.read(new AddOns().getResources(imageName)), i.perform().addOns().convertImageFileToBufferedImage(i.perform().screenCapture().getScreenshot()), tolerance);
+            return compareTwoImages(ImageIO.read(new AddOns().getResources(imageName)), i.amPerforming().addOnsTo().convertImageFileToBufferedImage(i.amPerforming().snapShot().getScreenshot()), tolerance);
         }
 
         /**

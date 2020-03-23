@@ -47,37 +47,37 @@ public final class FastActionSteps {
     @Description("To switch to Parent Frame")
     @When("^I switch to Parent iframe$")
     public void switchToParentFrame() {
-        i.perform().switchTo().switchToParentFrame();
+        i.amPerforming().switchTo().parentFrame();
     }
 
     @Description("To switch to specific Frame")
     @When("I switch to iframe with id \"([^\"]*)\"$")
     public void switchToFrame(String iframeID) {
-        i.perform().switchTo().switchToFrame(By.xpath("//iframe[@id='" + iframeID + "']"));
+        i.amPerforming().switchTo().frame(By.xpath("//iframe[@id='" + iframeID + "']"));
     }
 
     @Description("refresh page")
     @When("^I refresh the page$")
     public void refreshPage() {
-        i.perform().get().pageRefresh();
+        i.amPerforming().get().pageRefresh();
     }
 
     @Description("switch to parent application page")
     @When("^I switch to parent tab$")
     public void switchToParentPage() {
-        i.perform().switchTo().switchToWindowHandler(0);
+        i.amPerforming().switchTo().windowHandler(0);
     }
 
     @Description("switch to tab")
     @When("^I switch to tab number \"(\\d+)\"$")
     public void switchToTab(int tabNumber) {
-        i.perform().switchTo().switchToWindowHandler(tabNumber);
+        i.amPerforming().switchTo().windowHandler(tabNumber);
     }
 
     @Description("wait for seconds")
     @When("^I wait for \"(\\d+)\" seconds$")
     public void waitFor(int waitTime) {
-        i.perform().WaitFor().makeThreadSleep(waitTime);
+        i.amPerforming().waitFor().makeThreadSleep(waitTime);
     }
 
     @Description("perform assertions")
@@ -92,7 +92,7 @@ public final class FastActionSteps {
         if (ReportingLogsPlugin.getErrorsFromPreviousStep().size() > 0) {
             throw new FastExceptionWithoutStackTrace("Soft assertions failed in the previous step.");
         } else {
-            i.perform().report().write(LogLevel.FAST_INFO, "No soft assertions failed in the previous step.");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "No soft assertions failed in the previous step.");
         }
     }
 }

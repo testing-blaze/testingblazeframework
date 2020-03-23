@@ -383,23 +383,23 @@ public final class Waits {
      * @return Whatever the return value of waiting for the ExpectedCondition is
      */
     private <V> V waitFor(ExpectedCondition<V> expectedCondition, long waitTime) {
-        i.perform().switchTo().acceptAlert();
+        i.amPerforming().switchTo().acceptAlert();
         V value;
         if (wait == null) {
             wait = new WebDriverWait(InstanceRecording.getInstance(DeviceBucket.class).getDriver(), STANDARD_WAIT_TIME).pollingEvery(Duration.ofSeconds(STANDARD_POLLING_TIME)).ignoring(NoSuchElementException.class, NullPointerException.class);
         }
-        i.perform().report().write(LogLevel.FAST_INFO, "Waiting for " + expectedCondition.toString());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Waiting for " + expectedCondition.toString());
         long preTime = System.currentTimeMillis();
         String result = "Failed";
         try {
             value = wait.withTimeout(Duration.ofSeconds(waitTime)).until(expectedCondition);
             result = "Succeeded";
         } catch (Exception e) {
-            i.perform().report().write(LogLevel.FAST_ERROR, "Wait for " + expectedCondition.toString() + " failed.");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Wait for " + expectedCondition.toString() + " failed.");
             throw e;
         } finally {
             long postTime = System.currentTimeMillis();
-            i.perform().report().write(LogLevel.FAST_INFO, String.format("%s after %.1f  seconds.", result, ((postTime - preTime) / 1_000.0)));
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, String.format("%s after %.1f  seconds.", result, ((postTime - preTime) / 1_000.0)));
         }
         return value;
     }
@@ -408,9 +408,9 @@ public final class Waits {
      * Waits for a condition, and afterwards scrolls to the given locator
      */
     private <V> V waitFor(By locator, ExpectedCondition<V> expectedCondition, long waitTime) {
-        i.perform().switchTo().acceptAlert();
+        i.amPerforming().switchTo().acceptAlert();
         V value = waitFor(expectedCondition, waitTime);
-        i.perform().switchTo().acceptAlert();
+        i.amPerforming().switchTo().acceptAlert();
         InstanceRecording.getInstance(JavaScript.class).scrollElementToPageDetailCenter(locator);
         return value;
     }
@@ -419,7 +419,7 @@ public final class Waits {
      * Scrolls to the given element, and afterwards waits for a condition
      */
     private <V> V waitFor(WebElement element, ExpectedCondition<V> expectedCondition, long waitTime) {
-        i.perform().switchTo().acceptAlert();
+        i.amPerforming().switchTo().acceptAlert();
         InstanceRecording.getInstance(JavaScript.class).scrollElementToPageDetailCenter(element);
         return waitFor(expectedCondition, waitTime);
     }

@@ -64,7 +64,7 @@ public final class MouseActions {
      */
     public void mouseClick(int x, int y) {
         actions.moveByOffset(x, y).click().build().perform();
-        i.perform().report().write(LogLevel.FAST_INFO, "Scrolled using mouse");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Scrolled using mouse");
 
     }
 

@@ -37,7 +37,7 @@ public class i {
     }
 
 
-    public static CoreHandlers perform() {
+    public static CoreHandlers amPerforming() {
         return InstanceRecording.getInstance(CoreHandlers.class);
     }
 

@@ -71,8 +71,8 @@ public class EnterText {
      *                By.
      * @author nauman.shahid
      */
-    public <T> void clear(T locator) {
-        clear(locator, true);
+    public <T> void toClear(T locator) {
+        toClear(locator, true);
     }
 
     /**
@@ -83,7 +83,7 @@ public class EnterText {
      *                By.
      * @author nauman.shahid
      */
-    public <T> void clear(T locator,Boolean processing) {
+    public <T> void toClear(T locator, Boolean processing) {
         executeAction.doIt(elementApi.locator(locator,processing),"--clear--");
     }
 

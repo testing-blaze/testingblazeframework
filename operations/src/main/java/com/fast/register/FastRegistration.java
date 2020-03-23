@@ -68,12 +68,12 @@ public final class FastRegistration {
     @After(order = 1)
     public void verifyingScenarioSoftAssertions() throws FastExceptionWithoutStackTrace {
         if (ScenarioController.getScenario().isFailed()) {
-            i.perform().report().write(LogLevel.FAST_INFO, "The scenario is already failed.  Skipping check of soft assertions.");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "The scenario is already failed.  Skipping check of soft assertions.");
         } else if (ReportingLogsPlugin.getErrorsFromScenario().size() > 0) {
             throw new FastExceptionWithoutStackTrace("The following soft assertions failed in the scenario:\n"
                     + String.join("\n", ReportingLogsPlugin.getErrorsFromScenario()));
         } else {
-            i.perform().report().write(LogLevel.FAST_INFO, "No soft assertions failed in the scenario.");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "No soft assertions failed in the scenario.");
         }
     }
 

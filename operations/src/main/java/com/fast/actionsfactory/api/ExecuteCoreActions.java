@@ -65,7 +65,7 @@ public class ExecuteCoreActions implements Action {
         localWait.until(ExpectedConditions.elementToBeClickable(element));
         try {
             element.click();
-            i.perform().switchTo().acceptAlert();
+            i.amPerforming().switchTo().acceptAlert();
             CompletableFuture.supplyAsync(() -> {
                 try {
                     InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
@@ -74,7 +74,7 @@ public class ExecuteCoreActions implements Action {
                 }
                 return true;
             });
-            i.perform().report().write(LogLevel.FAST_INFO, BRIGHT_GREEN, ROBOT, "Click action performed successfully");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, BRIGHT_GREEN, ROBOT, "Click action performed successfully");
 
         } catch (ElementClickInterceptedException interceptException) {
             retryExecutor(element, "click", "Intercept Exception Caught");
@@ -96,7 +96,7 @@ public class ExecuteCoreActions implements Action {
         try {
             if (input.equalsIgnoreCase("--clear--")) {
                 element.clear();
-                i.perform().switchTo().acceptAlert();
+                i.amPerforming().switchTo().acceptAlert();
                 CompletableFuture.supplyAsync(() -> {
                     try {
                         InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
@@ -107,7 +107,7 @@ public class ExecuteCoreActions implements Action {
                 });
             } else {
                 element.sendKeys(input);
-                i.perform().switchTo().acceptAlert();
+                i.amPerforming().switchTo().acceptAlert();
                 CompletableFuture.supplyAsync(() -> {
                     try {
                         InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
@@ -117,7 +117,7 @@ public class ExecuteCoreActions implements Action {
                     return true;
                 });
             }
-            i.perform().report().write(LogLevel.FAST_INFO, BRIGHT_GREEN, ROBOT, "Input action performed successfully");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, BRIGHT_GREEN, ROBOT, "Input action performed successfully");
         } catch (ElementClickInterceptedException interceptException) {
             retryExecutor(element, "input", "Intercept Exception Caught", input);
         } catch (ElementNotInteractableException interactableException) {
@@ -147,23 +147,23 @@ public class ExecuteCoreActions implements Action {
             return true;
         });
         timerLimit = wait.getWaitTime();
-        i.perform().report().write(LogLevel.FAST_CRITICAL, RED, X_MARK, args[1] + " : Retrying to "+args[0]+" for maximum " + Waits.STANDARD_WAIT_TIME + " seconds");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, RED, X_MARK, args[1] + " : Retrying to "+args[0]+" for maximum " + Waits.STANDARD_WAIT_TIME + " seconds");
         while (timerLimit > System.currentTimeMillis() / 1000) {
             try {
                 if (args[0].equalsIgnoreCase("click")) {
                     element.click();
-                    i.perform().switchTo().acceptAlert();
-                    i.perform().report().write(LogLevel.FAST_CRITICAL, RED, TICK, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
+                    i.amPerforming().switchTo().acceptAlert();
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, RED, TICK, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
                     break;
                 } else if (args[0].equalsIgnoreCase("input")) {
                     if (args[2].equalsIgnoreCase("--clear--")) {
                         element.clear();
-                        i.perform().switchTo().acceptAlert();
+                        i.amPerforming().switchTo().acceptAlert();
                     } else {
                         element.sendKeys(args[2]);
-                        i.perform().switchTo().acceptAlert();
+                        i.amPerforming().switchTo().acceptAlert();
                     }
-                    i.perform().report().write(LogLevel.FAST_CRITICAL, RED, TICK, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, RED, TICK, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
                     break;
                 }
             } catch (ElementClickInterceptedException interceptException) {
@@ -175,8 +175,8 @@ public class ExecuteCoreActions implements Action {
                     throw interactableException;
                 }
             } catch (StaleElementReferenceException staleException) {
-                i.perform().report().write(LogLevel.FAST_CRITICAL, RED, X_MARK, "Stale Element Exception : Cancelling Retry ");
-                i.perform().report().write(LogLevel.FAST_CRITICAL, RED, X_MARK, "Next Step might fail");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, RED, X_MARK, "Stale Element Exception : Cancelling Retry ");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_CRITICAL, RED, X_MARK, "Next Step might fail");
                 break;
             } catch (WebDriverException notClickableException) {
                 if ((timerLimit <= System.currentTimeMillis() / 1000) || !notClickableException.getMessage().contains("is not clickable at point")) {

@@ -49,8 +49,8 @@ public final class AndroidManager implements Device {
                     System.getProperty("user.dir") + "\\mobileapp" + EnvironmentFetcher.getAppName());
 
             try {
-                androidCapabilities.setCapability("appPackage", i.perform().Properties().ReadPropertyFile("appConfig", "appPackage"));
-                androidCapabilities.setCapability("appActivity", i.perform().Properties().ReadPropertyFile("appConfig", "appActivity"));
+                androidCapabilities.setCapability("appPackage", i.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("appConfig", "appPackage"));
+                androidCapabilities.setCapability("appActivity", i.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("appConfig", "appActivity"));
             } catch (NullPointerException | IOException e) {
                 e.printStackTrace();
             }

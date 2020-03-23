@@ -49,12 +49,12 @@ public final class JavaScript {
      * clicks on specific webElement using java script
      */
     public void clickByJSWebElement(WebElement element) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Clicking with java script");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Clicking with java script");
         try {
             scrollElementToPageDetailCenter(element);
             js.executeScript("arguments[0].click();", element);
         } catch (Exception e) {
-            i.perform().report().write(LogLevel.FAST_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED,"X: ")+"Unable to use JavaScript due to : "+e.getMessage());
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED,"X: ")+"Unable to use JavaScript due to : "+e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public final class JavaScript {
      * scroll page up,down or to any specific x-axis and y-axis using java script
      */
     public void scrollPageWindowJS(String scrolltype, int xAxis, int Yaxis) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Scrolling " + scrolltype + " on page");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Scrolling " + scrolltype + " on page");
         switch (scrolltype.toUpperCase()) {
             case "PAGEDOWN":
                 js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
@@ -92,7 +92,7 @@ public final class JavaScript {
      * scroll page up,down or to any specific x-axis and y-axis using java script
      */
     public void scrollPageDocumentJS(String scrolltype, int xAxis, int Yaxis) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Scrolling " + scrolltype + " on page");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Scrolling " + scrolltype + " on page");
         try {
             switch (scrolltype.toUpperCase()) {
                 case "PAGEDOWN":
@@ -220,11 +220,11 @@ public final class JavaScript {
      * Input to any field using java script
      */
     public void InputJSByWebElement(WebElement element, String input) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Entering text with java script");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Entering text with java script");
         try {
         js.executeScript("arguments[0].value=\"" + input + "\"", element);
     } catch (Exception e) {
-        i.perform().report().write(LogLevel.FAST_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED,"X: ")+"Unable to use JavaScript due to : "+e.getMessage());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED,"X: ")+"Unable to use JavaScript due to : "+e.getMessage());
     }
     }
 
@@ -232,7 +232,7 @@ public final class JavaScript {
      * Zoom in or out using java script
      */
     public void ZoomInOutJS(int zoom) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Console log Zooming in");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Console log Zooming in");
         js.executeScript("document.body.style.zoom='" + zoom + "'");
     }
 
@@ -254,14 +254,14 @@ public final class JavaScript {
      * @return status of the page load like Completed , loading , Interactive
      */
     public String getJQueryStatus() {
-        i.perform().report().write(LogLevel.FAST_INFO, "fetching jquery status");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "fetching jquery status");
         String myPageStatus = "Not available";
         try {
             myPageStatus = js.executeScript("return jQuery.active").toString();
         } catch (Exception e) {
-            i.perform().report().write(LogLevel.FAST_ERROR, "Unable to get page status");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Unable to get page status");
         }
-        i.perform().report().write(LogLevel.FAST_INFO, "Page load status is " + myPageStatus.toUpperCase());
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Page load status is " + myPageStatus.toUpperCase());
         return myPageStatus;
     }
 

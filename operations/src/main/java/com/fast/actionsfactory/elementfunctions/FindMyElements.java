@@ -66,14 +66,14 @@ public final class FindMyElements {
             try {
                 return elementProcessing.forSingleElement(refinedFinalLocator);
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, RED, X_MARK, "Element is not present or locator is not correct | " + refinedFinalLocator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, RED, X_MARK, "Element is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         } else {
             try {
                 return driver.findElement(refinedFinalLocator);
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, RED, X_MARK, "Element is not present or locator is not correct | " + refinedFinalLocator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, RED, X_MARK, "Element is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         }
@@ -92,14 +92,14 @@ public final class FindMyElements {
             try {
                 return elementProcessing.forNestedElement(element, refinedFinalLocator);
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "Nested Element is not present or locator is not correct | " + refinedFinalLocator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Nested Element is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         } else {
             try {
                 return element.findElement(refinedFinalLocator);
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "Nested Element is not present or locator is not correct | " + refinedFinalLocator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Nested Element is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         }
@@ -120,14 +120,14 @@ public final class FindMyElements {
             try {
                 return elementProcessing.forListOfElements(refinedFinalLocator);
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "List of Elements is not present or locator is not correct | " + refinedFinalLocator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "List of Elements is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         } else {
             try {
                 return driver.findElements(refinedFinalLocator);
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "List of Elementss is not present or locator is not correct | " + refinedFinalLocator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "List of Elementss is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         }
@@ -146,7 +146,7 @@ public final class FindMyElements {
         try {
             return element.findElements(locator);
         } catch (Exception e) {
-            i.perform().report().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + refinedFinalLocator);
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + refinedFinalLocator);
             throw e;
         }
     }
@@ -166,14 +166,14 @@ public final class FindMyElements {
             try {
                 return new Select(elementProcessing.forSingleElement(refinedFinalLocator));
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + locator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         } else {
             try {
                 return new Select(driver.findElement(refinedFinalLocator));
             } catch (Exception e) {
-                i.perform().report().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + locator);
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         }
@@ -188,7 +188,7 @@ public final class FindMyElements {
         try {
             return new Select(element);
         } catch (Exception e) {
-            i.perform().report().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + element);
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_ERROR, "Element is not present or locator is not correct | " + element);
             throw e;
         }
     }

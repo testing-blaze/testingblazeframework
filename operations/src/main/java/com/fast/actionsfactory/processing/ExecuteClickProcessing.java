@@ -43,17 +43,17 @@ public class ExecuteClickProcessing {
 
     public ActionProcessing preProcessingFast = () -> {
         windowHandles.clear();
-        windowHandles.addAll(i.perform().switchTo().getWindowsHandlers());
+        windowHandles.addAll(i.amPerforming().switchTo().getWindowsHandlers());
     };
 
     public ActionProcessing postProcessingFast = () -> {
         //PageLoadProcessing.documentLoad.status("before action processing");
-        List<String> newWindowHandles = i.perform().switchTo().getWindowsHandlers();
+        List<String> newWindowHandles = i.amPerforming().switchTo().getWindowsHandlers();
         if (newWindowHandles.size() != windowHandles.size()) {
             for (int i = 0; i < newWindowHandles.size(); i++) {
                 if (!windowHandles.contains(newWindowHandles.get(i))) {
                     switchToWindowHandler(i);
-                    com.fast.register.i.perform().report().write(LogLevel.FAST_INFO, GREEN, CYCLONE, setBoldText(setTextColor(GREEN, "Switched to a new Window ")));
+                    com.fast.register.i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, GREEN, CYCLONE, setBoldText(setTextColor(GREEN, "Switched to a new Window ")));
                     break;
                 }
             }

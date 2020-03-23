@@ -101,7 +101,7 @@ public final class Android {
      * @return
      */
     public WebElement getElementByImage(String pngImage) {
-        return driver().findElementByImage(Base64.getEncoder().encode(i.perform().convert().imageToByteArray(i.perform().addOns().getResources(pngImage).toString(), "png")).toString());
+        return driver().findElementByImage(Base64.getEncoder().encode(i.amPerforming().conversionOf().imageToByteArray(i.amPerforming().addOnsTo().getResources(pngImage).toString(), "png")).toString());
     }
 
     /**

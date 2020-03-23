@@ -41,33 +41,33 @@ public final class SwitchTo {
     /**
      * switch between different frame
      */
-    public WebDriver switchToFrame(By locator) {
+    public WebDriver frame(By locator) {
         WebElement frameElement = driver.findElement(locator);
-        i.perform().report().write(LogLevel.FAST_INFO, "  Switched to new frame");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "  Switched to new frame");
         return driver.switchTo().frame(frameElement);
     }
 
     /**
      * switch between different frame
      */
-    public WebDriver switchToFrame(WebElement element) {
-        i.perform().report().write(LogLevel.FAST_INFO, " Switched to new frame");
+    public WebDriver frame(WebElement element) {
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, " Switched to new frame");
         return driver.switchTo().frame(element);
     }
 
     /**
      * switch back to parent frame
      */
-    public WebDriver switchToParentFrame() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Switched to parent frame");
+    public WebDriver parentFrame() {
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Switched to parent frame");
         return driver.switchTo().parentFrame();
     }
 
     /**
      * switch back default content
      */
-    public WebDriver switchToDefaultContent() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Switched to default content");
+    public WebDriver defaultContent() {
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Switched to default content");
         return driver.switchTo().defaultContent();
     }
 
@@ -76,11 +76,11 @@ public final class SwitchTo {
      */
     public void acceptAlert() {
         try {
-            if (i.perform().is().popupPresent()) {
+            if (i.amPerforming().check().popupPresent()) {
                 if(FastGlobal.getVariable("acceptAlert") != null && ((String) FastGlobal.getVariable("acceptAlert")).equalsIgnoreCase("off")) return;
                 else {
                     driver.switchTo().alert().accept();
-                    i.perform().report().write(LogLevel.FAST_INFO, "Alert accepted");
+                    i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Alert accepted");
                 }
             }
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public final class SwitchTo {
     public void rejectAlert() {
         try {
             driver.switchTo().alert().dismiss();
-            i.perform().report().write(LogLevel.FAST_INFO, "Alert accepted");
+            i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Alert accepted");
 
         } catch (Exception e) {
 
@@ -114,10 +114,10 @@ public final class SwitchTo {
      * @param handlerNumber : Usually child number is "1" and parent number is "0". However,
      *                      method is dyanmic to handle any child number
      */
-    public void switchToWindowHandler(int handlerNumber) {
-        i.perform().report().write(LogLevel.FAST_INFO, "Ready to Switch to window " + handlerNumber);
+    public void windowHandler(int handlerNumber) {
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Ready to Switch to window " + handlerNumber);
         driver.switchTo().window(getWindowsHandlers().get(handlerNumber));
-        i.perform().report().write(LogLevel.FAST_INFO, "Switch to new tab ");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Switch to new tab ");
     }
 
     /**
@@ -126,7 +126,7 @@ public final class SwitchTo {
      * @return
      */
     public String getAlertText() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Fectching text from alert ");
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Fectching text from alert ");
         return driver.switchTo().alert().getText();
     }
 
@@ -135,8 +135,8 @@ public final class SwitchTo {
      *
      * @return
      */
-    public WebElement switchToActiveContext() {
-        i.perform().report().write(LogLevel.FAST_INFO, "Switching to current active element context ");
+    public WebElement activeContext() {
+        i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Switching to current active element context ");
         return driver.switchTo().activeElement();
     }
 }

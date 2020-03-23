@@ -631,7 +631,7 @@ public final class FileHandler {
 
             try {
                 // Contacting the URL
-                i.perform().report().write(LogLevel.FAST_INFO, "Connecting to " + url1.toString() + " ... ");
+                i.amPerforming().updatingReportWith().write(LogLevel.FAST_INFO, "Connecting to " + url1.toString() + " ... ");
                 URLConnection urlConn = url1.openConnection();
 
                 // Checking whether the URL contains a PDF
