@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.fast</groupId>
-    <artifactId>fast-bdd</artifactId>
+    <groupId>com.test</groupId>
+    <artifactId>blaze-bdd</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
@@ -22,7 +22,7 @@
 
         <!-- Versions -->
         <java.version>11</java.version>
-        <cats.version>2.3.0</cats.version>
+        <test.blaze.version>1.0.0</test.blaze.version>
         <saas.version>2.3.0</saas.version>
         <selenium.version>3.141.59</selenium.version>
         <appium.version>7.2.0</appium.version>
