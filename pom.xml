@@ -28,7 +28,7 @@
         <selenium.version>3.141.59</selenium.version>
         <appium.version>7.2.0</appium.version>
         <cucumber.version>5.4.2</cucumber.version>
-        <cucable.version>1.6.0</cucable.version>
+        <cucable.version>1.7.0</cucable.version>
         <report.version>2.3.3</report.version>
         <testng.version>6.14.3</testng.version>
         <junit.version>4.13-beta-3</junit.version>
