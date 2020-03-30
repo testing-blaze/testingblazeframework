@@ -19,6 +19,7 @@
         <tags/>
         <threads/>
         <env/>
+        <numberOfTimesRunTag/>
 
         <!-- Versions -->
         <java.version>11</java.version>
