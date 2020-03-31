@@ -310,7 +310,7 @@ public class Tfs {
                     tempResultIdsToResultMapping.put(testIdsToTestResultIdsMapping.get(executedTestCaseIds), executedTestResults.get(executedTestCaseIds) ? "Passed" : "Failed");
                 }
             }
-            resultIdsToResultMappingAgainstRuns.put(runIds, tempResultIdsToResultMapping);
+            if (tempResultIdsToResultMapping.size() > 0)  resultIdsToResultMappingAgainstRuns.put(runIds, tempResultIdsToResultMapping);
         }
         return resultIdsToResultMappingAgainstRuns;
     }
