@@ -19,11 +19,11 @@
  */
 package com.testblaze.http;
 
-import com.testblaze.register.i;
-import com.testblaze.report.LogLevel;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.testblaze.register.i;
+import com.testblaze.report.LogLevel;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -298,11 +298,13 @@ public final class RestfulWebServices {
                 response = request.delete(endPoint);
                 break;
         }
-        try {
-            reportsLogger(callType, response);
-        } catch (Exception e) {
-            // to handle reporting exception - avoid unnecessary exceptions
-            consoleLogger(callType, response);
+        if (System.getProperty("postTestResults") == null) {
+            try {
+                reportsLogger(callType, response);
+            } catch (Exception e) {
+                // to handle reporting exception - avoid unnecessary exceptions
+                consoleLogger(callType, response);
+            }
         }
         return response;
     }
@@ -323,10 +325,11 @@ public final class RestfulWebServices {
         i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
         i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "3 - Response body: " + response.body().asString());
     }
+
     private void consoleLogger(CallTypes callType, Response response) {
         System.out.println(callType.name() + " Api call Response details:");
-        System.out.println( "1 - Response status: " + response.statusLine());
-        System.out.println( "2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
-        System.out.println( "3 - Response body: " + response.body().asString());
+        System.out.println("1 - Response status: " + response.statusLine());
+        System.out.println("2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
+        System.out.println("3 - Response body: " + response.body().asString());
     }
 }
