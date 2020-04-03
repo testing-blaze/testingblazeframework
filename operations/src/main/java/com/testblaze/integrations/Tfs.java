@@ -65,10 +65,12 @@ public class Tfs {
         if (loadTfsConfig) {
             triggerMandatoryClosureJobs();
             System.out.println("-------------------- TFS Result Post Configuration Started -----------------------");
-            if (System.getProperty("threads") != null && (!System.getProperty("threads").equals("0") || !System.getProperty("threads").equals("1")))
+            if (System.getProperty("threads") != null && !(System.getProperty("threads").equals("0") || System.getProperty("threads").equals("1"))) {
                 createMultiJvmConfiguration();
-            else {
+                System.out.println("Running........");
+            } else {
                 loadTfsConfiguration();
+                System.out.println("Running........");
                 setUpInitialConfiguration();
             }
             System.out.println("-------------------- TFS Result Post Configuration Completed -----------------------");
