@@ -298,14 +298,12 @@ public final class RestfulWebServices {
                 response = request.delete(endPoint);
                 break;
         }
-        if (System.getProperty("postTestResults") == null) {
             try {
                 reportsLogger(callType, response);
             } catch (Exception e) {
                 // to handle reporting exception - avoid unnecessary exceptions
                 consoleLogger(callType, response);
             }
-        }
         return response;
     }
 
@@ -323,6 +321,7 @@ public final class RestfulWebServices {
         i.amPerforming().updatingReportWith().write(LogLevel.TEST_BLAZE_INFO, callType.name() + " Api call Response details:");
         i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "1 - Response status: " + response.statusLine());
         i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
+        if (System.getProperty("postTestResults") == null)
         i.amPerforming().updatingReportWith().write(LogLevel.EMPTY_LABEL, "3 - Response body: " + response.body().asString());
     }
 
@@ -330,6 +329,7 @@ public final class RestfulWebServices {
         System.out.println(callType.name() + " Api call Response details:");
         System.out.println("1 - Response status: " + response.statusLine());
         System.out.println("2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
+        if (System.getProperty("postTestResults") == null)
         System.out.println("3 - Response body: " + response.body().asString());
     }
 }
