@@ -205,16 +205,18 @@ public class Tfs {
             runIds.add(runId);
             if (setThreadBasedConfiguration) jsonRunIds.add(runId);
             //get all test result ends against test cases
-            List<Map<String, Object>> testResultsIds = tfsApiCalls.getCall(tfsUrl + "/test/Runs/" + runId + "/results?" + apiVersion, "Authorization", authType + " " + pat).jsonPath().getList("value");
+            List<List<Map<String, Object>>> listTestResultsIds = handleTestResultIds(runId);
 
-            for (Map testResultInfo : testResultsIds) {
-                Map<String, Object> testCaseInfo = (Map<String, Object>) testResultInfo.get("testCase");
-                tempTestIdsToTestResultIdsMapping.put(testCaseInfo.get("id").toString(), testResultInfo.get("id").toString());
-                if (setThreadBasedConfiguration)
-                    tempJsonTestIdsToTestResultIdsMapping.addProperty(testCaseInfo.get("id").toString(), testResultInfo.get("id").toString());
-                testIdsToTestResultIdsMappingToRuns.put(runId, tempTestIdsToTestResultIdsMapping);
-                if (setThreadBasedConfiguration)
-                    jsonTestIdsToTestResultIdsMappingToRuns.add(runId, tempJsonTestIdsToTestResultIdsMapping);
+            for (var testResultsIds : listTestResultsIds) {
+                for (Map testResultInfo : testResultsIds) {
+                    Map<String, Object> testCaseInfo = (Map<String, Object>) testResultInfo.get("testCase");
+                    tempTestIdsToTestResultIdsMapping.put(testCaseInfo.get("id").toString(), testResultInfo.get("id").toString());
+                    if (setThreadBasedConfiguration)
+                        tempJsonTestIdsToTestResultIdsMapping.addProperty(testCaseInfo.get("id").toString(), testResultInfo.get("id").toString());
+                    testIdsToTestResultIdsMappingToRuns.put(runId, tempTestIdsToTestResultIdsMapping);
+                    if (setThreadBasedConfiguration)
+                        jsonTestIdsToTestResultIdsMappingToRuns.add(runId, tempJsonTestIdsToTestResultIdsMapping);
+                }
             }
         }
         if (setThreadBasedConfiguration)
@@ -223,6 +225,48 @@ public class Tfs {
             runIdsJsonArray_jsonTestIdsToTestResultIdsMappingToRuns_holder.add("resultMap", jsonTestIdsToTestResultIdsMappingToRuns);
         if (setThreadBasedConfiguration)
             i.amPerforming().fileHandlingTo().writeInFile(tfsTestsMappingFile.toString(), new Gson().toJson(runIdsJsonArray_jsonTestIdsToTestResultIdsMappingToRuns_holder));
+    }
+
+    /**
+     * handles fetching all test result ids form tfs. Special ahndling where record exceeds 1000
+     * @param runId
+     * @return
+     * @author nauman.shahid
+     */
+    private static List<List<Map<String, Object>>> handleTestResultIds(String runId) {
+        List<List<Map<String, Object>>> listTestResultsIds = new ArrayList<>();
+        Boolean fetchingResultIds = true;
+        int count = 0;
+        int limitRetryApi =0;
+        var initialTestResultPayload = tfsApiCalls.getCall(tfsUrl + "/test/Runs/" + runId + "/results?" + apiVersion, "Authorization", authType + " " + pat).jsonPath();
+
+        while (fetchingResultIds) {
+            limitRetryApi++;
+            String recordCount = initialTestResultPayload.get("count").toString();
+            List<Map<String, Object>> records = initialTestResultPayload.getList("value");
+
+            if (!recordCount.equalsIgnoreCase("1000") && count == 0) {
+                listTestResultsIds.add(initialTestResultPayload.getList("value"));
+                return listTestResultsIds;
+            } else if (recordCount.equalsIgnoreCase("1000")) {
+                if (records.get(0).get("id").toString().endsWith("000")) {
+                    listTestResultsIds.add(initialTestResultPayload.get("value"));
+                    count++;
+                    initialTestResultPayload = tfsApiCalls.getCall(tfsUrl + "/test/Runs/" + runId + "/results?$skip=" + (1000 * count) + "&" + apiVersion, "Authorization", authType + " " + pat).jsonPath();
+                } else if (!records.get(0).get("id").toString().endsWith("000")) {
+                    initialTestResultPayload = tfsApiCalls.getCall(tfsUrl + "/test/Runs/" + runId + "/results?$skip=" + (1000 * count) + "&" + apiVersion, "Authorization", authType + " " + pat).jsonPath();
+                }
+            } else if (!recordCount.equalsIgnoreCase("1000") && count > 0) {
+                if(records.get(0).get("id").toString().endsWith("000")) {
+                    listTestResultsIds.add(initialTestResultPayload.get("value"));
+                    fetchingResultIds = false;
+                } else {
+                    initialTestResultPayload = tfsApiCalls.getCall(tfsUrl + "/test/Runs/" + runId + "/results?$skip=" + (1000 * count) + "&" + apiVersion, "Authorization", authType + " " + pat).jsonPath();
+                }
+            }
+            if (limitRetryApi == 20) break;
+        }
+        return listTestResultsIds;
     }
 
     private static JsonObject getTestRunCreationPayLoad(String planId, JsonArray testPointId) {
