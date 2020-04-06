@@ -31,7 +31,6 @@ import com.testblaze.register.EnvironmentFetcher;
 import com.testblaze.register.i;
 
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -106,16 +105,15 @@ public class Tfs {
         } catch (Exception e) {
             // This catch is executed in case test runs are already created by some other jvm
             try {
-                Thread.sleep(10000);
+                Thread.sleep(60000);
             } catch (InterruptedException exx) {
 
             }
             try {
                 tfsTestsMappingFile = Paths.get(EnvironmentFetcher.getProjectPath() + "/target/tfs_tests_mapping.json");
             } catch (Exception ex) {
-                System.out.println("I am inside file Reading Exception for  " + ManagementFactory.getRuntimeMXBean().getPid());
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(30000);
                     tfsTestsMappingFile = Paths.get(EnvironmentFetcher.getProjectPath() + "/target/tfs_tests_mapping.json");
                 } catch (InterruptedException exx) {
 
