@@ -224,7 +224,7 @@ public class Tfs {
         if (setThreadBasedConfiguration)
             runIdsJsonArray_jsonTestIdsToTestResultIdsMappingToRuns_holder.add("resultMap", jsonTestIdsToTestResultIdsMappingToRuns);
         if (setThreadBasedConfiguration)
-            i.amPerforming().fileHandlingTo().writeInFile(tfsTestsMappingFile.toString(), new Gson().toJson(runIdsJsonArray_jsonTestIdsToTestResultIdsMappingToRuns_holder));
+            i.amPerforming().fileHandling().toWriteInFile(tfsTestsMappingFile.toString(), new Gson().toJson(runIdsJsonArray_jsonTestIdsToTestResultIdsMappingToRuns_holder));
     }
 
     /**
@@ -328,7 +328,7 @@ public class Tfs {
             tfsApiCalls.patchCall(completeState, null, tfsUrl + "/test/runs/" + runId + "?" + apiVersion, "Authorization", authType + " " + pat, null);
         }
 
-        if (System.getProperty("threads") == null) {
+        if (System.getProperty("threads") == null || ("0".equals(System.getProperty("threads")) || ("1".equals(System.getProperty("threads"))))){
             for (String runId : runIds) {
                 JsonObject completeState = new JsonObject();
                 completeState.addProperty("state", "Completed");
@@ -386,10 +386,10 @@ public class Tfs {
      * manages the credentials and tokens of the related project
      */
     private static void loadTfsConfiguration() {
-        tfsUrl = i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "tfsUrl") + "/_apis";
-        pat = i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "pat");
-        authType = i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "authType");
-        apiVersion = "api-version=" + i.amPerforming().fileHandlingTo().json().getDataFromJson("tfs.json", "profile", "apiVersion");
+        tfsUrl = i.amPerforming().fileHandling().forJsonAnd().getDataFromJson("tfs.json", "profile", "tfsUrl") + "/_apis";
+        pat = i.amPerforming().fileHandling().forJsonAnd().getDataFromJson("tfs.json", "profile", "pat");
+        authType = i.amPerforming().fileHandling().forJsonAnd().getDataFromJson("tfs.json", "profile", "authType");
+        apiVersion = "api-version=" + i.amPerforming().fileHandling().forJsonAnd().getDataFromJson("tfs.json", "profile", "apiVersion");
         loadTfsConfig = false;
     }
 

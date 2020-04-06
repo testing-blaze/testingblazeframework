@@ -275,7 +275,7 @@ public final class CoreHandlers {
      * @return different file handling including excel,adobe ,json, image.
      * @author nauman.shahid
      */
-    public FileHandler fileHandlingTo() {
+    public FileHandler fileHandling() {
         if (fileHandler == null) {
             fileHandler = new FileHandler();
         }

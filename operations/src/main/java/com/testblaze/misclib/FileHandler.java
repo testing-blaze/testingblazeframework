@@ -74,7 +74,7 @@ public final class FileHandler {
      * @return
      * @author nauman.shahid
      */
-    public ExcelReader excel() {
+    public ExcelReader forExcelAnd() {
         return this.excelReader;
     }
 
@@ -84,7 +84,7 @@ public final class FileHandler {
      * @return
      * @author nauman.shahid
      */
-    public JsonReader json() {
+    public JsonReader forJsonAnd() {
         return this.jsonReader;
     }
 
@@ -94,7 +94,7 @@ public final class FileHandler {
      * @return
      * @author nauman.shahid
      */
-    public AdobeReader adobeReader() {
+    public AdobeReader forAdobeReaderAnd() {
         return this.adobeReader;
     }
 
@@ -105,7 +105,7 @@ public final class FileHandler {
      * @return String Array list of lines
      * @author nauman.shahid
      */
-    public List<String> readAnyFile(String filePathWithFileName) {
+    public List<String> toReadAnyFile(String filePathWithFileName) {
         List<String> fileData = null;
         try {
             fileData = Files.readAllLines(Paths.get(filePathWithFileName));
@@ -123,7 +123,7 @@ public final class FileHandler {
      * @return directory
      * @author nauman.shahid
      */
-    public File[] getCompleteFilesListOnLocalDirectory(String path) {
+    public File[] toGetCompleteFilesListOnLocalDirectory(String path) {
         File directory = new File(path);
         return directory.listFiles();
     }
@@ -136,8 +136,8 @@ public final class FileHandler {
      * @param fileType new extension of file
      * @author nauman.shahid
      */
-    public void reNameDownloadedTmpFile(File file, String fileName, String fileType) {
-        File[] directory = getCompleteFilesListOnLocalDirectory(file.getAbsolutePath());
+    public void toRenameDownloadedTmpFile(File file, String fileName, String fileType) {
+        File[] directory = toGetCompleteFilesListOnLocalDirectory(file.getAbsolutePath());
         for (File files : directory) {
             if (files.getName().endsWith(".tmp")) {
                 new File(files.getAbsolutePath())
@@ -153,7 +153,7 @@ public final class FileHandler {
      * @param pathWithFileName path with filename and extension /abc/file.txt
      * @author nauman.shahid
      */
-    public void createFile(String pathWithFileName) {
+    public void toCreateFile(String pathWithFileName) {
         try {
             if (Files.notExists(Paths.get(pathWithFileName))) ;
             Files.createFile(Paths.get(pathWithFileName));
@@ -169,7 +169,7 @@ public final class FileHandler {
      * @param dataToWrite
      * @author nauman.shahid
      */
-    public void writeInFile(String pathWithFileName, String dataToWrite) {
+    public void toWriteInFile(String pathWithFileName, String dataToWrite) {
         try {
             if (Files.notExists(Paths.get(pathWithFileName)))
                 Files.write(Paths.get(pathWithFileName), dataToWrite.getBytes());
@@ -187,7 +187,7 @@ public final class FileHandler {
      * @param pathOfDirectoryName path with filename and extension /abc/folderName
      * @author nauman.shahid
      */
-    public void createDirectory(String pathOfDirectoryName) {
+    public void toCreateDirectory(String pathOfDirectoryName) {
         if (Files.notExists(Paths.get(pathOfDirectoryName))) {
             try {
                 Files.createDirectory(Paths.get(pathOfDirectoryName));
@@ -238,7 +238,7 @@ public final class FileHandler {
          */
         public String[][] readFromDownloadedFile(String fileName, String sheetName) {
             File file = new File(System.getProperty("user.dir") + "\\target");
-            reNameDownloadedTmpFile(file, fileName, "xlsx");
+            toRenameDownloadedTmpFile(file, fileName, "xlsx");
             return readExcelFile(fileName, sheetName,
                     file.getAbsolutePath() + "\\" + fileName);
         }
@@ -491,7 +491,7 @@ public final class FileHandler {
          */
         public String readFromDownloadedFile(String fileName, int pageNumber) {
             File file = new File(System.getProperty("user.dir") + "\\target");
-            reNameDownloadedTmpFile(file, fileName, "pdf");
+            toRenameDownloadedTmpFile(file, fileName, "pdf");
             return readFromAdobeFileOnLocalAtUserDirectory(
                     file.getAbsolutePath() + "\\" + fileName, pageNumber);
         }
