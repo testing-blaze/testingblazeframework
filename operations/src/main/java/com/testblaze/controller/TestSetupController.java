@@ -123,10 +123,10 @@ public final class TestSetupController {
         List<LogEntry> performanceEntries = device.getDriver().manage().logs().get(LogType.PERFORMANCE).getAll();
         List<LogEntry> browserEntries = device.getDriver().manage().logs().get(LogType.PERFORMANCE).getAll();
         for (LogEntry entry : performanceEntries) {
-            i.amPerforming().fileHandlingTo().writeInFile(System.getProperty("user.dir") + "/target/Automation-Report/performance.txt", entry.toString());
+            i.amPerforming().fileHandling().toWriteInFile(System.getProperty("user.dir") + "/target/Automation-Report/performance.txt", entry.toString());
         }
         for (LogEntry entry : browserEntries) {
-            i.amPerforming().fileHandlingTo().writeInFile(System.getProperty("user.dir") + "/target/Automation-Report/browser.txt", entry.toString());
+            i.amPerforming().fileHandling().toWriteInFile(System.getProperty("user.dir") + "/target/Automation-Report/browser.txt", entry.toString());
         }
     }
 
