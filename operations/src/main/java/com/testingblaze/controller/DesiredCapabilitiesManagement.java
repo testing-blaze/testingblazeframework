@@ -1,9 +1,9 @@
 /*
  * Copyright 2020
  *
- * This file is part of  Test Blaze Bdd Framework [Test Blaze Automation Solution].
+ * This file is part of  Testing Blaze Automation Framework [BDD] .
  *
- * Test Blaze Bdd Framework is licensed under the Apache License, Version
+ * Testing Blaze Automation Framework is licensed under the Apache License, Version
  * 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy
  * of the License at
