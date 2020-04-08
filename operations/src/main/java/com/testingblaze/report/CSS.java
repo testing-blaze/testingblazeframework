@@ -116,7 +116,7 @@ public final class CSS {
                         +"<br>Execution Mode: " + EnvironmentFactory.getExecutionMode()
                         + "  - eDriver version: " + EnvironmentFactory.getDriverVersion()
                         + "  - Reduced Automation Execution Speed: "+(EnvironmentFactory.getSlowDownExecutionTime() > 0 ? "Yes":"No"),
-                "PoweredBy:"+"Testing Blaze Automation Solution - Apache License 2.0 [ "+ EnvironmentFactory.getOrgName()+")]"
+                "PoweredBy:"+"Testing Blaze Automation Solution - Apache License 2.0 [ "+ EnvironmentFactory.getOrgName()+"]"
         );
     }
 
