@@ -21,7 +21,7 @@ package com.testingblaze.actionsfactory.elementfunctions;
 
 import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
 import com.testingblaze.controller.DeviceBucket;
-import com.testingblaze.exception.TestBlazeRunTimeException;
+import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.mobile.Android;
 import com.testingblaze.mobile.IOS;
 import com.testingblaze.objects.InstanceRecording;
@@ -141,7 +141,7 @@ public final class Mobile {
                 break;
         }
         if (fetchElement == null)
-            throw new TestBlazeRunTimeException("Mobile element is not present or incorrect: " + refinedLocator);
+            throw new TestingBlazeRunTimeException("Mobile element is not present or incorrect: " + refinedLocator);
         return fetchElement;
     }
 
@@ -191,7 +191,7 @@ public final class Mobile {
     private AppiumDriver<WebElement> driver() {
         if (!"android".equalsIgnoreCase(EnvironmentFactory.getDevice())
                 && !"ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
-            throw new TestBlazeRunTimeException("In order to use 'Mobile' library, System parameter 'device' must be set to 'android' or 'ios'.\n" +
+            throw new TestingBlazeRunTimeException("In order to use 'Mobile' library, System parameter 'device' must be set to 'android' or 'ios'.\n" +
                     "Parameter 'device' was found to be '" + EnvironmentFactory.getDevice() + "'");
         }
         return (AppiumDriver<WebElement>) InstanceRecording.getInstance(DeviceBucket.class).getDriver();

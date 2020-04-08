@@ -24,7 +24,7 @@ import com.testingblaze.actionsfactory.api.IframeAnalyzer;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
 import com.testingblaze.controller.DeviceBucket;
-import com.testingblaze.controller.TestBlazeGlobal;
+import com.testingblaze.controller.TestingBlazeGlobal;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
@@ -67,8 +67,8 @@ public class ExecuteElementProcessing implements ElementProcessing {
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, CHECKERED_FLAG, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
-                if (TestBlazeGlobal.getVariable("highlightElements") != null && ((String) TestBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
-                    TestBlazeGlobal.deleteRecord("highlightElements");
+                if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
+                    TestingBlazeGlobal.deleteRecord("highlightElements");
                     return element;
                 } else {
                     InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #e6ffff; border: 2px solid black;');", element);
@@ -103,8 +103,8 @@ public class ExecuteElementProcessing implements ElementProcessing {
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, CHECKERED_FLAG, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
-                if (TestBlazeGlobal.getVariable("highlightElements") != null && ((String) TestBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
-                    TestBlazeGlobal.deleteRecord("highlightElements");
+                if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
+                    TestingBlazeGlobal.deleteRecord("highlightElements");
                     return element;
                 } else {
                     InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #e6ffff; border: 2px solid black;');", element);
@@ -280,7 +280,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
 
     private void projectProcessingWrapper() {
         if (turnOnProcessingHoldOnScreen == null && processingHoldOnScreen == null) {
-            processingHoldOnScreen = (By) TestBlazeGlobal.getVariable("processingHoldOnScreen");
+            processingHoldOnScreen = (By) TestingBlazeGlobal.getVariable("processingHoldOnScreen");
             turnOnProcessingHoldOnScreen = processingHoldOnScreen != null;
         }
         if (driver.findElements(processingHoldOnScreen).size() > 0)

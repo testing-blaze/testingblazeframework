@@ -17,11 +17,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.testingblaze.exception;
+package com.testingblaze.controller;
 
-public final class TestBlazeCustomException extends Exception {
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-    public TestBlazeCustomException(String message) {
-        super(message);
+public class TestingBlazeGlobal {
+    private static Map<String, Object> globalVariable = new LinkedHashMap<>();
+
+    public static Object getVariable(String key) {
+        return (globalVariable.get(key));
     }
+
+    public static void deleteRecord(String key) {
+        globalVariable.remove(key);
+    }
+
+    public static void setVariable(String key, Object value) {
+        globalVariable.put(key, value);
+    }
+
 }

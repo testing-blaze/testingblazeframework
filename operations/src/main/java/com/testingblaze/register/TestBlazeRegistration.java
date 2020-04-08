@@ -25,7 +25,7 @@ import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.ReportingLogsPlugin;
 import com.testingblaze.controller.ScenarioController;
 import com.testingblaze.controller.TestSetupController;
-import com.testingblaze.exception.TestBlazeExceptionWithoutStackTrace;
+import com.testingblaze.exception.TestingBlazeExceptionWithoutStackTrace;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.report.LogLevel;
 import io.cucumber.java.After;
@@ -58,11 +58,11 @@ public final class TestBlazeRegistration {
     }
 
     @After(order = 1)
-    public void verifyingScenarioSoftAssertions() throws TestBlazeExceptionWithoutStackTrace {
+    public void verifyingScenarioSoftAssertions() throws TestingBlazeExceptionWithoutStackTrace {
         if (ScenarioController.getScenario().isFailed()) {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "The scenario is already failed.  Skipping check of soft assertions.");
         } else if (ReportingLogsPlugin.getErrorsFromScenario().size() > 0) {
-            throw new TestBlazeExceptionWithoutStackTrace("The following soft assertions failed in the scenario:\n"
+            throw new TestingBlazeExceptionWithoutStackTrace("The following soft assertions failed in the scenario:\n"
                     + String.join("\n", ReportingLogsPlugin.getErrorsFromScenario()));
         } else {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "No soft assertions failed in the scenario.");
