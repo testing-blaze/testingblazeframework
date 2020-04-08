@@ -20,7 +20,7 @@
 package com.testingblaze.actionsfactory.gherkin;
 
 import com.testingblaze.controller.ReportingLogsPlugin;
-import com.testingblaze.exception.TestBlazeExceptionWithoutStackTrace;
+import com.testingblaze.exception.TestingBlazeExceptionWithoutStackTrace;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import io.cucumber.java.en.Then;
@@ -88,9 +88,9 @@ public final class TestBlazeActionSteps {
     }
 
     @Then("^I verify that no soft assertions failed in the previous step$")
-    public void verifyingPreviousStepSoftAssertions() throws TestBlazeExceptionWithoutStackTrace {
+    public void verifyingPreviousStepSoftAssertions() throws TestingBlazeExceptionWithoutStackTrace {
         if (ReportingLogsPlugin.getErrorsFromPreviousStep().size() > 0) {
-            throw new TestBlazeExceptionWithoutStackTrace("Soft assertions failed in the previous step.");
+            throw new TestingBlazeExceptionWithoutStackTrace("Soft assertions failed in the previous step.");
         } else {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "No soft assertions failed in the previous step.");
         }

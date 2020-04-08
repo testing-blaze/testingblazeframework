@@ -20,7 +20,7 @@
 package com.testingblaze.actionsfactory.processing;
 
 import com.testingblaze.actionsfactory.api.IframeAnalyzer;
-import com.testingblaze.exception.TestBlazeRunTimeException;
+import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
@@ -59,7 +59,7 @@ public class ExecuteLocatorProcessing {
         I.amPerforming().updatingOfReportWith().newLine();
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, CYAN, HORSE, "Locator and Element Processing Starts");
         if (finalRefinedLocator == null)
-            throw new TestBlazeRunTimeException("Locator processing failed: " + locator.toString());
+            throw new TestingBlazeRunTimeException("Locator processing failed: " + locator.toString());
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, THUMBS_UP, "Locator = " + finalRefinedLocator);
         return finalRefinedLocator;
     }

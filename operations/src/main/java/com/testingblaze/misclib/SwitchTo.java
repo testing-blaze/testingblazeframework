@@ -20,7 +20,7 @@
 package com.testingblaze.misclib;
 
 import com.testingblaze.controller.DeviceBucket;
-import com.testingblaze.controller.TestBlazeGlobal;
+import com.testingblaze.controller.TestingBlazeGlobal;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
@@ -77,7 +77,7 @@ public final class SwitchTo {
     public void acceptAlert() {
         try {
             if (I.amPerforming().checkToSee().popupPresent()) {
-                if(TestBlazeGlobal.getVariable("acceptAlert") != null && ((String) TestBlazeGlobal.getVariable("acceptAlert")).equalsIgnoreCase("off")) return;
+                if(TestingBlazeGlobal.getVariable("acceptAlert") != null && ((String) TestingBlazeGlobal.getVariable("acceptAlert")).equalsIgnoreCase("off")) return;
                 else {
                     driver.switchTo().alert().accept();
                     I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Alert accepted");

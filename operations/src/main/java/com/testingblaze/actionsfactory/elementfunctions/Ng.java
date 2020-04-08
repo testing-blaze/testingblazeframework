@@ -21,7 +21,7 @@ package com.testingblaze.actionsfactory.elementfunctions;
 
 import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
 import com.testingblaze.controller.DeviceBucket;
-import com.testingblaze.exception.TestBlazeRunTimeException;
+import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
@@ -144,7 +144,7 @@ public final class Ng {
                 fetchElement = getElementsWithexactRepeater(refinedLocator);
                 break;
         }
-        if(fetchElement == null)throw new TestBlazeRunTimeException("Angular element is not present or incorrect: "+refinedLocator);
+        if(fetchElement == null)throw new TestingBlazeRunTimeException("Angular element is not present or incorrect: "+refinedLocator);
         return fetchElement;
     }
 
