@@ -20,7 +20,6 @@
 package com.testingblaze.exception;
 
 public final class TestingBlazeCustomException extends Exception {
-
     public TestingBlazeCustomException(String message) {
         super(message);
     }
