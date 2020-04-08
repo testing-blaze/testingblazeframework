@@ -27,7 +27,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.testingblaze.controller.ReportingLogsPlugin;
 import com.testingblaze.http.RestfulWebServices;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 
 import java.io.IOException;
@@ -86,11 +86,11 @@ public class Tfs {
     private static void createMultiJvmConfiguration() {
         // The try block handles jvm that first approaches and is eligible to create the test runs
         setThreadBasedConfiguration = true;
-        Path path = Paths.get(EnvironmentFetcher.getProjectPath() + "/target");
+        Path path = Paths.get(EnvironmentFactory.getProjectPath() + "/target");
         try {
             if (Files.list(path).noneMatch(file -> file.startsWith("tfs_tests_mapping"))) {
                 Files.createFile(Paths.get(path + "/tfs_tests_mapping.json"));
-                tfsTestsMappingFile = Paths.get(EnvironmentFetcher.getProjectPath() + "/target/tfs_tests_mapping.json");
+                tfsTestsMappingFile = Paths.get(EnvironmentFactory.getProjectPath() + "/target/tfs_tests_mapping.json");
                 fileChannel = FileChannel.open(tfsTestsMappingFile, StandardOpenOption.WRITE,
                         StandardOpenOption.APPEND);
                 fileChannel.lock();
@@ -110,11 +110,11 @@ public class Tfs {
 
             }
             try {
-                tfsTestsMappingFile = Paths.get(EnvironmentFetcher.getProjectPath() + "/target/tfs_tests_mapping.json");
+                tfsTestsMappingFile = Paths.get(EnvironmentFactory.getProjectPath() + "/target/tfs_tests_mapping.json");
             } catch (Exception ex) {
                 try {
                     Thread.sleep(30000);
-                    tfsTestsMappingFile = Paths.get(EnvironmentFetcher.getProjectPath() + "/target/tfs_tests_mapping.json");
+                    tfsTestsMappingFile = Paths.get(EnvironmentFactory.getProjectPath() + "/target/tfs_tests_mapping.json");
                 } catch (InterruptedException exx) {
 
                 }
@@ -273,7 +273,7 @@ public class Tfs {
         JsonObject mainContainer = new JsonObject();
         JsonObject plan = new JsonObject();
         plan.addProperty("id", planId);
-        mainContainer.addProperty("name", EnvironmentFetcher.getOrgName()+"-Test Blaze " + EnvironmentFetcher.getScenarioTag() + " automated run for Test Plan:" + planId);
+        mainContainer.addProperty("name", EnvironmentFactory.getOrgName()+"-Test Blaze " + EnvironmentFactory.getScenarioTag() + " automated run for Test Plan:" + planId);
         mainContainer.add("plan", plan);
         mainContainer.add("pointIds", testPointId);
         mainContainer.addProperty("automated", false);

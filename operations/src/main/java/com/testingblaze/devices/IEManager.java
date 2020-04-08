@@ -21,7 +21,7 @@ package com.testingblaze.devices;
 
 import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -45,7 +45,7 @@ public final class IEManager implements Device {
 
     @Override
     public void setupController() {
-        if ("ie-32".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if ("ie-32".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             WebDriverManager.iedriver().arch32().forceCache().setup();
         } else {
             WebDriverManager.iedriver().forceCache().setup();
@@ -66,13 +66,13 @@ public final class IEManager implements Device {
 
         InternetExplorerOptions internetExplorerOptions = new InternetExplorerOptions().merge(ieCapabilities);
 
-        if ("local".equalsIgnoreCase(EnvironmentFetcher.getHub())) {
+        if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new InternetExplorerDriver(internetExplorerOptions);
             this.driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFetcher.getHub() + "/wd/hub"),
+                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
                         new DesiredCapabilitiesManagement().getBrowserCapabilities(ieCapabilities));
                 ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {

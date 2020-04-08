@@ -19,7 +19,7 @@
  */
 package com.testingblaze.controller;
 
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 
@@ -101,6 +101,6 @@ public final class DockerController {
     }
 
     private static String getContainerId() {
-        return "selenium-" + EnvironmentFetcher.getDevice().toLowerCase();
+        return "selenium-" + EnvironmentFactory.getDevice().toLowerCase();
     }
 }

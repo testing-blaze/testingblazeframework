@@ -22,7 +22,7 @@ package com.testingblaze.controller;
 import com.testingblaze.integrations.Tfs;
 import com.testingblaze.misclib.ScreenCapture;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
@@ -80,7 +80,7 @@ public final class TestSetupController {
         if ("true".equalsIgnoreCase(System.getProperty("docker"))) {
             DockerController.startDocker();
         }
-        if ("android".equalsIgnoreCase(EnvironmentFetcher.getDevice()) || "ios".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if ("android".equalsIgnoreCase(EnvironmentFactory.getDevice()) || "ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             runMobileApp();
         } else {
             runBrowser();
@@ -107,13 +107,13 @@ public final class TestSetupController {
         if ("true".equalsIgnoreCase(System.getProperty("docker"))) {
             DockerController.stopDocker();
         }
-        if ("android".equalsIgnoreCase(EnvironmentFetcher.getDevice()) || "ios".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if ("android".equalsIgnoreCase(EnvironmentFactory.getDevice()) || "ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             mobileWrapUp();
         } else {
             browserWrapUp();
         }
 
-        if (null != System.getProperty("evaluatePerformance") && "true".equalsIgnoreCase(System.getProperty("evaluatePerformance")) && "chrome".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if (null != System.getProperty("evaluatePerformance") && "true".equalsIgnoreCase(System.getProperty("evaluatePerformance")) && "chrome".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             generateChromeBrowserPerformanceLog();
         }
         InstanceRecording.flushInstance();
@@ -164,7 +164,7 @@ public final class TestSetupController {
      */
     private void runBrowser() {
         device.setupController();
-        device.getDriver().get(EnvironmentFetcher.getEnvironmentUrl().toUpperCase());
+        device.getDriver().get(EnvironmentFactory.getEnvironmentUrl().toUpperCase());
     }
 
     /**
@@ -206,7 +206,7 @@ public final class TestSetupController {
         for (int i = 1; i <= 5; i++) {
             System.out.println(setTextColor(COLOR.values()[i], "*".repeat(i)));
         }
-        System.out.println("Test Blaze Bdd Framework (" +EnvironmentFetcher.getOrgName()+" ) - Apache License 2.0");
+        System.out.println("Testing Blaze Automation Solution - Apache License 2.0");
         for (int i = 5; i >= 1; i--) {
             System.out.println(setTextColor(COLOR.values()[i], "*".repeat(i)));
         }

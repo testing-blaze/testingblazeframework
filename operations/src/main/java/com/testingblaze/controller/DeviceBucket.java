@@ -26,7 +26,7 @@ import com.testingblaze.devices.FireFoxManager;
 import com.testingblaze.devices.IEManager;
 import com.testingblaze.devices.IOSManager;
 import com.testingblaze.devices.SafariManager;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import org.openqa.selenium.WebDriver;
 
 
@@ -40,7 +40,7 @@ public final class DeviceBucket implements Device {
     private final Device delegate;
 
     public DeviceBucket() {
-        switch (EnvironmentFetcher.getDevice().toLowerCase()) {
+        switch (EnvironmentFactory.getDevice().toLowerCase()) {
             case "firefox":
                 delegate = new FireFoxManager();
                 break;

@@ -21,7 +21,7 @@ package com.testingblaze.devices;
 
 import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -47,7 +47,7 @@ public final class EdgeManager implements Device {
     @Override
     public void setupController() {
 
-        if ("edge-32".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if ("edge-32".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             WebDriverManager.edgedriver().arch32().forceCache().setup();
         } else {
             WebDriverManager.edgedriver().forceCache().setup();
@@ -68,13 +68,13 @@ public final class EdgeManager implements Device {
 
         EdgeOptions edgeOptions = new EdgeOptions().merge(edgeCapabilities);
 
-        if ("local".equalsIgnoreCase(EnvironmentFetcher.getHub())) {
+        if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new EdgeDriver(edgeOptions);
             this.driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFetcher.getHub() + "/wd/hub"),
+                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
                         new DesiredCapabilitiesManagement().getBrowserCapabilities(edgeCapabilities));
                 ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {

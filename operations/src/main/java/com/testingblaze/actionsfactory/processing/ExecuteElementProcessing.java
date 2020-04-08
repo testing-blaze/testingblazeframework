@@ -26,7 +26,7 @@ import com.testingblaze.actionsfactory.elementfunctions.Waits;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.TestBlazeGlobal;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.apache.commons.lang.StringUtils;
@@ -262,8 +262,8 @@ public class ExecuteElementProcessing implements ElementProcessing {
             iframeAnalyzer.evaluatePossibleIFrameToSwitch();
             if (IframeAnalyzer.setFlagForFrameSwitch) {
                 I.amPerforming().waitFor().makeThreadSleep(200);
-                if (EnvironmentFetcher.getSlowDownExecutionTime() > 0) {
-                    I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFetcher.getSlowDownExecutionTime());
+                if (EnvironmentFactory.getSlowDownExecutionTime() > 0) {
+                    I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFactory.getSlowDownExecutionTime());
                 }
                 projectProcessingWrapper();
                 try {

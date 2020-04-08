@@ -22,7 +22,7 @@ package com.testingblaze.actionsfactory.elementfunctions;
 import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.Alert;
@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public final class Waits {
-    public static final long STANDARD_WAIT_TIME = EnvironmentFetcher.getMaxWaitTime();
+    public static final long STANDARD_WAIT_TIME = EnvironmentFactory.getMaxWaitTime();
     private final long STANDARD_POLLING_TIME = 1;
     private FluentWait<WebDriver> wait;
     private FluentWait<WebDriver> waitToInvisible;

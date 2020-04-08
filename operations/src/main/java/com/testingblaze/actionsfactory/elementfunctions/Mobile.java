@@ -25,7 +25,7 @@ import com.testingblaze.exception.TestBlazeRunTimeException;
 import com.testingblaze.mobile.Android;
 import com.testingblaze.mobile.IOS;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
@@ -72,7 +72,7 @@ public final class Mobile {
      * @return
      */
     public Android usingAndroidSpecials() {
-        if ("android".equalsIgnoreCase(EnvironmentFetcher.getDevice()))
+        if ("android".equalsIgnoreCase(EnvironmentFactory.getDevice()))
             this.android = new Android();
         return android;
     }
@@ -83,7 +83,7 @@ public final class Mobile {
      * @return
      */
     public IOS iosSpecials() {
-        if ("ios".equalsIgnoreCase(EnvironmentFetcher.getDevice()))
+        if ("ios".equalsIgnoreCase(EnvironmentFactory.getDevice()))
             this.ios = new IOS();
         return ios;
     }
@@ -189,18 +189,18 @@ public final class Mobile {
 
     @SuppressWarnings("unchecked") // If statement ensures unchecked cast is safe
     private AppiumDriver<WebElement> driver() {
-        if (!"android".equalsIgnoreCase(EnvironmentFetcher.getDevice())
-                && !"ios".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if (!"android".equalsIgnoreCase(EnvironmentFactory.getDevice())
+                && !"ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             throw new TestBlazeRunTimeException("In order to use 'Mobile' library, System parameter 'device' must be set to 'android' or 'ios'.\n" +
-                    "Parameter 'device' was found to be '" + EnvironmentFetcher.getDevice() + "'");
+                    "Parameter 'device' was found to be '" + EnvironmentFactory.getDevice() + "'");
         }
         return (AppiumDriver<WebElement>) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
     }
 
     private TouchAction<?> touch() {
-        if ("android".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if ("android".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             return new TouchAction<AndroidTouchAction>(driver());
-        } else if ("ios".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        } else if ("ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             return new TouchAction<IOSTouchAction>(driver());
         } else {
             return new TouchAction<>(driver());

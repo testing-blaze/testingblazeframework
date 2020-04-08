@@ -21,7 +21,7 @@ package com.testingblaze.devices;
 
 import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -44,9 +44,9 @@ public final class AndroidManager implements Device {
     @Override
     public void setupController() {
         DesiredCapabilities androidCapabilities = new DesiredCapabilities();
-        if (EnvironmentFetcher.getAppName() != null) {
+        if (EnvironmentFactory.getAppName() != null) {
             androidCapabilities.setCapability(MobileCapabilityType.APP,
-                    System.getProperty("user.dir") + "\\mobileapp" + EnvironmentFetcher.getAppName());
+                    System.getProperty("user.dir") + "\\mobileapp" + EnvironmentFactory.getAppName());
 
             try {
                 androidCapabilities.setCapability("appPackage", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("appConfig", "appPackage"));
@@ -61,7 +61,7 @@ public final class AndroidManager implements Device {
             androidCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
         }
         try {
-            this.driver = new AndroidDriver<>(new URL(EnvironmentFetcher.getHub() + "/wd/hub"),
+            this.driver = new AndroidDriver<>(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
                     new DesiredCapabilitiesManagement().getAndroidCapabilities(androidCapabilities));
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block

@@ -21,7 +21,7 @@ package com.testingblaze.devices;
 
 import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
@@ -49,13 +49,13 @@ public final class SafariManager implements Device {
 
         SafariOptions safariOptions = new SafariOptions().merge(safariCapabilities);
 
-        if ("local".equalsIgnoreCase(EnvironmentFetcher.getHub())) {
+        if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new SafariDriver(safariDriverService, safariOptions);
             this.driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFetcher.getHub() + "/wd/hub"),
+                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
                         new DesiredCapabilitiesManagement().getBrowserCapabilities(safariCapabilities));
                 ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {

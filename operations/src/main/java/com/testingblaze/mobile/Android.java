@@ -22,7 +22,7 @@ package com.testingblaze.mobile;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import io.appium.java_client.android.AndroidBatteryInfo;
 import io.appium.java_client.android.AndroidDriver;
@@ -116,9 +116,9 @@ public final class Android {
 
     @SuppressWarnings("unchecked") // If statement ensures unchecked cast is safe
     private AndroidDriver<WebElement> driver() {
-        if (!"android".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if (!"android".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             throw new TestBlazeRunTimeException("In order to use 'Android' library, System parameter 'device' must be set to 'android'.\n" +
-                    "Parameter 'device' was found to be '" + EnvironmentFetcher.getDevice() + "'");
+                    "Parameter 'device' was found to be '" + EnvironmentFactory.getDevice() + "'");
         }
         return (AndroidDriver<WebElement>) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
     }

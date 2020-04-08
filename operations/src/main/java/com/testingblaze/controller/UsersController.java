@@ -21,7 +21,7 @@ package com.testingblaze.controller;
 
 
 import com.testingblaze.misclib.Properties_Logs;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 
 import java.io.IOException;
 
@@ -48,11 +48,11 @@ public interface UsersController {
      */
     default String getPortalUrl(String portalType) {
         String url = null;
-        if ("default".equalsIgnoreCase(portalType) || EnvironmentFetcher.getEnvironmentName().equalsIgnoreCase(portalType)) {
-            url = EnvironmentFetcher.getEnvironmentUrl();
+        if ("default".equalsIgnoreCase(portalType) || EnvironmentFactory.getEnvironmentName().equalsIgnoreCase(portalType)) {
+            url = EnvironmentFactory.getEnvironmentUrl();
         } else {
             try {
-                url = new Properties_Logs().ReadPropertyFile("environment.properties", EnvironmentFetcher.getEnvironmentName() + portalType);
+                url = new Properties_Logs().ReadPropertyFile("environment.properties", EnvironmentFactory.getEnvironmentName() + portalType);
             } catch (IOException e) {
                 e.printStackTrace();
             }

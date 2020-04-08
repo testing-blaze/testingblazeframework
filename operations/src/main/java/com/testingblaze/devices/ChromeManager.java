@@ -21,7 +21,7 @@ package com.testingblaze.devices;
 
 import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -99,14 +99,14 @@ public final class ChromeManager implements Device {
         chromePrefs.put("download.default_directory", System.getProperty("user.dir") + "\\target");
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
 
-        if ("Headless".equalsIgnoreCase(EnvironmentFetcher.getExecutionMode())) {
+        if ("Headless".equalsIgnoreCase(EnvironmentFactory.getExecutionMode())) {
             chromeOptions.addArguments("--window-size=2560,1440");
             chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("--mute-audio");
             headlessMode = true;
         }
 
-        if ("local".equalsIgnoreCase(EnvironmentFetcher.getHub())) {
+        if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new RemoteWebDriver(service.getUrl(), chromeOptions);
             if(!headlessMode) driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(1000, TimeUnit.SECONDS);
@@ -114,7 +114,7 @@ public final class ChromeManager implements Device {
             DesiredCapabilities chromeCapabilities = DesiredCapabilities.chrome();
             chromeCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFetcher.getHub() + "/wd/hub"),
+                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
                         new DesiredCapabilitiesManagement().getBrowserCapabilities(chromeCapabilities));
                 ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {

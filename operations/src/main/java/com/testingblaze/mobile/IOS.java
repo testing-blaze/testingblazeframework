@@ -22,7 +22,7 @@ package com.testingblaze.mobile;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.WebElement;
 
@@ -40,9 +40,9 @@ public final class IOS {
      */
     @SuppressWarnings("unchecked") // If statement ensures unchecked cast is safe
     public IOSDriver<WebElement> getIOSMobileDriver() {
-        if (!"ios".equalsIgnoreCase(EnvironmentFetcher.getDevice())) {
+        if (!"ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             throw new TestBlazeRunTimeException("In order to use 'IOS' library, System parameter 'device' must be set to 'ios'.\n" +
-                    "Parameter 'device' was found to be '" + EnvironmentFetcher.getDevice() + "'");
+                    "Parameter 'device' was found to be '" + EnvironmentFactory.getDevice() + "'");
         }
         return (IOSDriver<WebElement>) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
     }

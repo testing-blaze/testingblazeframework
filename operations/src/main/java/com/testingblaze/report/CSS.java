@@ -19,7 +19,7 @@
  */
 package com.testingblaze.report;
 
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,9 +34,10 @@ public final class CSS {
      * @author nauman.shahid
      */
     public void reportConfigWriteUp() {
-        var projectPath=EnvironmentFetcher.getProjectPath();
-        var projectName = EnvironmentFetcher.getProjectName();
-        Path path = Paths.get(projectPath + "/target/Automation-Report/test_blaze_css");
+        var projectPath= EnvironmentFactory.getProjectPath();
+        var projectName = EnvironmentFactory.getProjectName();
+        Path path = Paths.get(projectPath + "/target/Automation-Report/test_blaze_config");
+        System.out.println("path is "+projectPath);
         try {
             if (Files.notExists(path))
                 Files.createDirectories(path);
@@ -106,16 +107,16 @@ public final class CSS {
         return List.of(
                 "Project:" + projectName ,
                 "Specifications:"
-                        + "Environment Name: " + EnvironmentFetcher.getEnvironmentName()
-                        + "  - Url: " + EnvironmentFetcher.getEnvironmentUrl()
-                        + "  ||  Executed Tag: " + EnvironmentFetcher.getScenarioTag()
-                        + "<br>Browser: " + EnvironmentFetcher.getDevice()
-                        + "  - Version: " + EnvironmentFetcher.getDeviceVersion()
-                        + "  - Platform: " + EnvironmentFetcher.getPlatformInfo()
-                        +"<br>Execution Mode: " + EnvironmentFetcher.getExecutionMode()
-                        + "  - eDriver version: " + EnvironmentFetcher.getDriverVersion()
-                        + "  - Reduced Automation Execution Speed: "+(EnvironmentFetcher.getSlowDownExecutionTime() > 0 ? "Yes":"No"),
-                "PoweredBy:"+"Test Blaze Bdd Framework ( "+ EnvironmentFetcher.getOrgName()+" ) - Copyright © 2020"
+                        + "Environment Name: " + EnvironmentFactory.getEnvironmentName()
+                        + "  - Url: " + EnvironmentFactory.getEnvironmentUrl()
+                        + "  ||  Executed Tag: " + EnvironmentFactory.getScenarioTag()
+                        + "<br>Browser: " + EnvironmentFactory.getDevice()
+                        + "  - Version: " + EnvironmentFactory.getDeviceVersion()
+                        + "  - Platform: " + EnvironmentFactory.getPlatformInfo()
+                        +"<br>Execution Mode: " + EnvironmentFactory.getExecutionMode()
+                        + "  - eDriver version: " + EnvironmentFactory.getDriverVersion()
+                        + "  - Reduced Automation Execution Speed: "+(EnvironmentFactory.getSlowDownExecutionTime() > 0 ? "Yes":"No"),
+                "PoweredBy:"+"Testing Blaze Automation Solution - Apache License 2.0 [ "+ EnvironmentFactory.getOrgName()+")]"
         );
     }
 

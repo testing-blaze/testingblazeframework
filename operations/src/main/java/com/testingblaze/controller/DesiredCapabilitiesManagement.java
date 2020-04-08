@@ -19,7 +19,7 @@
  */
 package com.testingblaze.controller;
 
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -111,7 +111,7 @@ public final class DesiredCapabilitiesManagement {
     }
 
     private void handleBrowser() {
-        switch (EnvironmentFetcher.getDevice().toLowerCase()) {
+        switch (EnvironmentFactory.getDevice().toLowerCase()) {
             case "chrome":
                 desiredCapabilities.setBrowserName("Chrome");
                 break;

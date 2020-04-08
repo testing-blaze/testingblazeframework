@@ -32,7 +32,7 @@ import java.util.Arrays;
  *
  * @author nauman.shahid
  */
-public final class EnvironmentFetcher {
+public final class EnvironmentFactory {
     private static String projectName;
 
     public static String getProjectName() {
@@ -42,7 +42,7 @@ public final class EnvironmentFetcher {
     }
 
     public static void setProjectName(String projectName) {
-        EnvironmentFetcher.projectName = projectName;
+        EnvironmentFactory.projectName = projectName;
     }
 
     private static String orgName;
@@ -54,7 +54,7 @@ public final class EnvironmentFetcher {
     }
 
     public static void setOrgName(String orgName) {
-        EnvironmentFetcher.orgName = orgName;
+        EnvironmentFactory.orgName = orgName;
     }
 
 
@@ -67,7 +67,7 @@ public final class EnvironmentFetcher {
     }
 
     public static void setProjectPath(String projectPath) {
-        EnvironmentFetcher.projectPath = projectPath;
+        EnvironmentFactory.projectPath = projectPath;
     }
 
 
@@ -76,7 +76,7 @@ public final class EnvironmentFetcher {
     public static String getEnvironmentUrl() {
         if (environmentUrl == null) {
             try {
-                environmentUrl = I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("environment.properties", EnvironmentFetcher.getEnvironmentName());
+                environmentUrl = I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("environment.properties", EnvironmentFactory.getEnvironmentName());
             } catch (IOException e) {
                 e.printStackTrace();
             }

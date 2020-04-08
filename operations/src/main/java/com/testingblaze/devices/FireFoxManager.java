@@ -21,7 +21,7 @@ package com.testingblaze.devices;
 
 import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
@@ -80,19 +80,19 @@ public final class FireFoxManager implements Device {
         firefoxCapabilities.setBrowserName("firefox");
         firefoxCapabilities.setCapability(FirefoxDriver.PROFILE, profile);
 
-        if ("Headless".equalsIgnoreCase(EnvironmentFetcher.getExecutionMode())) {
+        if ("Headless".equalsIgnoreCase(EnvironmentFactory.getExecutionMode())) {
             FirefoxBinary firefoxBinary = new FirefoxBinary();
             firefoxBinary.addCommandLineOptions("--headless");
             firefoxOptions.setBinary(firefoxBinary);
             firefoxCapabilities.setCapability(FirefoxDriver.BINARY, firefoxBinary);
         }
-        if ("local".equalsIgnoreCase(EnvironmentFetcher.getHub())) {
+        if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new FirefoxDriver(firefoxOptions);
             driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFetcher.getHub() + "/wd/hub"),
+                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
                         new DesiredCapabilitiesManagement().getBrowserCapabilities(firefoxCapabilities));
                 ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {

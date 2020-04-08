@@ -23,7 +23,7 @@ import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.EnvironmentFetcher;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import com.paulhammant.ngwebdriver.ByAngular;
@@ -54,7 +54,7 @@ public final class Ng {
     private LocatorProcessing getLocator;
 
     public Ng() {
-        if (!EnvironmentFetcher.getDevice().equalsIgnoreCase("android") || !EnvironmentFetcher.getDevice().equalsIgnoreCase("ios")) {
+        if (!EnvironmentFactory.getDevice().equalsIgnoreCase("android") || !EnvironmentFactory.getDevice().equalsIgnoreCase("ios")) {
             this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
             this.ngDriver = new NgWebDriver((JavascriptExecutor) this.driver);
             ngDriver.waitForAngularRequestsToFinish();
