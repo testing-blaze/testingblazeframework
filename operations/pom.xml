@@ -12,7 +12,7 @@
     <artifactId>blaze-operations</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0</version>
-    <name>Test Blaze Bdd Framework Operations</name>
+    <name>Testing Blaze Operations</name>
 
     <build>
         <plugins>
