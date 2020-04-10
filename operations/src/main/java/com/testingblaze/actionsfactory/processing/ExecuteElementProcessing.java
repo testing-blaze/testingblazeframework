@@ -20,6 +20,7 @@
 package com.testingblaze.actionsfactory.processing;
 
 import com.testingblaze.actionsfactory.abstracts.ElementProcessing;
+import com.testingblaze.actionsfactory.abstracts.PageLoadProcessing;
 import com.testingblaze.actionsfactory.api.IframeAnalyzer;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
@@ -61,6 +62,8 @@ public class ExecuteElementProcessing implements ElementProcessing {
     @Override
     public WebElement forSingleElement(By locator) {
         I.amPerforming().switchTo().acceptAlert();
+        PageLoadProcessing.documentLoad.status("for DOM ");
+        PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement element = elementWaitProcessing(locator);
         javaScript.scrollElementToPageDetailCenter(element);
         isViewPort(element);
@@ -85,6 +88,8 @@ public class ExecuteElementProcessing implements ElementProcessing {
     @Override
     public List<WebElement> forListOfElements(By locator) {
         I.amPerforming().switchTo().acceptAlert();
+        PageLoadProcessing.documentLoad.status("for DOM ");
+        PageLoadProcessing.documentLoad.status("for script loading ");
         List<WebElement> listOfElements = listOfElementsWaitProcessing(locator);
         javaScript.scrollElementToPageDetailCenter(locator);
         if (listOfElements != null) isViewPort(listOfElements.get(0));
@@ -97,6 +102,8 @@ public class ExecuteElementProcessing implements ElementProcessing {
     @Override
     public WebElement forNestedElement(WebElement element, By locator) {
         I.amPerforming().switchTo().acceptAlert();
+        PageLoadProcessing.documentLoad.status("for DOM ");
+        PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement finalElement = elementWaitProcessing(element.findElement(locator));
         javaScript.scrollElementToPageDetailCenter(finalElement);
         isViewPort(element);
