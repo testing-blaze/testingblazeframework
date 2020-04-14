@@ -57,13 +57,15 @@ public class ScenarioController {
 
     static void printInitialLogs() {
         System.out.println("--------------------------------------------------------------------------------");
-        System.out.println("************************** Framework Logs **************************************");
+        System.out.println("************************** Running Now **************************************");
         System.out.println("--------------------------------------------------------------------------------");
-        System.out.println("[Info:ETCAF] Scenario Number in Current Execution: " + getExecutedScenarioCount() + " / " + totalNumberOfScenarios);
-        System.out.println("[Info:ETCAF] Scenario Name: " + getScenario().getName());
-        System.out.println("[Info:ETCAF] Scenario Tags: " + getScenario().getSourceTagNames());
-        System.out.println("[Info:ETCAF] Controlling DI instance # " + InstanceRecording.getInstance(DeviceBucket.class).hashCode());
-        System.out.println("[Info:ETCAF] Controlling WebDriver instance # " + InstanceRecording.getInstance(DeviceBucket.class).getDriver().hashCode());
+        System.out.println("Scenario Number in Current Execution: " + getExecutedScenarioCount() + " / " + totalNumberOfScenarios);
+        System.out.println("Scenario Name: " + getScenario().getName());
+        System.out.println("Scenario Tags: " + getScenario().getSourceTagNames());
+        System.out.println("Controlling DI instance # " + InstanceRecording.getInstance(DeviceBucket.class).hashCode());
+        System.out.println("Controlling WebDriver instance # " + InstanceRecording.getInstance(DeviceBucket.class).getDriver().hashCode());
+        System.out.println("--------------------------------------------------------------------------------");
+
     }
 
     static void printFinalLogs() {
