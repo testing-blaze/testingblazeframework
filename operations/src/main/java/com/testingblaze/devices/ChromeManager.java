@@ -60,6 +60,7 @@ public final class ChromeManager implements Device {
 
         // Need to make it thread safe somehow
         if (disableDriverEnforcedDownloadActivity) {
+            System.out.println("Removing binary");
             WebDriverManager.chromedriver().clearCache();
             disableDriverEnforcedDownloadActivity = false;
         }
