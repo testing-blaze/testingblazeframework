@@ -41,10 +41,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.BRIGHT_GREEN;
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.RED;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.*;
-
 public class ExecuteCoreActions implements Action {
     private ExecuteClickProcessing clickProcessingController;
     private static long timerLimit;
@@ -74,7 +70,7 @@ public class ExecuteCoreActions implements Action {
                 }
                 return true;
             });
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, BRIGHT_GREEN, ROBOT, "Click action performed successfully");
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Click action performed successfully");
 
         } catch (ElementClickInterceptedException interceptException) {
             retryExecutor(element, "click", "Intercept Exception Caught");
@@ -117,7 +113,7 @@ public class ExecuteCoreActions implements Action {
                     return true;
                 });
             }
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, BRIGHT_GREEN, ROBOT, "Input action performed successfully");
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Input action performed successfully");
         } catch (ElementClickInterceptedException interceptException) {
             retryExecutor(element, "input", "Intercept Exception Caught", input);
         } catch (ElementNotInteractableException interactableException) {
@@ -147,13 +143,13 @@ public class ExecuteCoreActions implements Action {
             return true;
         });
         timerLimit = wait.getWaitTime();
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, RED, X_MARK, args[1] + " : Retrying to "+args[0]+" for maximum " + Waits.STANDARD_WAIT_TIME + " seconds");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL,  args[1] + " : Retrying to "+args[0]+" for maximum " + Waits.STANDARD_WAIT_TIME + " seconds");
         while (timerLimit > System.currentTimeMillis() / 1000) {
             try {
                 if (args[0].equalsIgnoreCase("click")) {
                     element.click();
                     I.amPerforming().switchTo().acceptAlert();
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, RED, TICK, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL,  args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
                     break;
                 } else if (args[0].equalsIgnoreCase("input")) {
                     if (args[2].equalsIgnoreCase("--clear--")) {
@@ -163,7 +159,7 @@ public class ExecuteCoreActions implements Action {
                         element.sendKeys(args[2]);
                         I.amPerforming().switchTo().acceptAlert();
                     }
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, RED, TICK, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL,  args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
                     break;
                 }
             } catch (ElementClickInterceptedException interceptException) {
@@ -175,8 +171,8 @@ public class ExecuteCoreActions implements Action {
                     throw interactableException;
                 }
             } catch (StaleElementReferenceException staleException) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, RED, X_MARK, "Stale Element Exception : Cancelling Retry ");
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, RED, X_MARK, "Next Step might fail");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL,  "Stale Element Exception : Cancelling Retry ");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL,  "Next Step might fail");
                 break;
             } catch (WebDriverException notClickableException) {
                 if ((timerLimit <= System.currentTimeMillis() / 1000) || !notClickableException.getMessage().contains("is not clickable at point")) {

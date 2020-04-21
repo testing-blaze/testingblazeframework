@@ -26,9 +26,6 @@ import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.JavascriptExecutor;
 
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.BRIGHT_BLUE;
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.BRIGHT_CYAN;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.WEB;
 import static com.testingblaze.misclib.ConsoleFormatter.setBoldText;
 
 
@@ -56,7 +53,7 @@ public interface PageLoadProcessing<T> {
 
         }
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, BRIGHT_BLUE, WEB, "Level 2 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Level 2 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
     };
 
     PageLoadProcessing<String> documentLoad = (reportMessage) -> {
@@ -76,6 +73,6 @@ public interface PageLoadProcessing<T> {
 
         }
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, BRIGHT_CYAN, WEB, "Level 1 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Level 1 -> page Load status "+reportMessage+" is: " + setBoldText(pageLoadStatus)+" in "+(Math.round(reportEndTime)*10)/10.0+" seconds");
     };
 }
