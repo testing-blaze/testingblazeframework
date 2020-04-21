@@ -37,7 +37,6 @@ public final class CSS {
         var projectPath= EnvironmentFactory.getProjectPath();
         var projectName = EnvironmentFactory.getProjectName();
         Path path = Paths.get(projectPath + "/target/Automation-Report/test_blaze_config");
-        System.out.println("path is "+projectPath);
         try {
             if (Files.notExists(path))
                 Files.createDirectories(path);

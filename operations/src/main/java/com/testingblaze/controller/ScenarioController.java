@@ -27,11 +27,6 @@ import io.cucumber.java.Scenario;
 import java.io.File;
 import java.util.Objects;
 
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.CYAN;
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.GREEN;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.CLOCK;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.TICK;
-
 public class ScenarioController {
     private static Scenario scenario;
     private static int totalNumberOfScenarios = 0;
@@ -74,8 +69,8 @@ public class ScenarioController {
         }
 
         I.amPerforming().updatingOfReportWith().newLine();
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, GREEN, CLOCK, "Scenario Result Analysis:");
-        I.amPerforming().updatingOfReportWith().write(LogLevel.EMPTY_LABEL, CYAN, TICK, "                          Successful / Failed / Total scenarios: "
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Scenario Result Analysis:");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.EMPTY_LABEL,  "                          Successful / Failed / Total scenarios: "
                 + (executedScenarioCount - failedScenarioCount) + " / "  + failedScenarioCount + " / " + totalNumberOfScenarios);
         I.amPerforming().updatingOfReportWith().newLine();
 

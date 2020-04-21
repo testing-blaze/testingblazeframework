@@ -26,11 +26,6 @@ import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.BLUE;
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.BRIGHT_CYAN;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.CYCLONE;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.DOLPHIN;
-
 public class IframeAnalyzer {
     private final By IFRAME = By.xpath("//iframe[contains(@ng-sc,'/') or contains(@src,'/') or @src='']");
     private By locator;
@@ -60,7 +55,7 @@ public class IframeAnalyzer {
             switchedFrameInfo = getFrameId(iframes, "id");
             switchToFrame(iframes);
             if (device.getDriver().findElements(locator).size() > 0) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, BRIGHT_CYAN, DOLPHIN, String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
                 setFlagForFrameSwitch = true;
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
@@ -92,7 +87,7 @@ public class IframeAnalyzer {
     private void switchToDefaultContent() {
         try {
             device.getDriver().switchTo().defaultContent();
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, BLUE, CYCLONE, "Default Context Enabled");
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Default Context Enabled");
         } catch (Exception e) {
         }
 

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.testingblaze.misclib.ConsoleFormatter.COLOR.GREEN;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.CYCLONE;
 import static com.testingblaze.misclib.ConsoleFormatter.setBoldText;
 import static com.testingblaze.misclib.ConsoleFormatter.setTextColor;
 
@@ -53,7 +52,7 @@ public class ExecuteClickProcessing {
             for (int i = 0; i < newWindowHandles.size(); i++) {
                 if (!windowHandles.contains(newWindowHandles.get(i))) {
                     switchToWindowHandler(i);
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, GREEN, CYCLONE, setBoldText(setTextColor(GREEN, "Switched to a new Window ")));
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  setBoldText(setTextColor(GREEN, "Switched to a new Window ")));
                     break;
                 }
             }

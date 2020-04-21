@@ -29,10 +29,6 @@ import org.openqa.selenium.By;
 
 import java.io.IOException;
 
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.CYAN;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.HORSE;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.THUMBS_UP;
-
 
 public class ExecuteLocatorProcessing {
     IframeAnalyzer iframe;
@@ -57,10 +53,10 @@ public class ExecuteLocatorProcessing {
             finalRefinedLocator = (T) getLocatorParameters(locator.toString().split(":")[1]);
         }
         I.amPerforming().updatingOfReportWith().newLine();
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, CYAN, HORSE, "Locator and Element Processing Starts");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Locator and Element Processing Starts");
         if (finalRefinedLocator == null)
             throw new TestingBlazeRunTimeException("Locator processing failed: " + locator.toString());
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, THUMBS_UP, "Locator = " + finalRefinedLocator);
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Locator = " + finalRefinedLocator);
         return finalRefinedLocator;
     }
 

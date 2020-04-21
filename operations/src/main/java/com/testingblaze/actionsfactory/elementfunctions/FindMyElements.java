@@ -32,9 +32,6 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-import static com.testingblaze.misclib.ConsoleFormatter.COLOR.RED;
-import static com.testingblaze.misclib.ConsoleFormatter.ICON.X_MARK;
-
 /**
  * @author nauman.shahid
  * @REI-Systems
@@ -66,14 +63,14 @@ public final class FindMyElements {
             try {
                 return elementProcessing.forSingleElement(refinedFinalLocator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, RED, X_MARK, "Element is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         } else {
             try {
                 return driver.findElement(refinedFinalLocator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, RED, X_MARK, "Element is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + refinedFinalLocator);
                 throw e;
             }
         }
