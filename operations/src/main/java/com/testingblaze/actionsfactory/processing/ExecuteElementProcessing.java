@@ -195,7 +195,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
         while ((elementVisibilityWaitTime > I.amPerforming().waitFor().getCurrentTimeInSecs() && displayedFlag) && !isElementDrawnValidated) {
             try {
                 if (isElementDrawn(element)) {
-                    javaScript.scrollpageToSpecificElement(element);
+                    javaScript.scrollElementToPageDetailCenter(element);
                     if (element.isDisplayed()) {
                         isElementDrawnValidated = true;
                         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,  "Element is Displayed & Enabled on page");
