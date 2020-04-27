@@ -150,11 +150,11 @@ public final class EnvironmentFactory {
         return platformInfo;
     }
 
-    private static Long maxWaitTime;
+    private static int maxWaitTime = 0;
 
-    public static Long getMaxWaitTime() {
-        if (maxWaitTime == null) {
-            maxWaitTime = System.getProperty("waitTime") != null ? Long.parseLong(System.getProperty("waitTime")) : 10;
+    public static int getMaxWaitTime() {
+        if (maxWaitTime == 0) {
+            maxWaitTime = System.getProperty("waitTime") != null ? Integer.parseInt(System.getProperty("waitTime")) : 10;
         }
         return maxWaitTime;
     }
