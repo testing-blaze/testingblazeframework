@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public final class Waits {
-    public static final long STANDARD_WAIT_TIME = EnvironmentFactory.getMaxWaitTime();
+    public static final int STANDARD_WAIT_TIME = EnvironmentFactory.getMaxWaitTime();
     private final long STANDARD_POLLING_TIME = 1;
     private FluentWait<WebDriver> wait;
     private FluentWait<WebDriver> waitToInvisible;
