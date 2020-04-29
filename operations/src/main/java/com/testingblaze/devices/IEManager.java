@@ -52,7 +52,7 @@ public final class IEManager implements Device {
         }
 
         DesiredCapabilities ieCapabilities = new DesiredCapabilities();
-        ieCapabilities.setBrowserName("internetExplorer");
+        ieCapabilities.setBrowserName("internet explorer");
         ieCapabilities.acceptInsecureCerts();
         ieCapabilities.setJavascriptEnabled(true);
         ieCapabilities.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
