@@ -27,6 +27,7 @@ import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -75,7 +76,8 @@ public final class FireFoxManager implements Device {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setAcceptInsecureCerts(true);
         firefoxOptions.setProfile(profile);
-        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
+        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.TRACE);
         DesiredCapabilities firefoxCapabilities= new DesiredCapabilities();
         firefoxCapabilities.setBrowserName("firefox");
         firefoxCapabilities.setCapability(FirefoxDriver.PROFILE, profile);
@@ -89,7 +91,7 @@ public final class FireFoxManager implements Device {
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new FirefoxDriver(firefoxOptions);
             driver.manage().window().maximize();
-            driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(1000, TimeUnit.SECONDS);
         } else {
             try {
                 this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),

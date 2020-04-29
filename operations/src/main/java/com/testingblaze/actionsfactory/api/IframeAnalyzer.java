@@ -29,7 +29,7 @@ import org.openqa.selenium.WebElement;
 public class IframeAnalyzer {
     private final By IFRAME = By.xpath("//iframe[contains(@ng-sc,'/') or contains(@src,'/') or @src='']");
     private By locator;
-    private DeviceBucket device;
+    private final DeviceBucket device;
     public static boolean setFlagForFrameSwitch = false;
     public String switchedFrameInfo = "No information available";
 
@@ -43,10 +43,14 @@ public class IframeAnalyzer {
     }
 
     public void evaluatePossibleIFrameToSwitch() {
-        if (device.getDriver().findElements(IFRAME).size() > 0) {
-            manageSwitching();
-        } else {
-            switchToDefaultContent();
+        try {
+            if (device.getDriver().findElements(IFRAME).size() > 0) {
+                manageSwitching();
+            } else {
+                switchToDefaultContent();
+            }
+        } catch (Exception e) {
+            // to cover dead object in firefox
         }
     }
 
@@ -55,7 +59,7 @@ public class IframeAnalyzer {
             switchedFrameInfo = getFrameId(iframes, "id");
             switchToFrame(iframes);
             if (device.getDriver().findElements(locator).size() > 0) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
                 setFlagForFrameSwitch = true;
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
@@ -87,7 +91,7 @@ public class IframeAnalyzer {
     private void switchToDefaultContent() {
         try {
             device.getDriver().switchTo().defaultContent();
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Default Context Enabled");
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Default Context Enabled");
         } catch (Exception e) {
         }
 

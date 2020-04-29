@@ -287,8 +287,17 @@ public class ExecuteElementProcessing implements ElementProcessing {
             processingHoldOnScreen = (By) TestingBlazeGlobal.getVariable("processingHoldOnScreen");
             turnOnProcessingHoldOnScreen = processingHoldOnScreen != null;
         }
-        if (driver.findElements(processingHoldOnScreen).size() > 0)
+        try {
+            if (driver.findElements(processingHoldOnScreen).size() > 0) {
+                // only to avoid dead object
+            }
+        } catch (org.openqa.selenium.WebDriverException typeError) {
+            I.amPerforming().waitFor().makeThreadSleep(2000);
+        }
+        if (driver.findElements(processingHoldOnScreen).size() > 0) {
             I.amPerforming().waitFor().makeThreadSleep(500);
+        }
+
         else return;
         try {
             if (turnOnProcessingHoldOnScreen && (driver.findElements(processingHoldOnScreen).get(0).getRect().getDimension().getWidth() > 0 || driver.findElement(processingHoldOnScreen).isEnabled())) {
