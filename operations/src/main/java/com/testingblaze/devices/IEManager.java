@@ -52,7 +52,6 @@ public final class IEManager implements Device {
         }
 
         DesiredCapabilities ieCapabilities = new DesiredCapabilities();
-        ieCapabilities = new DesiredCapabilities();
         ieCapabilities.setBrowserName("internetExplorer");
         ieCapabilities.acceptInsecureCerts();
         ieCapabilities.setJavascriptEnabled(true);
