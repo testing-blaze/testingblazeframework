@@ -31,7 +31,7 @@ import static com.testingblaze.misclib.ConsoleFormatter.setBoldText;
 
 @FunctionalInterface
 public interface PageLoadProcessing<T> {
-    double pageLaodStandardWait=60;
+    double pageLaodStandardWait=5;
 
     void status(T reportMessage);
 
