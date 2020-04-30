@@ -32,6 +32,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 public class AddOns {
     private JavaScript javaScript;
@@ -42,6 +43,19 @@ public class AddOns {
         elementApi = InstanceRecording.getInstance(Element.class);
         executeAction = InstanceRecording.getInstance(Action.class);
         this.javaScript = InstanceRecording.getInstance(JavaScript.class);
+    }
+
+    /**
+     * geenrate a random number in a specified range
+     * @param min lower range
+     * @param max upper range
+     * @return random number
+     * @author nauman.shahid
+     */
+    public synchronized int getRandomNumberInRange(int min, int max) {
+        Random random=new Random();
+        int randomNum = random.nextInt((max - min) + 1) + min;
+        return randomNum;
     }
 
     /**
