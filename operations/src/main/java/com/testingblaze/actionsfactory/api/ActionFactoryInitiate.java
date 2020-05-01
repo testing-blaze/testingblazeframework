@@ -32,12 +32,13 @@ import com.testingblaze.actionsfactory.elementfunctions.Ng;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
 import com.testingblaze.actionsfactory.processing.ExecuteElementProcessing;
 import com.testingblaze.actionsfactory.processing.ExecuteLocatorProcessing;
+import com.testingblaze.actionsfactory.type.AddOns;
 import com.testingblaze.actionsfactory.type.Click;
 import com.testingblaze.actionsfactory.type.DropDown;
 import com.testingblaze.actionsfactory.type.ElementReference;
-import com.testingblaze.actionsfactory.type.TextInput;
 import com.testingblaze.actionsfactory.type.Is;
 import com.testingblaze.actionsfactory.type.Scroll;
+import com.testingblaze.actionsfactory.type.TextInput;
 import com.testingblaze.objects.InstanceRecording;
 
 public class ActionFactoryInitiate {
@@ -46,6 +47,7 @@ public class ActionFactoryInitiate {
         InstanceRecording.recordInstance(LocatorProcessing.class,new ExecuteLocatorProcessing()::getRefinedLocator);
         InstanceRecording.recordInstance(Waits.class, new Waits());
         InstanceRecording.recordInstance(Action.class, new ExecuteCoreActions());
+        InstanceRecording.recordInstance(AddOns.class, new AddOns());
         InstanceRecording.recordInstance(JavaScript.class, new JavaScript());
         InstanceRecording.recordInstance(ElementProcessing.class, new ExecuteElementProcessing());
         InstanceRecording.recordInstance(FindMyElements.class, new FindMyElements());
