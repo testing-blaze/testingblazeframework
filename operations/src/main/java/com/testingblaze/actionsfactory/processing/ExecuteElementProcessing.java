@@ -180,9 +180,11 @@ public class ExecuteElementProcessing implements ElementProcessing {
                             displayedFlag = false;
                         }
                     }catch (NoSuchWindowException e) {
+                        // usually comes up on chrome
                         if (magicWaitRetry == 0) {
                             magicWaitRetry++;
                             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "No context is available, so re-trying one more time");
+                            I.amPerforming().waitFor().makeThreadSleep(2000);
                             elementWaitProcessing(locatorOrElement);
                         } else {
                             displayedFlag = false;
