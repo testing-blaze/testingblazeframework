@@ -34,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -43,10 +44,10 @@ import java.util.stream.Collectors;
 
 public class ExecuteElementProcessing implements ElementProcessing {
 
-    private WebDriver driver;
-    private JavaScript javaScript;
+    private final WebDriver driver;
+    private final JavaScript javaScript;
     private int magicWaitRetry = 0;
-    private IframeAnalyzer iframeAnalyzer;
+    private final IframeAnalyzer iframeAnalyzer;
     private static By processingHoldOnScreen = null;
     private static Boolean turnOnProcessingHoldOnScreen = null;
 
@@ -62,9 +63,10 @@ public class ExecuteElementProcessing implements ElementProcessing {
         PageLoadProcessing.documentLoad.status("for DOM ");
         PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement element = elementWaitProcessing(locator);
+        TestingBlazeGlobal.setVariable("locatorInProgress", locator);
         javaScript.scrollElementToPageDetailCenter(element);
         isViewPort(element);
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Element Processing Ends");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
                 if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
@@ -88,9 +90,10 @@ public class ExecuteElementProcessing implements ElementProcessing {
         PageLoadProcessing.documentLoad.status("for DOM ");
         PageLoadProcessing.documentLoad.status("for script loading ");
         List<WebElement> listOfElements = listOfElementsWaitProcessing(locator);
+        TestingBlazeGlobal.setVariable("locatorInProgress", "ignore");
         javaScript.scrollElementToPageDetailCenter(locator);
         if (listOfElements != null) isViewPort(listOfElements.get(0));
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "List of Elements Processing Ends");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "List of Elements Processing Ends");
         if (listOfElements == null)
             return new ArrayList<>();
         return listOfElements;
@@ -102,9 +105,10 @@ public class ExecuteElementProcessing implements ElementProcessing {
         PageLoadProcessing.documentLoad.status("for DOM ");
         PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement finalElement = elementWaitProcessing(element.findElement(locator));
+        TestingBlazeGlobal.setVariable("locatorInProgress", "ignore");
         javaScript.scrollElementToPageDetailCenter(finalElement);
         isViewPort(element);
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Element Processing Ends");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
                 if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
@@ -133,7 +137,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
             }
         }
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  String.format("List of Elements Presence Check Completed in %.1f seconds", reportEndTime));
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("List of Elements Presence Check Completed in %.1f seconds", reportEndTime));
         return listOfElements;
     }
 
@@ -161,14 +165,14 @@ public class ExecuteElementProcessing implements ElementProcessing {
                             if (ele.isDisplayed()) {
                                 element = ele;
                                 isElementDrawnValidated = true;
-                                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,  "Element is Displayed & Enabled on page");
+                                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element is Displayed & Enabled on page");
                             }
                             break;
                         }
                     } catch (StaleElementReferenceException e) {
                         if (magicWaitRetry == 0) {
                             magicWaitRetry++;
-                            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL,  "Element is stale so re-trying one more time");
+                            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Element is stale so re-trying one more time");
                             elementWaitProcessing(locatorOrElement);
                         } else {
                             displayedFlag = false;
@@ -182,7 +186,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
                 try {
                     element = getElementForMagicWait((By) locatorOrElement);
                 } catch (Exception e) {
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element does not exist in DOM");
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element does not exist in DOM");
                     throw e;
                 }
             }
@@ -198,7 +202,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
                     javaScript.scrollElementToPageDetailCenter(element);
                     if (element.isDisplayed()) {
                         isElementDrawnValidated = true;
-                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,  "Element is Displayed & Enabled on page");
+                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element is Displayed & Enabled on page");
                     }
                     break;
                 }
@@ -215,7 +219,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
 
         magicWaitRetry = 0;
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  String.format("Element Presence/Creation Completed in %.1f seconds", reportEndTime));
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Element Presence/Creation Completed in %.1f seconds", reportEndTime));
         return element;
     }
 
@@ -243,7 +247,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
             int newSize = element.getRect().getHeight() + element.getRect().getWidth();
             if (newSize > iSize) iSize = newSize;
             else {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,  "Element Creation on UI completed");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element Creation on UI completed");
                 break;
             }
         }
@@ -252,34 +256,40 @@ public class ExecuteElementProcessing implements ElementProcessing {
     private void countMatchingNodesOnPage(By locator) {
         int nodes = driver.findElements(locator).size();
         if (nodes != 1) {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL,  "Total element matching nodes in DOM --> " + nodes);
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Total element matching nodes in DOM --> " + nodes);
         } else {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Total element matching nodes in DOM --> " + nodes);
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Total element matching nodes in DOM --> " + nodes);
         }
     }
 
     private List<WebElement> getElementsForMagicWait(By locator) {
-        if (driver.findElements(locator).size() > 0) {
-            projectProcessingWrapper();
-            return driver.findElements(locator);
-        } else if (driver.findElements(locator).size() == 0) {
-            iframeAnalyzer.evaluatePossibleIFrameToSwitch();
-            if (IframeAnalyzer.setFlagForFrameSwitch) {
-                I.amPerforming().waitFor().makeThreadSleep(200);
-                if (EnvironmentFactory.getSlowDownExecutionTime() > 0) {
-                    I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFactory.getSlowDownExecutionTime());
+        try {
+            if (driver.findElements(locator).size() > 0) {
+                projectProcessingWrapper();
+                return driver.findElements(locator);
+            } else if (driver.findElements(locator).size() == 0) {
+                iframeAnalyzer.evaluatePossibleIFrameToSwitch();
+                if (IframeAnalyzer.setFlagForFrameSwitch) {
+                    I.amPerforming().waitFor().makeThreadSleep(200);
+                    if (EnvironmentFactory.getSlowDownExecutionTime() > 0) {
+                        I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFactory.getSlowDownExecutionTime());
+                    }
+                    projectProcessingWrapper();
+                    try {
+                        completeElementCreationOnUi(driver.findElement(By.xpath("//body")));
+                    } catch (Exception e) {
+                        // Handles unexpected exception for //body
+                    }
+                    IframeAnalyzer.setFlagForFrameSwitch = false;
                 }
                 projectProcessingWrapper();
-                try {
-                    completeElementCreationOnUi(driver.findElement(By.xpath("//body")));
-                } catch (Exception e) {
-                    // Handles unexpected exception for //body
-                }
-                IframeAnalyzer.setFlagForFrameSwitch = false;
             }
-            projectProcessingWrapper();
+            return driver.findElements(locator);
+        } catch (WebDriverException typeError) {
+            // this exception is generated byb firefox when a frame is destroyed and we still try to check element in it.
+            driver.switchTo().defaultContent();
+            return driver.findElements(locator);
         }
-        return driver.findElements(locator);
     }
 
     private void projectProcessingWrapper() {
@@ -287,25 +297,16 @@ public class ExecuteElementProcessing implements ElementProcessing {
             processingHoldOnScreen = (By) TestingBlazeGlobal.getVariable("processingHoldOnScreen");
             turnOnProcessingHoldOnScreen = processingHoldOnScreen != null;
         }
-        try {
-            if (driver.findElements(processingHoldOnScreen).size() > 0) {
-                // only to avoid dead object
-            }
-        } catch (org.openqa.selenium.WebDriverException typeError) {
-            I.amPerforming().waitFor().makeThreadSleep(2000);
-        }
         if (driver.findElements(processingHoldOnScreen).size() > 0) {
             I.amPerforming().waitFor().makeThreadSleep(500);
-        }
-
-        else return;
+        } else return;
         try {
             if (turnOnProcessingHoldOnScreen && (driver.findElements(processingHoldOnScreen).get(0).getRect().getDimension().getWidth() > 0 || driver.findElement(processingHoldOnScreen).isEnabled())) {
                 long startTime = System.currentTimeMillis() / 1000;
                 I.amPerforming().waitFor().disappearForProcessingONLY(processingHoldOnScreen, 120);
                 I.amPerforming().waitFor().makeThreadSleep(400);
                 long endTime = (System.currentTimeMillis() / 1000) - startTime;
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  String.format("Waited for hold on screen to fade away for %s seconds", endTime));
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Waited for hold on screen to fade away for %s seconds", endTime));
             }
         } catch (Exception e) {
             /* Ignore Exception */
@@ -346,13 +347,13 @@ public class ExecuteElementProcessing implements ElementProcessing {
                                     (bottom <= Double.parseDouble(windowHeightOpt1.toString()) || bottom <= Double.parseDouble(windowHeightOpt2.toString())))
             ) {
                 isViewPortCounter = 0;
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,  "Element ViewPort confirmed");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element ViewPort confirmed");
             } else {
                 if (isViewPortCounter < 5) {
                     isViewPortCounter++;
                     isViewPort((element));
                 }
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,  "Element ViewPort not confirmed");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element ViewPort not confirmed");
             }
         } catch (Exception e) {
             //Only to handle unexpected error of JS
