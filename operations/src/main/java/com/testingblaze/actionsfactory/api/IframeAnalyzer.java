@@ -43,15 +43,11 @@ public class IframeAnalyzer {
     }
 
     public void evaluatePossibleIFrameToSwitch() {
-        try {
             if (device.getDriver().findElements(IFRAME).size() > 0) {
                 manageSwitching();
             } else {
                 switchToDefaultContent();
             }
-        } catch (Exception e) {
-            // to cover dead object in firefox
-        }
     }
 
     private void manageSwitching() {
