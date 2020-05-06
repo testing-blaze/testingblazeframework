@@ -111,7 +111,8 @@ public final class ChromeManager implements Device {
             if(!headlessMode) driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(1000, TimeUnit.SECONDS);
         } else {
-            DesiredCapabilities chromeCapabilities = DesiredCapabilities.chrome();
+            DesiredCapabilities chromeCapabilities = new DesiredCapabilities();
+            chromeCapabilities.setBrowserName("chrome");
             chromeCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
             try {
                 this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
