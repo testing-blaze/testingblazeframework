@@ -50,7 +50,7 @@ public final class EdgeManager implements Device {
         if ("edge-32".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             WebDriverManager.edgedriver().arch32().forceCache().setup();
         } else {
-            WebDriverManager.edgedriver().forceCache().setup();
+            WebDriverManager.edgedriver().arch64().forceCache().setup();
         }
 
         DesiredCapabilities edgeCapabilities = new DesiredCapabilities();
@@ -67,6 +67,8 @@ public final class EdgeManager implements Device {
         edgeCapabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 
         EdgeOptions edgeOptions = new EdgeOptions().merge(edgeCapabilities);
+        //edgeOptions.setExperimentalOption("useAutomationExtension", false);
+        //edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new EdgeDriver(edgeOptions);

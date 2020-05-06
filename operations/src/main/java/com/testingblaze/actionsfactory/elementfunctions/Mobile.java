@@ -40,7 +40,6 @@ import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.html5.Location;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -297,13 +296,7 @@ public final class Mobile {
             driver().installApp(path);
         }
 
-        /**
-         * @return locations library
-         */
-        public Location getLocation() {
-            //Console log Getting Current location ");
-            return driver().location();
-        }
+
 
         /**
          * boolean app is installed
