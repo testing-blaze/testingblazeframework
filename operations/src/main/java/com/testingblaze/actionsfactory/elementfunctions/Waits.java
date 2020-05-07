@@ -37,7 +37,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author nauman.shahid
@@ -117,7 +116,7 @@ public final class Waits {
      */
     public Boolean disappearForProcessingONLY(By locator, long customWaitTime) {
         if (waitToInvisible == null) {
-            waitToInvisible = new WebDriverWait(InstanceRecording.getInstance(DeviceBucket.class).getDriver(), customWaitTime).pollingEvery(STANDARD_POLLING_TIME, TimeUnit.SECONDS);
+            waitToInvisible = new WebDriverWait(InstanceRecording.getInstance(DeviceBucket.class).getDriver(), customWaitTime).pollingEvery(Duration.ofSeconds(STANDARD_POLLING_TIME));
         }
         return waitToInvisible.withTimeout(Duration.ofSeconds(STANDARD_WAIT_TIME)).until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }

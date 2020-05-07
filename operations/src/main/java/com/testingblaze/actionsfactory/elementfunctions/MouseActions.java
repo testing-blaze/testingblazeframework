@@ -29,8 +29,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author nauman.shahid
@@ -131,7 +131,7 @@ public final class MouseActions {
      */
     public void scrollTo(WebElement elementScrollTo) {
         WebDriverWait wait = new WebDriverWait(InstanceRecording.getInstance(DeviceBucket.class).getDriver(), 10);
-        while (wait.pollingEvery(1, TimeUnit.SECONDS).ignoring(NoSuchElementException.class)
+        while (wait.pollingEvery(Duration.ofSeconds(1)).ignoring(NoSuchElementException.class)
                 .until(ExpectedConditions.visibilityOf(elementScrollTo)) != null) {
             actions.keyDown(Keys.PAGE_DOWN).build().perform();
         }
