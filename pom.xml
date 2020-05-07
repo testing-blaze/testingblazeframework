@@ -25,8 +25,9 @@
         <java.version>11</java.version>
         <test.blaze.version>1.0.0</test.blaze.version>
         <saas.version>2.3.0</saas.version>
-        <selenium.version>3.141.59</selenium.version>
-        <appium.version>7.2.0</appium.version>
+        <selenium.version>4.0.0-alpha-5</selenium.version>
+        <selenium.server.version>4.0.0-alpha-2</selenium.server.version>
+        <appium.version>7.3.0</appium.version>
         <cucumber.version>5.4.2</cucumber.version>
         <cucable.version>1.7.0</cucable.version>
         <report.version>2.3.3</report.version>
@@ -60,6 +61,16 @@
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>${appium.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-support</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -109,7 +120,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-server</artifactId>
-            <version>${selenium.version}</version>
+            <version>${selenium.server.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>

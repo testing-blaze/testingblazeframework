@@ -33,6 +33,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -67,8 +68,8 @@ public final class EdgeManager implements Device {
         edgeCapabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 
         EdgeOptions edgeOptions = new EdgeOptions().merge(edgeCapabilities);
-        //edgeOptions.setExperimentalOption("useAutomationExtension", false);
-        //edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        edgeOptions.setExperimentalOption("useAutomationExtension", false);
+        edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new EdgeDriver(edgeOptions);
