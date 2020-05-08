@@ -178,7 +178,6 @@ public class ExecuteElementProcessing implements ElementProcessing {
                             displayedFlag = false;
                         }
                     } catch (WebDriverException noSuchWindowAndTypeError) {
-                        // usually comes up on chrome
                         if (magicWaitRetry == 0) {
                             magicWaitRetry++;
                             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "No context is available, so re-trying one more time");
@@ -272,27 +271,40 @@ public class ExecuteElementProcessing implements ElementProcessing {
         }
     }
 
+    private int switchFrameExceptionRetry = 0;
+
     private List<WebElement> getElementsForMagicWait(By locator) {
-        if (driver.findElements(locator).size() > 0) {
-            projectProcessingWrapper();
-            return driver.findElements(locator);
-        } else if (driver.findElements(locator).size() == 0) {
-            iframeAnalyzer.evaluatePossibleIFrameToSwitch();
-            if (IframeAnalyzer.setFlagForFrameSwitch) {
-                I.amPerforming().waitFor().makeThreadSleep(200);
-                if (EnvironmentFactory.getSlowDownExecutionTime() > 0) {
-                    I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFactory.getSlowDownExecutionTime());
+        try {
+            if (driver.findElements(locator).size() > 0) {
+                projectProcessingWrapper();
+                return driver.findElements(locator);
+            } else if (driver.findElements(locator).size() == 0) {
+                iframeAnalyzer.evaluatePossibleIFrameToSwitch();
+                if (IframeAnalyzer.setFlagForFrameSwitch) {
+                    I.amPerforming().waitFor().makeThreadSleep(200);
+                    if (EnvironmentFactory.getSlowDownExecutionTime() > 0) {
+                        I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFactory.getSlowDownExecutionTime());
+                    }
+                    projectProcessingWrapper();
+                    try {
+                        completeElementCreationOnUi(driver.findElement(By.xpath("//body")));
+                    } catch (Exception e) {
+                        // Handles unexpected exception for //body
+                    }
+                    IframeAnalyzer.setFlagForFrameSwitch = false;
                 }
                 projectProcessingWrapper();
-                try {
-                    completeElementCreationOnUi(driver.findElement(By.xpath("//body")));
-                } catch (Exception e) {
-                    // Handles unexpected exception for //body
-                }
-                IframeAnalyzer.setFlagForFrameSwitch = false;
             }
-            projectProcessingWrapper();
+
+        } catch (WebDriverException noSuchWindowAndTypeError) {
+            if (switchFrameExceptionRetry == 0) {
+                switchFrameExceptionRetry++;
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "No context is available to switch, so re-trying one more time");
+                I.amPerforming().waitFor().makeThreadSleep(5000);
+                getElementsForMagicWait(locator);
+            }
         }
+        switchFrameExceptionRetry = 0;
         return driver.findElements(locator);
     }
 
