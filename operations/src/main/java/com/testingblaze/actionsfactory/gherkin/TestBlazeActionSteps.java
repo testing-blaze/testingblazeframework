@@ -40,6 +40,7 @@ public final class TestBlazeActionSteps {
     }*/
 
     @When("^I pause execution for \"(\\d+)\" seconds$")
+    @When("^I wait for \"(\\d+)\" seconds$")
     public void pauseExecutionForMinutes(int seconds) throws Throwable {
         Thread.sleep(seconds * 1000);
     }
@@ -72,12 +73,6 @@ public final class TestBlazeActionSteps {
     @When("^I switch to tab number \"(\\d+)\"$")
     public void switchToTab(int tabNumber) {
         I.amPerforming().switchTo().windowHandler(tabNumber);
-    }
-
-    @Description("wait for seconds")
-    @When("^I wait for \"(\\d+)\" seconds$")
-    public void waitFor(int waitTime) {
-        I.amPerforming().waitFor().makeThreadSleep(waitTime);
     }
 
     @Description("perform assertions")
