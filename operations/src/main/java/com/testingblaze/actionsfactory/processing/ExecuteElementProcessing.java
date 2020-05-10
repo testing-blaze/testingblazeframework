@@ -65,7 +65,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
         WebElement element = elementWaitProcessing(locator);
         TestingBlazeGlobal.setVariable("locatorInProgress", locator);
         if (!isViewPort(element)) {
-            javaScript.scrollpageToSpecificElement(element);
+            javaScript.scrollElementToPageDetailCenter(element);
         }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
@@ -108,7 +108,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
         WebElement finalElement = elementWaitProcessing(element.findElement(locator));
         TestingBlazeGlobal.setVariable("locatorInProgress", "ignore");
         if (!isViewPort(element)) {
-            javaScript.scrollpageToSpecificElement(element);
+            javaScript.scrollElementToPageDetailCenter(element);
         }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
