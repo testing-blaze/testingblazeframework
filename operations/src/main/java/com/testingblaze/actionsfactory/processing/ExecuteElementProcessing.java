@@ -64,7 +64,9 @@ public class ExecuteElementProcessing implements ElementProcessing {
         PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement element = elementWaitProcessing(locator);
         TestingBlazeGlobal.setVariable("locatorInProgress", locator);
-        isViewPort(element);
+        if (!isViewPort(element)) {
+            javaScript.scrollpageToSpecificElement(element);
+        }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
@@ -105,7 +107,9 @@ public class ExecuteElementProcessing implements ElementProcessing {
         PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement finalElement = elementWaitProcessing(element.findElement(locator));
         TestingBlazeGlobal.setVariable("locatorInProgress", "ignore");
-        isViewPort(element);
+        if (!isViewPort(element)) {
+            javaScript.scrollpageToSpecificElement(element);
+        }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
             try {
@@ -335,7 +339,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
      */
     private int isViewPortCounter = 0;
 
-    private void isViewPort(WebElement element) {
+    private Boolean isViewPort(WebElement element) {
         double top = 0.0, left = 0.0, right = 0.0, bottom = 0.0;
         try {
             var windowWidthOpt1 = InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("return window.innerWidth");
@@ -361,12 +365,14 @@ public class ExecuteElementProcessing implements ElementProcessing {
             ) {
                 isViewPortCounter = 0;
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element ViewPort confirmed");
+                return true;
             } else {
                 if (isViewPortCounter < 5) {
                     isViewPortCounter++;
                     isViewPort((element));
                 }
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element ViewPort not confirmed");
+                return false;
             }
         } catch (Exception e) {
             //Only to handle unexpected error of JS
