@@ -40,8 +40,12 @@ public final class TestBlazeActionSteps {
     }*/
 
     @When("^I pause execution for \"(\\d+)\" seconds$")
-    @When("^I wait for \"(\\d+)\" seconds$")
     public void pauseExecutionForMinutes(int seconds) throws Throwable {
+        Thread.sleep(seconds * 1000);
+    }
+
+    @When("^I wait for \"(\\d+)\" seconds$")
+    public void waitForMinutes(int seconds) throws Throwable {
         Thread.sleep(seconds * 1000);
     }
 

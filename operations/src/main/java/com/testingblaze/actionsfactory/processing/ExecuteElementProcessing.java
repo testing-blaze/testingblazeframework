@@ -64,7 +64,6 @@ public class ExecuteElementProcessing implements ElementProcessing {
         PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement element = elementWaitProcessing(locator);
         TestingBlazeGlobal.setVariable("locatorInProgress", locator);
-        javaScript.scrollElementToPageDetailCenter(element);
         isViewPort(element);
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
@@ -106,7 +105,6 @@ public class ExecuteElementProcessing implements ElementProcessing {
         PageLoadProcessing.documentLoad.status("for script loading ");
         WebElement finalElement = elementWaitProcessing(element.findElement(locator));
         TestingBlazeGlobal.setVariable("locatorInProgress", "ignore");
-        javaScript.scrollElementToPageDetailCenter(finalElement);
         isViewPort(element);
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element Processing Ends");
         CompletableFuture.supplyAsync(() -> {
@@ -161,7 +159,6 @@ public class ExecuteElementProcessing implements ElementProcessing {
                 for (WebElement ele : getElementsForMagicWait((By) locatorOrElement)) {
                     try {
                         if (isElementDrawn(ele)) {
-                            javaScript.scrollpageToSpecificElement(ele);
                             if (ele.isDisplayed()) {
                                 element = ele;
                                 isElementDrawnValidated = true;
@@ -208,7 +205,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
         while ((elementVisibilityWaitTime > I.amPerforming().waitFor().getCurrentTimeInSecs() && displayedFlag) && !isElementDrawnValidated) {
             try {
                 if (isElementDrawn(element)) {
-                    javaScript.scrollElementToPageDetailCenter(element);
+
                     if (element.isDisplayed()) {
                         isElementDrawnValidated = true;
                         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element is Displayed & Enabled on page");
@@ -225,7 +222,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
                 }
             }
         }
-
+        javaScript.scrollElementToPageDetailCenter(element);
         magicWaitRetry = 0;
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Element Presence/Creation Completed in %.1f seconds", reportEndTime));
