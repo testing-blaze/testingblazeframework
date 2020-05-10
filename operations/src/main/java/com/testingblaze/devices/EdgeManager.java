@@ -44,6 +44,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class EdgeManager implements Device {
     WebDriver driver;
+    private Boolean headlessMode = false;
 
     @Override
     public void setupController() {
@@ -70,6 +71,14 @@ public final class EdgeManager implements Device {
         EdgeOptions edgeOptions = new EdgeOptions().merge(edgeCapabilities);
         edgeOptions.setExperimentalOption("useAutomationExtension", false);
         edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        edgeOptions.setExperimentalOption("UseChromium",true);
+
+        if ("Headless".equalsIgnoreCase(EnvironmentFactory.getExecutionMode())) {
+            edgeOptions.addArguments("--window-size=2560,1440");
+            edgeOptions.addArguments("--headless");
+            edgeOptions.addArguments("--mute-audio");
+            headlessMode = true;
+        }
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             this.driver = new EdgeDriver(edgeOptions);
