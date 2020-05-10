@@ -340,6 +340,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
     private int isViewPortCounter = 0;
 
     private Boolean isViewPort(WebElement element) {
+        Boolean status = false;
         double top = 0.0, left = 0.0, right = 0.0, bottom = 0.0;
         try {
             var windowWidthOpt1 = InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("return window.innerWidth");
@@ -365,18 +366,19 @@ public class ExecuteElementProcessing implements ElementProcessing {
             ) {
                 isViewPortCounter = 0;
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element ViewPort confirmed");
-                return true;
+                status=true;
             } else {
                 if (isViewPortCounter < 5) {
                     isViewPortCounter++;
                     isViewPort((element));
                 }
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element ViewPort not confirmed");
-                return false;
+                status=false;
             }
         } catch (Exception e) {
             //Only to handle unexpected error of JS
         }
+        return status;
     }
 
 }
