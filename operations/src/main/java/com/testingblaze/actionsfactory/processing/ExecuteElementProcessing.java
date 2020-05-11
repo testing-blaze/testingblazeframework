@@ -163,7 +163,6 @@ public class ExecuteElementProcessing implements ElementProcessing {
                 for (WebElement ele : getElementsForMagicWait((By) locatorOrElement)) {
                     try {
                         if (isElementDrawn(ele)) {
-                            javaScript.scrollElementToPageDetailCenter(element);
                             if (ele.isDisplayed()) {
                                 element = ele;
                                 isElementDrawnValidated = true;
@@ -196,7 +195,6 @@ public class ExecuteElementProcessing implements ElementProcessing {
             if (element == null) {
                 try {
                     element = getElementForMagicWait((By) locatorOrElement);
-                    javaScript.scrollElementToPageDetailCenter(element);
                 } catch (Exception e) {
                     I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element does not exist in DOM");
                     throw e;
@@ -211,7 +209,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
         while ((elementVisibilityWaitTime > I.amPerforming().waitFor().getCurrentTimeInSecs() && displayedFlag) && !isElementDrawnValidated) {
             try {
                 if (isElementDrawn(element)) {
-                    javaScript.scrollElementToPageDetailCenter(element);
+
                     if (element.isDisplayed()) {
                         isElementDrawnValidated = true;
                         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element is Displayed & Enabled on page");
@@ -228,7 +226,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
                 }
             }
         }
-
+        javaScript.scrollElementToPageDetailCenter(element);
         magicWaitRetry = 0;
         double reportEndTime = (System.currentTimeMillis() / 1000.0) - reportStartTime;
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Element Presence/Creation Completed in %.1f seconds", reportEndTime));
