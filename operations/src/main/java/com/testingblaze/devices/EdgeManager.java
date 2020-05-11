@@ -54,6 +54,7 @@ public final class EdgeManager implements Device {
         } else {
             WebDriverManager.edgedriver().arch64().forceCache().setup();
         }
+        System.setProperty("webdriver.chrome.silentOutput", "true");
 
         DesiredCapabilities edgeCapabilities = new DesiredCapabilities();
         edgeCapabilities.setBrowserName("edge");
@@ -71,7 +72,6 @@ public final class EdgeManager implements Device {
         EdgeOptions edgeOptions = new EdgeOptions().merge(edgeCapabilities);
         edgeOptions.setExperimentalOption("useAutomationExtension", false);
         edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
-        edgeOptions.setExperimentalOption("UseChromium",true);
 
         if ("Headless".equalsIgnoreCase(EnvironmentFactory.getExecutionMode())) {
             edgeOptions.addArguments("--window-size=2560,1440");
