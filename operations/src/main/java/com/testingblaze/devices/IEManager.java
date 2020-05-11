@@ -48,7 +48,7 @@ public final class IEManager implements Device {
         if ("ie-32".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             WebDriverManager.iedriver().arch32().forceCache().setup();
         } else {
-            WebDriverManager.iedriver().forceCache().setup();
+            WebDriverManager.iedriver().arch64().forceCache().setup();
         }
 
         DesiredCapabilities ieCapabilities = new DesiredCapabilities();
