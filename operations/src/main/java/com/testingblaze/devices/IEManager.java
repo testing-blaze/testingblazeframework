@@ -19,14 +19,11 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
 import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.ie.InternetExplorerOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -41,7 +38,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public final class IEManager implements Device {
-    WebDriver driver;
+    RemoteWebDriver driver;
 
     @Override
     public void setupController() {
@@ -51,29 +48,15 @@ public final class IEManager implements Device {
             WebDriverManager.iedriver().arch64().forceCache().setup();
         }
 
-        DesiredCapabilities ieCapabilities = new DesiredCapabilities();
-        ieCapabilities.setBrowserName("internet explorer");
-        ieCapabilities.acceptInsecureCerts();
-        ieCapabilities.setJavascriptEnabled(true);
-        ieCapabilities.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-        ieCapabilities.setCapability("ignoreProtectedModeSettings", true);
-        ieCapabilities.setCapability(InternetExplorerDriver.
-                INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-        ieCapabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, false);
-        ieCapabilities.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR, true);
-        ieCapabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
-
-        InternetExplorerOptions internetExplorerOptions = new InternetExplorerOptions().merge(ieCapabilities);
-
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
-            this.driver = new InternetExplorerDriver(internetExplorerOptions);
-            this.driver.manage().window().maximize();
+            driver = new InternetExplorerDriver(CapabilitiesManager.getIeCapabilities());
+            driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
-                        new DesiredCapabilitiesManagement().getBrowserCapabilities(ieCapabilities));
-                ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
+                driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
+                        CapabilitiesManager.getIeCapabilities());
+                driver.setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -82,7 +65,7 @@ public final class IEManager implements Device {
 
     @Override
     public WebDriver getDriver() {
-        return this.driver;
+        return driver;
     }
 
     @Override

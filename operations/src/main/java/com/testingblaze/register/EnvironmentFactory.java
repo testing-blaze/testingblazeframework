@@ -167,6 +167,10 @@ public final class EnvironmentFactory {
         }
         return executionMode;
     }
+    private static final Boolean isHeadless = "true".equalsIgnoreCase(System.getProperty("headless"));
+    public static Boolean isHeadless() {
+        return isHeadless;
+    }
 
     private static Integer slowDownExecutionTime;
 

@@ -19,13 +19,11 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
 import com.testingblaze.register.EnvironmentFactory;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -38,20 +36,13 @@ import java.net.URL;
  */
 
 public final class IOSManager implements Device {
-    private WebDriver driver;
+    private RemoteWebDriver driver;
 
     @Override
     public void setupController() {
-        DesiredCapabilities iosCapabilities = new DesiredCapabilities();
-        if (EnvironmentFactory.getAppName() != null) {
-            iosCapabilities.setCapability(MobileCapabilityType.APP,
-                    System.getProperty("user.dir") + "\\mobileapp" + EnvironmentFactory.getAppName());
-        } else {
-            iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
-        }
         try {
-            this.driver = new IOSDriver<>(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
-                    new DesiredCapabilitiesManagement().getIOSCapabilities(iosCapabilities));
+            driver = new IOSDriver<>(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
+                    CapabilitiesManager.getIosCapabilities());
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -19,22 +19,14 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
 import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -46,57 +38,27 @@ import java.util.concurrent.TimeUnit;
  */
 
 public final class FireFoxManager implements Device {
-    WebDriver driver;
+    RemoteWebDriver driver;
 
     @Override
     public void setupController() {
-
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"null");
 
-        if(System.getProperty("eDriverVersion") != null && !("default".equals(System.getProperty("eDriverVersion"))))
+        if(!"default".equals(System.getProperty("eDriverVersion"))) {
             WebDriverManager.firefoxdriver().version(System.getProperty("eDriverVersion")).forceCache().setup();
-        else
+        } else {
             WebDriverManager.firefoxdriver().forceCache().setup();
-
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setAssumeUntrustedCertificateIssuer(true);
-        profile.setPreference("browser.download.folderList", 2);
-        profile.setPreference("browser.download.dir", System.getProperty("user.dir") + File.separator + "target");
-        profile.setPreference("browser.download.manager.showWhenStarting", false);
-        profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/plain,application/octet-stream,application/pdf,application/x-pdf,application/vnd.pdf,text/csv,application/java-archive,application/x-msexcel,application/excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,application/msword,application/xml,application/vnd.microsoft.portable-executable");
-        profile.setPreference("browser.helperApps.alwaysAsk.force", false);
-        profile.setPreference("browser.download.manager.useWindow", false);
-        profile.setPreference("browser.download.manager.focusWhenStarting", false);
-        profile.setPreference("browser.helperApps.neverAsk.openFile", "");
-        profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
-        profile.setPreference("browser.download.manager.showAlertOnComplete", false);
-        profile.setPreference("browser.download.manager.closeWhenDone", true);
-        profile.setPreference("pdfjs.disabled", true);
-
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setAcceptInsecureCerts(true);
-        firefoxOptions.setProfile(profile);
-        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
-        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.TRACE);
-        DesiredCapabilities firefoxCapabilities= new DesiredCapabilities();
-        firefoxCapabilities.setBrowserName("firefox");
-        firefoxCapabilities.setCapability(FirefoxDriver.PROFILE, profile);
-
-        if ("Headless".equalsIgnoreCase(EnvironmentFactory.getExecutionMode())) {
-            FirefoxBinary firefoxBinary = new FirefoxBinary();
-            firefoxBinary.addCommandLineOptions("--headless");
-            firefoxOptions.setBinary(firefoxBinary);
-            firefoxCapabilities.setCapability(FirefoxDriver.BINARY, firefoxBinary);
         }
+
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
-            this.driver = new FirefoxDriver(firefoxOptions);
+            driver = new FirefoxDriver(CapabilitiesManager.getFirefoxCapabilities());
             driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(1000, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
-                        new DesiredCapabilitiesManagement().getBrowserCapabilities(firefoxCapabilities));
-                ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
+                driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
+                        CapabilitiesManager.getFirefoxCapabilities());
+                driver.setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -105,7 +67,7 @@ public final class FireFoxManager implements Device {
 
     @Override
     public WebDriver getDriver() {
-        return this.driver;
+        return driver;
     }
 
     @Override
