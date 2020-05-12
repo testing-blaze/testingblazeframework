@@ -108,7 +108,6 @@ public class CapabilitiesManager {
     public static EdgeOptions getEdgeCapabilities() {
         EdgeOptions edgeOptions = new EdgeOptions();
 
-        edgeOptions.setAcceptInsecureCerts(true);
         edgeOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
         edgeOptions.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
         edgeOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
@@ -139,7 +138,6 @@ public class CapabilitiesManager {
     public static InternetExplorerOptions getIeCapabilities() {
         InternetExplorerOptions internetExplorerOptions = new InternetExplorerOptions();
 
-        internetExplorerOptions.setAcceptInsecureCerts(true);
         internetExplorerOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
         internetExplorerOptions.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
         internetExplorerOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
@@ -157,7 +155,6 @@ public class CapabilitiesManager {
     public static SafariOptions getSafariCapabilities() {
         SafariOptions safariOptions = new SafariOptions();
 
-        safariOptions.setAcceptInsecureCerts(true);
         safariOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
         safariOptions.setCapability("ignoreProtectedModeSettings", true);
 
