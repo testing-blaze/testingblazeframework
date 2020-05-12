@@ -19,17 +19,12 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
 import com.testingblaze.register.EnvironmentFactory;
-import com.testingblaze.register.I;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -39,30 +34,13 @@ import java.net.URL;
  */
 
 public final class AndroidManager implements Device {
-    private WebDriver driver;
+    private RemoteWebDriver driver;
 
     @Override
     public void setupController() {
-        DesiredCapabilities androidCapabilities = new DesiredCapabilities();
-        if (EnvironmentFactory.getAppName() != null) {
-            androidCapabilities.setCapability(MobileCapabilityType.APP,
-                    System.getProperty("user.dir") + "\\mobileapp" + EnvironmentFactory.getAppName());
-
-            try {
-                androidCapabilities.setCapability("appPackage", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("appConfig", "appPackage"));
-                androidCapabilities.setCapability("appActivity", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("appConfig", "appActivity"));
-            } catch (NullPointerException | IOException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            androidCapabilities.setCapability("chromedriverExecutable", WebDriverManager.chromedriver().getBinaryPath());
-            androidCapabilities.setCapability("w3c", false);
-            androidCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-        }
         try {
-            this.driver = new AndroidDriver<>(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
-                    new DesiredCapabilitiesManagement().getAndroidCapabilities(androidCapabilities));
+            driver = new AndroidDriver<>(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
+                    CapabilitiesManager.getAndroidCapabilities());
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

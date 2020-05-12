@@ -19,21 +19,16 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
 import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,52 +38,27 @@ import java.util.concurrent.TimeUnit;
  */
 
 public final class EdgeManager implements Device {
-    WebDriver driver;
-    private Boolean headlessMode = false;
+    RemoteWebDriver driver;
 
     @Override
     public void setupController() {
-
         if ("edge-32".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
             WebDriverManager.edgedriver().arch32().forceCache().setup();
         } else {
             WebDriverManager.edgedriver().arch64().forceCache().setup();
         }
+
         System.setProperty("webdriver.chrome.silentOutput", "true");
 
-        DesiredCapabilities edgeCapabilities = new DesiredCapabilities();
-        edgeCapabilities.setBrowserName("edge");
-
-        edgeCapabilities.acceptInsecureCerts();
-        edgeCapabilities.setJavascriptEnabled(true);
-        edgeCapabilities.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-        edgeCapabilities.setCapability("ignoreProtectedModeSettings", true);
-        edgeCapabilities.setCapability(InternetExplorerDriver.
-                INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-        edgeCapabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, false);
-        edgeCapabilities.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR, true);
-        edgeCapabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
-
-        EdgeOptions edgeOptions = new EdgeOptions().merge(edgeCapabilities);
-        edgeOptions.setExperimentalOption("useAutomationExtension", false);
-        edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
-
-        if ("Headless".equalsIgnoreCase(EnvironmentFactory.getExecutionMode())) {
-            edgeOptions.addArguments("--window-size=2560,1440");
-            edgeOptions.addArguments("--headless");
-            edgeOptions.addArguments("--mute-audio");
-            headlessMode = true;
-        }
-
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
-            this.driver = new EdgeDriver(edgeOptions);
-            this.driver.manage().window().maximize();
+            driver = new EdgeDriver(CapabilitiesManager.getEdgeCapabilities());
+            driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
-                        new DesiredCapabilitiesManagement().getBrowserCapabilities(edgeCapabilities));
-                ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
+                driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
+                        CapabilitiesManager.getEdgeCapabilities());
+                driver.setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

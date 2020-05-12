@@ -19,45 +19,34 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.DesiredCapabilitiesManagement;
 import com.testingblaze.controller.Device;
 import com.testingblaze.register.EnvironmentFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariDriverService;
-import org.openqa.selenium.safari.SafariOptions;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public final class SafariManager implements Device {
-    WebDriver driver;
+    RemoteWebDriver driver;
 
     @Override
     public void setupController() {
         SafariDriverService safariDriverService = new SafariDriverService.Builder().usingAnyFreePort().build();
 
-        DesiredCapabilities safariCapabilities = new DesiredCapabilities();
-        safariCapabilities.setBrowserName("safari");
-        safariCapabilities.acceptInsecureCerts();
-        safariCapabilities.setJavascriptEnabled(true);
-        safariCapabilities.setCapability("ignoreProtectedModeSettings", true);
-
-        SafariOptions safariOptions = new SafariOptions().merge(safariCapabilities);
-
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
-            this.driver = new SafariDriver(safariDriverService, safariOptions);
-            this.driver.manage().window().maximize();
+            driver = new SafariDriver(safariDriverService, CapabilitiesManager.getSafariCapabilities());
+            driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
         } else {
             try {
-                this.driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
-                        new DesiredCapabilitiesManagement().getBrowserCapabilities(safariCapabilities));
-                ((RemoteWebDriver) this.driver).setFileDetector(new LocalFileDetector());
+                driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
+                        CapabilitiesManager.getSafariCapabilities());
+                driver.setFileDetector(new LocalFileDetector());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -66,7 +55,7 @@ public final class SafariManager implements Device {
 
     @Override
     public WebDriver getDriver() {
-        return this.driver;
+        return driver;
     }
 
     @Override
