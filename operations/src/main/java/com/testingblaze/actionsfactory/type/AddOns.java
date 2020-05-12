@@ -46,6 +46,15 @@ public class AddOns {
     }
 
     /**
+     * generates random number
+     * @return integer random number
+     * @author jitendra.pisal
+     */
+    public int getRandomNumber() {
+        return 1000 + (int) (Math.random() * 50000) + Math.round(System.currentTimeMillis() / 1000);
+    }
+
+    /**
      * geenrate a random number in a specified range
      * @param min lower range
      * @param max upper range
