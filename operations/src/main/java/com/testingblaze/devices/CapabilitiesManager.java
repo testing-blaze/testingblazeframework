@@ -156,7 +156,7 @@ public class CapabilitiesManager {
         SafariOptions safariOptions = new SafariOptions();
 
         safariOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
-        safariOptions.setCapability("ignoreProtectedModeSettings", true);
+        safariOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 
         if (!"local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             setBrowserCapabilities(safariOptions);
