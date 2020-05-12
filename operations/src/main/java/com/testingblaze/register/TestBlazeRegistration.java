@@ -57,7 +57,7 @@ public final class TestBlazeRegistration {
         registerSetup.theEnd();
     }
 
-    @After(order = 1)
+    @After(order = 5)
     public void verifyingScenarioSoftAssertions() throws TestingBlazeExceptionWithoutStackTrace {
         if (ScenarioController.getScenario().isFailed()) {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "The scenario is already failed.  Skipping check of soft assertions.");
