@@ -27,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author nauman.shahid
@@ -35,7 +36,7 @@ import java.util.Properties;
  */
 
 public final class Properties_Logs {
-    private Map<String, String> valueStore = new HashMap<>();
+    private final Map<String, String> valueStore = new HashMap<>();
     String log4jConfPath = "log4j.properties";
     static final Logger log = Logger.getLogger(TestBlazeLogs.class.getName());
     Properties OR;
@@ -44,7 +45,6 @@ public final class Properties_Logs {
     public Properties_Logs() {
         testBlazeLogs = new TestBlazeLogs();
     }
-
 
 
     /**
@@ -86,6 +86,16 @@ public final class Properties_Logs {
      */
     public String getValue(String key) {
         return valueStore.get(key.toUpperCase());
+    }
+
+    /**
+     * get all keys of the saved values
+     *
+     * @return set of keys
+     * @author nauman.shahid
+     */
+    public Set<String> getAllSavedKeys() {
+        return valueStore.keySet();
     }
 
     public TestBlazeLogs generateLogs() {
