@@ -204,7 +204,6 @@ public class CapabilitiesManager {
     }
 
     private static void setBrowserCapabilities(MutableCapabilities browserCapabilities) {
-        browserCapabilities.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
         browserCapabilities.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
 
         if (System.getProperty("platform") != null) {
