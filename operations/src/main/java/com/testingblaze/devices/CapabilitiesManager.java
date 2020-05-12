@@ -23,7 +23,7 @@ import org.openqa.selenium.safari.SafariOptions;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class CapabilitiesManager {
@@ -45,17 +45,19 @@ public class CapabilitiesManager {
             chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
         }
 
-        HashMap<String, Object> chromePrefs = new HashMap<>();
-        chromePrefs.put("profile.default_content_settings.popups", 0);
-        chromePrefs.put("download.prompt_for_download", "false");
-        chromePrefs.put("download.directory_upgrade", "true");
-        chromePrefs.put("download.default_directory", System.getProperty("user.dir") + "\\target");
-        chromeOptions.setExperimentalOption("prefs", chromePrefs);
+        chromeOptions.setExperimentalOption("prefs", Map.of(
+                "profile.default_content_settings.popups", 0,
+                "download.prompt_for_download", "false",
+                "download.directory_upgrade", "true",
+                "download.default_directory", System.getProperty("user.dir") + "\\target"
+        ));
 
         if (EnvironmentFactory.isHeadless()) {
-            chromeOptions.addArguments("--window-size=2560,1440");
-            chromeOptions.addArguments("--headless");
-            chromeOptions.addArguments("--mute-audio");
+            chromeOptions.addArguments(
+                    "--window-size=2560,1440",
+                    "--headless",
+                    "--mute-audio"
+            );
         }
 
         if (!"local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
@@ -109,9 +111,7 @@ public class CapabilitiesManager {
         edgeOptions.setAcceptInsecureCerts(true);
         edgeOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
         edgeOptions.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-        edgeOptions.setCapability("ignoreProtectedModeSettings", true);
-        edgeOptions.setCapability(InternetExplorerDriver.
-                INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+        edgeOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
         edgeOptions.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, false);
         edgeOptions.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR, true);
         edgeOptions.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
@@ -121,9 +121,11 @@ public class CapabilitiesManager {
             edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 
             if (EnvironmentFactory.isHeadless()) {
-                edgeOptions.addArguments("--window-size=2560,1440");
-                edgeOptions.addArguments("--headless");
-                edgeOptions.addArguments("--mute-audio");
+                edgeOptions.addArguments(
+                        "--window-size=2560,1440",
+                        "--headless",
+                        "--mute-audio"
+                );
             }
         }
 
@@ -140,9 +142,7 @@ public class CapabilitiesManager {
         internetExplorerOptions.setAcceptInsecureCerts(true);
         internetExplorerOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
         internetExplorerOptions.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-        internetExplorerOptions.setCapability("ignoreProtectedModeSettings", true);
-        internetExplorerOptions.setCapability(InternetExplorerDriver.
-                INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+        internetExplorerOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
         internetExplorerOptions.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, false);
         internetExplorerOptions.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR, true);
         internetExplorerOptions.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
