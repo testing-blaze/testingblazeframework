@@ -55,8 +55,8 @@ public final class ChromeManager implements Device {
 
     @Override
     public void setupController() {
-        System.setProperty("webdriver.chrome.logfile", System.getProperty("user.dir")+ "/target/chromedriver.log");
-        System.setProperty("webdriver.chrome.verboseLogging", "true");
+        //System.setProperty("webdriver.chrome.logfile", System.getProperty("user.dir")+ "/target/chromedriver.log");
+        //System.setProperty("webdriver.chrome.verboseLogging", "true");
 
         // Need to make it thread safe somehow
         if (disableDriverEnforcedDownloadActivity) {
