@@ -51,7 +51,16 @@ public class AddOns {
      * @author jitendra.pisal
      */
     public int getRandomNumber() {
-        return 1000 + (int) (Math.random() * 50000) + Math.round(System.currentTimeMillis() / 1000);
+        return getRandomNumberInRange(1000, 50000) + Math.round(System.currentTimeMillis() / 100000);
+    }
+
+    /**
+     * generates random number
+     * @return String random number
+     * @author jitendra.pisal
+     */
+    public String getStringRandomNumber() {
+        return Integer.toString(getRandomNumberInRange(1000, 50000) + Math.round(System.currentTimeMillis() / 100000));
     }
 
     /**
