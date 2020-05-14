@@ -98,6 +98,16 @@ public final class Properties_Logs {
         return valueStore.keySet();
     }
 
+    /**
+     * get all keys of the saved values
+     *
+     * @return set of keys
+     * @author nauman.shahid
+     */
+    public Map<String, String> getSavedValuesMap() {
+        return valueStore;
+    }
+
     public TestBlazeLogs generateLogs() {
         return testBlazeLogs;
     }
