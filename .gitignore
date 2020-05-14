@@ -7,5 +7,4 @@
 /test-output/
 /.settings/
 /.project/
-/operations/target/
-/target/
+target/
