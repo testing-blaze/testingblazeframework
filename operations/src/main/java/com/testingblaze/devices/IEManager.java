@@ -19,7 +19,7 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.Device;
+import com.testingblaze.controller.qrYoTsOWwA;
 import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * @returns IE webdriver instance
  */
 
-public final class IEManager implements Device {
+public final class IEManager implements qrYoTsOWwA {
     RemoteWebDriver driver;
 
     @Override

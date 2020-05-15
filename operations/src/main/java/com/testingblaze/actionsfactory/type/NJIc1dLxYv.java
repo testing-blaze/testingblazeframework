@@ -26,13 +26,13 @@ import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.objects.InstanceRecording;
 
-public class TextInput {
+public class NJIc1dLxYv {
     private JavaScript javaScript;
     private Element elementApi;
     private Action executeAction;
     private Mobile mobile;
 
-    public TextInput() {
+    public NJIc1dLxYv() {
         elementApi = InstanceRecording.getInstance(Element.class);
         executeAction = InstanceRecording.getInstance(Action.class);
         javaScript = InstanceRecording.getInstance(JavaScript.class);

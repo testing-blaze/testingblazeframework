@@ -19,7 +19,7 @@
  */
 package com.testingblaze.actionsfactory.processing;
 
-import com.testingblaze.actionsfactory.api.IframeAnalyzer;
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
@@ -30,11 +30,11 @@ import org.openqa.selenium.By;
 import java.io.IOException;
 
 
-public class ExecuteLocatorProcessing {
-    IframeAnalyzer iframe;
+public class qnadzOnjgo {
+    HGJGcYGHQk iframe;
 
-    public ExecuteLocatorProcessing() {
-        this.iframe = InstanceRecording.getInstance(IframeAnalyzer.class);
+    public qnadzOnjgo() {
+        this.iframe = InstanceRecording.getInstance(HGJGcYGHQk.class);
     }
 
     /**

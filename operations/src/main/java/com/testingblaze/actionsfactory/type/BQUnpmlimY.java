@@ -26,14 +26,14 @@ import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.MouseActions;
 import com.testingblaze.objects.InstanceRecording;
 
-public class Click {
+public class BQUnpmlimY {
     private MouseClicks mouseClicks;
     private JavaScript javaScript;
     private Element elementApi;
     private Action executeAction;
     private Mobile mobile;
 
-    public Click() {
+    public BQUnpmlimY() {
         elementApi = InstanceRecording.getInstance(Element.class);
         executeAction = InstanceRecording.getInstance(Action.class);
         javaScript = InstanceRecording.getInstance(JavaScript.class);

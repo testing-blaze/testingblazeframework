@@ -24,9 +24,9 @@ import com.testingblaze.actionsfactory.api.ActionFactoryInitiate;
 import com.testingblaze.objects.InstanceRecording;
 import io.cucumber.java.Before;
 
-public class RegisterActionFactory {
+public class AfiYxaVmIURegAFact {
 
-    public RegisterActionFactory(ActionFactoryInitiate actions) {
+    public AfiYxaVmIURegAFact(ActionFactoryInitiate actions) {
         InstanceRecording.recordInstance(ActionFactoryInitiate.class, actions);
     }
 

@@ -19,7 +19,7 @@
  */
 package com.testingblaze.controller;
 
-import com.testingblaze.integrations.Tfs;
+import com.testingblaze.integrations.zFdcvgY0Kq;
 import com.testingblaze.misclib.ScreenCapture;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
@@ -48,7 +48,7 @@ public final class TestSetupController {
     private DeviceBucket device;
     private int retryCount = 0;
     public static UsersController usersController;
-    private Tfs tfs;
+    private zFdcvgY0Kq tfs;
 
     static {
         createLogo();
@@ -98,7 +98,7 @@ public final class TestSetupController {
         ScenarioController.printFinalLogs();
         if ("tfs".equalsIgnoreCase(System.getProperty("postTestResults"))) {
             if (tfs == null) {
-                tfs = new Tfs();
+                tfs = new zFdcvgY0Kq();
             }
         } else if ("jira".equalsIgnoreCase(System.getProperty("postTestResults"))) {
             //To be Implemented

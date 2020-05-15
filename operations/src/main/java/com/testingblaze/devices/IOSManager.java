@@ -19,7 +19,7 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.Device;
+import com.testingblaze.controller.qrYoTsOWwA;
 import com.testingblaze.register.EnvironmentFactory;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +35,7 @@ import java.net.URL;
  * @category Implementation yet to be tested
  */
 
-public final class IOSManager implements Device {
+public final class IOSManager implements qrYoTsOWwA {
     private RemoteWebDriver driver;
 
     @Override

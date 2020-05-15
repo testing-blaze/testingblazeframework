@@ -33,7 +33,7 @@ import static com.testingblaze.misclib.ConsoleFormatter.COLOR.GREEN;
 import static com.testingblaze.misclib.ConsoleFormatter.setBoldText;
 import static com.testingblaze.misclib.ConsoleFormatter.setTextColor;
 
-public class ExecuteClickProcessing {
+public class wlGgOnuIbI {
     public final Is is = InstanceRecording.getInstance(Is.class);
     private final DeviceBucket device = InstanceRecording.getInstance(DeviceBucket.class);
     List<String> windowHandles = new ArrayList<>();

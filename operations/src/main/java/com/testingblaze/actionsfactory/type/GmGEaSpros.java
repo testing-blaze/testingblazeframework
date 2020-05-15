@@ -24,14 +24,14 @@ import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.objects.InstanceRecording;
 import org.openqa.selenium.WebElement;
 
-public class ElementReference {
+public class GmGEaSpros {
     private Element elementApi;
-    private ElementsList elementsList;
+    private akzkdaiqAC elementsList;
 
     // Accessed from Fetch class
-    public ElementReference() {
+    public GmGEaSpros() {
         elementApi = InstanceRecording.getInstance(Element.class);
-        this.elementsList = new ElementsList();
+        this.elementsList = new akzkdaiqAC();
     }
 
     /**
@@ -81,7 +81,7 @@ public class ElementReference {
      *                @return List<Elements></Elements> reference
      * @author nauman.shahid
      */
-    public ElementsList forListOfElements() {
+    public akzkdaiqAC forListOfElements() {
         return elementsList;
     }
 

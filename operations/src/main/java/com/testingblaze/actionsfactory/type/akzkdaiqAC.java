@@ -26,10 +26,10 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class ElementsList {
+public class akzkdaiqAC {
     private Element elementApi;
 
-    public ElementsList() {
+    public akzkdaiqAC() {
         elementApi = InstanceRecording.getInstance(Element.class);
     }
 

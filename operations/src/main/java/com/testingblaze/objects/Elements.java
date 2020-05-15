@@ -20,8 +20,8 @@
 package com.testingblaze.objects;
 
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
-import com.testingblaze.actionsfactory.type.Click;
-import com.testingblaze.actionsfactory.type.TextInput;
+import com.testingblaze.actionsfactory.type.BQUnpmlimY;
+import com.testingblaze.actionsfactory.type.NJIc1dLxYv;
 import com.testingblaze.actionsfactory.type.Is;
 import com.testingblaze.register.I;
 import org.openqa.selenium.By;
@@ -35,15 +35,15 @@ public class Elements {
     }
 
     public void click() {
-        InstanceRecording.getInstance(Click.class).on(element);
+        InstanceRecording.getInstance(BQUnpmlimY.class).on(element);
     }
 
     public void enterText(String text) {
-        InstanceRecording.getInstance(TextInput.class).in(element, text);
+        InstanceRecording.getInstance(NJIc1dLxYv.class).in(element, text);
     }
 
     public void clearText() {
-        InstanceRecording.getInstance(TextInput.class).toClear(element);
+        InstanceRecording.getInstance(NJIc1dLxYv.class).toClear(element);
     }
 
     public String getAttributes(String attributeName) {

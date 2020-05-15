@@ -20,7 +20,7 @@
 package com.testingblaze.register;
 
 
-import com.testingblaze.controller.CoreHandlers;
+import com.testingblaze.controller.Avrb8aYEmH;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.ReportingLogsPlugin;
 import com.testingblaze.controller.ScenarioController;
@@ -36,12 +36,12 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
 
-public final class TestBlazeRegistration {
+public final class toquzjGnQQTBR {
     private TestSetupController registerSetup;
 
-    public TestBlazeRegistration(DeviceBucket device, CoreHandlers coreLib, TestSetupController registerSetup) {
+    public toquzjGnQQTBR(DeviceBucket device, Avrb8aYEmH coreLib, TestSetupController registerSetup) {
         this.registerSetup = registerSetup;
-        InstanceRecording.recordInstance(CoreHandlers.class, coreLib);
+        InstanceRecording.recordInstance(Avrb8aYEmH.class, coreLib);
         InstanceRecording.recordInstance(DeviceBucket.class, device);
     }
 

@@ -21,7 +21,7 @@ package com.testingblaze.actionsfactory.type;
 
 import com.testingblaze.actionsfactory.abstracts.Action;
 import com.testingblaze.actionsfactory.abstracts.Element;
-import com.testingblaze.actionsfactory.api.ExecuteCoreActions;
+import com.testingblaze.actionsfactory.api.GEqwlYLeImActions;
 import com.testingblaze.objects.InstanceRecording;
 import org.openqa.selenium.support.ui.Select;
 
@@ -31,7 +31,7 @@ public class DropDown {
 
     public DropDown() {
         elementApi = InstanceRecording.getInstance(Element.class);
-        executeAction = InstanceRecording.getInstance(ExecuteCoreActions.class);
+        executeAction = InstanceRecording.getInstance(GEqwlYLeImActions.class);
     }
 
     /**

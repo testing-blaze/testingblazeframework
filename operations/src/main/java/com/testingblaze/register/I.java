@@ -19,13 +19,13 @@
  */
 package com.testingblaze.register;
 
-import com.testingblaze.controller.CoreHandlers;
+import com.testingblaze.controller.Avrb8aYEmH;
 import com.testingblaze.objects.InstanceRecording;
 
 public class I {
 
-    public static CoreHandlers amPerforming() {
-        return InstanceRecording.getInstance(CoreHandlers.class);
+    public static Avrb8aYEmH amPerforming() {
+        return InstanceRecording.getInstance(Avrb8aYEmH.class);
     }
 
 }

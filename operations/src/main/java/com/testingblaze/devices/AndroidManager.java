@@ -19,7 +19,7 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.Device;
+import com.testingblaze.controller.qrYoTsOWwA;
 import com.testingblaze.register.EnvironmentFactory;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +33,7 @@ import java.net.URL;
  * @category Initialize Android
  */
 
-public final class AndroidManager implements Device {
+public final class AndroidManager implements qrYoTsOWwA {
     private RemoteWebDriver driver;
 
     @Override

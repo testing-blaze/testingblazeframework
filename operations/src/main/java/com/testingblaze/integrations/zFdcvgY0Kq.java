@@ -45,7 +45,7 @@ import java.util.Map;
  * The class is responsible for creating test run , adding all tests to runs, collect test results and post them to tfs, close runs
  * @parallel: Supports multi threading and multi jvm safe.
  */
-public class Tfs {
+public class zFdcvgY0Kq {
     private volatile static String tfsUrl, pat, authType, apiVersion;
     private volatile static boolean loadTfsConfig = true;
     private static Map<String, List<String>> suitesToPlansMapping = new LinkedHashMap<>();
@@ -59,7 +59,7 @@ public class Tfs {
     private volatile static boolean setThreadBasedConfiguration = false;
     private static RestfulWebServices tfsApiCalls;
 
-    public Tfs() {
+    public zFdcvgY0Kq() {
         if (tfsApiCalls == null) tfsApiCalls = new RestfulWebServices();
         if (loadTfsConfig) {
             triggerMandatoryClosureJobs();

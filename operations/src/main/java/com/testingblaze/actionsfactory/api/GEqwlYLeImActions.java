@@ -23,7 +23,7 @@ import com.testingblaze.actionsfactory.abstracts.Action;
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
-import com.testingblaze.actionsfactory.processing.ExecuteClickProcessing;
+import com.testingblaze.actionsfactory.processing.wlGgOnuIbI;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.TestingBlazeGlobal;
 import com.testingblaze.objects.InstanceRecording;
@@ -44,14 +44,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 
-public class ExecuteCoreActions implements Action {
-    private ExecuteClickProcessing clickProcessingController;
+public class GEqwlYLeImActions implements Action {
+    private wlGgOnuIbI clickProcessingController;
     private static long timerLimit;
     private Waits wait;
     private FluentWait<WebDriver> localWait = null;
 
-    public ExecuteCoreActions() {
-        if (clickProcessingController == null) clickProcessingController = new ExecuteClickProcessing();
+    public GEqwlYLeImActions() {
+        if (clickProcessingController == null) clickProcessingController = new wlGgOnuIbI();
         if (wait == null) wait = InstanceRecording.getInstance(Waits.class);
         if (localWait == null) {
             localWait = new WebDriverWait(InstanceRecording.getInstance(DeviceBucket.class).getDriver(), Waits.STANDARD_WAIT_TIME).pollingEvery(Duration.ofSeconds(1)).ignoring(NoSuchElementException.class, NullPointerException.class);

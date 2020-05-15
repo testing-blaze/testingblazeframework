@@ -30,36 +30,36 @@ import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.MouseActions;
 import com.testingblaze.actionsfactory.elementfunctions.Ng;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
-import com.testingblaze.actionsfactory.processing.ExecuteElementProcessing;
-import com.testingblaze.actionsfactory.processing.ExecuteLocatorProcessing;
-import com.testingblaze.actionsfactory.type.AddOns;
-import com.testingblaze.actionsfactory.type.Click;
+import com.testingblaze.actionsfactory.processing.HAbNpdpLKF;
+import com.testingblaze.actionsfactory.processing.qnadzOnjgo;
+import com.testingblaze.actionsfactory.type.jucQcQgaaP;
+import com.testingblaze.actionsfactory.type.BQUnpmlimY;
 import com.testingblaze.actionsfactory.type.DropDown;
-import com.testingblaze.actionsfactory.type.ElementReference;
+import com.testingblaze.actionsfactory.type.GmGEaSpros;
 import com.testingblaze.actionsfactory.type.Is;
 import com.testingblaze.actionsfactory.type.Scroll;
-import com.testingblaze.actionsfactory.type.TextInput;
+import com.testingblaze.actionsfactory.type.NJIc1dLxYv;
 import com.testingblaze.objects.InstanceRecording;
 
 public class ActionFactoryInitiate {
     public ActionFactoryInitiate() {
-        InstanceRecording.recordInstance(IframeAnalyzer.class, new IframeAnalyzer());
-        InstanceRecording.recordInstance(LocatorProcessing.class,new ExecuteLocatorProcessing()::getRefinedLocator);
+        InstanceRecording.recordInstance(HGJGcYGHQk.class, new HGJGcYGHQk());
+        InstanceRecording.recordInstance(LocatorProcessing.class,new qnadzOnjgo()::getRefinedLocator);
         InstanceRecording.recordInstance(Waits.class, new Waits());
-        InstanceRecording.recordInstance(Action.class, new ExecuteCoreActions());
-        InstanceRecording.recordInstance(AddOns.class, new AddOns());
+        InstanceRecording.recordInstance(Action.class, new GEqwlYLeImActions());
+        InstanceRecording.recordInstance(jucQcQgaaP.class, new jucQcQgaaP());
         InstanceRecording.recordInstance(JavaScript.class, new JavaScript());
-        InstanceRecording.recordInstance(ElementProcessing.class, new ExecuteElementProcessing());
+        InstanceRecording.recordInstance(ElementProcessing.class, new HAbNpdpLKF());
         InstanceRecording.recordInstance(FindMyElements.class, new FindMyElements());
         InstanceRecording.recordInstance(Mobile.class, new Mobile());
         InstanceRecording.recordInstance(Ng.class, new Ng());
         InstanceRecording.recordInstance(MouseActions.class, new MouseActions());
         InstanceRecording.recordInstance(Element.class, new ElementAPI());
         InstanceRecording.recordInstance(Is.class, new Is());
-        InstanceRecording.recordInstance(Click.class, new Click());
-        InstanceRecording.recordInstance(TextInput.class, new TextInput());
+        InstanceRecording.recordInstance(BQUnpmlimY.class, new BQUnpmlimY());
+        InstanceRecording.recordInstance(NJIc1dLxYv.class, new NJIc1dLxYv());
         InstanceRecording.recordInstance(Scroll.class, new Scroll());
         InstanceRecording.recordInstance(DropDown.class, new DropDown());
-        InstanceRecording.recordInstance(ElementReference.class, new ElementReference());
+        InstanceRecording.recordInstance(GmGEaSpros.class, new GmGEaSpros());
     }
 }

@@ -21,11 +21,11 @@ package com.testingblaze.controller;
 
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
-import com.testingblaze.actionsfactory.type.AddOns;
-import com.testingblaze.actionsfactory.type.Click;
+import com.testingblaze.actionsfactory.type.jucQcQgaaP;
+import com.testingblaze.actionsfactory.type.BQUnpmlimY;
 import com.testingblaze.actionsfactory.type.DropDown;
-import com.testingblaze.actionsfactory.type.ElementReference;
-import com.testingblaze.actionsfactory.type.TextInput;
+import com.testingblaze.actionsfactory.type.GmGEaSpros;
+import com.testingblaze.actionsfactory.type.NJIc1dLxYv;
 import com.testingblaze.actionsfactory.type.Fetch;
 import com.testingblaze.actionsfactory.type.Is;
 import com.testingblaze.actionsfactory.type.Scroll;
@@ -50,7 +50,7 @@ import org.assertj.core.api.SoftAssertions;
  * @category Main handler class to handle all method library classes
  */
 
-public final class CoreHandlers {
+public final class Avrb8aYEmH {
     private Properties_Logs pl;
     private RobotActions ra;
     private ScreenCapture sc;
@@ -65,26 +65,26 @@ public final class CoreHandlers {
     private ReportController reportController;
     private Emails email;
     private Fetch get;
-    private Click click;
-    private TextInput enterText;
+    private BQUnpmlimY click;
+    private NJIc1dLxYv enterText;
     private Scroll scroll;
     private DropDown select;
-    private AddOns miscellaneous;
+    private jucQcQgaaP miscellaneous;
     private Is is;
-    private ElementReference elementRef;
+    private GmGEaSpros elementRef;
     private SoftAssertions softAssertions;
     private Mobile mobile;
 
-    public Click click() {
+    public BQUnpmlimY click() {
         if (click == null) {
-            click = InstanceRecording.getInstance(Click.class);
+            click = InstanceRecording.getInstance(BQUnpmlimY.class);
         }
         return click;
     }
 
-    public TextInput textInput() {
+    public NJIc1dLxYv textInput() {
         if (enterText == null) {
-            enterText = InstanceRecording.getInstance(TextInput.class);
+            enterText = InstanceRecording.getInstance(NJIc1dLxYv.class);
         }
         return enterText;
     }
@@ -115,9 +115,9 @@ public final class CoreHandlers {
         return mobile.MobileAccessories();
     }
 
-    public AddOns addOnsTo() {
+    public jucQcQgaaP addOnsTo() {
         if (miscellaneous == null) {
-            miscellaneous = InstanceRecording.getInstance(AddOns.class);
+            miscellaneous = InstanceRecording.getInstance(jucQcQgaaP.class);
         }
         return miscellaneous;
     }
@@ -129,9 +129,9 @@ public final class CoreHandlers {
         return is;
     }
 
-    public ElementReference getElementReference() {
+    public GmGEaSpros getElementReference() {
         if (elementRef == null) {
-            elementRef = InstanceRecording.getInstance(ElementReference.class);
+            elementRef = InstanceRecording.getInstance(GmGEaSpros.class);
         }
         return elementRef;
     }

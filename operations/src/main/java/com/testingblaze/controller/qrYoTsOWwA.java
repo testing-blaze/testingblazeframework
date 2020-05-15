@@ -28,7 +28,7 @@ import org.openqa.selenium.WebDriver;
  * @category Interface for device instances
  */
 
-public interface Device {
+public interface qrYoTsOWwA {
 
     WebDriver getDriver();
 

@@ -34,12 +34,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-public class AddOns {
+public class jucQcQgaaP {
     private JavaScript javaScript;
     private Element elementApi;
     private Action executeAction;
 
-    public AddOns() {
+    public jucQcQgaaP() {
         elementApi = InstanceRecording.getInstance(Element.class);
         executeAction = InstanceRecording.getInstance(Action.class);
         this.javaScript = InstanceRecording.getInstance(JavaScript.class);

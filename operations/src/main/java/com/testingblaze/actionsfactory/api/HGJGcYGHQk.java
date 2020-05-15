@@ -26,7 +26,7 @@ import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class IframeAnalyzer {
+public class HGJGcYGHQk {
     private final By IFRAME = By.xpath("//iframe[contains(@ng-sc,'/') or contains(@src,'/') or @src='']");
     private By locator;
     private final DeviceBucket device;
@@ -34,7 +34,7 @@ public class IframeAnalyzer {
     public String switchedFrameInfo = "No information available";
 
 
-    public IframeAnalyzer() {
+    public HGJGcYGHQk() {
         this.device = InstanceRecording.getInstance(DeviceBucket.class);
     }
 

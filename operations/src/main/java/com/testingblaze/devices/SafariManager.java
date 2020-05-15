@@ -19,7 +19,7 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.Device;
+import com.testingblaze.controller.qrYoTsOWwA;
 import com.testingblaze.register.EnvironmentFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.LocalFileDetector;
@@ -31,7 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-public final class SafariManager implements Device {
+public final class SafariManager implements qrYoTsOWwA {
     RemoteWebDriver driver;
 
     @Override

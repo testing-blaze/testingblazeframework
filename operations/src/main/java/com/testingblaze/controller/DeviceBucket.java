@@ -36,8 +36,8 @@ import org.openqa.selenium.WebDriver;
  */
 
 
-public final class DeviceBucket implements Device {
-    private final Device delegate;
+public final class DeviceBucket implements qrYoTsOWwA {
+    private final qrYoTsOWwA delegate;
 
     public DeviceBucket() {
         switch (EnvironmentFactory.getDevice().toLowerCase()) {

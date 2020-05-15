@@ -19,7 +19,7 @@
  */
 package com.testingblaze.devices;
 
-import com.testingblaze.controller.Device;
+import com.testingblaze.controller.qrYoTsOWwA;
 import com.testingblaze.register.EnvironmentFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
  * @returns chrome webdriver instance
  */
 
-public final class ChromeManager implements Device {
+public final class ChromeManager implements qrYoTsOWwA {
     private RemoteWebDriver driver;
     private ChromeDriverService service;
     private static Boolean disableDriverEnforcedDownloadActivity = true;

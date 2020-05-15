@@ -21,7 +21,7 @@ package com.testingblaze.actionsfactory.processing;
 
 import com.testingblaze.actionsfactory.abstracts.ElementProcessing;
 import com.testingblaze.actionsfactory.abstracts.PageLoadProcessing;
-import com.testingblaze.actionsfactory.api.IframeAnalyzer;
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
 import com.testingblaze.controller.DeviceBucket;
@@ -42,19 +42,19 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public class ExecuteElementProcessing implements ElementProcessing {
+public class HAbNpdpLKF implements ElementProcessing {
 
     private final WebDriver driver;
     private final JavaScript javaScript;
     private int magicWaitRetry = 0;
-    private final IframeAnalyzer iframeAnalyzer;
+    private final HGJGcYGHQk iframeAnalyzer;
     private static By processingHoldOnScreen = null;
     private static Boolean turnOnProcessingHoldOnScreen = null;
 
-    public ExecuteElementProcessing() {
+    public HAbNpdpLKF() {
         this.javaScript = InstanceRecording.getInstance(JavaScript.class);
         this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
-        iframeAnalyzer = InstanceRecording.getInstance(IframeAnalyzer.class);
+        iframeAnalyzer = InstanceRecording.getInstance(HGJGcYGHQk.class);
     }
 
     @Override
@@ -281,7 +281,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
                 return driver.findElements(locator);
             } else if (driver.findElements(locator).size() == 0) {
                 iframeAnalyzer.evaluatePossibleIFrameToSwitch();
-                if (IframeAnalyzer.setFlagForFrameSwitch) {
+                if (HGJGcYGHQk.setFlagForFrameSwitch) {
                     I.amPerforming().waitFor().makeThreadSleep(200);
                     if (EnvironmentFactory.getSlowDownExecutionTime() > 0) {
                         I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFactory.getSlowDownExecutionTime());
@@ -292,7 +292,7 @@ public class ExecuteElementProcessing implements ElementProcessing {
                     } catch (Exception e) {
                         // Handles unexpected exception for //body
                     }
-                    IframeAnalyzer.setFlagForFrameSwitch = false;
+                    HGJGcYGHQk.setFlagForFrameSwitch = false;
                 }
                 projectProcessingWrapper();
             }

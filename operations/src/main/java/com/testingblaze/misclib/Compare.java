@@ -19,7 +19,7 @@
  */
 package com.testingblaze.misclib;
 
-import com.testingblaze.actionsfactory.type.AddOns;
+import com.testingblaze.actionsfactory.type.jucQcQgaaP;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.objects.Elements;
 import com.testingblaze.objects.InstanceRecording;
@@ -155,7 +155,7 @@ public final class Compare {
          * @throws IOException
          */
         public boolean isElementImage(WebElement element, String imageName, Integer tolerance) throws IOException {
-            return compareTwoImages(ImageIO.read(new AddOns().getResources(imageName)), new AddOns().convertImageFileToBufferedImage(I.amPerforming().snapShotTo().getlementScreenShot(element)), tolerance);
+            return compareTwoImages(ImageIO.read(new jucQcQgaaP().getResources(imageName)), new jucQcQgaaP().convertImageFileToBufferedImage(I.amPerforming().snapShotTo().getlementScreenShot(element)), tolerance);
         }
 
         /**
@@ -177,7 +177,7 @@ public final class Compare {
          * @throws IOException
          */
         public boolean isFullImage(String imageName, int tolerance) throws IOException {
-            return compareTwoImages(ImageIO.read(new AddOns().getResources(imageName)), I.amPerforming().addOnsTo().convertImageFileToBufferedImage(I.amPerforming().snapShotTo().getScreenshot()), tolerance);
+            return compareTwoImages(ImageIO.read(new jucQcQgaaP().getResources(imageName)), I.amPerforming().addOnsTo().convertImageFileToBufferedImage(I.amPerforming().snapShotTo().getScreenshot()), tolerance);
         }
 
         /**
