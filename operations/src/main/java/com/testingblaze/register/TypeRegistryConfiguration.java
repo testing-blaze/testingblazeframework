@@ -19,6 +19,8 @@
  */
 package com.testingblaze.register;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.testingblaze.controller.TestSetupController;
 import com.testingblaze.report.LogLevel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,10 +30,10 @@ import io.cucumber.core.stepexpression.StepTypeRegistry;
 import io.cucumber.cucumberexpressions.ParameterType;
 import io.cucumber.cucumberexpressions.ParameterTypeRegistry;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.docstring.DocStringType;
 import io.cucumber.docstring.DocStringTypeRegistry;
 import io.cucumber.java.DataTableType;
 import io.cucumber.java.DefaultParameterTransformer;
+import io.cucumber.java.DocStringType;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -80,6 +82,11 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     @DataTableType
     public List<String> convertDataTableToListOfString(DataTable table) {
         return table.asList().stream().map(this::convertString).collect(Collectors.toList());
+    }
+
+    @DocStringType
+    public JsonElement json(String docString) {
+        return new Gson().toJsonTree(convertString(docString), String.class);
     }
 
     @DefaultParameterTransformer
@@ -295,14 +302,14 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             Field typeMapByContentField = DocStringTypeRegistry.class.getDeclaredField("docStringTypesByContentType");
             typeMapByContentField.setAccessible(true);
             @SuppressWarnings("unchecked")
-            Map<String, DocStringType> typeMapByContent = (Map<String, DocStringType>) typeMapByContentField.get(dataTableRegistry);
+            Map<String, io.cucumber.docstring.DocStringType> typeMapByContent = (Map<String, io.cucumber.docstring.DocStringType>) typeMapByContentField.get(dataTableRegistry);
 
             // Get the underlying map from the DataTableRegistry
             // It is a map from JavaType to DataTableType
             Field typeMapByClassField = DocStringTypeRegistry.class.getDeclaredField("docStringTypesByType");
             typeMapByClassField.setAccessible(true);
             @SuppressWarnings("unchecked")
-            Map<Type, DocStringType> typeMapByClass = (Map<Type, DocStringType>) typeMapByClassField.get(dataTableRegistry);
+            Map<Type, io.cucumber.docstring.DocStringType> typeMapByClass = (Map<Type, io.cucumber.docstring.DocStringType>) typeMapByClassField.get(dataTableRegistry);
 
             // Remove the default String DataTable processing
             typeMapByContent.remove("");
@@ -311,7 +318,7 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, e.getMessage());
         }
 
-        typeRegistry.defineDocStringType(new DocStringType(String.class, "", this::convertString));
+        typeRegistry.defineDocStringType(new io.cucumber.docstring.DocStringType(String.class, "", this::convertString));
     }
 
     /**
