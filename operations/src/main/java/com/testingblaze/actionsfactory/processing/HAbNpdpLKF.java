@@ -272,8 +272,6 @@ public class HAbNpdpLKF implements ElementProcessing {
         }
     }
 
-    private int switchFrameExceptionRetry = 0;
-
     private List<WebElement> getElementsForMagicWait(By locator) {
         try {
             if (driver.findElements(locator).size() > 0) {
@@ -298,14 +296,11 @@ public class HAbNpdpLKF implements ElementProcessing {
             }
 
         } catch (WebDriverException noSuchWindowAndTypeError) {
-            if (switchFrameExceptionRetry == 0) {
-                switchFrameExceptionRetry++;
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "No context is available to switch, so re-trying one more time");
-                I.amPerforming().waitFor().makeThreadSleep(5000);
-                getElementsForMagicWait(locator);
-            }
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "No initial context is available to switch, so re-trying one more time");
+            I.amPerforming().waitFor().makeThreadSleep(5000);
+            InstanceRecording.getInstance(DeviceBucket.class).getDriver().switchTo().defaultContent();
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Default Context Enabled");
         }
-        switchFrameExceptionRetry = 0;
         return driver.findElements(locator);
     }
 
@@ -366,14 +361,14 @@ public class HAbNpdpLKF implements ElementProcessing {
             ) {
                 isViewPortCounter = 0;
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Element ViewPort confirmed");
-                status=true;
+                status = true;
             } else {
                 if (isViewPortCounter < 5) {
                     isViewPortCounter++;
                     isViewPort((element));
                 }
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Element ViewPort not confirmed");
-                status=false;
+                status = false;
             }
         } catch (Exception e) {
             //Only to handle unexpected error of JS
