@@ -152,7 +152,7 @@ public class GEqwlYLeImActions implements Action {
                 if (args[0].equalsIgnoreCase("click")) {
                     element.click();
                     I.amPerforming().switchTo().acceptAlert();
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
                     break;
                 } else if (args[0].equalsIgnoreCase("input")) {
                     if (args[2].equalsIgnoreCase("--clear--")) {
@@ -162,7 +162,7 @@ public class GEqwlYLeImActions implements Action {
                         element.sendKeys(args[2]);
                         I.amPerforming().switchTo().acceptAlert();
                     }
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful " + Waits.STANDARD_WAIT_TIME + " seconds");
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
                     break;
                 }
             } catch (ElementClickInterceptedException interceptException) {
@@ -176,17 +176,21 @@ public class GEqwlYLeImActions implements Action {
             } catch (StaleElementReferenceException staleException) {
 
                 if (TestingBlazeGlobal.getVariable("locatorInProgress") instanceof By) {
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Stale Element Exception : Retrying ");
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "Locator: " + TestingBlazeGlobal.getVariable("locatorInProgress"));
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Stale Element Exception : Retrying once again");
                     WebElement freshElement = InstanceRecording.getInstance(FindMyElements.class).getElement((By) TestingBlazeGlobal.getVariable("locatorInProgress"), true);
+                    I.amPerforming().waitFor().makeThreadSleep(2000);
                     if (args[0].equalsIgnoreCase("click")) {
                         freshElement.click();
+                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                        I.amPerforming().switchTo().acceptAlert();
                     } else if (args[0].equalsIgnoreCase("input")) {
                         if (args[2].equalsIgnoreCase("--clear--")) {
                             freshElement.clear();
+                            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
                             I.amPerforming().switchTo().acceptAlert();
                         } else {
                             freshElement.sendKeys(args[2]);
+                            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
                             I.amPerforming().switchTo().acceptAlert();
                         }
                     }
