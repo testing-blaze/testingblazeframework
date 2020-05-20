@@ -195,14 +195,17 @@ public final class JavaScript {
                 + "            total = total + parentEl.offsetTop;"
                 + "            offsetParentEl = parentEl.offsetParent;"
                 + "        }"
+                + "        el = parentEl;"
                 + "        parentEl = parentEl.parentElement;"
                 + "    }"
+                + "    el.scrollTop = total-(parentEl.clientHeight/2.0);"
                 + "    parentEl.scrollTop = total-(parentEl.clientHeight/2.0);"
                 + "}";
 
         try {
             js.executeScript(scrollElementIntoMiddle, element);
         } catch (Exception e) {
+            /* Ignore Exception */
         }
     }
 
