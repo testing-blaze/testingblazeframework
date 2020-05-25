@@ -25,7 +25,7 @@
         <java.version>11</java.version>
         <test.blaze.version>1.0.0</test.blaze.version>
         <saas.version>2.3.0</saas.version>
-        <selenium.version>4.0.0-alpha-5</selenium.version>
+        <selenium.version>3.141.59</selenium.version>
         <selenium.server.version>4.0.0-alpha-2</selenium.server.version>
         <appium.version>7.3.0</appium.version>
         <cucumber.version>5.4.2</cucumber.version>
