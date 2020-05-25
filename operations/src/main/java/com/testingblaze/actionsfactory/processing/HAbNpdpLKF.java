@@ -26,6 +26,7 @@ import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.TestingBlazeGlobal;
+import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
@@ -300,6 +301,9 @@ public class HAbNpdpLKF implements ElementProcessing {
             I.amPerforming().waitFor().makeThreadSleep(5000);
             InstanceRecording.getInstance(DeviceBucket.class).getDriver().switchTo().defaultContent();
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Default Context Enabled");
+        } catch (StackOverflowError stackOverflowError) {
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Unable to handle frame switch");
+            throw new TestingBlazeRunTimeException("Unable to handle frame switch");
         }
         return driver.findElements(locator);
     }
