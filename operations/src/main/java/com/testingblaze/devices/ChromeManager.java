@@ -46,9 +46,11 @@ public final class ChromeManager implements qrYoTsOWwA {
 
     @Override
     public void setupController() {
-        System.setProperty("webdriver.chrome.logfile", System.getProperty("user.dir")+ "/target/chromedriver.log");
-        System.setProperty("webdriver.chrome.verboseLogging", "true");
-        //System.setProperty("webdriver.chrome.silentOutput", "true");
+        if ("true".equalsIgnoreCase(System.getProperty("chromedebuglogs"))) {
+            System.setProperty("webdriver.chrome.logfile", System.getProperty("user.dir") + "/target/chromedriver.log");
+            System.setProperty("webdriver.chrome.verboseLogging", "true");
+            //System.setProperty("webdriver.chrome.silentOutput", "true");
+        }
 
         // Need to make it thread safe somehow
         if (disableDriverEnforcedDownloadActivity) {
@@ -71,7 +73,7 @@ public final class ChromeManager implements qrYoTsOWwA {
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             driver = new RemoteWebDriver(service.getUrl(), CapabilitiesManager.getChromeCapabilities());
-            if(!EnvironmentFactory.isHeadless()) {
+            if (!EnvironmentFactory.isHeadless()) {
                 driver.manage().window().maximize();
             }
             driver.manage().timeouts().pageLoadTimeout(1000, TimeUnit.SECONDS);
