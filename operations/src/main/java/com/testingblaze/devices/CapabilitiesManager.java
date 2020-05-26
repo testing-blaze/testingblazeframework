@@ -1,5 +1,6 @@
 package com.testingblaze.devices;
 
+
 import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -22,7 +23,6 @@ import org.openqa.selenium.safari.SafariOptions;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -115,8 +115,8 @@ public class CapabilitiesManager {
         edgeOptions.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR, true);
         edgeOptions.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 
-        if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
-            edgeOptions.setExperimentalOption("useAutomationExtension", false);
+        if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) { // uncomment once switching to sel 4.0.0
+            /*edgeOptions.setExperimentalOption("useAutomationExtension", false);
             edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 
             if (EnvironmentFactory.isHeadless()) {
@@ -125,7 +125,7 @@ public class CapabilitiesManager {
                         "--headless",
                         "--mute-audio"
                 );
-            }
+            }*/
         }
 
         if (!"local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
