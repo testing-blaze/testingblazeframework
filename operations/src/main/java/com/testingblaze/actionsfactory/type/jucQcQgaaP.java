@@ -60,7 +60,7 @@ public class jucQcQgaaP {
      * @author jitendra.pisal
      */
     public String getStringRandomNumber() {
-        return Integer.toString(getRandomNumberInRange(1000, 50000) + getRandomNumberInRange(51000, 90000));
+        return Integer.toString(getRandomNumberInRange(1000, 50000)) + Integer.toString(getRandomNumberInRange(51000, 90000));
     }
 
     /**
