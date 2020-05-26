@@ -51,7 +51,7 @@ public class jucQcQgaaP {
      * @author jitendra.pisal
      */
     public int getRandomNumber() {
-        return getRandomNumberInRange(1000, 50000) + Math.round(System.currentTimeMillis() / 100000);
+        return getRandomNumberInRange(1000, 50000) + getRandomNumberInRange(51000, 90000);
     }
 
     /**
@@ -60,7 +60,7 @@ public class jucQcQgaaP {
      * @author jitendra.pisal
      */
     public String getStringRandomNumber() {
-        return Integer.toString(getRandomNumberInRange(1000, 50000) + Math.round(System.currentTimeMillis() / 100000));
+        return Integer.toString(getRandomNumberInRange(1000, 50000) + getRandomNumberInRange(51000, 90000));
     }
 
     /**
