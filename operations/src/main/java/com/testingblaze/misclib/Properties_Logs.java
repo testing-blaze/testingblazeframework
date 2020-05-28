@@ -75,7 +75,7 @@ public final class Properties_Logs {
      * @param value the value to save for future use
      */
     public void saveValue(String key, String value) {
-        valueStore.put(key.toUpperCase(), value);
+        valueStore.put(key.toUpperCase().trim(), value);
     }
 
     /**
