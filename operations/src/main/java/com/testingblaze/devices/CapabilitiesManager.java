@@ -49,7 +49,7 @@ public class CapabilitiesManager {
                 "profile.default_content_settings.popups", 0,
                 "download.prompt_for_download", "false",
                 "download.directory_upgrade", "true",
-                "download.default_directory", System.getProperty("user.dir") + "\\target"
+                "download.default_directory", System.getProperty("user.dir") + File.separatorChar+"target"
         ));
 
         if (EnvironmentFactory.isHeadless()) {
