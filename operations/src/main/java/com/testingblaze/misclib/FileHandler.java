@@ -19,21 +19,22 @@
  */
 package com.testingblaze.misclib;
 
-import com.testingblaze.controller.DeviceBucket;
-import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.I;
-import com.testingblaze.report.LogLevel;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.testingblaze.controller.DeviceBucket;
+import com.testingblaze.objects.InstanceRecording;
+import com.testingblaze.register.I;
+import com.testingblaze.report.LogLevel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import java.io.BufferedReader;
@@ -196,6 +197,25 @@ public final class FileHandler {
             }
         }
     }
+
+    /**
+     * This method downloads the file opened in browser using the URL. The file gets save to target folder
+     * @param fileNameWithExtension
+     * @author jitendra.pisal
+     */
+    public void downloadAnyFileUsingURL(String fileNameWithExtension){
+        String aa = "(function downloadURI(uri, name)\n" +
+                "        {\n" +
+                "            var link = document.createElement(\"a\");\n" +
+                "            link.download = name;\n" +
+                "            link.href = uri;\n" +
+                "            link.click();\n" +
+                "        })(\""+I.amPerforming().actionToGet().currentURL()+"\",\""+fileNameWithExtension+"\");";
+
+        JavascriptExecutor jj = (JavascriptExecutor) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
+        jj.executeScript(aa);
+    }
+
 
     /**
      * Handles all methods related to excel files
@@ -624,7 +644,7 @@ public final class FileHandler {
             Random random = new Random(500);
             String newFileName = "newPdfFile" + random + ".pdf";
             URL url1 = new URL(url);
-            File file = new File(System.getProperty("user.dir") + "src/main/resources", newFileName);
+            File file = new File(System.getProperty("user.dir") + File.separatorChar+"target", newFileName);
             byte[] ba1 = new byte[1024];
             int baLength;
             FileOutputStream fos1 = new FileOutputStream(file);
