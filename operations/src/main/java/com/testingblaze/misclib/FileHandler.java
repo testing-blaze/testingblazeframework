@@ -142,7 +142,7 @@ public final class FileHandler {
         for (File files : directory) {
             if (files.getName().endsWith(".tmp")) {
                 new File(files.getAbsolutePath())
-                        .renameTo(new File(file.getAbsolutePath() + "\\" + fileName + "." + fileType));
+                        .renameTo(new File(file.getAbsolutePath() + File.pathSeparatorChar + fileName + "." + fileType));
                 break;
             }
         }
@@ -268,10 +268,10 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public String[][] readFromDownloadedFile(String fileName, String sheetName) {
-            File file = new File(System.getProperty("user.dir") + "\\target");
+            File file = new File(System.getProperty("user.dir") +File.pathSeparatorChar + "target");
             toRenameDownloadedTmpFile(file, fileName, "xlsx");
             return readExcelFile(fileName, sheetName,
-                    file.getAbsolutePath() + "\\" + fileName);
+                    file.getAbsolutePath() + File.pathSeparatorChar  + fileName);
         }
 
         /**
@@ -521,10 +521,10 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public String readFromDownloadedFile(String fileName, int pageNumber) {
-            File file = new File(System.getProperty("user.dir") + "\\target");
+            File file = new File(System.getProperty("user.dir") + File.pathSeparatorChar +"target");
             toRenameDownloadedTmpFile(file, fileName, "pdf");
             return readFromAdobeFileOnLocalAtUserDirectory(
-                    file.getAbsolutePath() + "\\" + fileName, pageNumber);
+                    file.getAbsolutePath() + File.pathSeparatorChar  + fileName, pageNumber);
         }
 
 
