@@ -75,6 +75,8 @@ public class GEqwlYLeImActions implements Action {
             });
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Click action performed successfully");
 
+        } catch (StaleElementReferenceException staleException) {
+            retryExecutor(element, "click", "Stale element Exception Caught");
         } catch (ElementClickInterceptedException interceptException) {
             retryExecutor(element, "click", "Intercept Exception Caught");
         } catch (ElementNotInteractableException interactableException) {
@@ -117,6 +119,8 @@ public class GEqwlYLeImActions implements Action {
                 });
             }
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Input action performed successfully");
+        } catch (StaleElementReferenceException staleException) {
+            retryExecutor(element, "input", "Stale element Exception Caught", input);
         } catch (ElementClickInterceptedException interceptException) {
             retryExecutor(element, "input", "Intercept Exception Caught", input);
         } catch (ElementNotInteractableException interactableException) {
