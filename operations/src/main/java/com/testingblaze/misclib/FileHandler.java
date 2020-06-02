@@ -134,15 +134,54 @@ public final class FileHandler {
      *
      * @param file     directory path
      * @param fileName new name of file
+     * @param toFileType new extension of file
+     * @author nauman.shahid
+     */
+    public void toRenameDownloadedTmpFile(File file, String fileName, String toFileType) {
+        toRenameFileWithSpecificExtension(file,fileName,"tmp", toFileType);
+    }
+
+    /**
+     * rename any downloaded file with .tmp extension
+     *
+     * @param file     directory path
+     * @param fileName new name of file
      * @param fileType new extension of file
      * @author nauman.shahid
      */
-    public void toRenameDownloadedTmpFile(File file, String fileName, String fileType) {
-        File[] directory = toGetCompleteFilesListOnLocalDirectory(file.getAbsolutePath());
+
+    /**
+     * rename a specific file with an extension
+     * @param filePath
+     * @param fileName name of file without extension
+     * @param fromFileType
+     * @param toFileType
+     * @author nauman.shahid
+     */
+    public void toRenameFileWithSpecificExtension(File filePath, String fileName,String fromFileType, String toFileType) {
+        File[] directory = toGetCompleteFilesListOnLocalDirectory(filePath.getAbsolutePath());
         for (File files : directory) {
-            if (files.getName().endsWith(".tmp")) {
+            if (files.getName().endsWith("."+fromFileType)) {
                 new File(files.getAbsolutePath())
-                        .renameTo(new File(file.getAbsolutePath() + File.pathSeparatorChar + fileName + "." + fileType));
+                        .renameTo(new File(filePath.getAbsolutePath() + File.pathSeparatorChar + fileName + "." + toFileType));
+                break;
+            }
+        }
+    }
+
+    /**
+     * rename a specific file in a folder
+     * @param filePath
+     * @param fromFileName with extension
+     * @param toFileName  with extension
+     * @author nauman.shahid
+     */
+    public void toRenameFile(File filePath, String fromFileName,String toFileName) {
+        File[] directory = toGetCompleteFilesListOnLocalDirectory(filePath.getAbsolutePath());
+        for (File files : directory) {
+            if (files.getName().equalsIgnoreCase((fromFileName))) {
+                new File(files.getAbsolutePath())
+                        .renameTo(new File(filePath.getAbsolutePath() + File.pathSeparatorChar + toFileName));
                 break;
             }
         }
