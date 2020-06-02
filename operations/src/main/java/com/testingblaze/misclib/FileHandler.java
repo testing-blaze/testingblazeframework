@@ -57,10 +57,10 @@ import java.util.List;
 import java.util.Random;
 
 public final class FileHandler {
-    private ExcelReader excelReader;
-    private JsonReader jsonReader;
-    private AdobeReader adobeReader;
-    private WebDriver driver;
+    private final ExcelReader excelReader;
+    private final JsonReader jsonReader;
+    private final AdobeReader adobeReader;
+    private final WebDriver driver;
 
     public FileHandler() {
         this.excelReader = new ExcelReader();
@@ -200,20 +200,31 @@ public final class FileHandler {
 
     /**
      * This method downloads the file opened in browser using the URL. The file gets save to target folder
+     *
      * @param fileNameWithExtension
      * @author jitendra.pisal
      */
-    public void downloadAnyFileUsingURL(String fileNameWithExtension){
+    public void toDownloadAnyFileUsingURL(String fileNameWithExtension) {
         String aa = "(function downloadURI(uri, name)\n" +
                 "        {\n" +
                 "            var link = document.createElement(\"a\");\n" +
                 "            link.download = name;\n" +
                 "            link.href = uri;\n" +
                 "            link.click();\n" +
-                "        })(\""+I.amPerforming().actionToGet().currentURL()+"\",\""+fileNameWithExtension+"\");";
+                "        })(\"" + I.amPerforming().actionToGet().currentURL() + "\",\"" + fileNameWithExtension + "\");";
 
         JavascriptExecutor jj = (JavascriptExecutor) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
         jj.executeScript(aa);
+    }
+
+    /**
+     * Delete any file in provide directory
+     * @param fileNameWithExtensionAndPath
+     * @author jitendra.pisal
+     */
+    public void toDeleteFile(String fileNameWithExtensionAndPath) {
+        File file = new File(fileNameWithExtensionAndPath);
+        file.delete();
     }
 
 
@@ -644,7 +655,7 @@ public final class FileHandler {
             Random random = new Random(500);
             String newFileName = "newPdfFile" + random + ".pdf";
             URL url1 = new URL(url);
-            File file = new File(System.getProperty("user.dir") + File.separatorChar+"target", newFileName);
+            File file = new File(System.getProperty("user.dir") + File.separatorChar + "target", newFileName);
             byte[] ba1 = new byte[1024];
             int baLength;
             FileOutputStream fos1 = new FileOutputStream(file);
