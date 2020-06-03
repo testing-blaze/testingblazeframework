@@ -57,10 +57,10 @@ import java.util.List;
 import java.util.Random;
 
 public final class FileHandler {
-    private ExcelReader excelReader;
-    private JsonReader jsonReader;
-    private AdobeReader adobeReader;
-    private WebDriver driver;
+    private final ExcelReader excelReader;
+    private final JsonReader jsonReader;
+    private final AdobeReader adobeReader;
+    private final WebDriver driver;
 
     public FileHandler() {
         this.excelReader = new ExcelReader();
@@ -134,15 +134,54 @@ public final class FileHandler {
      *
      * @param file     directory path
      * @param fileName new name of file
+     * @param toFileType new extension of file
+     * @author nauman.shahid
+     */
+    public void toRenameDownloadedTmpFile(File file, String fileName, String toFileType) {
+        toRenameFileWithSpecificExtension(file,fileName,"tmp", toFileType);
+    }
+
+    /**
+     * rename any downloaded file with .tmp extension
+     *
+     * @param file     directory path
+     * @param fileName new name of file
      * @param fileType new extension of file
      * @author nauman.shahid
      */
-    public void toRenameDownloadedTmpFile(File file, String fileName, String fileType) {
-        File[] directory = toGetCompleteFilesListOnLocalDirectory(file.getAbsolutePath());
+
+    /**
+     * rename a specific file with an extension
+     * @param filePath
+     * @param fileName name of file without extension
+     * @param fromFileType
+     * @param toFileType
+     * @author nauman.shahid
+     */
+    public void toRenameFileWithSpecificExtension(File filePath, String fileName,String fromFileType, String toFileType) {
+        File[] directory = toGetCompleteFilesListOnLocalDirectory(filePath.getAbsolutePath());
         for (File files : directory) {
-            if (files.getName().endsWith(".tmp")) {
+            if (files.getName().endsWith("."+fromFileType)) {
                 new File(files.getAbsolutePath())
-                        .renameTo(new File(file.getAbsolutePath() + "\\" + fileName + "." + fileType));
+                        .renameTo(new File(filePath.getAbsolutePath() + File.pathSeparatorChar + fileName + "." + toFileType));
+                break;
+            }
+        }
+    }
+
+    /**
+     * rename a specific file in a folder
+     * @param filePath
+     * @param fromFileName with extension
+     * @param toFileName  with extension
+     * @author nauman.shahid
+     */
+    public void toRenameFile(File filePath, String fromFileName,String toFileName) {
+        File[] directory = toGetCompleteFilesListOnLocalDirectory(filePath.getAbsolutePath());
+        for (File files : directory) {
+            if (files.getName().equalsIgnoreCase((fromFileName))) {
+                new File(files.getAbsolutePath())
+                        .renameTo(new File(filePath.getAbsolutePath() + File.pathSeparatorChar + toFileName));
                 break;
             }
         }
@@ -200,20 +239,31 @@ public final class FileHandler {
 
     /**
      * This method downloads the file opened in browser using the URL. The file gets save to target folder
+     *
      * @param fileNameWithExtension
      * @author jitendra.pisal
      */
-    public void downloadAnyFileUsingURL(String fileNameWithExtension){
+    public void toDownloadAnyFileUsingURL(String fileNameWithExtension) {
         String aa = "(function downloadURI(uri, name)\n" +
                 "        {\n" +
                 "            var link = document.createElement(\"a\");\n" +
                 "            link.download = name;\n" +
                 "            link.href = uri;\n" +
                 "            link.click();\n" +
-                "        })(\""+I.amPerforming().actionToGet().currentURL()+"\",\""+fileNameWithExtension+"\");";
+                "        })(\"" + I.amPerforming().actionToGet().currentURL() + "\",\"" + fileNameWithExtension + "\");";
 
         JavascriptExecutor jj = (JavascriptExecutor) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
         jj.executeScript(aa);
+    }
+
+    /**
+     * Delete any file in provide directory
+     * @param fileNameWithExtensionAndPath
+     * @author jitendra.pisal
+     */
+    public void toDeleteFile(String fileNameWithExtensionAndPath) {
+        File file = new File(fileNameWithExtensionAndPath);
+        file.delete();
     }
 
 
@@ -257,10 +307,10 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public String[][] readFromDownloadedFile(String fileName, String sheetName) {
-            File file = new File(System.getProperty("user.dir") + "\\target");
+            File file = new File(System.getProperty("user.dir") +File.pathSeparatorChar + "target");
             toRenameDownloadedTmpFile(file, fileName, "xlsx");
             return readExcelFile(fileName, sheetName,
-                    file.getAbsolutePath() + "\\" + fileName);
+                    file.getAbsolutePath() + File.pathSeparatorChar  + fileName);
         }
 
         /**
@@ -510,10 +560,10 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public String readFromDownloadedFile(String fileName, int pageNumber) {
-            File file = new File(System.getProperty("user.dir") + "\\target");
+            File file = new File(System.getProperty("user.dir") + File.pathSeparatorChar +"target");
             toRenameDownloadedTmpFile(file, fileName, "pdf");
             return readFromAdobeFileOnLocalAtUserDirectory(
-                    file.getAbsolutePath() + "\\" + fileName, pageNumber);
+                    file.getAbsolutePath() + File.pathSeparatorChar  + fileName, pageNumber);
         }
 
 
@@ -644,7 +694,7 @@ public final class FileHandler {
             Random random = new Random(500);
             String newFileName = "newPdfFile" + random + ".pdf";
             URL url1 = new URL(url);
-            File file = new File(System.getProperty("user.dir") + File.separatorChar+"target", newFileName);
+            File file = new File(System.getProperty("user.dir") + File.separatorChar + "target", newFileName);
             byte[] ba1 = new byte[1024];
             int baLength;
             FileOutputStream fos1 = new FileOutputStream(file);

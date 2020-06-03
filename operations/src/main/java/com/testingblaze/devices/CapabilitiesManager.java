@@ -73,7 +73,7 @@ public class CapabilitiesManager {
         FirefoxProfile profile = new FirefoxProfile();
         profile.setAssumeUntrustedCertificateIssuer(true);
         profile.setPreference("browser.download.folderList", 2);
-        profile.setPreference("browser.download.dir", System.getProperty("user.dir") + File.separator + "target");
+        profile.setPreference("browser.download.dir", System.getProperty("user.dir") + File.pathSeparatorChar  + "target");
         profile.setPreference("browser.download.manager.showWhenStarting", false);
         profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/plain,application/octet-stream,application/pdf,application/x-pdf,application/vnd.pdf,text/csv,application/java-archive,application/x-msexcel,application/excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,application/msword,application/xml,application/vnd.microsoft.portable-executable");
         profile.setPreference("browser.helperApps.alwaysAsk.force", false);
@@ -118,7 +118,8 @@ public class CapabilitiesManager {
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) { // uncomment once switching to sel 4.0.0
             /*edgeOptions.setExperimentalOption("useAutomationExtension", false);
             edgeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
-
+            edgeOptions.setExperimentalOption("download.default_directory", System.getProperty("user.dir") + File.separatorChar+"target");
+        )
             if (EnvironmentFactory.isHeadless()) {
                 edgeOptions.addArguments(
                         "--window-size=2560,1440",
@@ -193,7 +194,7 @@ public class CapabilitiesManager {
         DesiredCapabilities iosCapabilities = new DesiredCapabilities();
         if (EnvironmentFactory.getAppName() != null) {
             iosCapabilities.setCapability(MobileCapabilityType.APP,
-                    System.getProperty("user.dir") + "\\mobileapp" + EnvironmentFactory.getAppName());
+                    System.getProperty("user.dir") + File.pathSeparatorChar +"mobileapp" + EnvironmentFactory.getAppName());
         } else {
             iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
         }
