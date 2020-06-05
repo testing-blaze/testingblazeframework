@@ -223,6 +223,24 @@ public class BQUnpmlimY {
         }
 
         /**
+         * Drag and drop on desired location on web page
+         *
+         * @author nauman.shahid
+         */
+        public <T> void toDragAndDrop(T source, T target) {
+            toDragAndDrop(source,target, true);
+        }
+
+        /**
+         * Drag and drop on desired location on web page
+         *
+         * @author nauman.shahid
+         */
+        public <T> void toDragAndDrop(T source, T target, Boolean processing) {
+            mouseActions.dragAndDrop(elementApi.locator(source, processing), elementApi.locator(target, processing));
+        }
+
+        /**
          * Mouse right click on desired location on web page
          *
          * @author nauman.shahid
