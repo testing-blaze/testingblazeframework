@@ -111,6 +111,15 @@ public final class MouseActions {
      *
      * @author nauman.shahid
      */
+    public void dragAndDrop(WebElement elementSource, WebElement elementTarget) {
+        actions.clickAndHold(elementSource).moveToElement(elementTarget).release(elementSource).build().perform();
+    }
+
+    /**
+     * Drag and drop on desired location on web page
+     *
+     * @author nauman.shahid
+     */
     public void mouseDragAndDrop(WebElement elementSource, int xOffset,int yOffset) {
         actions.dragAndDropBy(elementSource,xOffset,yOffset).build().perform();
     }
