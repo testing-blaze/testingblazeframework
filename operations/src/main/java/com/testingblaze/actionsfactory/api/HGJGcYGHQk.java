@@ -43,13 +43,54 @@ public class HGJGcYGHQk {
     }
 
     public void evaluatePossibleIFrameToSwitch() {
-            if (device.getDriver().findElements(IFRAME).size() > 0) {
-                manageSwitching();
-            } else {
-                switchToDefaultContent();
-            }
+        if (device.getDriver().findElements(IFRAME).size() > 0) {
+            manageSwitching();
+        } else {
+            switchToDefaultContent();
+        }
     }
 
+    private void manageSwitching() {
+        for (WebElement iframes : device.getDriver().findElements(IFRAME)) {
+            switchedFrameInfo = getFrameId(iframes, "id");
+            switchToFrame(iframes);
+            if (device.getDriver().findElements(locator).size() > 0) {
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
+                setFlagForFrameSwitch = true;
+                break;
+            } else if (device.getDriver().findElements(IFRAME).size() > 0) {
+                manageInternalSwitching(switchedFrameInfo);
+            } else {
+                switchToDefaultContent();
+                if (device.getDriver().findElements(locator).size() > 0) {
+                    break;
+                } else {
+
+                }
+            }
+        }
+    }
+
+    private void manageInternalSwitching(String mainIframe) {
+        for (WebElement iframes : device.getDriver().findElements(IFRAME)) {
+            switchedFrameInfo = getFrameId(iframes, "id");
+            switchToFrame(iframes);
+            if (device.getDriver().findElements(locator).size() > 0) {
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Successfully Switched to nested iframe with id '%s'", switchedFrameInfo));
+                setFlagForFrameSwitch = true;
+                break;
+            } else if (device.getDriver().findElements(IFRAME).size() > 0) {
+                manageInternalSwitching(mainIframe);
+            } else {
+                switchToFrameId(mainIframe);
+                if (device.getDriver().findElements(locator).size() > 0) {
+                    break;
+                }
+            }
+        }
+    }
+
+/* Old working method. Keeping it till new functioanlity works perfectly
     private void manageSwitching() {
         for (WebElement iframes : device.getDriver().findElements(IFRAME)) {
             switchedFrameInfo = getFrameId(iframes, "id");
@@ -67,7 +108,7 @@ public class HGJGcYGHQk {
                 }
             }
         }
-    }
+    }*/
 
     /**
      * switch between different frame
@@ -75,6 +116,17 @@ public class HGJGcYGHQk {
     private void switchToFrame(WebElement element) {
         try {
             device.getDriver().switchTo().frame(element);
+        } catch (Exception e) {
+
+        }
+    }
+
+    /**
+     * switch between different frame
+     */
+    private void switchToFrameId(String id) {
+        try {
+            device.getDriver().switchTo().frame(id);
         } catch (Exception e) {
 
         }
