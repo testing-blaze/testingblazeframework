@@ -113,7 +113,6 @@ public final class MouseActions {
      */
     public void dragAndDrop(WebElement elementSource, WebElement elementTarget) {
         actions.clickAndHold(elementSource).pause(Duration.ofSeconds(3)).moveToElement(elementTarget).pause(Duration.ofSeconds(3)).release(elementSource).build().perform();
-
     }
 
     /**
