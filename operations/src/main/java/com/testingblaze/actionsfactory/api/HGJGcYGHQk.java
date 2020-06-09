@@ -60,7 +60,6 @@ public class HGJGcYGHQk {
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
                 manageSwitching();
-                break;
             } else {
                 switchToDefaultContent();
                 if (device.getDriver().findElements(locator).size() > 0) {
