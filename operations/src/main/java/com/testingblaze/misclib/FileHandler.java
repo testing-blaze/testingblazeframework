@@ -163,7 +163,7 @@ public final class FileHandler {
         for (File files : directory) {
             if (files.getName().endsWith("."+fromFileType)) {
                 new File(files.getAbsolutePath())
-                        .renameTo(new File(filePath.getAbsolutePath() + File.pathSeparatorChar + fileName + "." + toFileType));
+                        .renameTo(new File(filePath.getAbsolutePath() + File.separatorChar + fileName + "." + toFileType));
                 break;
             }
         }
