@@ -25,6 +25,7 @@ import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -112,8 +113,9 @@ public final class MouseActions {
      * @author nauman.shahid
      */
     public void dragAndDrop(WebElement elementSource, WebElement elementTarget) {
-        actions.clickAndHold(elementSource).pause(Duration.ofSeconds(3)).moveToElement(elementTarget).pause(Duration.ofSeconds(3)).release(elementSource).build().perform();
-
+        Action dragDrop=actions.clickAndHold(elementSource).pause(Duration.ofSeconds(1)).moveByOffset(0, -2).moveToElement(elementTarget).pause(Duration.ofSeconds(1)).release(elementSource).build();
+        I.amPerforming().waitFor().makeThreadSleep(2000);
+        dragDrop.perform();
     }
 
     /**
