@@ -25,7 +25,6 @@ import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -113,9 +112,18 @@ public final class MouseActions {
      * @author nauman.shahid
      */
     public void dragAndDrop(WebElement elementSource, WebElement elementTarget) {
-        Action dragDrop=actions.clickAndHold(elementSource).pause(Duration.ofSeconds(1)).moveByOffset(0, -2).moveToElement(elementTarget).pause(Duration.ofSeconds(1)).release(elementSource).build();
-        I.amPerforming().waitFor().makeThreadSleep(2000);
-        dragDrop.perform();
+        var sourceXaxis=elementSource.getRect().getX();
+        var sourceYaxis=elementSource.getRect().getY();
+        var targetXaxis=elementTarget.getRect().getX();
+        var targetYaxis=elementTarget.getRect().getY();
+        actions.dragAndDropBy(elementSource,(sourceXaxis-targetXaxis),(sourceXaxis-targetXaxis)).build().perform();
+
+        actions.clickAndHold(elementSource).pause(Duration.ofSeconds(1)).build().perform();
+        actions.moveByOffset((sourceXaxis-targetXaxis), (sourceXaxis-targetXaxis)).pause(Duration.ofSeconds(1)).build().perform();
+        actions.release(elementSource).build().perform();
+        //actions.moveByOffset(-1, -1).build().perform();
+        //actions.pause(Duration.ofSeconds(1)).release().build().perform();
+
     }
 
     /**

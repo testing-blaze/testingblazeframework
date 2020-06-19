@@ -19,10 +19,15 @@
  */
 package com.testingblaze.misclib;
 
+import com.testingblaze.register.I;
+import com.testingblaze.report.LogLevel;
 import org.apache.log4j.Logger;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,11 +58,46 @@ public final class Properties_Logs {
     public String ReadPropertyFile(String fileName, String parameter) throws IOException {
         OR = new Properties();
         try {
-            OR.load(new InputStreamReader(getClass().getResourceAsStream("/" + fileName), StandardCharsets.UTF_8));
+            OR.load(new InputStreamReader(getClass().getResourceAsStream(File.separatorChar + fileName), StandardCharsets.UTF_8));
         } catch (Exception e) {
-            OR.load(new InputStreamReader(getClass().getResourceAsStream("/properties/" + fileName), StandardCharsets.UTF_8));
+            OR.load(new InputStreamReader(getClass().getResourceAsStream(File.separatorChar +"properties" +File.separatorChar + fileName), StandardCharsets.UTF_8));
         }
         return OR.getProperty(parameter);
+    }
+
+    /**
+     * Read from property file
+     *
+     * @return
+     */
+    public Set<Map.Entry<Object, Object>> getCompleteEntrySetFromPropertyFile(File filePath, String fileName) throws IOException {
+        OR = new Properties();
+        Reader read = new FileReader(filePath.getAbsolutePath() + File.separatorChar + fileName + "properties");
+        try {
+            OR.load(read);
+        } catch (Exception e) {
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Properties file is not loaded");
+        }
+        return OR.entrySet();
+    }
+
+    /**
+     * reads specified properties file and load the values to the framework save value map
+     *
+     * @param filePath
+     * @param fileName
+     * @throws IOException
+     * @author nauman.shahid
+     */
+    public void loadCompleteEntrySetFromPropertiesFileToSaveValueMap(File filePath, String fileName) throws IOException {
+        OR = new Properties();
+        Reader read = new FileReader(filePath.getAbsolutePath() + File.separatorChar + fileName + "properties");
+        try {
+            OR.load(read);
+        } catch (Exception e) {
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Properties file is not loaded");
+        }
+        OR.entrySet().stream().forEach(set -> valueStore.put((String) set.getKey(), (String) set.getValue()));
     }
 
     /**
