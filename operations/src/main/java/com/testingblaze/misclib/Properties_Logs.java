@@ -58,9 +58,9 @@ public final class Properties_Logs {
     public String ReadPropertyFile(String fileName, String parameter) throws IOException {
         OR = new Properties();
         try {
-            OR.load(new InputStreamReader(getClass().getResourceAsStream("/" + fileName), StandardCharsets.UTF_8));
+            OR.load(new InputStreamReader(getClass().getResourceAsStream(File.separatorChar + fileName), StandardCharsets.UTF_8));
         } catch (Exception e) {
-            OR.load(new InputStreamReader(getClass().getResourceAsStream("/properties/" + fileName), StandardCharsets.UTF_8));
+            OR.load(new InputStreamReader(getClass().getResourceAsStream(File.separatorChar +"properties" +File.separatorChar + fileName), StandardCharsets.UTF_8));
         }
         return OR.getProperty(parameter);
     }
