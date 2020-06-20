@@ -60,7 +60,7 @@ public final class Properties_Logs {
         try {
             OR.load(new InputStreamReader(getClass().getResourceAsStream("/" + fileName), StandardCharsets.UTF_8));
         } catch (Exception e) {
-            OR.load(new InputStreamReader(getClass().getResourceAsStream("/properties/" +File.separatorChar + fileName), StandardCharsets.UTF_8));
+            OR.load(new InputStreamReader(getClass().getResourceAsStream("/properties/" + fileName), StandardCharsets.UTF_8));
         }
         return OR.getProperty(parameter);
     }
