@@ -29,6 +29,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
@@ -116,14 +119,39 @@ public final class MouseActions {
         var sourceYaxis=elementSource.getRect().getY();
         var targetXaxis=elementTarget.getRect().getX();
         var targetYaxis=elementTarget.getRect().getY();
-        actions.dragAndDropBy(elementSource,(sourceXaxis-targetXaxis),(sourceXaxis-targetXaxis)).build().perform();
+        var xAxis=targetXaxis-sourceXaxis;
+        var YAxis=targetYaxis-sourceYaxis;
+        var drag=actions.clickAndHold(elementSource)
+                .moveByOffset(10, 0)
+                .moveByOffset(-10, 0)
+                .moveByOffset(xAxis, YAxis)
+                .release()
+                .build();
+        drag.perform();
+    }
 
-        actions.clickAndHold(elementSource).pause(Duration.ofSeconds(1)).build().perform();
-        actions.moveByOffset((sourceXaxis-targetXaxis), (sourceXaxis-targetXaxis)).pause(Duration.ofSeconds(1)).build().perform();
-        actions.release(elementSource).build().perform();
-        //actions.moveByOffset(-1, -1).build().perform();
-        //actions.pause(Duration.ofSeconds(1)).release().build().perform();
+    public void dragAndDropInHtml5(String elementSourceCss,String elementTargetCss) {
+        BufferedReader dragDropJSFile= new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/drag_drop_html5.js")));
+        StringBuffer buffer = new StringBuffer();
+        String java_script="";
+        String text = null;
+        while (true) {
+            try {
+                if (!((text = dragDropJSFile.readLine()) != null)) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            buffer.append(text + " ");
+        }
+        java_script = buffer.toString();
 
+        try {
+            dragDropJSFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        java_script = java_script+"$('#"+elementSourceCss+"').simulate( '#" +elementTargetCss+ "');" ;
+        InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript(java_script);
     }
 
     /**

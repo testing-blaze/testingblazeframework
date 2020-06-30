@@ -241,6 +241,16 @@ public class BQUnpmlimY {
         }
 
         /**
+         * Drag and Drop specific for HTML 5. It doesnt perform any framework processing on element.
+         * @param elementSourceCss
+         * @param elementTargetCss
+         * @author nauman.shahid
+         */
+        public void dragAndDropInHtml5(String elementSourceCss, String elementTargetCss) {
+            mouseActions.dragAndDropInHtml5(elementSourceCss, elementTargetCss);
+        }
+
+        /**
          * Mouse right click on desired location on web page
          *
          * @author nauman.shahid
