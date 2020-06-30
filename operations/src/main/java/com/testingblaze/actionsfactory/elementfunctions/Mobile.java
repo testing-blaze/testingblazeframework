@@ -26,6 +26,7 @@ import com.testingblaze.mobile.IOS;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidBatteryInfo;
@@ -103,42 +104,14 @@ public final class Mobile {
     /**
      * Access mobile elements
      *
-     * @param locatorWithType : xapth,name,id,accessiblityid,linktext,classname,css,tagname : String of locator
+     * @param locator : xapth,name,id,accessiblityid,linktext,classname,css,tagname : String of locator
      * @return
      */
-    private WebElement getMobileElement(String locatorWithType, Boolean processing) {
-        WebElement fetchElement = null;
-        String locatorType = locatorWithType.split(":")[0];
-        String refinedLocator = locatorWithType.split(":")[1];
-        // Add processing
-        switch (locatorType.toUpperCase()) {
-            case "XPATH":
-                fetchElement = driver().findElementByXPath(refinedLocator);
-                break;
-            case "ID":
-                fetchElement = driver().findElementById(refinedLocator);
-                break;
-            case "NAME":
-                fetchElement = driver().findElementByName(refinedLocator);
-                break;
-            case "CLASSNAME":
-                fetchElement = driver().findElementByClassName(refinedLocator);
-                break;
-            case "CSS":
-                fetchElement = driver().findElementByCssSelector(refinedLocator);
-                break;
-            case "LINKTEXT":
-                fetchElement = driver().findElementByLinkText(refinedLocator);
-                break;
-            case "ACCESSIBILITYID":
-                fetchElement = driver().findElementByAccessibilityId(refinedLocator);
-                break;
-            case "TAGNAME":
-                fetchElement = driver().findElementByTagName(refinedLocator);
-                break;
+    private WebElement getMobileElement(MobileBy locator, Boolean processing) {
+        WebElement fetchElement = driver().findElement(locator);
+        if (fetchElement == null) {
+            throw new TestingBlazeRunTimeException("Mobile element is not present or incorrect: " + locator);
         }
-        if (fetchElement == null)
-            throw new TestingBlazeRunTimeException("Mobile element is not present or incorrect: " + refinedLocator);
         return fetchElement;
     }
 
@@ -146,41 +119,11 @@ public final class Mobile {
     /**
      * Access mobile elements
      *
-     * @param locatorWithType : xapth,name,id,accessiblityid,linktext,classname,css,tagname : String of locator
+     * @param locator : xapth,name,id,accessiblityid,linktext,classname,css,tagname : String of locator
      * @return
      */
-    private List<WebElement> getMobileElements(String locatorWithType, Boolean processing) {
-        List<WebElement> fetchElement = null;
-        String locatorType = locatorWithType.split(":")[0];
-        String refinedLocator = locatorWithType.split(":")[1];
-        // Add processing
-        switch (locatorType.toUpperCase()) {
-            case "XPATH":
-                fetchElement = driver().findElementsByXPath(refinedLocator);
-                break;
-            case "ID":
-                fetchElement = driver().findElementsById(refinedLocator);
-                break;
-            case "NAME":
-                fetchElement = driver().findElementsByName(refinedLocator);
-                break;
-            case "CLASSNAME":
-                fetchElement = driver().findElementsByClassName(refinedLocator);
-                break;
-            case "CSS":
-                fetchElement = driver().findElementsByCssSelector(refinedLocator);
-                break;
-            case "LINKTEXT":
-                fetchElement = driver().findElementsByLinkText(refinedLocator);
-                break;
-            case "ACCESSIBILITYID":
-                fetchElement = driver().findElementsByAccessibilityId(refinedLocator);
-                break;
-            case "TAGNAME":
-                fetchElement = driver().findElementsByTagName(refinedLocator);
-                break;
-        }
-        return fetchElement;
+    private List<WebElement> getMobileElements(MobileBy locator, Boolean processing) {
+        return driver().findElements(locator);
     }
 
     @SuppressWarnings("unchecked") // If statement ensures unchecked cast is safe
