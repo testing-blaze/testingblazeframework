@@ -66,6 +66,22 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     private static final Pattern parameterPattern1 = Pattern.compile("\\{([^:}]+):([^}]+)}");
     private static final Pattern parameterPattern2 = Pattern.compile("---((?:(?!:-:).)*):-:((?:(?!---).)*)---");
 
+
+    /*
+     * Given a step defined by:
+     * @When("I convert a table to a datatable :")
+     * public void convert(DataTable table) {
+     *   // Implementation
+     * }
+     *
+     * When I convert a table to a datatable :
+     *    | {PropertiesFile:Property} |
+     *
+     *           Becomes
+     *
+     * When I convert a table to a datatable :
+     *   | Converted Value |
+     */
     @DataTableType
     public DataTable convertDataTable(DataTable table) {
         return DataTable.create(
@@ -74,21 +90,83 @@ public final class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                 ).collect(Collectors.toList()));
     }
 
+    /*
+     * Given a step defined by:
+     * @When("I convert a table to a list of lists :")
+     * public void convert(List<List<String>> table) {
+     *   // Implementation
+     * }
+     *
+     * When I convert a table to a list of lists :
+     *    | {PropertiesFile:Property} |
+     *
+     *           Becomes
+     *
+     * When I convert a table to a list of lists :
+     *   | Converted Value |
+     */
     @DataTableType
     public String convertStringInDataTable(String cell) {
         return convertString(cell);
     }
 
+    /*
+     * Given a step defined by:
+     * @When("I convert a table to a list :")
+     * public void convert(List<String> table) {
+     *   // Implementation
+     * }
+     *
+     * When I convert a table to a list :
+     *    | {PropertiesFile:Property} |
+     *
+     *           Becomes
+     *
+     * When I convert a table to a list :
+     *   | Converted Value |
+     */
     @DataTableType
     public List<String> convertDataTableToListOfString(DataTable table) {
         return table.asList().stream().map(this::convertString).collect(Collectors.toList());
     }
 
+    /*
+     * Given a step defined by:
+     * @When("I convert a docstring to a json element :")
+     * public void convert(JsonElement table) {
+     *   // Implementation
+     * }
+     *
+     * When I convert a docstring to a json element :
+     *   """
+     *   {PropertiesFile:Property}
+     *   """
+     *
+     *           Becomes
+     *
+     * When I convert a docstring to a json element :
+     *   """
+     *   Converted Value
+     *   """
+     */
     @DocStringType
     public JsonElement json(String docString) {
         return new Gson().toJsonTree(convertString(docString), String.class);
     }
 
+    /*
+     * Given a step defined by:
+     * @When("I convert {string} to a string")
+     * public void convert(JsonElement table) {
+     *   // Implementation
+     * }
+     *
+     * When I convert "{PropertiesFile:Property}" to a string
+     *
+     *           Becomes
+     *
+     * When I convert "Converted Value" to a string
+     */
     @DefaultParameterTransformer
     public Object convertStringParameter(String inputString, Type targetType) {
         if (String.class == targetType) {
