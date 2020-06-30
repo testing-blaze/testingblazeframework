@@ -58,7 +58,7 @@ public class ElementAPI implements Element {
         }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting single element located by: " + locator.toString());
         if (locator instanceof MobileBy) {
-            element = getMobileElement((MobileBy) locator, processing);
+            element = findMobileElement.getMobileElement((MobileBy) locator, processing);
         } else if (locator instanceof ByAngular.BaseBy) {
             element = ng.getNgElement((ByAngular.BaseBy) locator, processing);
         } else {
@@ -93,7 +93,7 @@ public class ElementAPI implements Element {
         List<WebElement> elementList = null;
 
         if (locator instanceof MobileBy) {
-            elementList = getMobileElements((MobileBy) locator, processing);
+            elementList = findMobileElement.getMobileElements((MobileBy) locator, processing);
         } else if (locator instanceof ByAngular.BaseBy) {
             elementList = ng.getNgElements((ByAngular.BaseBy) locator, processing);
         } else if (locator instanceof By) {
@@ -134,43 +134,5 @@ public class ElementAPI implements Element {
     @Override
     public <T> Select selectLocator(T locatorParameter, Boolean processing) {
         return new Select(locator(locatorParameter, processing));
-    }
-
-    /**
-     * Accessing private methods of mobile class
-     *
-     * @param locator
-     * @param processing
-     * @return
-     */
-    private WebElement getMobileElement(MobileBy locator, Boolean processing) {
-        WebElement element = null;
-        try {
-            Method mobileElement = Mobile.class.getDeclaredMethod("getMobileElement", MobileBy.class, Boolean.class);
-            mobileElement.setAccessible(true);
-            element = (WebElement) mobileElement.invoke(findMobileElement, locator, processing);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return element;
-    }
-
-    /**
-     * Accessing private methods of mobile class
-     *
-     * @param locator
-     * @param processing
-     * @return
-     */
-    private List<WebElement> getMobileElements(MobileBy locator, Boolean processing) {
-        List<WebElement> element = null;
-        try {
-            Method mobileElement = Mobile.class.getDeclaredMethod("getMobileElements", MobileBy.class, Boolean.class);
-            mobileElement.setAccessible(true);
-            element = (List<WebElement>) mobileElement.invoke(findMobileElement, locator, processing);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return element;
     }
 }

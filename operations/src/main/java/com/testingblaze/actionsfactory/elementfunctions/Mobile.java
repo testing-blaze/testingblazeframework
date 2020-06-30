@@ -107,7 +107,7 @@ public final class Mobile {
      * @param locator : xapth,name,id,accessiblityid,linktext,classname,css,tagname : String of locator
      * @return
      */
-    private WebElement getMobileElement(MobileBy locator, Boolean processing) {
+    public WebElement getMobileElement(MobileBy locator, Boolean processing) {
         WebElement fetchElement = driver().findElement(locator);
         if (fetchElement == null) {
             throw new TestingBlazeRunTimeException("Mobile element is not present or incorrect: " + locator);
@@ -122,7 +122,7 @@ public final class Mobile {
      * @param locator : xapth,name,id,accessiblityid,linktext,classname,css,tagname : String of locator
      * @return
      */
-    private List<WebElement> getMobileElements(MobileBy locator, Boolean processing) {
+    public List<WebElement> getMobileElements(MobileBy locator, Boolean processing) {
         return driver().findElements(locator);
     }
 
