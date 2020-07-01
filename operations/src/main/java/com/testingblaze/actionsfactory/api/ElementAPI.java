@@ -25,6 +25,8 @@ import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.Ng;
 import com.testingblaze.objects.Elements;
 import com.testingblaze.objects.InstanceRecording;
+import com.testingblaze.register.I;
+import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -50,6 +52,7 @@ public class ElementAPI implements Element {
     public <T> WebElement locator(T locator, Boolean processing) {
         WebElement element = null;
         if(locator instanceof WebElement) return (WebElement) locator;
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting single element located by: " + locator.toString());
         if (locator instanceof By) element = findMyElements.getElement((By) locator, processing);
         else if (locator instanceof String && (locator.toString().startsWith("ByMobile"))) {
             element = getMobileElement(((String) locator).split("::")[1], processing);
@@ -71,6 +74,7 @@ public class ElementAPI implements Element {
 
     @Override
     public <T> WebElement nestedElement(WebElement webElement, T locator) {
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting nested element located by: " + locator.toString());
         WebElement element = null;
         if (locator instanceof By) element = findMyElements.getNestedElement(webElement, (By) locator, true);
         return element;
@@ -78,6 +82,7 @@ public class ElementAPI implements Element {
 
     @Override
     public <T> List<Elements> locators(T locator, Boolean processing) {
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting list of elements located by: " + locator.toString());
         List<WebElement> elementList = null;
         if (locator instanceof By) {
             elementList = findMyElements.getElements((By) locator, processing);
@@ -106,6 +111,7 @@ public class ElementAPI implements Element {
      */
     @Override
     public <T> List<Elements> nestedElementsList(WebElement element, T locator) {
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting nested list of elements located by: " + locator.toString());
         List<WebElement> elementList = findMyElements.getNestedElementList(element, (By) locator);
         List<Elements> testBlazeElements = new ArrayList<>();
         if (elementList.size() > 0) {
@@ -117,16 +123,8 @@ public class ElementAPI implements Element {
     }
 
     @Override
-    public <T> Select selectLocator(T locator, Boolean processing) {
-        Select dropDown = null;
-        if (locator instanceof WebElement) dropDown = new Select((WebElement) locator);
-        if (locator instanceof By) dropDown = new Select(findMyElements.getElement((By) locator, processing));
-        else if (locator instanceof String && ((String) locator).startsWith("ByMobile")) {
-            dropDown = new Select(getMobileElement(((String) locator).split("::")[1], processing));
-        } else if (locator instanceof String && ((String) locator).startsWith("ByAngular")) {
-            dropDown = new Select(ng.getNgElement(((String) locator).split("::")[1], processing));
-        }
-        return dropDown;
+    public <T> Select selectLocator(T locatorParameter, Boolean processing) {
+        return new Select(locator(locatorParameter, processing));
     }
 
     /**

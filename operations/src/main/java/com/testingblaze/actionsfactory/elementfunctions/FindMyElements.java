@@ -20,7 +20,7 @@
 package com.testingblaze.actionsfactory.elementfunctions;
 
 import com.testingblaze.actionsfactory.abstracts.ElementProcessing;
-import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
@@ -39,12 +39,12 @@ import java.util.List;
  */
 
 public final class FindMyElements {
-    private LocatorProcessing getLocator;
-    private ElementProcessing elementProcessing;
-    private WebDriver driver;
+    private final HGJGcYGHQk iframeAnalyzer;
+    private final ElementProcessing elementProcessing;
+    private final WebDriver driver;
 
     public FindMyElements() {
-        this.getLocator = InstanceRecording.getInstance(LocatorProcessing.class);
+        this.iframeAnalyzer = InstanceRecording.getInstance(HGJGcYGHQk.class);
         this.elementProcessing = InstanceRecording.getInstance(ElementProcessing.class);
         this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
     }
@@ -58,19 +58,19 @@ public final class FindMyElements {
      * @return webElement
      */
     public WebElement getElement(By locator, Boolean enablePreProcessing) {
-        By refinedFinalLocator = getLocator.get(locator);
+        iframeAnalyzer.setUpLocator(locator);
         if (enablePreProcessing) {
             try {
-                return elementProcessing.forSingleElement(refinedFinalLocator);
+                return elementProcessing.forSingleElement(locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         } else {
             try {
-                return driver.findElement(refinedFinalLocator);
+                return driver.findElement(locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         }
@@ -84,19 +84,19 @@ public final class FindMyElements {
      * @return webElement
      */
     public WebElement getNestedElement(WebElement element, By locator, Boolean enablePreProcessing) {
-        By refinedFinalLocator = getLocator.get(locator);
+        iframeAnalyzer.setUpLocator(locator);
         if (enablePreProcessing) {
             try {
-                return elementProcessing.forNestedElement(element, refinedFinalLocator);
+                return elementProcessing.forNestedElement(element, locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Nested Element is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Nested Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         } else {
             try {
-                return element.findElement(refinedFinalLocator);
+                return element.findElement(locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Nested Element is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Nested Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         }
@@ -112,19 +112,19 @@ public final class FindMyElements {
      * @author nauman.shahid
      */
     public List<WebElement> getElements(By locator, Boolean enablePreProcessing) {
-        By refinedFinalLocator = getLocator.get(locator);
+        iframeAnalyzer.setUpLocator(locator);
         if (enablePreProcessing) {
             try {
-                return elementProcessing.forListOfElements(refinedFinalLocator);
+                return elementProcessing.forListOfElements(locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "List of Elements is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "List of Elements is not present or locator is not correct | " + locator);
                 throw e;
             }
         } else {
             try {
-                return driver.findElements(refinedFinalLocator);
+                return driver.findElements(locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "List of Elementss is not present or locator is not correct | " + refinedFinalLocator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "List of Elementss is not present or locator is not correct | " + locator);
                 throw e;
             }
         }
@@ -139,11 +139,11 @@ public final class FindMyElements {
      * @warning No Pre-Processing
      */
     public List<WebElement> getNestedElementList(WebElement element, By locator) {
-        By refinedFinalLocator = getLocator.get(locator);
+        iframeAnalyzer.setUpLocator(locator);
         try {
             return element.findElements(locator);
         } catch (Exception e) {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element is not present or locator is not correct | " + refinedFinalLocator);
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element is not present or locator is not correct | " + locator);
             throw e;
         }
     }
@@ -158,17 +158,17 @@ public final class FindMyElements {
      * @author nauman.shahid
      */
     public Select getDropDown(By locator, Boolean enablePreProcessing) {
-        By refinedFinalLocator = getLocator.get(locator);
+        iframeAnalyzer.setUpLocator(locator);
         if (enablePreProcessing) {
             try {
-                return new Select(elementProcessing.forSingleElement(refinedFinalLocator));
+                return new Select(elementProcessing.forSingleElement(locator));
             } catch (Exception e) {
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         } else {
             try {
-                return new Select(driver.findElement(refinedFinalLocator));
+                return new Select(driver.findElement(locator));
             } catch (Exception e) {
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element is not present or locator is not correct | " + locator);
                 throw e;

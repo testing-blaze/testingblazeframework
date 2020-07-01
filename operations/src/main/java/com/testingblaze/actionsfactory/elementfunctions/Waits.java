@@ -19,7 +19,7 @@
  */
 package com.testingblaze.actionsfactory.elementfunctions;
 
-import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
@@ -48,10 +48,10 @@ public final class Waits {
     private final long STANDARD_POLLING_TIME = 1;
     private FluentWait<WebDriver> wait;
     private FluentWait<WebDriver> waitToInvisible;
-    private LocatorProcessing getLocator;
+    private final HGJGcYGHQk iframeAnalyzer;
 
     public Waits() {
-        this.getLocator = InstanceRecording.getInstance(LocatorProcessing.class);
+        this.iframeAnalyzer = InstanceRecording.getInstance(HGJGcYGHQk.class);
     }
 
     /**
@@ -63,8 +63,8 @@ public final class Waits {
      * @return The element which was found on the page
      */
     public void ElementToBePresent(By locator, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        waitFor(refinedFinalLocator, ExpectedConditions.presenceOfElementLocated(refinedFinalLocator), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        waitFor(locator, ExpectedConditions.presenceOfElementLocated(locator), customWaitTime);
     }
 
     public void ElementToBePresent(By locator) {
@@ -81,8 +81,8 @@ public final class Waits {
      * @return The element which was found on the page
      */
     public void ElementToBeClickable(By locator, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        waitFor(refinedFinalLocator, ExpectedConditions.elementToBeClickable(getLocator.get(refinedFinalLocator)), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        waitFor(locator, ExpectedConditions.elementToBeClickable(locator), customWaitTime);
     }
 
     public void ElementToBeClickable(By locator) {
@@ -98,8 +98,8 @@ public final class Waits {
      * @return The element which was found on the page
      */
     public void ElementToBeVisible(By locator, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        waitFor(refinedFinalLocator, ExpectedConditions.visibilityOfElementLocated(getLocator.get(refinedFinalLocator)), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        waitFor(locator, ExpectedConditions.visibilityOfElementLocated(locator), customWaitTime);
     }
 
     public void ElementToBeVisible(By locator) {
@@ -130,8 +130,8 @@ public final class Waits {
      * @return A boolean indicating whether or not the element disappeared
      */
     public Boolean ElementToDisappear(By locator, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        return waitFor(refinedFinalLocator, ExpectedConditions.invisibilityOfElementLocated(getLocator.get(refinedFinalLocator)), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        return waitFor(locator, ExpectedConditions.invisibilityOfElementLocated(locator), customWaitTime);
     }
 
     public Boolean ElementToDisappear(By locator) {
@@ -147,8 +147,8 @@ public final class Waits {
      * @return A boolean indicating whether or not the element was selected
      */
     public Boolean ElementToBeSelected(By locator, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        return waitFor(refinedFinalLocator, ExpectedConditions.elementToBeSelected(getLocator.get(refinedFinalLocator)), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        return waitFor(locator, ExpectedConditions.elementToBeSelected(locator), customWaitTime);
     }
 
     public Boolean ElementToBeSelected(By locator) {
@@ -255,8 +255,8 @@ public final class Waits {
      * @return A boolean indicating whether or not the given conditions were met.
      */
     public Boolean AttributeToEqual(By locator, String attribute, String value, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        return waitFor(refinedFinalLocator, ExpectedConditions.attributeToBe(refinedFinalLocator, attribute, value), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        return waitFor(locator, ExpectedConditions.attributeToBe(locator, attribute, value), customWaitTime);
     }
 
     public Boolean AttributeToEqual(By locator, String attribute, String value) {
@@ -274,8 +274,8 @@ public final class Waits {
      * @return A boolean indicating whether or not the given conditions were met.
      */
     public Boolean AttributeToContain(By locator, String attribute, String value, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        return waitFor(refinedFinalLocator, ExpectedConditions.attributeContains(refinedFinalLocator, attribute, value), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        return waitFor(locator, ExpectedConditions.attributeContains(locator, attribute, value), customWaitTime);
     }
 
     public Boolean AttributeToContain(By locator, String attribute, String value) {
@@ -297,8 +297,8 @@ public final class Waits {
         //                      ExpectedConditions.attributeToBe can only check the attribute text().
         //                      These are not guaranteed to be the same, so I cannot simply call
         //                      AttributeToEqual(locator, "text()", text).
-        By refinedFinalLocator = getLocator.get(locator);
-        return waitFor(refinedFinalLocator, ExpectedConditions.textToBePresentInElementLocated(refinedFinalLocator, text), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        return waitFor(locator, ExpectedConditions.textToBePresentInElementLocated(locator, text), customWaitTime);
     }
 
     public Boolean TextToContain(By locator, String text) {
@@ -344,8 +344,8 @@ public final class Waits {
      *                       Defaults to the standard wait time (5 or -DwaitTime parameter if present)
      */
     public void ElementListToBePresent(By locator, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        waitFor(refinedFinalLocator, ExpectedConditions.presenceOfAllElementsLocatedBy(refinedFinalLocator), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        waitFor(locator, ExpectedConditions.presenceOfAllElementsLocatedBy(locator), customWaitTime);
     }
 
     public void ElementListToBePresent(By locator) {
@@ -360,8 +360,8 @@ public final class Waits {
      *                       Defaults to the standard wait time (5 or -DwaitTime parameter if present)
      */
     public void ElementListToBeVisible(By locator, long customWaitTime) {
-        By refinedFinalLocator = getLocator.get(locator);
-        waitFor(refinedFinalLocator, ExpectedConditions.visibilityOfAllElementsLocatedBy(refinedFinalLocator), customWaitTime);
+        iframeAnalyzer.setUpLocator(locator);
+        waitFor(locator, ExpectedConditions.visibilityOfAllElementsLocatedBy(locator), customWaitTime);
     }
 
     public long getWaitTime() {

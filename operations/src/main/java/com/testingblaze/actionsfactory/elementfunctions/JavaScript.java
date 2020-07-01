@@ -19,10 +19,11 @@
  */
 package com.testingblaze.actionsfactory.elementfunctions;
 
-import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.misclib.ConsoleFormatter;
 import com.testingblaze.objects.InstanceRecording;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.By;
@@ -38,11 +39,11 @@ import org.openqa.selenium.WebElement;
 
 public final class JavaScript {
     JavascriptExecutor js;
-    LocatorProcessing getLocator;
+    HGJGcYGHQk iframeAnalyzer;
 
     public JavaScript() {
         js = (JavascriptExecutor) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
-        getLocator = InstanceRecording.getInstance(LocatorProcessing.class);
+        iframeAnalyzer = InstanceRecording.getInstance(HGJGcYGHQk.class);
     }
 
     /**
@@ -148,7 +149,9 @@ public final class JavaScript {
      */
     public void scrollElementToPageDetailCenter(WebElement element) {
         //Console log  Attempting to scroll element to page center with JavaScript");
-        String scrollElementIntoMiddle = ""
+        boolean isIeBased = EnvironmentFactory.getDevice().toLowerCase().contains("ie")
+                || EnvironmentFactory.getDevice().toLowerCase().contains("edge");
+        String scrollElementIntoMiddle = String.format(""
                 + "function isScrollable(element) {"
                 + "    var styles = ("
                 + "        document.defaultView && document.defaultView.getComputedStyle ? "
@@ -198,9 +201,8 @@ public final class JavaScript {
                 + "        el = parentEl;"
                 + "        parentEl = parentEl.parentElement;"
                 + "    }"
-                + "    el.scrollTop = total-(parentEl.clientHeight/2.0);"
-                + "    parentEl.scrollTop = total-(parentEl.clientHeight/2.0);"
-                + "}";
+                + "    %s.scrollTop = total-(parentEl.clientHeight/2.0);"
+                + "}", isIeBased ? "el" : "parentEl");
 
         try {
             js.executeScript(scrollElementIntoMiddle, element);
@@ -211,9 +213,9 @@ public final class JavaScript {
 
     // only for super Element use
     public void scrollElementToPageDetailCenter(By locator) {
-        By refinedFinalLocator = getLocator.get(locator);
+        iframeAnalyzer.setUpLocator(locator);
         try {
-            WebElement element = InstanceRecording.getInstance(DeviceBucket.class).getDriver().findElement(refinedFinalLocator);
+            WebElement element = InstanceRecording.getInstance(DeviceBucket.class).getDriver().findElement(locator);
             this.scrollElementToPageDetailCenter(element);
         } catch (Exception e) {
         }

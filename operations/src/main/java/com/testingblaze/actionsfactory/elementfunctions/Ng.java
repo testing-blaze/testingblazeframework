@@ -19,7 +19,6 @@
  */
 package com.testingblaze.actionsfactory.elementfunctions;
 
-import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
@@ -51,14 +50,12 @@ import java.util.List;
 public final class Ng {
     private NgWebDriver ngDriver;
     private WebDriver driver;
-    private LocatorProcessing getLocator;
 
     public Ng() {
         if (!EnvironmentFactory.getDevice().equalsIgnoreCase("android") || !EnvironmentFactory.getDevice().equalsIgnoreCase("ios")) {
             this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
             this.ngDriver = new NgWebDriver((JavascriptExecutor) this.driver);
             ngDriver.waitForAngularRequestsToFinish();
-            this.getLocator = InstanceRecording.getInstance(LocatorProcessing.class);
         }
     }
 
@@ -70,8 +67,8 @@ public final class Ng {
      */
     public WebElement getNgElement(String locatorWithType,Boolean processing) {
         WebElement fetchElement = null;
-        String locatorType=locatorWithType.split(":")[0];
-        String refinedLocator = getLocator.get(locatorWithType);
+        String locatorType = locatorWithType.split(":")[0];
+        String refinedLocator = locatorWithType.split(":")[1];
         switch (locatorType.toUpperCase()) {
             case "MODEL":
                 fetchElement = getElementWithModel(refinedLocator);
@@ -113,7 +110,7 @@ public final class Ng {
     public List<WebElement> getNgElements(String locatorWithType,Boolean processing) {
         List<WebElement> fetchElement = null;
         String locatorType=locatorWithType.split(":")[0];
-        String refinedLocator = getLocator.get(locatorWithType);
+        String refinedLocator = locatorWithType.split(":")[1];
         switch (locatorType.toUpperCase()) {
             case "MODEL":
                 fetchElement = getElementsWithModel(refinedLocator);

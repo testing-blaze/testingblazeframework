@@ -23,7 +23,6 @@ package com.testingblaze.actionsfactory.api;
 import com.testingblaze.actionsfactory.abstracts.Action;
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.abstracts.ElementProcessing;
-import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
@@ -31,7 +30,6 @@ import com.testingblaze.actionsfactory.elementfunctions.MouseActions;
 import com.testingblaze.actionsfactory.elementfunctions.Ng;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
 import com.testingblaze.actionsfactory.processing.HAbNpdpLKF;
-import com.testingblaze.actionsfactory.processing.qnadzOnjgo;
 import com.testingblaze.actionsfactory.type.jucQcQgaaP;
 import com.testingblaze.actionsfactory.type.BQUnpmlimY;
 import com.testingblaze.actionsfactory.type.DropDown;
@@ -44,7 +42,6 @@ import com.testingblaze.objects.InstanceRecording;
 public class ActionFactoryInitiate {
     public ActionFactoryInitiate() {
         InstanceRecording.recordInstance(HGJGcYGHQk.class, new HGJGcYGHQk());
-        InstanceRecording.recordInstance(LocatorProcessing.class,new qnadzOnjgo()::getRefinedLocator);
         InstanceRecording.recordInstance(Waits.class, new Waits());
         InstanceRecording.recordInstance(Action.class, new GEqwlYLeImActions());
         InstanceRecording.recordInstance(jucQcQgaaP.class, new jucQcQgaaP());

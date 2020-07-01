@@ -19,7 +19,6 @@
  */
 package com.testingblaze.actionsfactory.elementfunctions;
 
-import com.testingblaze.actionsfactory.abstracts.LocatorProcessing;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.mobile.Android;
@@ -56,13 +55,12 @@ public final class Mobile {
     private Android android;
     private IOS ios;
     int pressX, bottomY, topY;
-    private LocatorProcessing getLocator;
     private MobileScrolls mobileScrolls;
     private Tap tap;
     private MobileAccessories mobileAccessories;
 
     public Mobile() {
-        this.getLocator = InstanceRecording.getInstance(LocatorProcessing.class);
+
     }
 
     /**
@@ -111,7 +109,7 @@ public final class Mobile {
     private WebElement getMobileElement(String locatorWithType, Boolean processing) {
         WebElement fetchElement = null;
         String locatorType = locatorWithType.split(":")[0];
-        String refinedLocator = getLocator.get(locatorWithType);
+        String refinedLocator = locatorWithType.split(":")[1];
         // Add processing
         switch (locatorType.toUpperCase()) {
             case "XPATH":
@@ -154,8 +152,7 @@ public final class Mobile {
     private List<WebElement> getMobileElements(String locatorWithType, Boolean processing) {
         List<WebElement> fetchElement = null;
         String locatorType = locatorWithType.split(":")[0];
-        String locator = locatorWithType.split(":")[1];
-        String refinedLocator = getLocator.get(locator);
+        String refinedLocator = locatorWithType.split(":")[1];
         // Add processing
         switch (locatorType.toUpperCase()) {
             case "XPATH":
