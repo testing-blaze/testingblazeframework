@@ -19,6 +19,7 @@
  */
 package com.testingblaze.actionsfactory.api;
 
+import com.paulhammant.ngwebdriver.ByAngular;
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
@@ -27,6 +28,7 @@ import com.testingblaze.objects.Elements;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
+import io.appium.java_client.MobileBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -51,13 +53,16 @@ public class ElementAPI implements Element {
     @Override
     public <T> WebElement locator(T locator, Boolean processing) {
         WebElement element = null;
-        if(locator instanceof WebElement) return (WebElement) locator;
+        if(locator instanceof WebElement) {
+            return (WebElement) locator;
+        }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting single element located by: " + locator.toString());
-        if (locator instanceof By) element = findMyElements.getElement((By) locator, processing);
-        else if (locator instanceof String && (locator.toString().startsWith("ByMobile"))) {
-            element = getMobileElement(((String) locator).split("::")[1], processing);
-        } else if (locator instanceof String && (locator.toString().startsWith("ByAngular"))) {
-            element = ng.getNgElement(((String) locator).split("::")[1], processing);
+        if (locator instanceof MobileBy) {
+            element = findMobileElement.getMobileElement((MobileBy) locator, processing);
+        } else if (locator instanceof ByAngular.BaseBy) {
+            element = ng.getNgElement((ByAngular.BaseBy) locator, processing);
+        } else {
+            element = findMyElements.getElement((By) locator, processing);
         }
         return element;
     }
@@ -76,7 +81,9 @@ public class ElementAPI implements Element {
     public <T> WebElement nestedElement(WebElement webElement, T locator) {
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting nested element located by: " + locator.toString());
         WebElement element = null;
-        if (locator instanceof By) element = findMyElements.getNestedElement(webElement, (By) locator, true);
+        if (locator instanceof By) {
+            element = findMyElements.getNestedElement(webElement, (By) locator, true);
+        }
         return element;
     }
 
@@ -84,13 +91,15 @@ public class ElementAPI implements Element {
     public <T> List<Elements> locators(T locator, Boolean processing) {
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting list of elements located by: " + locator.toString());
         List<WebElement> elementList = null;
-        if (locator instanceof By) {
+
+        if (locator instanceof MobileBy) {
+            elementList = findMobileElement.getMobileElements((MobileBy) locator, processing);
+        } else if (locator instanceof ByAngular.BaseBy) {
+            elementList = ng.getNgElements((ByAngular.BaseBy) locator, processing);
+        } else if (locator instanceof By) {
             elementList = findMyElements.getElements((By) locator, processing);
-        } else if (locator instanceof String && ((String) locator).startsWith("ByMobile")) {
-            elementList = getMobileElements(((String) locator).split("::")[1], processing);
-        } else if (locator instanceof String && ((String) locator).startsWith("ByAngular")) {
-            elementList = ng.getNgElements(((String) locator).split("::")[1], processing);
         }
+
         List<Elements> testBlazeElements = new ArrayList<>();
         if (elementList.size() > 0) {
             for (WebElement element : elementList) {
@@ -125,43 +134,5 @@ public class ElementAPI implements Element {
     @Override
     public <T> Select selectLocator(T locatorParameter, Boolean processing) {
         return new Select(locator(locatorParameter, processing));
-    }
-
-    /**
-     * Accessing private methods of mobile class
-     *
-     * @param locator
-     * @param processing
-     * @return
-     */
-    private WebElement getMobileElement(String locator, Boolean processing) {
-        WebElement element = null;
-        try {
-            Method mobileElement = Mobile.class.getDeclaredMethod("getMobileElement", String.class, Boolean.class);
-            mobileElement.setAccessible(true);
-            element = (WebElement) mobileElement.invoke(findMobileElement, locator, processing);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return element;
-    }
-
-    /**
-     * Accessing private methods of mobile class
-     *
-     * @param locator
-     * @param processing
-     * @return
-     */
-    private List<WebElement> getMobileElements(String locator, Boolean processing) {
-        List<WebElement> element = null;
-        try {
-            Method mobileElement = Mobile.class.getDeclaredMethod("getMobileElements", String.class, Boolean.class);
-            mobileElement.setAccessible(true);
-            element = (List<WebElement>) mobileElement.invoke(findMobileElement, locator, processing);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return element;
     }
 }
