@@ -180,6 +180,11 @@ public class CapabilitiesManager {
             }
 
         } else {
+            if (!"default".equals(System.getProperty("browserVersion"))) {
+                WebDriverManager.chromedriver().browserVersion((System.getProperty("browserVersion"))).setup();
+            } else {
+                WebDriverManager.chromedriver().setup();
+            }
             androidCapabilities.setCapability("chromedriverExecutable", WebDriverManager.chromedriver().getBinaryPath());
             androidCapabilities.setCapability("w3c", false);
             androidCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");

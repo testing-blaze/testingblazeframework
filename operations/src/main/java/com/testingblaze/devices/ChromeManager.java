@@ -58,10 +58,10 @@ public final class ChromeManager implements qrYoTsOWwA {
             disableDriverEnforcedDownloadActivity = false;
         }
 
-        if (!"default".equals(System.getProperty("eDriverVersion"))) {
-            WebDriverManager.chromedriver().version(System.getProperty("eDriverVersion")).forceCache().setup();
+        if (!"default".equals(System.getProperty("browserVersion"))) {
+            WebDriverManager.chromedriver().browserVersion((System.getProperty("browserVersion"))).setup();
         } else {
-            WebDriverManager.chromedriver().forceCache().setup();
+            WebDriverManager.chromedriver().setup();
         }
 
         service = new ChromeDriverService.Builder().usingDriverExecutable(new File(WebDriverManager.chromedriver().getBinaryPath())).usingAnyFreePort().build();

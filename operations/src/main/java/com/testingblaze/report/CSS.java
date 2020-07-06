@@ -113,7 +113,6 @@ public final class CSS {
                         + "  - Version: " + EnvironmentFactory.getDeviceVersion()
                         + "  - Platform: " + EnvironmentFactory.getPlatformInfo()
                         +"<br>Execution Mode: " + (EnvironmentFactory.isHeadless() ? "Headless" : "Browser UI")
-                        + "  - eDriver version: " + EnvironmentFactory.getDriverVersion()
                         + "  - Reduced Automation Execution Speed: "+(EnvironmentFactory.getSlowDownExecutionTime() > 0 ? "Yes":"No"),
                 "PoweredBy:"+"Testing Blaze Automation Solution - Apache License 2.0 [ "+ EnvironmentFactory.getOrgName()+"]"
         );

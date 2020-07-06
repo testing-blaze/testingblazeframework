@@ -19,23 +19,15 @@
  */
 package com.testingblaze.actionsfactory.elementfunctions;
 
+import com.paulhammant.ngwebdriver.ByAngular;
+import com.paulhammant.ngwebdriver.ByAngular.Factory;
+import com.paulhammant.ngwebdriver.NgWebDriver;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
-import com.paulhammant.ngwebdriver.ByAngular;
-import com.paulhammant.ngwebdriver.ByAngular.Factory;
-import com.paulhammant.ngwebdriver.ByAngularBinding;
-import com.paulhammant.ngwebdriver.ByAngularButtonText;
-import com.paulhammant.ngwebdriver.ByAngularCssContainingText;
-import com.paulhammant.ngwebdriver.ByAngularExactBinding;
-import com.paulhammant.ngwebdriver.ByAngularModel;
-import com.paulhammant.ngwebdriver.ByAngularOptions;
-import com.paulhammant.ngwebdriver.ByAngularPartialButtonText;
-import com.paulhammant.ngwebdriver.ByAngularRepeater;
-import com.paulhammant.ngwebdriver.NgWebDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

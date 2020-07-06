@@ -181,15 +181,6 @@ public final class EnvironmentFactory {
         return slowDownExecutionTime;
     }
 
-    private static String eDriverVersion;
-
-    public static String getDriverVersion() {
-        if (eDriverVersion == null) {
-            eDriverVersion = System.getProperty("eDriverVersion") != null ? System.getProperty("eDriverVersion") != "default" ? System.getProperty("eDriverVersion") : getDeviceVersion() : getDeviceVersion();
-        }
-        return eDriverVersion;
-    }
-
     private static String scenarioTag;
 
     public static String getScenarioTag() {
