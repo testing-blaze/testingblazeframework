@@ -2,7 +2,6 @@ package com.testingblaze.devices;
 
 
 import com.testingblaze.register.EnvironmentFactory;
-import com.testingblaze.register.I;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.MutableCapabilities;
@@ -22,8 +21,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariOptions;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 
 public class CapabilitiesManager {
@@ -168,14 +169,20 @@ public class CapabilitiesManager {
 
     public static DesiredCapabilities getAndroidCapabilities() {
         DesiredCapabilities androidCapabilities = new DesiredCapabilities();
+        Properties loadConfigFile=new Properties();
+        String filePath = System.getProperty("user.dir") + File.separatorChar + "mobileapp" + File.separatorChar;
+        try {
+            loadConfigFile.load(new FileReader(filePath+"appConfig.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (EnvironmentFactory.getAppName() != null) {
-            androidCapabilities.setCapability(MobileCapabilityType.APP,
-                    System.getProperty("user.dir") + "\\mobileapp" + EnvironmentFactory.getAppName());
+            androidCapabilities.setCapability(MobileCapabilityType.APP, filePath+ EnvironmentFactory.getAppName());
 
             try {
-                androidCapabilities.setCapability("appPackage", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("appConfig", "appPackage"));
-                androidCapabilities.setCapability("appActivity", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("appConfig", "appActivity"));
-            } catch (NullPointerException | IOException e) {
+                androidCapabilities.setCapability("appPackage", loadConfigFile.getProperty("appPackage"));
+                androidCapabilities.setCapability("appActivity", loadConfigFile.getProperty("appActivity"));
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
 
@@ -199,7 +206,7 @@ public class CapabilitiesManager {
         DesiredCapabilities iosCapabilities = new DesiredCapabilities();
         if (EnvironmentFactory.getAppName() != null) {
             iosCapabilities.setCapability(MobileCapabilityType.APP,
-                    System.getProperty("user.dir") + File.pathSeparatorChar +"mobileapp" + EnvironmentFactory.getAppName());
+                    System.getProperty("user.dir") +File.separatorChar +"mobileapp" +File.separatorChar+ EnvironmentFactory.getAppName());
         } else {
             iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
         }

@@ -108,11 +108,7 @@ public final class Mobile {
      * @return
      */
     public WebElement getMobileElement(MobileBy locator, Boolean processing) {
-        WebElement fetchElement = driver().findElement(locator);
-        if (fetchElement == null) {
-            throw new TestingBlazeRunTimeException("Mobile element is not present or incorrect: " + locator);
-        }
-        return fetchElement;
+        return driver().findElement(locator);
     }
 
 

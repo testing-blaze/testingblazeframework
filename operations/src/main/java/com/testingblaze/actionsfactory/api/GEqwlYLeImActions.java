@@ -27,6 +27,7 @@ import com.testingblaze.actionsfactory.processing.wlGgOnuIbI;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.TestingBlazeGlobal;
 import com.testingblaze.objects.InstanceRecording;
+import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.By;
@@ -60,7 +61,7 @@ public class GEqwlYLeImActions implements Action {
 
     @Override
     public void doIt(WebElement element) {
-        clickProcessingController.preProcessingTestBlaze.perform();
+        if (mobileRun()) clickProcessingController.preProcessingTestBlaze.perform();
         localWait.until(ExpectedConditions.elementToBeClickable(element));
         try {
             element.click();
@@ -88,7 +89,7 @@ public class GEqwlYLeImActions implements Action {
                 throw notClickableOrNoFocusException;
             }
         }
-        clickProcessingController.postProcessingTestBlaze.perform();
+        if (mobileRun()) clickProcessingController.postProcessingTestBlaze.perform();
     }
 
     @Override
@@ -100,7 +101,8 @@ public class GEqwlYLeImActions implements Action {
                 I.amPerforming().switchTo().acceptAlert();
                 CompletableFuture.supplyAsync(() -> {
                     try {
-                        InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                        if (mobileRun())
+                            InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
                     } catch (Exception e) {
 
                     }
@@ -111,7 +113,8 @@ public class GEqwlYLeImActions implements Action {
                 I.amPerforming().switchTo().acceptAlert();
                 CompletableFuture.supplyAsync(() -> {
                     try {
-                        InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                        if (mobileRun())
+                            InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
                     } catch (Exception e) {
 
                     }
@@ -141,74 +144,80 @@ public class GEqwlYLeImActions implements Action {
      * @param args    actionType,exception,inputText(for input only)
      */
     private void retryExecutor(WebElement element, String... args) {
-        CompletableFuture.supplyAsync(() -> {
-            try {
-                InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: red; border: 2px solid black;');", element);
-            } catch (Exception e) {
+        if (mobileRun()) {
+            CompletableFuture.supplyAsync(() -> {
+                try {
+                    if (mobileRun())
+                        InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: red; border: 2px solid black;');", element);
+                } catch (Exception e) {
 
-            }
-            return true;
-        });
-        timerLimit = wait.getWaitTime();
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying to " + args[0] + " for maximum " + Waits.STANDARD_WAIT_TIME + " seconds");
-        while (timerLimit > System.currentTimeMillis() / 1000) {
-            try {
-                if (args[0].equalsIgnoreCase("click")) {
-                    element.click();
-                    I.amPerforming().switchTo().acceptAlert();
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
-                    break;
-                } else if (args[0].equalsIgnoreCase("input")) {
-                    if (args[2].equalsIgnoreCase("--clear--")) {
-                        element.clear();
-                        I.amPerforming().switchTo().acceptAlert();
-                    } else {
-                        element.sendKeys(args[2]);
-                        I.amPerforming().switchTo().acceptAlert();
-                    }
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
-                    break;
                 }
-            } catch (ElementClickInterceptedException interceptException) {
-                if (timerLimit <= System.currentTimeMillis() / 1000) {
-                    throw interceptException;
-                }
-            } catch (ElementNotInteractableException interactableException) {
-                if (timerLimit <= System.currentTimeMillis() / 1000) {
-                    throw interactableException;
-                }
-            } catch (StaleElementReferenceException staleException) {
-
-                if (TestingBlazeGlobal.getVariable("locatorInProgress") instanceof By) {
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Stale Element Exception : Retrying once again");
-                    WebElement freshElement = InstanceRecording.getInstance(FindMyElements.class).getElement((By) TestingBlazeGlobal.getVariable("locatorInProgress"), true);
-                    I.amPerforming().waitFor().makeThreadSleep(2000);
+                return true;
+            });
+            timerLimit = wait.getWaitTime();
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying to " + args[0] + " for maximum " + Waits.STANDARD_WAIT_TIME + " seconds");
+            while (timerLimit > System.currentTimeMillis() / 1000) {
+                try {
                     if (args[0].equalsIgnoreCase("click")) {
-                        freshElement.click();
-                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                        element.click();
                         I.amPerforming().switchTo().acceptAlert();
+                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                        break;
                     } else if (args[0].equalsIgnoreCase("input")) {
                         if (args[2].equalsIgnoreCase("--clear--")) {
-                            freshElement.clear();
-                            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                            element.clear();
                             I.amPerforming().switchTo().acceptAlert();
                         } else {
-                            freshElement.sendKeys(args[2]);
-                            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                            element.sendKeys(args[2]);
                             I.amPerforming().switchTo().acceptAlert();
                         }
+                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                        break;
                     }
-                } else {
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Stale Element Exception : Retry cancelled");
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Next Step might fail");
-                }
-                break;
-            } catch (WebDriverException notClickableException) {
-                if ((timerLimit <= System.currentTimeMillis() / 1000) || !notClickableException.getMessage().contains("is not clickable at point")) {
-                    throw notClickableException;
+                } catch (ElementClickInterceptedException interceptException) {
+                    if (timerLimit <= System.currentTimeMillis() / 1000) {
+                        throw interceptException;
+                    }
+                } catch (ElementNotInteractableException interactableException) {
+                    if (timerLimit <= System.currentTimeMillis() / 1000) {
+                        throw interactableException;
+                    }
+                } catch (StaleElementReferenceException staleException) {
+
+                    if (TestingBlazeGlobal.getVariable("locatorInProgress") instanceof By) {
+                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Stale Element Exception : Retrying once again");
+                        WebElement freshElement = InstanceRecording.getInstance(FindMyElements.class).getElement((By) TestingBlazeGlobal.getVariable("locatorInProgress"), true);
+                        I.amPerforming().waitFor().makeThreadSleep(2000);
+                        if (args[0].equalsIgnoreCase("click")) {
+                            freshElement.click();
+                            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                            I.amPerforming().switchTo().acceptAlert();
+                        } else if (args[0].equalsIgnoreCase("input")) {
+                            if (args[2].equalsIgnoreCase("--clear--")) {
+                                freshElement.clear();
+                                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                                I.amPerforming().switchTo().acceptAlert();
+                            } else {
+                                freshElement.sendKeys(args[2]);
+                                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
+                                I.amPerforming().switchTo().acceptAlert();
+                            }
+                        }
+                    } else {
+                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Stale Element Exception : Retry cancelled");
+                        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, "Next Step might fail");
+                    }
+                    break;
+                } catch (WebDriverException notClickableException) {
+                    if ((timerLimit <= System.currentTimeMillis() / 1000) || !notClickableException.getMessage().contains("is not clickable at point")) {
+                        throw notClickableException;
+                    }
                 }
             }
         }
     }
 
+    private Boolean mobileRun() {
+        return !(EnvironmentFactory.getDevice().equalsIgnoreCase("android") || EnvironmentFactory.getDevice().equalsIgnoreCase("ios"));
+    }
 }

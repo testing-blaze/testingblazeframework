@@ -44,7 +44,7 @@ public final class Ng {
     private WebDriver driver;
 
     public Ng() {
-        if (!EnvironmentFactory.getDevice().equalsIgnoreCase("android") || !EnvironmentFactory.getDevice().equalsIgnoreCase("ios")) {
+        if (!(EnvironmentFactory.getDevice().equalsIgnoreCase("android") || EnvironmentFactory.getDevice().equalsIgnoreCase("ios"))) {
             this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
             this.ngDriver = new NgWebDriver((JavascriptExecutor) this.driver);
             ngDriver.waitForAngularRequestsToFinish();
