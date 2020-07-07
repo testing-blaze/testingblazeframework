@@ -44,10 +44,10 @@ public final class FireFoxManager implements qrYoTsOWwA {
     public void setupController() {
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"null");
 
-        if(!"default".equals(System.getProperty("eDriverVersion"))) {
-            WebDriverManager.firefoxdriver().version(System.getProperty("eDriverVersion")).forceCache().setup();
+        if(!"default".equals(System.getProperty("browserVersion"))) {
+            WebDriverManager.firefoxdriver().browserVersion(System.getProperty("browserVersion")).setup();
         } else {
-            WebDriverManager.firefoxdriver().forceCache().setup();
+            WebDriverManager.firefoxdriver().setup();
         }
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {

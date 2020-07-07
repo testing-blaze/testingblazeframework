@@ -120,7 +120,7 @@ public class jucQcQgaaP {
      */
 
     public InputStream getResources(String fileNameWithExtension) {
-        return getClass().getResourceAsStream("/"+fileNameWithExtension);
+        return getClass().getResourceAsStream(File.separatorChar+fileNameWithExtension);
     }
 
     /**

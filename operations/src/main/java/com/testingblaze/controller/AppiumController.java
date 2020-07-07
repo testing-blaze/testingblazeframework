@@ -35,7 +35,7 @@ import java.net.ServerSocket;
 
 public final class AppiumController {
     private static AppiumDriverLocalService service;
-    private static final int DEFAULT_PORT = System.getProperty("port") != null ? Integer.parseInt(System.getProperty("port")) : 4723;
+    private static final int DEFAULT_PORT = System.getProperty("hub") != null ? Integer.parseInt(System.getProperty("hub").split(":")[2]) : 4723;
 
     /**
      * Build Appium Service Execute Appium Server
@@ -43,7 +43,7 @@ public final class AppiumController {
     public static void startServer() {
         killPort();
         service = new AppiumServiceBuilder()
-                .withIPAddress("127.0.0.1")
+                .withIPAddress(System.getProperty("hub") !=null ? System.getProperty("hub").split(":")[1].replaceAll("//", ""):"0.0.0.0")
                 .usingPort(DEFAULT_PORT)
                 .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "error")
