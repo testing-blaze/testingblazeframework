@@ -52,16 +52,10 @@ public final class ChromeManager implements qrYoTsOWwA {
             //System.setProperty("webdriver.chrome.silentOutput", "true");
         }
 
-        // Need to make it thread safe somehow
-        if (disableDriverEnforcedDownloadActivity) {
-            WebDriverManager.chromedriver().clearCache();
-            disableDriverEnforcedDownloadActivity = false;
-        }
-
         if (!"default".equals(System.getProperty("browserVersion"))) {
-            WebDriverManager.chromedriver().browserVersion((System.getProperty("browserVersion"))).setup();
+            WebDriverManager.chromedriver().useBetaVersions().browserVersion((System.getProperty("browserVersion"))).setup();
         } else {
-            WebDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().useBetaVersions().setup();
         }
 
         service = new ChromeDriverService.Builder().usingDriverExecutable(new File(WebDriverManager.chromedriver().getBinaryPath())).usingAnyFreePort().build();
