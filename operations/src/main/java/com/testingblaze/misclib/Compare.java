@@ -41,14 +41,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class Compare {
     private Image image;
-    private WebDriver driver;
 
     public Compare() {
         this.image = new Image();
-        this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
     }
 
     /**
@@ -71,31 +70,26 @@ public final class Compare {
      * @author nauman.shahid
      */
     public boolean sortAndCompareWebTableWithTwoColumns(Map<Integer, List<Elements>> twoColumnTable, String sortingOrder) {
-        boolean flag = false;
-        List<TwoColumnSorting> runtimeSortedList = new ArrayList<TwoColumnSorting>();
-        List<TwoColumnSorting> orignalTwoColumnList = new ArrayList<TwoColumnSorting>();
         List<Elements> rows_table1 = twoColumnTable.get(1);
         List<Elements> rows_table2 = twoColumnTable.get(2);
+
+        List<TwoColumnSorting> originalTwoColumnList = new ArrayList<>();
         for (int i = 0; i < rows_table1.size(); i++) {
-            runtimeSortedList.add(new TwoColumnSorting(rows_table1.get(i).getText(), Integer.parseInt(rows_table2.get(i).getText())));
+            originalTwoColumnList.add(new TwoColumnSorting(rows_table1.get(i).getText(), Integer.parseInt(rows_table2.get(i).getText())));
         }
-        orignalTwoColumnList.addAll(runtimeSortedList);
+
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,"Below is the original table received from web");
-        orignalTwoColumnList.stream().forEach(myList -> I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, myList.getPair()));
-        if ("Descending".equalsIgnoreCase(sortingOrder)) {
-            Comparator<TwoColumnSorting> customComparison = Comparator.comparingInt(sort -> sort.value);
-            Collections.sort(runtimeSortedList, customComparison.reversed());
+        originalTwoColumnList.forEach(myList -> I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, myList.getPair()));
 
-        } else if ("Ascending".equalsIgnoreCase(sortingOrder)) {
-            Comparator<TwoColumnSorting> customComparison = Comparator.comparingInt(sort -> sort.value);
-            Collections.sort(runtimeSortedList,customComparison);
+        Comparator<TwoColumnSorting> customComparison = Comparator.comparingInt(sort -> sort.value);
+        List<TwoColumnSorting> runtimeSortedList = "Ascending".equalsIgnoreCase(sortingOrder) ? originalTwoColumnList.stream().sorted(customComparison).collect(Collectors.toList())
+                : "Descending".equalsIgnoreCase(sortingOrder) ? originalTwoColumnList.stream().sorted(customComparison.reversed()).collect(Collectors.toList())
+                : originalTwoColumnList;
 
-        }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,"Below is the sorted table by Test Blaze");
-        runtimeSortedList.stream().forEach(myList -> I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, myList.getPair()));
+        runtimeSortedList.forEach(myList -> I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, myList.getPair()));
 
-        flag = runtimeSortedList.equals(orignalTwoColumnList);
-        return flag;
+        return runtimeSortedList.equals(originalTwoColumnList);
     }
 
     /**
@@ -109,19 +103,12 @@ public final class Compare {
     public Boolean sortAndCompareOneTableColumn(List<Elements> rows_table, String sorting) {
         boolean flag = false;
         try {
-            ArrayList<String> obtainedList = new ArrayList<>();
-            for (Elements we : rows_table) {
-                obtainedList.add(we.getText().toLowerCase());
-            }
-            ArrayList<String> sortedList = new ArrayList<>();
-            for (String s : obtainedList) {
-                sortedList.add(s.toLowerCase());
-            }
-            if (sorting.equalsIgnoreCase("Ascending")) {
-                Collections.sort(sortedList);
-            } else if (sorting.equalsIgnoreCase("Descending")) {
-                Collections.sort(sortedList, Collections.reverseOrder());
-            }
+            List<String> obtainedList = rows_table.stream().map(el -> el.getText().toLowerCase()).collect(Collectors.toList());
+
+            List<String> sortedList = "Ascending".equalsIgnoreCase(sorting) ? obtainedList.stream().sorted().collect(Collectors.toList())
+                    : "Descending".equalsIgnoreCase(sorting) ? obtainedList.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList())
+                    : obtainedList;
+
             flag = sortedList.equals(obtainedList);
         } catch (Exception e) {
             e.printStackTrace();
