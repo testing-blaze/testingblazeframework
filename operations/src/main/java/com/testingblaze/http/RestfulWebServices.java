@@ -20,9 +20,7 @@
 package com.testingblaze.http;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import io.restassured.RestAssured;
