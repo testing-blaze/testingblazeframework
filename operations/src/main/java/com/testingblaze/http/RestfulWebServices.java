@@ -21,6 +21,7 @@ package com.testingblaze.http;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
@@ -36,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * @category Handles all Api calls
  */
 public final class RestfulWebServices {
-    Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     public enum CallTypes {GET, POST, PATCH, DELETE, PUT}
 
@@ -64,24 +65,9 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response postCall(JsonObject jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response postCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
                              String authToken) {
         return makeCall(CallTypes.POST, jsonBody, stringBody, endPoint, key, keyValue, authToken);
-    }
-
-    /**
-     * make a post call
-     *
-     * @param jsonArray
-     * @param endPoint
-     * @param key
-     * @param keyValue
-     * @param authToken
-     * @return
-     */
-    public Response postCall(JsonArray jsonArray, String endPoint, String key, String keyValue,
-                             String authToken) {
-        return makeCall(CallTypes.POST, jsonArray, endPoint, key, keyValue, authToken);
     }
 
     /**
@@ -95,7 +81,7 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response putCall(JsonObject jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response putCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
                             String authToken) {
         return makeCall(CallTypes.PUT, jsonBody, stringBody, endPoint, key, keyValue, authToken);
     }
@@ -111,26 +97,10 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response patchCall(JsonObject jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response patchCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
                               String authToken) {
         return makeCall(CallTypes.PATCH, jsonBody, stringBody, endPoint, key, keyValue, authToken);
     }
-
-    /**
-     * make a post call
-     *
-     * @param jsonBody
-     * @param endPoint
-     * @param key
-     * @param keyValue
-     * @param authToken
-     * @return
-     */
-    public Response patchCall(JsonArray jsonBody, String endPoint, String key, String keyValue,
-                              String authToken) {
-        return makeCall(CallTypes.PATCH, jsonBody, endPoint, key, keyValue, authToken);
-    }
-
 
     /**
      * make a delete call
@@ -143,7 +113,7 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response DeleteCall(JsonObject jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response DeleteCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
                                String authToken) {
         return makeCall(CallTypes.DELETE, jsonBody, stringBody, endPoint, key, keyValue, authToken);
     }
@@ -161,7 +131,7 @@ public final class RestfulWebServices {
      * @return
      */
     private Response makeCall(CallTypes callType,
-                              JsonObject jsonBody, String stringBody, String endPoint, String key, String keyValue,
+                              JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
                               String authToken) {
 
         // Print pre-request logs
@@ -195,7 +165,7 @@ public final class RestfulWebServices {
             } catch (Exception e) {
                 // to handle reporting exception - avoid unnecessary exceptions
             }
-            request.body(gsonToJson(jsonBody));
+            request.body(gson.toJson(jsonBody));
         }
         if (stringBody != null) {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
@@ -228,93 +198,6 @@ public final class RestfulWebServices {
             consoleLogger(callType, response);
         }
         return response;
-    }
-
-    /**
-     * Combines the different request methods, since they had a lot of duplicated code.
-     *
-     * @param callType
-     * @param jsonArray
-     * @param endPoint
-     * @param key
-     * @param keyValue
-     * @param authToken
-     * @return
-     */
-    private Response makeCall(CallTypes callType,
-                              JsonArray jsonArray, String endPoint, String key, String keyValue,
-                              String authToken) {
-
-        // Print pre-request logs
-        try {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Executing " + callType.name() + " Api");
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "End Point is " + endPoint);
-        } catch (Exception e) {
-            // to handle reporting exception - avoid unnecessary exceptions
-        }
-
-        // Make sure that GET calls do not use relaxed HTTPS validation
-        RequestSpecification request;
-        if (callType == CallTypes.GET) {
-            request = RestAssured.given();
-        } else {
-            request = RestAssured.given().relaxedHTTPSValidation();
-        }
-
-        // Construct the request
-        request.accept("application/json");
-        request.header("Content-Type", "application/json");
-        if (keyValue != null) {
-            request.header(key, keyValue);
-        }
-        if (authToken != null) {
-            request.auth().oauth2(authToken);
-        }
-        if (jsonArray != null) {
-            try {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + jsonArray);
-            } catch (Exception e) {
-                // to handle reporting exception - avoid unnecessary exceptions
-            }
-            request.body(gson.toJson(jsonArray));
-        }
-
-        // Make the actual call
-        Response response = null;
-        switch (callType) {
-            case GET:
-                response = request.get(endPoint);
-                break;
-            case POST:
-                response = request.post(endPoint);
-                break;
-            case PUT:
-                response = request.put(endPoint);
-                break;
-            case PATCH:
-                response = request.patch(endPoint);
-                break;
-            case DELETE:
-                response = request.delete(endPoint);
-                break;
-        }
-            try {
-                reportsLogger(callType, response);
-            } catch (Exception e) {
-                // to handle reporting exception - avoid unnecessary exceptions
-                consoleLogger(callType, response);
-            }
-        return response;
-    }
-
-    /**
-     * convert to gson to json
-     *
-     * @param body
-     * @return
-     */
-    public String gsonToJson(JsonObject body) {
-        return gson.toJson(body);
     }
 
     private void reportsLogger(CallTypes callType, Response response) {
