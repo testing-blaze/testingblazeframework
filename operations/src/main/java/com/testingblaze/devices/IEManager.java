@@ -43,9 +43,9 @@ public final class IEManager implements qrYoTsOWwA {
     @Override
     public void setupController() {
         if ("ie-32".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
-            WebDriverManager.iedriver().arch32().setup();
+            WebDriverManager.iedriver().useBetaVersions().arch32().setup();
         } else {
-            WebDriverManager.iedriver().arch64().setup();
+            WebDriverManager.iedriver().useBetaVersions().arch64().setup();
         }
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
