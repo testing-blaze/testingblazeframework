@@ -43,9 +43,9 @@ public final class EdgeManager implements qrYoTsOWwA {
     @Override
     public void setupController() {
         if ("edge-32".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
-            WebDriverManager.edgedriver().arch32().setup();
+            WebDriverManager.edgedriver().useBetaVersions().arch32().setup();
         } else {
-            WebDriverManager.edgedriver().arch64().setup();
+            WebDriverManager.edgedriver().useBetaVersions().arch64().setup();
         }
 
         System.setProperty("webdriver.chrome.silentOutput", "true");
