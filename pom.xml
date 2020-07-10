@@ -203,6 +203,20 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.10.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-cucumber4</artifactId>
+            <version>5.0.0-BETA-13</version>
+        </dependency>
     </dependencies>
-
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-epam-reportportal</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/epam/reportportal</url>
+        </repository>
+    </repositories>
 </project>
