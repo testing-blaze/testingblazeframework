@@ -55,7 +55,7 @@ public final class RestfulWebServices {
     /**
      * make a post call
      *
-     * @param jsonBody
+     * @param jsonElement
      * @param stringBody
      * @param endPoint
      * @param key
@@ -63,15 +63,15 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response postCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response postCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue,
                              String authToken) {
-        return makeCall(CallTypes.POST, jsonBody, stringBody, endPoint, key, keyValue, authToken);
+        return makeCall(CallTypes.POST, jsonElement, stringBody, endPoint, key, keyValue, authToken);
     }
 
     /**
      * make a put call
      *
-     * @param jsonBody
+     * @param jsonElement
      * @param stringBody
      * @param endPoint
      * @param key
@@ -79,15 +79,15 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response putCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response putCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue,
                             String authToken) {
-        return makeCall(CallTypes.PUT, jsonBody, stringBody, endPoint, key, keyValue, authToken);
+        return makeCall(CallTypes.PUT, jsonElement, stringBody, endPoint, key, keyValue, authToken);
     }
 
     /**
      * make a post call
      *
-     * @param jsonBody
+     * @param jsonElement
      * @param stringBody
      * @param endPoint
      * @param key
@@ -95,15 +95,15 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response patchCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response patchCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue,
                               String authToken) {
-        return makeCall(CallTypes.PATCH, jsonBody, stringBody, endPoint, key, keyValue, authToken);
+        return makeCall(CallTypes.PATCH, jsonElement, stringBody, endPoint, key, keyValue, authToken);
     }
 
     /**
      * make a delete call
      *
-     * @param jsonBody
+     * @param jsonElement
      * @param stringBody
      * @param endPoint
      * @param key
@@ -111,16 +111,16 @@ public final class RestfulWebServices {
      * @param authToken
      * @return
      */
-    public Response DeleteCall(JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
+    public Response DeleteCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue,
                                String authToken) {
-        return makeCall(CallTypes.DELETE, jsonBody, stringBody, endPoint, key, keyValue, authToken);
+        return makeCall(CallTypes.DELETE, jsonElement, stringBody, endPoint, key, keyValue, authToken);
     }
 
     /**
      * Combines the different request methods, since they had a lot of duplicated code.
      *
      * @param callType
-     * @param jsonBody
+     * @param jsonElement
      * @param stringBody
      * @param endPoint
      * @param key
@@ -129,7 +129,7 @@ public final class RestfulWebServices {
      * @return
      */
     private Response makeCall(CallTypes callType,
-                              JsonElement jsonBody, String stringBody, String endPoint, String key, String keyValue,
+                              JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue,
                               String authToken) {
 
         // Print pre-request logs
@@ -157,13 +157,13 @@ public final class RestfulWebServices {
         if (authToken != null) {
             request.auth().oauth2(authToken);
         }
-        if (jsonBody != null) {
+        if (jsonElement != null) {
             try {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + jsonBody);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + jsonElement);
             } catch (Exception e) {
                 // to handle reporting exception - avoid unnecessary exceptions
             }
-            request.body(gson.toJson(jsonBody));
+            request.body(gson.toJson(jsonElement));
         }
         if (stringBody != null) {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
