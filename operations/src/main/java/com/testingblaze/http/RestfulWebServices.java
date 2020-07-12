@@ -166,7 +166,11 @@ public final class RestfulWebServices {
             request.body(gson.toJson(jsonElement));
         }
         if (stringBody != null) {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
+            try {
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
+            } catch (Exception e) {
+                // to handle reporting exception - avoid unnecessary exceptions
+            }
             request.body(stringBody);
         }
 
@@ -203,7 +207,7 @@ public final class RestfulWebServices {
         I.amPerforming().updatingOfReportWith().write(LogLevel.EMPTY_LABEL, "1 - Response status: " + response.statusLine());
         I.amPerforming().updatingOfReportWith().write(LogLevel.EMPTY_LABEL, "2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
         if (System.getProperty("postTestResults") == null)
-        I.amPerforming().updatingOfReportWith().write(LogLevel.EMPTY_LABEL, "3 - Response body: " + response.body().asString());
+            I.amPerforming().updatingOfReportWith().write(LogLevel.EMPTY_LABEL, "3 - Response body: " + response.body().asString());
     }
 
     private void consoleLogger(CallTypes callType, Response response) {
@@ -211,6 +215,6 @@ public final class RestfulWebServices {
         System.out.println("1 - Response status: " + response.statusLine());
         System.out.println("2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
         if (System.getProperty("postTestResults") == null)
-        System.out.println("3 - Response body: " + response.body().asString());
+            System.out.println("3 - Response body: " + response.body().asString());
     }
 }
