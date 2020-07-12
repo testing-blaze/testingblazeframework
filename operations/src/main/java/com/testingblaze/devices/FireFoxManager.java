@@ -44,8 +44,8 @@ public final class FireFoxManager implements qrYoTsOWwA {
     public void setupController() {
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"null");
 
-        if(!"default".equals(System.getProperty("browserVersion"))) {
-            WebDriverManager.firefoxdriver().useBetaVersions().browserVersion(System.getProperty("browserVersion")).setup();
+        if(System.getProperty("browserVersion") != null && !"default".equals(System.getProperty("browserVersion"))) {
+            WebDriverManager.firefoxdriver().browserVersion(System.getProperty("browserVersion")).setup();
         } else {
             WebDriverManager.firefoxdriver().useBetaVersions().setup();
         }
