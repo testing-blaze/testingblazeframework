@@ -367,7 +367,7 @@ public class zFdcvgY0Kq {
      * @author nauman.shahid
      */
     private static void patchTestResult(JsonArray testCaseResultPayLoadHolder, String testRun) {
-        tfsApiCalls.patchCall(testCaseResultPayLoadHolder, tfsUrl + "/test/runs/" + testRun + "/results?" + apiVersion, "Authorization", authType + " " + pat, null);
+        tfsApiCalls.patchCall(testCaseResultPayLoadHolder, null, tfsUrl + "/test/runs/" + testRun + "/results?" + apiVersion, "Authorization", authType + " " + pat, null);
     }
 
     private static JsonObject getTestCaseResultPayload(String resultId, String result) {

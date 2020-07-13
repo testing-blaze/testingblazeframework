@@ -76,12 +76,10 @@ public final class SwitchTo {
      */
     public void acceptAlert() {
         try {
-            if (I.amPerforming().checkToSee().popupPresent()) {
-                if(TestingBlazeGlobal.getVariable("acceptAlert") != null && ((String) TestingBlazeGlobal.getVariable("acceptAlert")).equalsIgnoreCase("off")) return;
-                else {
-                    driver.switchTo().alert().accept();
-                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Alert accepted");
-                }
+            if (I.amPerforming().checkToSee().popupPresent()
+                    && !"off".equalsIgnoreCase((String) TestingBlazeGlobal.getVariable("acceptAlert"))) {
+                driver.switchTo().alert().accept();
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Alert accepted");
             }
         } catch (Exception e) {
 
