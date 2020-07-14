@@ -53,7 +53,7 @@ public final class EdgeManager implements qrYoTsOWwA {
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             driver = new EdgeDriver(CapabilitiesManager.getEdgeCapabilities());
             driver.manage().window().maximize();
-            driver.manage().timeouts().pageLoadTimeout(500, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(300, TimeUnit.SECONDS);
         } else {
             try {
                 driver = new RemoteWebDriver(new URL(EnvironmentFactory.getHub() + "/wd/hub"),
