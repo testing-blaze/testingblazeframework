@@ -52,11 +52,15 @@ public final class ChromeManager implements qrYoTsOWwA {
             //System.setProperty("webdriver.chrome.silentOutput", "true");
         }
 
-        if (System.getProperty("browserVersion") != null && !"default".equals(System.getProperty("browserVersion"))) {
-            WebDriverManager.chromedriver().browserVersion((System.getProperty("browserVersion"))).setup();
+        if (!"default".equals(EnvironmentFactory.getBrowserVersion())) {
+            WebDriverManager.chromedriver().browserVersion(EnvironmentFactory.getBrowserVersion());
         } else {
-            WebDriverManager.chromedriver().useBetaVersions().setup();
+            WebDriverManager.chromedriver().useBetaVersions();
         }
+        if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.chromedriver().driverVersion(EnvironmentFactory.getDriverVersion());
+        }
+        WebDriverManager.chromedriver().setup();
 
         service = new ChromeDriverService.Builder().usingDriverExecutable(new File(WebDriverManager.chromedriver().getBinaryPath())).usingAnyFreePort().build();
         try {
