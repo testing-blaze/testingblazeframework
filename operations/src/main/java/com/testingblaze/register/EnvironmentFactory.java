@@ -142,7 +142,7 @@ public final class EnvironmentFactory {
         if (browserVersion == null) {
             if (System.getProperty("browserVersion") != null) {
                 browserVersion = System.getProperty("browserVersion");
-            } else if (!"default".equalsIgnoreCase(getDriverVersion())) {
+            } else if ("chrome".equalsIgnoreCase(getDevice()) && !"default".equalsIgnoreCase(getDriverVersion())) {
                 browserVersion = getDriverVersion().substring(0, getDriverVersion().indexOf("."));
             } else {
                 browserVersion = "default";
