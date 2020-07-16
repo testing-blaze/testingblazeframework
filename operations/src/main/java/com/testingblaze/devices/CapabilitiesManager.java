@@ -190,7 +190,7 @@ public class CapabilitiesManager {
             if (!"default".equals(EnvironmentFactory.getBrowserVersion())) {
                 WebDriverManager.chromedriver().browserVersion(EnvironmentFactory.getBrowserVersion());
             } else {
-                WebDriverManager.chromedriver().useBetaVersions();
+                WebDriverManager.chromedriver();
             }
             if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
                 WebDriverManager.chromedriver().driverVersion(EnvironmentFactory.getDriverVersion());
