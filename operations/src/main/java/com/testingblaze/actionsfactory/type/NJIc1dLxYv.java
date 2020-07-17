@@ -25,6 +25,8 @@ import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.objects.InstanceRecording;
+import com.testingblaze.register.I;
+import io.appium.java_client.MobileBy;
 
 public class NJIc1dLxYv {
     private JavaScript javaScript;
@@ -108,23 +110,28 @@ public class NJIc1dLxYv {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.AndroidViewTag("the view tag"))
      * Enter text on android specific locator strategy
      * @param locator: Android
      * @
      */
-    public void onAndroidViewTag(String locator,String input) { executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByViewTag(locator),input);
+    public void onAndroidViewTag(String locator,String input) {
+        in(MobileBy.AndroidViewTag(locator), input);
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")))
      * Enter text on android specific locator strategy
      * @param imageName: Android
      * @
      */
     public void onAndroidImage(String imageName,String input) {
-        executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByImage(imageName),input);
+        in(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")), input);
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.iOSNsPredicateString(""), input)
+     *                     and I.amPerforming.textInput().in(MobileBy.iOSClassChain(""), input)
      * clicks on IOS specific locator strategy
      * @param locator: Mobile.
      * @

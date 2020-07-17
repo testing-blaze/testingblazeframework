@@ -95,6 +95,7 @@ public final class Android {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming().getElementReference().of(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")))
      * get Element using image
      *
      * @param pngImage
@@ -105,6 +106,7 @@ public final class Android {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming().getElementReference().of(MobileBy.AndroidViewTag("the view tag"))
      * get element using android view tag
      *
      * @param viewTag

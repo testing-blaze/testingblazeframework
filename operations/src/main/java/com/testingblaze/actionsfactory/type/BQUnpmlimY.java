@@ -25,6 +25,8 @@ import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.MouseActions;
 import com.testingblaze.objects.InstanceRecording;
+import com.testingblaze.register.I;
+import io.appium.java_client.MobileBy;
 
 public class BQUnpmlimY {
     private MouseClicks mouseClicks;
@@ -97,23 +99,26 @@ public class BQUnpmlimY {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.click().on(MobileBy.AndroidViewTag("the view tag")) will do the same thing
      * clicks on android specific locator strategy
      * @param locator: Android
-     * @
      */
-    public void onAndroidViewTag(String locator) { executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByViewTag(locator));
+    public void onAndroidViewTag(String locator) {
+        on(I.amPerforming().getElementReference().of(MobileBy.AndroidViewTag(locator)));
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.click().on(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")))
      * clicks on android specific locator strategy
      * @param imageName: Android
-     * @
      */
     public void onAndroidImage(String imageName) {
-        executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByImage(imageName));
+        on(I.amPerforming().getElementReference().of(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png"))));
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.click().on(MobileBy.iOSNsPredicateString(""))
+     *                     and I.amPerforming.click().on(MobileBy.iOSClassChain(""))
      * clicks on IOS specific locator strategy
      * @param locator: Mobile.
      * @
