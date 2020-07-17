@@ -83,7 +83,7 @@ public final class Convert {
      * @author john.phillips
      */
     public String imageToBase64String(String filePathToRead, String imageType) {
-        return Base64.getEncoder().encodeToString(I.amPerforming().conversionOf().imageToByteArray(filePathToRead, imageType));
+        return Base64.getEncoder().encodeToString(imageToByteArray(filePathToRead, imageType));
     }
 
 
