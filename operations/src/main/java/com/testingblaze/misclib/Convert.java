@@ -19,7 +19,6 @@
  */
 package com.testingblaze.misclib;
 
-import com.testingblaze.register.I;
 import org.openqa.selenium.By;
 
 import javax.imageio.ImageIO;
