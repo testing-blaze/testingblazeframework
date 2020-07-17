@@ -104,7 +104,7 @@ public class BQUnpmlimY {
      * @param locator: Android
      */
     public void onAndroidViewTag(String locator) {
-        on(I.amPerforming().getElementReference().of(MobileBy.AndroidViewTag(locator)));
+        on(MobileBy.AndroidViewTag(locator));
     }
 
     /**
@@ -113,7 +113,7 @@ public class BQUnpmlimY {
      * @param imageName: Android
      */
     public void onAndroidImage(String imageName) {
-        on(I.amPerforming().getElementReference().of(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png"))));
+        on(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")));
     }
 
     /**
