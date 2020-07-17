@@ -75,6 +75,9 @@ public class akzkdaiqAC {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.getElementReference().forListOfElements().of(MobileBy.AndroidViewTag("the view tag"))
+     *                     and I.amPerforming.getElementReference().forListOfElements().of(MobileBy.androidDataMatcher("the date matcher"))
+     *                     and I.amPerforming.getElementReference().forListOfElements().of(MobileBy.AndroidViewTag("the ui automator"))
      * clicks on android specific locator strategy
      * @param locator: Mobile.
      * @
@@ -84,6 +87,8 @@ public class akzkdaiqAC {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.getElementReference().forListOfElements().of(MobileBy.iOSNsPredicateString("the predicate string"))
+     *                     and I.amPerforming.getElementReference().forListOfElements().of(MobileBy.iOSClassChain("the class chain"))
      * clicks on IOS specific locator strategy
      * @param locator: Mobile.
      * @

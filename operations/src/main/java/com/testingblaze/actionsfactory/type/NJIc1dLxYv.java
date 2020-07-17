@@ -120,7 +120,7 @@ public class NJIc1dLxYv {
     }
 
     /**
-     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")))
+     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String("the image location", "png")))
      * Enter text on android specific locator strategy
      * @param imageName: Android
      * @
@@ -130,8 +130,8 @@ public class NJIc1dLxYv {
     }
 
     /**
-     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.iOSNsPredicateString(""), input)
-     *                     and I.amPerforming.textInput().in(MobileBy.iOSClassChain(""), input)
+     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.iOSNsPredicateString("the predicate string"), input)
+     *                     and I.amPerforming.textInput().in(MobileBy.iOSClassChain("the class chain"), input)
      * clicks on IOS specific locator strategy
      * @param locator: Mobile.
      * @

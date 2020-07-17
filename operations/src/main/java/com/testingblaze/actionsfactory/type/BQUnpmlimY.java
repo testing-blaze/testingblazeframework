@@ -99,7 +99,7 @@ public class BQUnpmlimY {
     }
 
     /**
-     * @deprecated in favor of I.amPerforming.click().on(MobileBy.AndroidViewTag("the view tag")) will do the same thing
+     * @deprecated in favor of I.amPerforming.click().on(MobileBy.AndroidViewTag("the view tag"))
      * clicks on android specific locator strategy
      * @param locator: Android
      */
@@ -108,7 +108,7 @@ public class BQUnpmlimY {
     }
 
     /**
-     * @deprecated in favor of I.amPerforming.click().on(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")))
+     * @deprecated in favor of I.amPerforming.click().on(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String("the image location", "png")))
      * clicks on android specific locator strategy
      * @param imageName: Android
      */
@@ -117,8 +117,8 @@ public class BQUnpmlimY {
     }
 
     /**
-     * @deprecated in favor of I.amPerforming.click().on(MobileBy.iOSNsPredicateString(""))
-     *                     and I.amPerforming.click().on(MobileBy.iOSClassChain(""))
+     * @deprecated in favor of I.amPerforming.click().on(MobileBy.iOSNsPredicateString("the predicate string"))
+     *                     and I.amPerforming.click().on(MobileBy.iOSClassChain("the class chain"))
      * clicks on IOS specific locator strategy
      * @param locator: Mobile.
      * @

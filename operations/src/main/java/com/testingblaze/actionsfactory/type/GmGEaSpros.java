@@ -22,6 +22,7 @@ package com.testingblaze.actionsfactory.type;
 
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.objects.InstanceRecording;
+import io.appium.java_client.MobileBy;
 import org.openqa.selenium.WebElement;
 
 public class GmGEaSpros {
@@ -86,6 +87,9 @@ public class GmGEaSpros {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.getElementReference().of(MobileBy.AndroidViewTag("the view tag"))
+     *                     and I.amPerforming.getElementReference().of(MobileBy.androidDataMatcher("the date matcher"))
+     *                     and I.amPerforming.getElementReference().of(MobileBy.AndroidViewTag("the ui automator"))
      * clicks on android specific locator strategy
      * @param locator: Mobile.
      * @
@@ -95,6 +99,8 @@ public class GmGEaSpros {
     }
 
     /**
+     * @deprecated in favor of I.amPerforming.getElementReference().of(MobileBy.iOSNsPredicateString("the predicate string"))
+     *                     and I.amPerforming.getElementReference().of(MobileBy.iOSClassChain("the class chain"))
      * clicks on IOS specific locator strategy
      * @param locator: Mobile.
      * @
