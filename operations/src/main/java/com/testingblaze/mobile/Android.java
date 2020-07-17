@@ -24,6 +24,7 @@ import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
 import com.testingblaze.register.I;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidBatteryInfo;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -102,7 +103,7 @@ public final class Android {
      * @return
      */
     public WebElement toGetElementByImage(String pngImage) {
-        return driver().findElementByImage(Base64.getEncoder().encode(I.amPerforming().conversionOf().imageToByteArray(I.amPerforming().addOnsTo().getResources(pngImage).toString(), "png")).toString());
+        return I.amPerforming().getElementReference().of(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(pngImage, "png")));
     }
 
     /**
@@ -113,7 +114,7 @@ public final class Android {
      * @return
      */
     public WebElement toGetElementByViewTag(String viewTag) {
-        return driver().findElementByAndroidViewTag(viewTag);
+        return I.amPerforming().getElementReference().of(MobileBy.AndroidViewTag(viewTag));
     }
 
     @SuppressWarnings("unchecked") // If statement ensures unchecked cast is safe
