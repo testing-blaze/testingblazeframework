@@ -52,7 +52,7 @@ public final class ChromeManager implements qrYoTsOWwA {
             //System.setProperty("webdriver.chrome.silentOutput", "true");
         }
 
-        if (!"default".equals(EnvironmentFactory.getBrowserVersion())) {
+        if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
             WebDriverManager.chromedriver().browserVersion(EnvironmentFactory.getBrowserVersion());
         } else {
             WebDriverManager.chromedriver().useBetaVersions();

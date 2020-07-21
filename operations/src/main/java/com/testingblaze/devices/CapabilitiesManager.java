@@ -187,7 +187,7 @@ public class CapabilitiesManager {
             }
 
         } else {
-            if (!"default".equals(EnvironmentFactory.getBrowserVersion())) {
+            if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
                 WebDriverManager.chromedriver().browserVersion(EnvironmentFactory.getBrowserVersion());
             } else {
                 WebDriverManager.chromedriver();
