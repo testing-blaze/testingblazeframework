@@ -55,7 +55,7 @@ public final class JavaScript {
             scrollElementToPageDetailCenter(element);
             js.executeScript("arguments[0].click();", element);
         } catch (Exception e) {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED,"X: ")+"Unable to use JavaScript due to : "+e.getMessage());
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED, "X: ") + "Unable to use JavaScript due to : " + e.getMessage());
         }
     }
 
@@ -65,10 +65,10 @@ public final class JavaScript {
     public void flashColor(WebElement element, String color, int BlinkNumber) {
         String oldColor = element.getCssValue("color");
         for (int i = 0; i < BlinkNumber; i++) {
-            js.executeScript("arguments[0].style.color='green'",element);
-            js.executeScript("arguments[0].style.color='" + color + "'",element);
+            js.executeScript("arguments[0].style.color='green'", element);
+            js.executeScript("arguments[0].style.color='" + color + "'", element);
         }
-        js.executeScript("arguments[0].style.color='" + oldColor + "'",element);
+        js.executeScript("arguments[0].style.color='" + oldColor + "'", element);
     }
 
     /**
@@ -227,10 +227,10 @@ public final class JavaScript {
     public void InputJSByWebElement(WebElement element, String input) {
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Entering text with java script");
         try {
-        js.executeScript("arguments[0].value=\"" + input + "\"", element);
-    } catch (Exception e) {
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED,"X: ")+"Unable to use JavaScript due to : "+e.getMessage());
-    }
+            js.executeScript("arguments[0].value=\"" + input + "\"", element);
+        } catch (Exception e) {
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, ConsoleFormatter.setTextColor(ConsoleFormatter.COLOR.RED, "X: ") + "Unable to use JavaScript due to : " + e.getMessage());
+        }
     }
 
     /**
@@ -289,6 +289,72 @@ public final class JavaScript {
      */
     public long getPageOffSetYAxis() {
         return (long) js.executeScript("return window.pageYOffset");
+    }
+
+    /**
+     * Drag an HTML5 element to another HTML5 element
+     * Sourced with minor modifications from: https://gist.github.com/rcorreia/2362544
+     *
+     * @author john.phillips
+     */
+    public void dragAndDropInHtml5(WebElement source, WebElement target) {
+        InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript(""
+                        + "(function( $ ) {\n"
+                        + "        $.fn.simulateDragDrop = function(options) {\n"
+                        + "                return this.each(function() {\n"
+                        + "                        new $.simulateDragDrop(this, options);\n"
+                        + "                });\n"
+                        + "        };\n"
+                        + "        $.simulateDragDrop = function(elem, options) {\n"
+                        + "                this.options = options;\n"
+                        + "                this.simulateEvent(elem, options);\n"
+                        + "        };\n"
+                        + "        $.extend($.simulateDragDrop.prototype, {\n"
+                        + "                simulateEvent: function(elem, options) {\n"
+                        + "                        /*Simulating drag start*/\n"
+                        + "                        var type = 'dragstart';\n"
+                        + "                        var event = this.createEvent(type);\n"
+                        + "                        this.dispatchEvent(elem, type, event);\n"
+                        + "\n"
+                        + "                        /*Simulating drop*/\n"
+                        + "                        type = 'drop';\n"
+                        + "                        var dropEvent = this.createEvent(type, {});\n"
+                        + "                        dropEvent.dataTransfer = event.dataTransfer;\n"
+                        + "                        this.dispatchEvent($(options.dropTarget)[0], type, dropEvent);\n"
+                        + "\n"
+                        + "                        /*Simulating drag end*/\n"
+                        + "                        type = 'dragend';\n"
+                        + "                        var dragEndEvent = this.createEvent(type, {});\n"
+                        + "                        dragEndEvent.dataTransfer = event.dataTransfer;\n"
+                        + "                        this.dispatchEvent(elem, type, dragEndEvent);\n"
+                        + "                },\n"
+                        + "                createEvent: function(type) {\n"
+                        + "                        var event = document.createEvent(\"CustomEvent\");\n"
+                        + "                        event.initCustomEvent(type, true, true, null);\n"
+                        + "                        event.dataTransfer = {\n"
+                        + "                                data: {\n"
+                        + "                                },\n"
+                        + "                                setData: function(type, val){\n"
+                        + "                                        this.data[type] = val;\n"
+                        + "                                },\n"
+                        + "                                getData: function(type){\n"
+                        + "                                        return this.data[type];\n"
+                        + "                                }\n"
+                        + "                        };\n"
+                        + "                        return event;\n"
+                        + "                },\n"
+                        + "                dispatchEvent: function(elem, type, event) {\n"
+                        + "                        if(elem.dispatchEvent) {\n"
+                        + "                                elem.dispatchEvent(event);\n"
+                        + "                        }else if( elem.fireEvent ) {\n"
+                        + "                                elem.fireEvent(\"on\"+type, event);\n"
+                        + "                        }\n"
+                        + "                }\n"
+                        + "        });\n"
+                        + "})(jQuery);"
+                        + "$(arguments[0]).simulateDragDrop({ dropTarget: arguments[1]});",
+                source, target
+        );
     }
 
     /**
