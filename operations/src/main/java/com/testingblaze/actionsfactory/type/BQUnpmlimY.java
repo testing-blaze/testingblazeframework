@@ -212,7 +212,6 @@ public class BQUnpmlimY {
             dragAndDrop(source,target, true);
         }
 
-
         /**
          * Drag and drop on desired location on web page
          *
@@ -223,31 +222,19 @@ public class BQUnpmlimY {
         }
 
         /**
-         * Drag and drop on desired location on web page
-         *
+         * Drag and Drop specific for HTML 5.
          * @author nauman.shahid
          */
-        public <T> void toDragAndDrop(T source, T target) {
-            toDragAndDrop(source,target, true);
+        public <T> void dragAndDropInHtml5(T source, T target) {
+            dragAndDropInHtml5(source,target, true);
         }
 
         /**
-         * Drag and drop on desired location on web page
-         *
+         * Drag and Drop specific for HTML 5.
          * @author nauman.shahid
          */
-        public <T> void toDragAndDrop(T source, T target, Boolean processing) {
-            mouseActions.dragAndDrop(elementApi.locator(source, processing), elementApi.locator(target, processing));
-        }
-
-        /**
-         * Drag and Drop specific for HTML 5. It doesnt perform any framework processing on element.
-         * @param elementSourceCss
-         * @param elementTargetCss
-         * @author nauman.shahid
-         */
-        public void dragAndDropInHtml5(String elementSourceCss, String elementTargetCss) {
-            mouseActions.dragAndDropInHtml5(elementSourceCss, elementTargetCss);
+        public <T> void dragAndDropInHtml5(T source, T target, Boolean processing) {
+            mouseActions.dragAndDropInHtml5(elementApi.locator(source, processing), elementApi.locator(target, processing));
         }
 
         /**
