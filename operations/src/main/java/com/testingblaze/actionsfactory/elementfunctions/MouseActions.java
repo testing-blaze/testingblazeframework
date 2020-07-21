@@ -109,8 +109,12 @@ public final class MouseActions {
         actions.dragAndDrop(elementSource, elementTarget).build().perform();
     }
 
+    /**
+     * Drag and drop an HTML5 element on desired location on web page
+     *
+     * @author nauman.shahid
+     */
     public void dragAndDropInHtml5(WebElement elementSource, WebElement elementTarget) {
-        System.out.println("This is the modified code 3");
         InstanceRecording.getInstance(JavaScript.class).dragAndDropInHtml5(elementSource, elementTarget);
     }
 

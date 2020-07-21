@@ -291,7 +291,12 @@ public final class JavaScript {
         return (long) js.executeScript("return window.pageYOffset");
     }
 
-
+    /**
+     * Drag an HTML5 element to another HTML5 element
+     * Sourced with minor modifications from: https://gist.github.com/rcorreia/2362544
+     *
+     * @author john.phillips
+     */
     public void dragAndDropInHtml5(WebElement source, WebElement target) {
         InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript(""
                         + "(function( $ ) {\n"
