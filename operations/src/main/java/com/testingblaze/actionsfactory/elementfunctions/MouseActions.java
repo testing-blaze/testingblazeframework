@@ -109,49 +109,9 @@ public final class MouseActions {
         actions.dragAndDrop(elementSource, elementTarget).build().perform();
     }
 
-    /**
-     * Drag and drop on desired location on web page
-     *
-     * @author nauman.shahid
-     */
-    public void dragAndDrop(WebElement elementSource, WebElement elementTarget) {
-        var sourceXaxis=elementSource.getRect().getX();
-        var sourceYaxis=elementSource.getRect().getY();
-        var targetXaxis=elementTarget.getRect().getX();
-        var targetYaxis=elementTarget.getRect().getY();
-        var xAxis=targetXaxis-sourceXaxis;
-        var YAxis=targetYaxis-sourceYaxis;
-        var drag=actions.clickAndHold(elementSource)
-                .moveByOffset(10, 0)
-                .moveByOffset(-10, 0)
-                .moveByOffset(xAxis, YAxis)
-                .release()
-                .build();
-        drag.perform();
-    }
-
-    public void dragAndDropInHtml5(String elementSourceCss,String elementTargetCss) {
-        BufferedReader dragDropJSFile= new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/drag_drop_html5.js")));
-        StringBuffer buffer = new StringBuffer();
-        String java_script="";
-        String text = null;
-        while (true) {
-            try {
-                if (!((text = dragDropJSFile.readLine()) != null)) break;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            buffer.append(text + " ");
-        }
-        java_script = buffer.toString();
-
-        try {
-            dragDropJSFile.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        java_script = java_script+"$('#"+elementSourceCss+"').simulate( '#" +elementTargetCss+ "');" ;
-        InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript(java_script);
+    public void dragAndDropInHtml5(WebElement elementSource, WebElement elementTarget) {
+        System.out.println("This is the modified code 3");
+        InstanceRecording.getInstance(JavaScript.class).dragAndDropInHtml5(elementSource, elementTarget);
     }
 
     /**
