@@ -44,15 +44,23 @@ public final class FireFoxManager implements qrYoTsOWwA {
     public void setupController() {
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"null");
 
-        if(!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
-            WebDriverManager.firefoxdriver().browserVersion(EnvironmentFactory.getBrowserVersion());
+        if(!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())
+                && !"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.firefoxdriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
+            WebDriverManager.firefoxdriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.firefoxdriver().useBetaVersions()
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
         } else {
-            WebDriverManager.firefoxdriver().useBetaVersions();
+            WebDriverManager.firefoxdriver().useBetaVersions().setup();
         }
-        if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
-            WebDriverManager.firefoxdriver().driverVersion(EnvironmentFactory.getDriverVersion());
-        }
-        WebDriverManager.firefoxdriver().setup();
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
             driver = new FirefoxDriver(CapabilitiesManager.getFirefoxCapabilities());
