@@ -187,15 +187,23 @@ public class CapabilitiesManager {
             }
 
         } else {
-            if (!"default".equals(EnvironmentFactory.getBrowserVersion())) {
-                WebDriverManager.chromedriver().browserVersion(EnvironmentFactory.getBrowserVersion());
+            if(!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())
+                    && !"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+                WebDriverManager.chromedriver()
+                        .browserVersion(EnvironmentFactory.getBrowserVersion())
+                        .driverVersion(EnvironmentFactory.getDriverVersion())
+                        .setup();
+            } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
+                WebDriverManager.chromedriver()
+                        .browserVersion(EnvironmentFactory.getBrowserVersion())
+                        .setup();
+            } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+                WebDriverManager.chromedriver()
+                        .driverVersion(EnvironmentFactory.getDriverVersion())
+                        .setup();
             } else {
-                WebDriverManager.chromedriver();
+                WebDriverManager.chromedriver().setup();
             }
-            if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
-                WebDriverManager.chromedriver().driverVersion(EnvironmentFactory.getDriverVersion());
-            }
-            WebDriverManager.chromedriver().setup();
 
             androidCapabilities.setCapability("chromedriverExecutable", WebDriverManager.chromedriver().getBinaryPath());
             androidCapabilities.setCapability("w3c", false);

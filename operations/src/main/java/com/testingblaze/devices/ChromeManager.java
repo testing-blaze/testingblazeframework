@@ -52,15 +52,23 @@ public final class ChromeManager implements qrYoTsOWwA {
             //System.setProperty("webdriver.chrome.silentOutput", "true");
         }
 
-        if (!"default".equals(EnvironmentFactory.getBrowserVersion())) {
-            WebDriverManager.chromedriver().browserVersion(EnvironmentFactory.getBrowserVersion());
+        if(!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())
+                && !"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.chromedriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
+            WebDriverManager.chromedriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.chromedriver().useBetaVersions()
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
         } else {
-            WebDriverManager.chromedriver().useBetaVersions();
+            WebDriverManager.chromedriver().useBetaVersions().setup();
         }
-        if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
-            WebDriverManager.chromedriver().driverVersion(EnvironmentFactory.getDriverVersion());
-        }
-        WebDriverManager.chromedriver().setup();
 
         service = new ChromeDriverService.Builder().usingDriverExecutable(new File(WebDriverManager.chromedriver().getBinaryPath())).usingAnyFreePort().build();
         try {
