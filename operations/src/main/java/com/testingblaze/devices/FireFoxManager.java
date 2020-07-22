@@ -44,8 +44,20 @@ public final class FireFoxManager implements qrYoTsOWwA {
     public void setupController() {
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"null");
 
-        if(System.getProperty("browserVersion") != null && !"default".equals(System.getProperty("browserVersion"))) {
-            WebDriverManager.firefoxdriver().browserVersion(System.getProperty("browserVersion")).setup();
+        if(!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())
+                && !"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.firefoxdriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
+            WebDriverManager.firefoxdriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.firefoxdriver().useBetaVersions()
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
         } else {
             WebDriverManager.firefoxdriver().useBetaVersions().setup();
         }

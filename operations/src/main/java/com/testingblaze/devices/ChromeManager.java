@@ -52,8 +52,20 @@ public final class ChromeManager implements qrYoTsOWwA {
             //System.setProperty("webdriver.chrome.silentOutput", "true");
         }
 
-        if (System.getProperty("browserVersion") != null && !"default".equals(System.getProperty("browserVersion"))) {
-            WebDriverManager.chromedriver().browserVersion((System.getProperty("browserVersion"))).setup();
+        if(!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())
+                && !"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.chromedriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())) {
+            WebDriverManager.chromedriver()
+                    .browserVersion(EnvironmentFactory.getBrowserVersion())
+                    .setup();
+        } else if (!"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
+            WebDriverManager.chromedriver().useBetaVersions()
+                    .driverVersion(EnvironmentFactory.getDriverVersion())
+                    .setup();
         } else {
             WebDriverManager.chromedriver().useBetaVersions().setup();
         }

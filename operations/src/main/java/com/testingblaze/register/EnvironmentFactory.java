@@ -136,6 +136,34 @@ public final class EnvironmentFactory {
         return deviceVersion;
     }
 
+    private static String browserVersion;
+
+    public static String getBrowserVersion() {
+        if (browserVersion == null) {
+            if (System.getProperty("browserVersion") != null) {
+                browserVersion = System.getProperty("browserVersion");
+            } else if ("chrome".equalsIgnoreCase(getDevice()) && !"default".equalsIgnoreCase(getDriverVersion())) {
+                browserVersion = getDriverVersion().substring(0, getDriverVersion().indexOf("."));
+            } else {
+                browserVersion = "default";
+            }
+        }
+        return browserVersion;
+    }
+
+    private static String driverVersion;
+
+    public static String getDriverVersion() {
+        if (driverVersion == null) {
+            if (System.getProperty("driverVersion") != null) {
+                driverVersion = System.getProperty("driverVersion");
+            } else {
+                driverVersion = "default";
+            }
+        }
+        return driverVersion;
+    }
+
     private static String platformInfo;
 
     public static String getPlatformInfo() {
