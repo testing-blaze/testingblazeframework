@@ -19,10 +19,8 @@
  */
 package com.testingblaze.actionsfactory.type;
 
-
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.objects.InstanceRecording;
-import io.appium.java_client.MobileBy;
 import org.openqa.selenium.WebElement;
 
 public class GmGEaSpros {

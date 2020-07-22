@@ -19,26 +19,20 @@
  */
 package com.testingblaze.actionsfactory.type;
 
-
 import com.testingblaze.actionsfactory.abstracts.Action;
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
-import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.I;
-import io.appium.java_client.MobileBy;
 
 public class NJIc1dLxYv {
     private JavaScript javaScript;
     private Element elementApi;
     private Action executeAction;
-    private Mobile mobile;
 
     public NJIc1dLxYv() {
         elementApi = InstanceRecording.getInstance(Element.class);
         executeAction = InstanceRecording.getInstance(Action.class);
         javaScript = InstanceRecording.getInstance(JavaScript.class);
-        mobile = InstanceRecording.getInstance(Mobile.class);
     }
 
     /**

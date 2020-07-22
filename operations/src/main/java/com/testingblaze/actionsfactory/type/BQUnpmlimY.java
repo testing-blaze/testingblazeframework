@@ -25,8 +25,6 @@ import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.MouseActions;
 import com.testingblaze.objects.InstanceRecording;
-import com.testingblaze.register.I;
-import io.appium.java_client.MobileBy;
 
 public class BQUnpmlimY {
     private MouseClicks mouseClicks;
