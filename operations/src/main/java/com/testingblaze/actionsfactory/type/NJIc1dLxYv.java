@@ -19,24 +19,20 @@
  */
 package com.testingblaze.actionsfactory.type;
 
-
 import com.testingblaze.actionsfactory.abstracts.Action;
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
-import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.objects.InstanceRecording;
 
 public class NJIc1dLxYv {
     private JavaScript javaScript;
     private Element elementApi;
     private Action executeAction;
-    private Mobile mobile;
 
     public NJIc1dLxYv() {
         elementApi = InstanceRecording.getInstance(Element.class);
         executeAction = InstanceRecording.getInstance(Action.class);
         javaScript = InstanceRecording.getInstance(JavaScript.class);
-        mobile = InstanceRecording.getInstance(Mobile.class);
     }
 
     /**
@@ -105,32 +101,6 @@ public class NJIc1dLxYv {
      */
     public <T> void withJavaScript(T locator, String input, Boolean processing) {
         javaScript.InputJSByWebElement(elementApi.locator(locator,processing), input);
-    }
-
-    /**
-     * Enter text on android specific locator strategy
-     * @param locator: Android
-     * @
-     */
-    public void onAndroidViewTag(String locator,String input) { executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByViewTag(locator),input);
-    }
-
-    /**
-     * Enter text on android specific locator strategy
-     * @param imageName: Android
-     * @
-     */
-    public void onAndroidImage(String imageName,String input) {
-        executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByImage(imageName),input);
-    }
-
-    /**
-     * clicks on IOS specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void onIosApp(String locator) {
-        // to be added
     }
 
 }

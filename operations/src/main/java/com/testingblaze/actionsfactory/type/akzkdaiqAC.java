@@ -74,23 +74,5 @@ public class akzkdaiqAC {
         return elementApi.nestedElementsList(element, locator);
     }
 
-    /**
-     * clicks on android specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void ofAndroidApp(String locator) {
-        // to be added
-    }
-
-    /**
-     * clicks on IOS specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void ofIosApp(String locator) {
-        // to be added
-    }
-
 
 }

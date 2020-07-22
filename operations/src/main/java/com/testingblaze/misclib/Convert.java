@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,18 @@ public final class Convert {
         }
        return bos.toByteArray();
     }
+
+    /**
+     * Convert any image to Base64-encoded Strng
+     * @param filePathToRead
+     * @param imageType
+     * @return
+     * @author john.phillips
+     */
+    public String imageToBase64String(String filePathToRead, String imageType) {
+        return Base64.getEncoder().encodeToString(imageToByteArray(filePathToRead, imageType));
+    }
+
 
     /**
      * convert image to byte array

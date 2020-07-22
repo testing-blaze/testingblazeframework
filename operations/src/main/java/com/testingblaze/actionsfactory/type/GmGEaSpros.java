@@ -19,7 +19,6 @@
  */
 package com.testingblaze.actionsfactory.type;
 
-
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.objects.InstanceRecording;
 import org.openqa.selenium.WebElement;
@@ -83,24 +82,6 @@ public class GmGEaSpros {
      */
     public akzkdaiqAC forListOfElements() {
         return elementsList;
-    }
-
-    /**
-     * clicks on android specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void ofAndroidApp(String locator) {
-        // to be added
-    }
-
-    /**
-     * clicks on IOS specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void ofIosApp(String locator) {
-        // to be added
     }
 
 

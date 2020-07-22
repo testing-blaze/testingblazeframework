@@ -96,32 +96,6 @@ public class BQUnpmlimY {
         return mouseClicks;
     }
 
-    /**
-     * clicks on android specific locator strategy
-     * @param locator: Android
-     * @
-     */
-    public void onAndroidViewTag(String locator) { executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByViewTag(locator));
-    }
-
-    /**
-     * clicks on android specific locator strategy
-     * @param imageName: Android
-     * @
-     */
-    public void onAndroidImage(String imageName) {
-        executeAction.doIt(mobile.usingAndroidSpecials().toGetElementByImage(imageName));
-    }
-
-    /**
-     * clicks on IOS specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void onIosApp(String locator) {
-        // to be added
-    }
-
     public Mobile.Tap withTapOnScreen(){
         return mobile.tap();
     }

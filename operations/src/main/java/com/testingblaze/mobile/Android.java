@@ -23,14 +23,11 @@ import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.EnvironmentFactory;
-import com.testingblaze.register.I;
 import io.appium.java_client.android.AndroidBatteryInfo;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.WebElement;
-
-import java.util.Base64;
 
 /**
  * @author nauman.shahid
@@ -92,26 +89,6 @@ public final class Android {
 
     public void openNotifications() {
         driver().openNotifications();
-    }
-
-    /**
-     * get Element using image
-     *
-     * @param pngImage
-     * @return
-     */
-    public WebElement toGetElementByImage(String pngImage) {
-        return driver().findElementByImage(Base64.getEncoder().encode(I.amPerforming().conversionOf().imageToByteArray(I.amPerforming().addOnsTo().getResources(pngImage).toString(), "png")).toString());
-    }
-
-    /**
-     * get element using android view tag
-     *
-     * @param viewTag
-     * @return
-     */
-    public WebElement toGetElementByViewTag(String viewTag) {
-        return driver().findElementByAndroidViewTag(viewTag);
     }
 
     @SuppressWarnings("unchecked") // If statement ensures unchecked cast is safe
