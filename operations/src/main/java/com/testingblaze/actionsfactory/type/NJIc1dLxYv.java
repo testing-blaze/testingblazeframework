@@ -109,35 +109,4 @@ public class NJIc1dLxYv {
         javaScript.InputJSByWebElement(elementApi.locator(locator,processing), input);
     }
 
-    /**
-     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.AndroidViewTag("the view tag"))
-     * Enter text on android specific locator strategy
-     * @param locator: Android
-     * @
-     */
-    public void onAndroidViewTag(String locator,String input) {
-        in(MobileBy.AndroidViewTag(locator), input);
-    }
-
-    /**
-     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String("the image location", "png")))
-     * Enter text on android specific locator strategy
-     * @param imageName: Android
-     * @
-     */
-    public void onAndroidImage(String imageName,String input) {
-        in(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")), input);
-    }
-
-    /**
-     * @deprecated in favor of I.amPerforming.textInput().in(MobileBy.iOSNsPredicateString("the predicate string"), input)
-     *                     and I.amPerforming.textInput().in(MobileBy.iOSClassChain("the class chain"), input)
-     * clicks on IOS specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void onIosApp(String locator) {
-        // to be added
-    }
-
 }

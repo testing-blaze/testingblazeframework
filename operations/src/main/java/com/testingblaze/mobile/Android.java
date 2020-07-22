@@ -95,28 +95,6 @@ public final class Android {
         driver().openNotifications();
     }
 
-    /**
-     * @deprecated in favor of I.amPerforming().getElementReference().of(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")))
-     * get Element using image
-     *
-     * @param pngImage
-     * @return
-     */
-    public WebElement toGetElementByImage(String pngImage) {
-        return I.amPerforming().getElementReference().of(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(pngImage, "png")));
-    }
-
-    /**
-     * @deprecated in favor of I.amPerforming().getElementReference().of(MobileBy.AndroidViewTag("the view tag"))
-     * get element using android view tag
-     *
-     * @param viewTag
-     * @return
-     */
-    public WebElement toGetElementByViewTag(String viewTag) {
-        return I.amPerforming().getElementReference().of(MobileBy.AndroidViewTag(viewTag));
-    }
-
     @SuppressWarnings("unchecked") // If statement ensures unchecked cast is safe
     private AndroidDriver<WebElement> driver() {
         if (!"android".equalsIgnoreCase(EnvironmentFactory.getDevice())) {

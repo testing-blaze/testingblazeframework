@@ -98,35 +98,6 @@ public class BQUnpmlimY {
         return mouseClicks;
     }
 
-    /**
-     * @deprecated in favor of I.amPerforming.click().on(MobileBy.AndroidViewTag("the view tag"))
-     * clicks on android specific locator strategy
-     * @param locator: Android
-     */
-    public void onAndroidViewTag(String locator) {
-        on(MobileBy.AndroidViewTag(locator));
-    }
-
-    /**
-     * @deprecated in favor of I.amPerforming.click().on(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String("the image location", "png")))
-     * clicks on android specific locator strategy
-     * @param imageName: Android
-     */
-    public void onAndroidImage(String imageName) {
-        on(MobileBy.image(I.amPerforming().conversionOf().imageToBase64String(imageName, "png")));
-    }
-
-    /**
-     * @deprecated in favor of I.amPerforming.click().on(MobileBy.iOSNsPredicateString("the predicate string"))
-     *                     and I.amPerforming.click().on(MobileBy.iOSClassChain("the class chain"))
-     * clicks on IOS specific locator strategy
-     * @param locator: Mobile.
-     * @
-     */
-    public void onIosApp(String locator) {
-        // to be added
-    }
-
     public Mobile.Tap withTapOnScreen(){
         return mobile.tap();
     }
