@@ -250,7 +250,7 @@ public final class FileHandler {
                 "            link.download = name;\n" +
                 "            link.href = uri;\n" +
                 "            link.click();\n" +
-                "        })(\"" + I.amPerforming().actionToGet().currentURL() + "\",\"" + fileNameWithExtension + "\");";
+                "        })(\"" + I.amPerforming().browserOperationsTo().getCurrentUrl() + "\",\"" + fileNameWithExtension + "\");";
 
         JavascriptExecutor jj = (JavascriptExecutor) InstanceRecording.getInstance(DeviceBucket.class).getDriver();
         jj.executeScript(aa);

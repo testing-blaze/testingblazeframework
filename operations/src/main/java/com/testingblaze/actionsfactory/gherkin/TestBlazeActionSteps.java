@@ -66,7 +66,7 @@ public final class TestBlazeActionSteps {
     @Description("refresh page")
     @When("^I refresh the page$")
     public void refreshPage() {
-        I.amPerforming().actionToGet().pageRefresh();
+        I.amPerforming().browserOperationsTo().refreshPage();
     }
 
     @Description("switch to parent application page")
