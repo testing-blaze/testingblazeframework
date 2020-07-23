@@ -287,8 +287,18 @@ public final class JavaScript {
      * @return double y-axis
      * @author nauman.shahid
      */
-    public long getPageOffSetYAxis() {
-        return (long) js.executeScript("return window.pageYOffset");
+    public double getPageOffSetYAxis() {
+        return (double) js.executeScript("return window.pageYOffset");
+    }
+
+    /**
+     * Get current double value of current off set or movement of the page from original position
+     *
+     * @return double y-axis
+     * @author nauman.shahid
+     */
+    public double getPageOffSetXAxis() {
+        return (double) js.executeScript("return window.pageXOffset");
     }
 
     /**

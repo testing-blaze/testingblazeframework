@@ -30,16 +30,7 @@ import com.testingblaze.actionsfactory.type.Fetch;
 import com.testingblaze.actionsfactory.type.Is;
 import com.testingblaze.actionsfactory.type.Scroll;
 import com.testingblaze.http.RestfulWebServices;
-import com.testingblaze.misclib.Compare;
-import com.testingblaze.misclib.Convert;
-import com.testingblaze.misclib.Cookies;
-import com.testingblaze.misclib.Emails;
-import com.testingblaze.misclib.FileHandler;
-import com.testingblaze.misclib.Properties_Logs;
-import com.testingblaze.misclib.RobotActions;
-import com.testingblaze.misclib.Sanitize;
-import com.testingblaze.misclib.ScreenCapture;
-import com.testingblaze.misclib.SwitchTo;
+import com.testingblaze.misclib.*;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.report.ReportController;
 import org.assertj.core.api.SoftAssertions;
@@ -74,6 +65,7 @@ public final class Avrb8aYEmH {
     private GmGEaSpros elementRef;
     private SoftAssertions softAssertions;
     private Mobile mobile;
+    private Browser browser;
 
     public BQUnpmlimY click() {
         if (click == null) {
@@ -306,6 +298,19 @@ public final class Avrb8aYEmH {
             email = new Emails();
         }
         return email;
+    }
+
+    /**
+     * access browser
+     *
+     * @return brwoser library
+     * @author john.phillips
+     */
+    public Browser browserOperationsTo() {
+        if (browser == null) {
+            browser = new Browser();
+        }
+        return browser;
     }
 
 }

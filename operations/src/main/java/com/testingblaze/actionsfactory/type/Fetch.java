@@ -55,6 +55,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().navigateToUrl(url)
      * navigate to a specific url
      *
      * @param url
@@ -66,6 +67,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().getPageLoadStatus()
      * @return status of the page load like Completed , loading , Interactive
      */
     public String pageLoadStatus() {
@@ -73,6 +75,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().getJQueryStatus()
      * @return status of the page load like Completed , loading , Interactive
      */
     public String jQueryStatus() {
@@ -169,6 +172,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().navigateBack()
      * navigate back from current page
      *
      * @author nauman.shahid
@@ -179,6 +183,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().navigateForward()
      * navigate forward from current page
      *
      * @author nauman.shahid
@@ -189,6 +194,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().refreshPage()
      * refresh page
      *
      * @author nauman.shahid
@@ -199,6 +205,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().navigateToUrl(url)
      * open any url
      *
      * @param url
@@ -209,6 +216,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().getPageTitle()
      * get title of current web page
      *
      * @author nauman.shahid
@@ -219,6 +227,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().getPageSource()
      * get complete current page source
      *
      * @author nauman.shahid
@@ -229,6 +238,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().getCurrentUrl()
      * get the current url of web page
      *
      * @author nauman.shahid
@@ -332,6 +342,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().closeBrowserOrTab()
      * close the current tab
      *
      * @author nauman.shahid
@@ -342,6 +353,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().browserOperationsTo().getPageYOffset()
      * Get current double value of current off set or movement of the page from original position
      *
      * @return double y-axis
