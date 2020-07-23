@@ -22,6 +22,7 @@ package com.testingblaze.actionsfactory.type;
 import com.testingblaze.actionsfactory.abstracts.Action;
 import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
+import com.testingblaze.misclib.KeysHandler;
 import com.testingblaze.objects.InstanceRecording;
 import org.openqa.selenium.WebElement;
 
@@ -33,16 +34,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class jucQcQgaaP {
     private JavaScript javaScript;
     private Element elementApi;
     private Action executeAction;
+    private KeysHandler key;
 
     public jucQcQgaaP() {
         elementApi = InstanceRecording.getInstance(Element.class);
         executeAction = InstanceRecording.getInstance(Action.class);
         this.javaScript = InstanceRecording.getInstance(JavaScript.class);
+        this.key = new KeysHandler();
     }
 
     /**
@@ -51,7 +55,7 @@ public class jucQcQgaaP {
      * @author jitendra.pisal
      */
     public int getRandomNumber() {
-        return getRandomNumberInRange(1000, 50000) + getRandomNumberInRange(51000, 90000);
+        return (int) getRandomNumberInRange(1000, 50000) + (int) getRandomNumberInRange(51000, 90000);
     }
 
     /**
@@ -60,20 +64,33 @@ public class jucQcQgaaP {
      * @author jitendra.pisal
      */
     public String getStringRandomNumber() {
-        return Integer.toString(getRandomNumberInRange(1000, 50000)) + Integer.toString(getRandomNumberInRange(51000, 90000));
+        return Integer.toString((int) getRandomNumberInRange(1000, 50000)) + (int) getRandomNumberInRange(51000, 90000);
     }
 
     /**
-     * geenrate a random number in a specified range
-     * @param min lower range
-     * @param max upper range
+     * Get random number within a range.
+     *
+     * @param minimum
+     * @param maximum
+     * @param <T>     Handles Double and int at the moment
      * @return random number
      * @author nauman.shahid
      */
-    public synchronized int getRandomNumberInRange(int min, int max) {
-        Random random=new Random();
-        int randomNum = random.nextInt((max - min) + 1) + min;
-        return randomNum;
+    public synchronized  <T extends Number> Number getRandomNumberInRange(T minimum, T maximum) {
+        if (minimum instanceof Double) {
+            return ThreadLocalRandom.current().nextDouble(minimum.doubleValue(), maximum.doubleValue());
+        } else {
+            return ThreadLocalRandom.current().nextInt(minimum.intValue(), maximum.intValue());
+        }
+    }
+
+    /**
+     * get access to keyboard
+     *
+     * @return
+     */
+    public KeysHandler getKeyBoard() {
+        return key;
     }
 
     /**

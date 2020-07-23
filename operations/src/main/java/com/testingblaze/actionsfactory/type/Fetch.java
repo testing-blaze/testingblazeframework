@@ -49,9 +49,7 @@ public final class Fetch {
         elementApi = InstanceRecording.getInstance(Element.class);
         this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
         this.javaScript = InstanceRecording.getInstance(JavaScript.class);
-        if (key == null) {
-            this.key = new KeysHandler();
-        }
+        this.key = new KeysHandler();
     }
 
     /**
@@ -364,6 +362,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().addOnsTo().getRandomNumberInRange(minimum, maximum)
      * Get random number within a range.
      *
      * @param minimum
@@ -381,6 +380,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().addOnsTo().getKeyBoard()
      * get access to keyboard
      *
      * @return

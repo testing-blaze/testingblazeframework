@@ -66,6 +66,7 @@ public final class Avrb8aYEmH {
     private SoftAssertions softAssertions;
     private Mobile mobile;
     private Browser browser;
+    private Dates dates;
 
     public BQUnpmlimY click() {
         if (click == null) {
@@ -311,6 +312,19 @@ public final class Avrb8aYEmH {
             browser = new Browser();
         }
         return browser;
+    }
+
+    /**
+     * access browser
+     *
+     * @return brwoser library
+     * @author john.phillips
+     */
+    public Dates dateOperationsTo() {
+        if (dates == null) {
+            dates = new Dates();
+        }
+        return dates;
     }
 
 }
