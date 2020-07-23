@@ -287,8 +287,8 @@ public final class JavaScript {
      * @return double y-axis
      * @author nauman.shahid
      */
-    public double getPageOffSetYAxis() {
-        return (double) js.executeScript("return window.pageYOffset");
+    public double getPageOffSetXAxis() {
+        return (double) js.executeScript("return window.pageXOffset");
     }
 
     /**
@@ -297,8 +297,8 @@ public final class JavaScript {
      * @return double y-axis
      * @author nauman.shahid
      */
-    public double getPageOffSetXAxis() {
-        return (double) js.executeScript("return window.pageXOffset");
+    public double getPageOffSetYAxis() {
+        return (double) js.executeScript("return window.pageYOffset");
     }
 
     /**
