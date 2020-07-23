@@ -247,6 +247,7 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().currentDate()
      * get current date in standard format
      *
      * @author nauman.shahid
@@ -256,6 +257,8 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().currentDateInDesiredFormat(formatter)
+     *
      * get current date in desired format
      *
      * @param formatter
@@ -266,6 +269,8 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().currentDateInDesiredFormat(formatter)
+     *
      * get current date in desired format
      *
      * @param formatter
@@ -276,6 +281,8 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().currentDateWithOffset(offset)
+     *
      * get current date in standard format with offset
      *
      * @param offset
@@ -286,6 +293,8 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().currentDateWithOffsetInDesiredFormat(offset, formatter)
+     *
      * get current date in desired format with offset
      *
      * @param offset    The number of days since the current day (Negative number for days in the past)
@@ -298,6 +307,8 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().givenDateWithOffsetFromGivenDate(date, offset, formatter)
+     *
      * get current date in desired format with offset
      *
      * @param date      The date from which the offset should come
@@ -313,6 +324,8 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().currentDateWithOffsetInDesiredFormat(offset, formatter)
+     *
      * get current date in desired format with offset
      *
      * @param offset    The number of days since the current day (Negative number for days in the past)
@@ -325,6 +338,8 @@ public final class Fetch {
     }
 
     /**
+     * @deprecated Use I.amPerforming().dateOperationsToGet().givenDateWithOffsetFromGivenDate(date, offset, formatter)
+     *
      * get current date in desired format with offset
      *
      * @param date      The date from which the offset should come

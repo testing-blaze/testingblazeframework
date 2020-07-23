@@ -320,7 +320,7 @@ public final class Avrb8aYEmH {
      * @return brwoser library
      * @author john.phillips
      */
-    public Dates dateOperationsTo() {
+    public Dates dateOperationsToGet() {
         if (dates == null) {
             dates = new Dates();
         }

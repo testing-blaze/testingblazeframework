@@ -27,11 +27,11 @@ public class Dates {
     }
 
     /**
-     * get current date in format "MM/dd/yyyy"
+     * get current date in standard format
      *
      * @author nauman.shahid
      */
-    public String getCurrentDate() {
+    public String currentDate() {
         return currentDateWithOffsetInDesiredFormat(0, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 
@@ -41,28 +41,18 @@ public class Dates {
      * @param formatter
      * @author john.philips
      */
-    public String getCurrentDateInDesiredFormat(DateTimeFormatter formatter) {
+    public String currentDateInDesiredFormat(DateTimeFormatter formatter) {
         return currentDateWithOffsetInDesiredFormat(0, formatter);
     }
 
     /**
-     * get current date in desired format
-     *
-     * @param formatter
-     * @author nauman.shahid
-     */
-    public String getCurrentDateTimeInDesiredFormat(DateTimeFormatter formatter) {
-        return currentDateTimeWithOffsetInDesiredFormat(0, formatter);
-    }
-
-    /**
-     * get current date in standard format with offset
+     * get current date with given offset in format "MM/dd/yyyy"
      *
      * @param offset
      * @author john.philips
      */
     public String currentDateWithOffset(int offset) {
-        return currentDateWithOffsetInDesiredFormat(offset, DateTimeFormatter.ofPattern("MM/dd/YYYY"));
+        return currentDateWithOffsetInDesiredFormat(offset, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 
     /**
@@ -70,11 +60,11 @@ public class Dates {
      *
      * @param offset    The number of days since the current day (Negative number for days in the past)
      * @param formatter DateTimeFormatter in the desired format (created with DateTimeFormatter.ofPattern(String))
-     * @return current date after off set
+     * @return current date after offset
      * @author john.philips
      */
     public String currentDateWithOffsetInDesiredFormat(int offset, DateTimeFormatter formatter) {
-        return dateWithOffsetFromGivenDate(LocalDate.now().format(formatter), offset, formatter);
+        return givenDateWithOffsetFromGivenDate(LocalDateTime.now().format(formatter), offset, formatter);
     }
 
     /**
@@ -86,37 +76,18 @@ public class Dates {
      * @return date after off set
      * @author john.philips
      */
-    public String dateWithOffsetFromGivenDate(String date, int offset, DateTimeFormatter formatter) {
-        String receivedDate = LocalDate.parse(date, formatter).plusDays(offset).format(formatter);
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Fetched date is : " + receivedDate);
+    public String givenDateWithOffsetFromGivenDate(String date, int offset, DateTimeFormatter formatter) {
+        String receivedDate = "";
+        try {
+            receivedDate = LocalDate.parse(date, formatter).plusDays(offset).format(formatter);
+        } catch (Exception e) {
+            try {
+                receivedDate = LocalDateTime.parse(date, formatter).plusDays(offset).format(formatter);
+            } catch (Exception f) {
+                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,
+                         "Could not get date for the following reasons: \n" + e.getMessage() + "\n" + f.getMessage());
+            }
+        }
         return receivedDate;
     }
-
-    /**
-     * get current date in desired format with offset
-     *
-     * @param offset    The number of days since the current day (Negative number for days in the past)
-     * @param formatter DateTimeFormatter in the desired format (created with DateTimeFormatter.ofPattern(String))
-     * @return current date after off set
-     * @author john.philips
-     */
-    public String currentDateTimeWithOffsetInDesiredFormat(int offset, DateTimeFormatter formatter) {
-        return dateTimeWithOffsetFromGivenDate(LocalDateTime.now().format(formatter), offset, formatter);
-    }
-
-    /**
-     * get current date in desired format with offset
-     *
-     * @param date      The date from which the offset should come
-     * @param offset    The number of days since the current day (Negative number for days in the past)
-     * @param formatter DateTimeFormatter in the desired format (created with DateTimeFormatter.ofPattern(String))
-     * @return date after off set
-     * @author john.philips
-     */
-    public String dateTimeWithOffsetFromGivenDate(String date, int offset, DateTimeFormatter formatter) {
-        String receivedDate = LocalDateTime.parse(date, formatter).plusDays(offset).format(formatter);
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Fetched date is : " + receivedDate);
-        return receivedDate;
-    }
-
 }
