@@ -8,25 +8,14 @@ import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.WebDriver;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.concurrent.ThreadLocalRandom;
-
 public final class Browser {
 
     private WebDriver driver;
     private JavaScript javaScript;
-    private KeysHandler key;
-    private Element elementApi;
 
     public Browser() {
-        elementApi = InstanceRecording.getInstance(Element.class);
         this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
         this.javaScript = InstanceRecording.getInstance(JavaScript.class);
-        if (key == null) {
-            this.key = new KeysHandler();
-        }
     }
 
     /**
