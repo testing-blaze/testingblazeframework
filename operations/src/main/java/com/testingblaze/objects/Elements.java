@@ -23,6 +23,7 @@ import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.type.BQUnpmlimY;
 import com.testingblaze.actionsfactory.type.NJIc1dLxYv;
 import com.testingblaze.actionsfactory.type.Is;
+import com.testingblaze.actionsfactory.type.Scroll;
 import com.testingblaze.register.I;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -76,6 +77,14 @@ public class Elements {
 
     public void switchFrame() {
         I.amPerforming().switchTo().frame(element);
+    }
+
+    public void scrollWithMouseToElement() {
+        (InstanceRecording.getInstance(Scroll.class)).withMouseToElement(element);
+    }
+
+    public void scrollToElement() {
+        (InstanceRecording.getInstance(Scroll.class)).toMoveToElement(element);
     }
 
     public WebElement nestedElement(By locator) {
