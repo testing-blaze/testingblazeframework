@@ -233,7 +233,6 @@ public final class Mobile {
         }
 
 
-
         /**
          * boolean app is installed
          *
