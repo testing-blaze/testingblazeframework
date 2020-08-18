@@ -68,7 +68,11 @@ public class GEqwlYLeImActions implements Action {
             I.amPerforming().switchTo().acceptAlert();
             CompletableFuture.supplyAsync(() -> {
                 try {
-                    InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                    if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
+                        TestingBlazeGlobal.deleteRecord("highlightElements");
+                    } else {
+                        InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                    }
                 } catch (Exception e) {
 
                 }
@@ -102,9 +106,12 @@ public class GEqwlYLeImActions implements Action {
                 CompletableFuture.supplyAsync(() -> {
                     try {
                         if (mobileRun())
-                            InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                            if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
+                                TestingBlazeGlobal.deleteRecord("highlightElements");
+                            } else {
+                                InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                            }
                     } catch (Exception e) {
-
                     }
                     return true;
                 });
@@ -114,7 +121,11 @@ public class GEqwlYLeImActions implements Action {
                 CompletableFuture.supplyAsync(() -> {
                     try {
                         if (mobileRun())
-                            InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                            if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
+                                TestingBlazeGlobal.deleteRecord("highlightElements");
+                            } else {
+                                InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #ccffcc; border: 2px solid black;');", element);
+                            }
                     } catch (Exception e) {
 
                     }
@@ -147,8 +158,11 @@ public class GEqwlYLeImActions implements Action {
         if (mobileRun()) {
             CompletableFuture.supplyAsync(() -> {
                 try {
-                    if (mobileRun())
+                    if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
+                        TestingBlazeGlobal.deleteRecord("highlightElements");
+                    } else {
                         InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: red; border: 2px solid black;');", element);
+                    }
                 } catch (Exception e) {
 
                 }

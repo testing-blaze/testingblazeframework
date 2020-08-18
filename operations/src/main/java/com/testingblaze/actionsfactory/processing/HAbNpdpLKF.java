@@ -72,7 +72,6 @@ public class HAbNpdpLKF implements ElementProcessing {
         CompletableFuture.supplyAsync(() -> {
             try {
                 if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
-                    TestingBlazeGlobal.deleteRecord("highlightElements");
                     return element;
                 } else {
                     InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #e6ffff; border: 2px solid black;');", element);
@@ -115,7 +114,6 @@ public class HAbNpdpLKF implements ElementProcessing {
         CompletableFuture.supplyAsync(() -> {
             try {
                 if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
-                    TestingBlazeGlobal.deleteRecord("highlightElements");
                     return element;
                 } else {
                     InstanceRecording.getInstance(JavaScript.class).executeJSCommand().executeScript("arguments[0].setAttribute('style', 'background-color: #e6ffff; border: 2px solid black;');", element);
