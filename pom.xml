@@ -23,7 +23,7 @@
 
         <!-- Versions -->
         <java.version>11</java.version>
-        <test.blaze.version>1.0.0</test.blaze.version>
+        <test.blaze.version>1.0.1</test.blaze.version>
         <saas.version>2.3.0</saas.version>
         <selenium.version>3.141.59</selenium.version>
         <selenium.server.version>4.0.0-alpha-2</selenium.server.version>
