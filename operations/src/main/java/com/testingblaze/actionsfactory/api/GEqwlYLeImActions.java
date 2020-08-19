@@ -62,8 +62,8 @@ public class GEqwlYLeImActions implements Action {
     @Override
     public void doIt(WebElement element) {
         if (mobileRun()) clickProcessingController.preProcessingTestBlaze.perform();
-        localWait.until(ExpectedConditions.elementToBeClickable(element));
         try {
+            localWait.until(ExpectedConditions.elementToBeClickable(element));
             element.click();
             I.amPerforming().switchTo().acceptAlert();
             CompletableFuture.supplyAsync(() -> {
@@ -98,8 +98,8 @@ public class GEqwlYLeImActions implements Action {
 
     @Override
     public void doIt(WebElement element, String input) {
-        localWait.until(ExpectedConditions.elementToBeClickable(element));
         try {
+            localWait.until(ExpectedConditions.elementToBeClickable(element));
             if (input.equalsIgnoreCase("--clear--")) {
                 element.clear();
                 I.amPerforming().switchTo().acceptAlert();
