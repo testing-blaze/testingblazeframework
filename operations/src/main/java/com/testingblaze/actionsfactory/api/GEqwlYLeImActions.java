@@ -21,7 +21,6 @@ package com.testingblaze.actionsfactory.api;
 
 import com.testingblaze.actionsfactory.abstracts.Action;
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
-import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.actionsfactory.elementfunctions.Waits;
 import com.testingblaze.actionsfactory.processing.wlGgOnuIbI;
 import com.testingblaze.controller.DeviceBucket;
@@ -43,7 +42,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.concurrent.CompletableFuture;
 
 public class GEqwlYLeImActions implements Action {
     private wlGgOnuIbI clickProcessingController;
@@ -60,12 +58,13 @@ public class GEqwlYLeImActions implements Action {
     }
 
     @Override
-    public void doIt(WebElement element) {
+    public void doIt(WebElement element,Boolean processing) {
         if (mobileRun()) clickProcessingController.preProcessingTestBlaze.perform();
         try {
             localWait.until(ExpectedConditions.elementToBeClickable(element));
             element.click();
-            I.amPerforming().switchTo().acceptAlert();
+            acceptAlert(processing);
+            /* This code is causing alert to get accepted automatically. So, it's commented till further investigation.
             CompletableFuture.supplyAsync(() -> {
                 try {
                     if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
@@ -77,18 +76,18 @@ public class GEqwlYLeImActions implements Action {
 
                 }
                 return true;
-            });
+            });*/
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Click action performed successfully");
 
         } catch (StaleElementReferenceException staleException) {
-            retryExecutor(element, "click", "Stale element Exception Caught");
+            retryExecutor(element, processing,"click", "Stale element Exception Caught");
         } catch (ElementClickInterceptedException interceptException) {
-            retryExecutor(element, "click", "Intercept Exception Caught");
+            retryExecutor(element, processing,"click", "Intercept Exception Caught");
         } catch (ElementNotInteractableException interactableException) {
-            retryExecutor(element, "click", "Not Interactable Exception Caught");
+            retryExecutor(element, processing,"click", "Not Interactable Exception Caught");
         } catch (WebDriverException notClickableOrNoFocusException) {
             if (notClickableOrNoFocusException.getMessage().contains("is not clickable at point") | notClickableOrNoFocusException.getMessage().contains("cannot focus element")) {
-                retryExecutor(element, "click", "Element is not clickable or in focus");
+                retryExecutor(element, processing,"click", "Element is not clickable or in focus");
             } else {
                 throw notClickableOrNoFocusException;
             }
@@ -102,7 +101,8 @@ public class GEqwlYLeImActions implements Action {
             localWait.until(ExpectedConditions.elementToBeClickable(element));
             if (input.equalsIgnoreCase("--clear--")) {
                 element.clear();
-                I.amPerforming().switchTo().acceptAlert();
+                acceptAlert(true);
+                /* This code is causing alert to get accepted automatically. So, it's commented till further investigation.
                 CompletableFuture.supplyAsync(() -> {
                     try {
                         if (mobileRun())
@@ -114,10 +114,11 @@ public class GEqwlYLeImActions implements Action {
                     } catch (Exception e) {
                     }
                     return true;
-                });
+                });*/
             } else {
                 element.sendKeys(input);
-                I.amPerforming().switchTo().acceptAlert();
+                acceptAlert(true);
+                /* This code is causing alert to get accepted automatically. So, it's commented till further investigation.
                 CompletableFuture.supplyAsync(() -> {
                     try {
                         if (mobileRun())
@@ -130,18 +131,18 @@ public class GEqwlYLeImActions implements Action {
 
                     }
                     return true;
-                });
+                });*/
             }
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Input action performed successfully");
         } catch (StaleElementReferenceException staleException) {
-            retryExecutor(element, "input", "Stale element Exception Caught", input);
+            retryExecutor(element, true,"input", "Stale element Exception Caught", input);
         } catch (ElementClickInterceptedException interceptException) {
-            retryExecutor(element, "input", "Intercept Exception Caught", input);
+            retryExecutor(element,true, "input", "Intercept Exception Caught", input);
         } catch (ElementNotInteractableException interactableException) {
-            retryExecutor(element, "input", "Not Interactable Exception Caught", input);
+            retryExecutor(element, true,"input", "Not Interactable Exception Caught", input);
         } catch (WebDriverException notClickableOrNoFocusException) {
             if (notClickableOrNoFocusException.getMessage().contains("is not clickable at point") | notClickableOrNoFocusException.getMessage().contains("cannot focus element")) {
-                retryExecutor(element, "input", "Element is not entering text or in focus", input);
+                retryExecutor(element, true,"input", "Element is not entering text or in focus", input);
             } else {
                 throw notClickableOrNoFocusException;
             }
@@ -154,8 +155,9 @@ public class GEqwlYLeImActions implements Action {
      * @param element
      * @param args    actionType,exception,inputText(for input only)
      */
-    private void retryExecutor(WebElement element, String... args) {
+    private void retryExecutor(WebElement element,Boolean processing, String... args) {
         if (mobileRun()) {
+            /* This code is causing alert to get accepted automatically. So, it's commented till further investigation.
             CompletableFuture.supplyAsync(() -> {
                 try {
                     if (TestingBlazeGlobal.getVariable("highlightElements") != null && ((String) TestingBlazeGlobal.getVariable("highlightElements")).equalsIgnoreCase("off")) {
@@ -167,23 +169,23 @@ public class GEqwlYLeImActions implements Action {
 
                 }
                 return true;
-            });
+            });*/
             timerLimit = wait.getWaitTime();
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying to " + args[0] + " for maximum " + Waits.STANDARD_WAIT_TIME + " seconds");
             while (timerLimit > System.currentTimeMillis() / 1000) {
                 try {
                     if (args[0].equalsIgnoreCase("click")) {
                         element.click();
-                        I.amPerforming().switchTo().acceptAlert();
+                        acceptAlert(processing);
                         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
                         break;
                     } else if (args[0].equalsIgnoreCase("input")) {
                         if (args[2].equalsIgnoreCase("--clear--")) {
                             element.clear();
-                            I.amPerforming().switchTo().acceptAlert();
+                            acceptAlert(processing);
                         } else {
                             element.sendKeys(args[2]);
-                            I.amPerforming().switchTo().acceptAlert();
+                            acceptAlert(processing);
                         }
                         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
                         break;
@@ -205,16 +207,16 @@ public class GEqwlYLeImActions implements Action {
                         if (args[0].equalsIgnoreCase("click")) {
                             freshElement.click();
                             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
-                            I.amPerforming().switchTo().acceptAlert();
+                            acceptAlert(processing);
                         } else if (args[0].equalsIgnoreCase("input")) {
                             if (args[2].equalsIgnoreCase("--clear--")) {
                                 freshElement.clear();
                                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
-                                I.amPerforming().switchTo().acceptAlert();
+                                acceptAlert(processing);
                             } else {
                                 freshElement.sendKeys(args[2]);
                                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_CRITICAL, args[1] + " : Retrying is Successful ");
-                                I.amPerforming().switchTo().acceptAlert();
+                                acceptAlert(processing);
                             }
                         }
                     } else {
@@ -233,5 +235,9 @@ public class GEqwlYLeImActions implements Action {
 
     private Boolean mobileRun() {
         return !(EnvironmentFactory.getDevice().equalsIgnoreCase("android") || EnvironmentFactory.getDevice().equalsIgnoreCase("ios"));
+    }
+
+    private void acceptAlert(Boolean processing) {
+        if(processing) I.amPerforming().switchTo().acceptAlert();
     }
 }
