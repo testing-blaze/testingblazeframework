@@ -24,6 +24,7 @@ import com.google.gson.JsonElement;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -150,8 +151,10 @@ public final class RestfulWebServices {
 
         // Construct the request
         request.accept("application/json");
-        request.header("Content-Type", "application/json");
+        request.header("Accept", ContentType.JSON.getAcceptHeader());
+        request.contentType(ContentType.JSON);
         if (keyValue != null) {
+            request.auth().preemptive().basic(key, keyValue);
             request.header(key, keyValue);
         }
         if (authToken != null) {
