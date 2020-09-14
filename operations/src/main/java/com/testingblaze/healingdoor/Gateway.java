@@ -20,9 +20,14 @@ public class Gateway {
     private static final Map<String, String> locatorRepository = new HashMap<>();
     private static RestfulWebServices selfHealer;
 
-    public static String fetchLocatorFromDB(String locatorCategory, String locatorType, String locatorName) {
+    /**
+     * @param locatorType format is "By-id"
+     * @param locatorName
+     * @return
+     */
+    public static String fetchLocatorFromDB(String locatorType, String locatorName) {
         if (!locatorRepository.containsKey(locatorName)) {
-            var response = accessSelfHealer().getCall(getEndPoint("fetchLocator", locatorType, locatorName), "monu.kumar@reisystems.com", "Test@123");
+            var response = accessSelfHealer().getCall(getEndPoint("fetchLocator", locatorType.split("-")[1], locatorName), "monu.kumar@reisystems.com", "Test@123");
             String theLocator = response.getBody().jsonPath().get("theLocator");
             locatorRepository.put(locatorName, theLocator);
             performTouchDocuments(response, locatorType, theLocator, locatorName);
@@ -34,13 +39,14 @@ public class Gateway {
         Boolean processingFlag = response.getBody().jsonPath().get("processingFlag");
 
         if (!processingFlag) {
-            if (locatorType.equalsIgnoreCase("id")) {
-                manageID("createTheLocatorTree", ElementAPI.getBy(locatorType, theLocator), theLocator, locatorName, locatorType);
+            if (locatorType.split("-")[1].equalsIgnoreCase("id")) {
+                System.out.println("INside id");
+                I.amPerforming().restHttp().postCall(manageID("createTheLocatorTree", theLocator, locatorName, locatorType),null,getEndPoint("postLocatorTree", "none", "none"),"monu.kumar@reisystems.com", "Test@123",null);
             }
 
         }
 
-        if (locatorType.equalsIgnoreCase("xpath")) {
+        if (locatorType.split("-")[1].equalsIgnoreCase("xpath")) {
             Boolean childProcessingFlag = response.getBody().jsonPath().get("childProcessingFlag");
             if (!childProcessingFlag) {
 
@@ -48,48 +54,16 @@ public class Gateway {
         }
     }
 
-    private static RestfulWebServices accessSelfHealer() {
-        if (selfHealer == null) selfHealer = new RestfulWebServices();
-        return selfHealer;
-    }
 
-    private static String getEndPoint(String endPointType, String locatorType, String locatorName) {
-        var finalEndPoint = "";
-        var initTouchDocuments = "http://127.0.0.1:8000/apis/touch_locator/?";
-        switch (endPointType.toLowerCase()) {
-            case "fetchlocator":
-                finalEndPoint = initTouchDocuments + "actionType=" + endPointType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName=product";
-                break;
-        }
-        return finalEndPoint;
 
-    }
-
-    private static <T> void manageID(String payLoadType, By locator, String theLocator, String locatorName, String locatorType) {
-        I.amPerforming().waitFor().ElementToBePresent(locator);
-        JsonObject attributePayload = new JsonObject();
+    private static <T> JsonObject manageID(String payLoadType, String theLocator, String locatorName, String locatorType) {
+        I.amPerforming().waitFor().ElementToBePresent(ElementAPI.getBy(locatorType, theLocator));
         if (payLoadType.equalsIgnoreCase("createTheLocatorTree")) {
-            var theLocatorTree = fetchLocatorDetails(getElement().findElement(locator), false);
-            attributePayload.addProperty("actionType", payLoadType);
-            attributePayload.addProperty("locatorType", locatorType);
-            attributePayload.addProperty("theLocatorName", locatorName);
-            attributePayload.addProperty("theLocatorFieldType", (String) theLocatorTree.get("fieldType"));
-            attributePayload.addProperty("theLocatorPosition", (String) theLocatorTree.get("position"));
-            attributePayload.addProperty("theLocatorText", (String) theLocatorTree.get("text"));
-            attributePayload.add("theLocatorAttributes", (JsonObject) theLocatorTree.get("attributes"));
+            return getCreateTheLocatorTree("createTheLocatorTree",theLocator, locatorName, locatorType);
         }
-        System.out.println("payload is " + attributePayload);
+
+        return null;
     }
-
-    private static JavaScript jsInstance() {
-        return InstanceRecording.getInstance(JavaScript.class);
-    }
-
-    private static WebDriver getElement() {
-        return InstanceRecording.getInstance(DeviceBucket.class).getDriver();
-    }
-
-
 
     private static Map<String, Object> fetchLocatorDetails(WebElement element, Boolean parent) {
         Map<String, Object> locatorDetails = new LinkedHashMap<>();
@@ -117,16 +91,70 @@ public class Gateway {
             locatorDetails.put("fieldType", fieldType);
         }
         long position = (long) jsInstance().executeJSCommand().executeScript("return [].indexOf.call(arguments[0].parentNode.children, arguments[0])", element);
-        String convertedPosition = String.valueOf(position);
-        locatorDetails.put("position", convertedPosition);
+        //String convertedPosition = String.valueOf(position);
+        locatorDetails.put("position", position);
         String textContent = (String) jsInstance().executeJSCommand().executeScript("return arguments[0].innerText", element);
         if (!textContent.equals("")) theLocatorText = textContent;
         locatorDetails.put("text", theLocatorText);
         return locatorDetails;
     }
 
-    private String getXpathforidparent(String locator, String fieldType) {
+    private static JsonObject getCreateTheLocatorTree(String payLoadType, String theLocator, String locatorName, String locatorType){
+        JsonObject attributePayload = new JsonObject();
+            var theLocatorTree = fetchLocatorDetails(getElement().findElement(ElementAPI.getBy(locatorType, theLocator)), false);
+            var iParentLocatorTree = fetchLocatorDetails(getElement().findElement(ElementAPI.getBy(locatorType, theLocator)), false);
+
+            attributePayload.addProperty("actionType", payLoadType);
+            attributePayload.addProperty("locatorType", locatorType.split("-")[1]);
+            attributePayload.addProperty("theLocatorName", locatorName);
+            attributePayload.addProperty("theLocatorFieldType", (String) theLocatorTree.get("fieldType"));
+            attributePayload.addProperty("theLocatorPosition", (long) theLocatorTree.get("position"));
+            attributePayload.addProperty("theLocatorText", (String) theLocatorTree.get("text"));
+            attributePayload.add("theLocatorAttributes", (JsonObject) theLocatorTree.get("attributes"));
+            if (getElement().findElements(By.xpath(getXpathForIdParent(theLocator, ((String) theLocatorTree.get("fieldType")).toLowerCase()))).size() > 0) {
+                var divParentLocatorTree = fetchLocatorDetails(getElement().findElement(By.xpath(getXpathForIdParent(theLocator, ((String) theLocatorTree.get("fieldType")).toLowerCase()))), false);
+                attributePayload.addProperty("divParentFieldType", (String) divParentLocatorTree.get("fieldType"));
+                attributePayload.addProperty("divParentPosition", (long) divParentLocatorTree.get("position"));
+                attributePayload.add("divParentAttributes", (JsonObject) divParentLocatorTree.get("attributes"));
+            } else {
+                attributePayload.addProperty("divParentFieldType", "Not Found");
+            }
+            attributePayload.addProperty("iParentFieldType", (String) iParentLocatorTree.get("fieldType"));
+            attributePayload.addProperty("iParentPosition", (long) iParentLocatorTree.get("position"));
+            attributePayload.add("iParentAttributes", (JsonObject) iParentLocatorTree.get("attributes"));
+            return attributePayload;
+    }
+
+    private static String getEndPoint(String endPointType, String locatorType, String locatorName) {
+        var finalEndPoint = "";
+        var initTouchDocuments = "http://127.0.0.1:8000/apis/touch_locator/?";
+        switch (endPointType.toLowerCase()) {
+            case "fetchlocator":
+                finalEndPoint = initTouchDocuments + "actionType=" + endPointType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName=product";
+                break;
+            case "postlocatortree":
+                finalEndPoint = initTouchDocuments +"projectName=product";
+                break;
+        }
+        return finalEndPoint;
+
+    }
+
+    private static String getXpathForIdParent(String locator, String fieldType) {
         return "//" + fieldType + "[@id='" + locator + "']//ancestor::div[1]";
+    }
+
+    private static RestfulWebServices accessSelfHealer() {
+        if (selfHealer == null) selfHealer = new RestfulWebServices();
+        return selfHealer;
+    }
+
+    private static JavaScript jsInstance() {
+        return InstanceRecording.getInstance(JavaScript.class);
+    }
+
+    private static WebDriver getElement() {
+        return InstanceRecording.getInstance(DeviceBucket.class).getDriver();
     }
 
 }

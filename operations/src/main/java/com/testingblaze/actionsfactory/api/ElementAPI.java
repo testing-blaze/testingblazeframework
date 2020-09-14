@@ -24,7 +24,6 @@ import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.Ng;
-import com.testingblaze.exception.TestingBlazeRunTimeException;
 import com.testingblaze.healingdoor.Gateway;
 import com.testingblaze.objects.Elements;
 import com.testingblaze.objects.InstanceRecording;
@@ -86,24 +85,7 @@ public class ElementAPI implements Element {
         if (locator instanceof String) {
             var locatorType = ((String) locator).split(":")[0];
             var locatorName = ((String) locator).split(":")[1];
-
-            if (locatorType.split("-")[1].equalsIgnoreCase("xpath")) {
-                if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                    element = findMyElements.getNestedElement(webElement, By.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), true);
-                if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                    element = findMyElements.getNestedElement(webElement, MobileBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), true);
-                if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                    element = findMyElements.getNestedElement(webElement, ByAngular.BaseBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), true);
-            } else if (locatorType.split("-")[1].equalsIgnoreCase("id")) {
-                if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                    element = findMyElements.getNestedElement(webElement, By.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), true);
-                if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                    element = findMyElements.getNestedElement(webElement, MobileBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), true);
-                if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                    element = findMyElements.getNestedElement(webElement, ByAngular.BaseBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), true);
-            } else {
-                throw new TestingBlazeRunTimeException("The Locator format is not supported");
-            }
+            element = findMyElements.getNestedElement(webElement, getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)), true);
         } else if (locator instanceof By) {
             element = findMyElements.getNestedElement(webElement, (By) locator, true);
         }
@@ -130,24 +112,7 @@ public class ElementAPI implements Element {
         if (locator instanceof String) {
             var locatorType = ((String) locator).split(":")[0];
             var locatorName = ((String) locator).split(":")[1];
-
-            if (locatorType.split("-")[1].equalsIgnoreCase("xpath")) {
-                if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                    elementList = findMyElements.getNestedElementList(webElement, By.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)));
-                if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                    elementList = findMyElements.getNestedElementList(webElement, MobileBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)));
-                if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                    elementList = findMyElements.getNestedElementList(webElement, ByAngular.BaseBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)));
-            } else if (locatorType.split("-")[1].equalsIgnoreCase("id")) {
-                if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                    elementList = findMyElements.getNestedElementList(webElement, By.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)));
-                if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                    elementList = findMyElements.getNestedElementList(webElement, MobileBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)));
-                if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                    elementList = findMyElements.getNestedElementList(webElement, ByAngular.BaseBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)));
-            } else {
-                throw new TestingBlazeRunTimeException("The Locator format is not supported");
-            }
+            elementList = findMyElements.getNestedElementList(webElement, getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)));
         } else if (locator instanceof By) {
             elementList = findMyElements.getNestedElementList(webElement, (By) locator);
         }
@@ -171,52 +136,14 @@ public class ElementAPI implements Element {
         var locatorType = locator.split(":")[0];
         var locatorName = locator.split(":")[1];
         WebElement element = null;
-        if (locatorType.split("-")[1].equalsIgnoreCase("xpath")) {
-            if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                element = handleLocatorInstanceOf(By.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                element = handleLocatorInstanceOf(MobileBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                element = handleLocatorInstanceOf(ByAngular.BaseBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-
-        } else if (locatorType.split("-")[1].equalsIgnoreCase("id")) {
-            if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                element = handleLocatorInstanceOf(By.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                element = handleLocatorInstanceOf(MobileBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                element = handleLocatorInstanceOf(ByAngular.BaseBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-
-        } else {
-            throw new TestingBlazeRunTimeException("The Locator format is not supported");
-        }
-        return element;
+        return handleLocatorInstanceOf(getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)), processing);
     }
 
     private List<Elements> handleSelfHealingLocators(String locator, Boolean processing) {
         var locatorType = locator.split(":")[0];
         var locatorName = locator.split(":")[1];
         List<Elements> element = null;
-        if (locatorType.split("-")[1].equalsIgnoreCase("xpath")) {
-            if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                element = handleLocatorsInstanceOf(By.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                element = handleLocatorsInstanceOf(MobileBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                element = handleLocatorsInstanceOf(ByAngular.BaseBy.xpath(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-
-        } else if (locatorType.split("-")[1].equalsIgnoreCase("id")) {
-            if (locatorType.split("-")[0].equalsIgnoreCase("by"))
-                element = handleLocatorsInstanceOf(By.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("MobileBy"))
-                element = handleLocatorsInstanceOf(MobileBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-            if (locatorType.split("-")[0].equalsIgnoreCase("ByAngular.BaseBy"))
-                element = handleLocatorsInstanceOf(ByAngular.BaseBy.id(Gateway.fetchLocatorFromDB(locatorType, locatorType.split("-")[1], locatorName)), processing);
-
-        } else {
-            throw new TestingBlazeRunTimeException("The Locator format is not supported");
-        }
-        return element;
+        return handleLocatorsInstanceOf(getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)), processing);
     }
 
     private <T> WebElement handleLocatorInstanceOf(T locator, Boolean processing) {
