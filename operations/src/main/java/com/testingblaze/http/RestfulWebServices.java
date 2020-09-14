@@ -41,6 +41,35 @@ public final class RestfulWebServices {
 
 
     /**
+     * Make a raw request with own compiled request
+     * @param callTypes CallTypes.GET
+     * @param requestLoad
+     * @param endPoint
+     * @author nauman.shahid
+     * @return
+     */
+    public Response rawRequest(CallTypes callTypes, RequestSpecification requestLoad, String endPoint) {
+        Response response = null;
+        // Print pre-request logs
+        try {
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Executing " + callTypes.name() + " Api");
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "End Point is " + endPoint);
+        } catch (Exception e) {
+            // to handle reporting exception - avoid unnecessary exceptions
+        }
+        if (callTypes.equals(CallTypes.POST)) response=requestLoad.post(endPoint);
+        else if (callTypes.equals(CallTypes.GET)) response=requestLoad.get(endPoint);
+        else if (callTypes.equals(CallTypes.PATCH)) response=requestLoad.patch(endPoint);
+        else if (callTypes.equals(CallTypes.DELETE)) response=requestLoad.delete(endPoint);
+        try {
+            this.reportsLogger(callTypes, response);
+        } catch (Exception var11) {
+            this.consoleLogger(callTypes, response);
+        }
+        return response;
+    }
+
+    /**
      * Make a get call
      *
      * @param endPoint
