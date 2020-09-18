@@ -149,8 +149,7 @@ public final class JavaScript {
      */
     public void scrollElementToPageDetailCenter(WebElement element) {
         //Console log  Attempting to scroll element to page center with JavaScript");
-        boolean isIeBased = EnvironmentFactory.getDevice().toLowerCase().contains("ie")
-                || EnvironmentFactory.getDevice().toLowerCase().contains("edge");
+        boolean isIeBased = EnvironmentFactory.getDevice().toLowerCase().contains("ie");
         String scrollElementIntoMiddle = String.format(""
                 + "function isScrollable(element) {"
                 + "    var styles = ("
