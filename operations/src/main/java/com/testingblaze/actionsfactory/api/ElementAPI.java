@@ -24,13 +24,15 @@ import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.Ng;
-import com.testingblaze.healingdoor.Gateway;
+import com.testingblaze.healing.HealLocators;
+import com.testingblaze.healing.TouchLocators;
 import com.testingblaze.objects.Elements;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import io.appium.java_client.MobileBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -51,6 +53,7 @@ public class ElementAPI implements Element {
 
     @Override
     public <T> WebElement locator(T locator, Boolean processing) {
+        cleanHealerMap();
         if (locator instanceof String) {
             return handleSelfHealingLocator((String) locator, processing);
         } else {
@@ -60,6 +63,7 @@ public class ElementAPI implements Element {
 
     @Override
     public <T> List<Elements> locators(T locator, Boolean processing) {
+        cleanHealerMap();
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting list of elements located by: " + locator.toString());
         if (locator instanceof String) {
             return handleSelfHealingLocators((String) locator, processing);
@@ -80,12 +84,22 @@ public class ElementAPI implements Element {
 
     @Override
     public <T> WebElement nestedElement(WebElement webElement, T locator) {
+        cleanHealerMap();
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting nested element located by: " + locator.toString());
         WebElement element = null;
         if (locator instanceof String) {
             var locatorType = ((String) locator).split(":")[0];
             var locatorName = ((String) locator).split(":")[1];
-            element = findMyElements.getNestedElement(webElement, getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)), true);
+            try {
+                element = findMyElements.getNestedElement(webElement, getBy(locatorType, TouchLocators.fetchLocatorFromDB(locatorType, locatorName)), true);
+            } catch (NoSuchElementException noSuchElementException) {
+                try {
+                    By newLocator = new HealLocators().performHealing();
+                    element = findMyElements.getNestedElement(webElement, newLocator, true);
+                } catch (Exception e) {
+
+                }
+            }
         } else if (locator instanceof By) {
             element = findMyElements.getNestedElement(webElement, (By) locator, true);
         }
@@ -104,6 +118,7 @@ public class ElementAPI implements Element {
      */
     @Override
     public <T> List<Elements> nestedElementsList(WebElement webElement, T locator) {
+        cleanHealerMap();
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting nested list of elements located by: " + locator.toString());
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting nested list of elements located by: " + locator.toString());
         List<WebElement> elementList = new ArrayList<>();
@@ -112,7 +127,11 @@ public class ElementAPI implements Element {
         if (locator instanceof String) {
             var locatorType = ((String) locator).split(":")[0];
             var locatorName = ((String) locator).split(":")[1];
-            elementList = findMyElements.getNestedElementList(webElement, getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)));
+            elementList = findMyElements.getNestedElementList(webElement, getBy(locatorType, TouchLocators.fetchLocatorFromDB(locatorType, locatorName)));
+            if (TouchLocators.locatorInUse.size() > 0 && elementList.size() == 0) {
+                By newLocator = new HealLocators().performHealing();
+                elementList = findMyElements.getNestedElementList(webElement, newLocator);
+            }
         } else if (locator instanceof By) {
             elementList = findMyElements.getNestedElementList(webElement, (By) locator);
         }
@@ -127,36 +146,25 @@ public class ElementAPI implements Element {
 
     @Override
     public <T> Select selectLocator(T locatorParameter, Boolean processing) {
+        cleanHealerMap();
         return new Select(locator(locatorParameter, processing));
     }
 
     /******************** Private Methods ***********************/
 
-    private WebElement handleSelfHealingLocator(String locator, Boolean processing) {
-        var locatorType = locator.split(":")[0];
-        var locatorName = locator.split(":")[1];
-        WebElement element = null;
-        return handleLocatorInstanceOf(getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)), processing);
-    }
-
-    private List<Elements> handleSelfHealingLocators(String locator, Boolean processing) {
-        var locatorType = locator.split(":")[0];
-        var locatorName = locator.split(":")[1];
-        List<Elements> element = null;
-        return handleLocatorsInstanceOf(getBy(locatorType, Gateway.fetchLocatorFromDB(locatorType, locatorName)), processing);
-    }
-
     private <T> WebElement handleLocatorInstanceOf(T locator, Boolean processing) {
+        WebElement element = null;
         if (locator instanceof WebElement) {
-            return (WebElement) locator;
+            element = (WebElement) locator;
         }
         if (locator instanceof MobileBy) {
-            return findMobileElement.getMobileElement((MobileBy) locator, processing);
+            element = findMobileElement.getMobileElement((MobileBy) locator, processing);
         } else if (locator instanceof ByAngular.BaseBy) {
-            return ng.getNgElement((ByAngular.BaseBy) locator, processing);
-        } else {
-            return findMyElements.getElement((By) locator, processing);
+            element = ng.getNgElement((ByAngular.BaseBy) locator, processing);
+        } else if (locator instanceof By) {
+            element = findMyElements.getElement((By) locator, processing);
         }
+        return element;
     }
 
     private <T> List<Elements> handleLocatorsInstanceOf(T locator, Boolean processing) {
@@ -177,6 +185,63 @@ public class ElementAPI implements Element {
         }
         return testBlazeElements;
     }
+
+    private WebElement handleSelfHealingLocator(String locator, Boolean processing) {
+        var locatorType = locator.split(":")[0];
+        var locatorName = locator.split(":")[1];
+        return handleSelfHealingLocatorInstanceOf(getBy(locatorType, TouchLocators.fetchLocatorFromDB(locatorType, locatorName)), processing);
+    }
+
+    private List<Elements> handleSelfHealingLocators(String locator, Boolean processing) {
+        var locatorType = locator.split(":")[0];
+        var locatorName = locator.split(":")[1];
+        return handleSelfHealingLocatorsInstanceOf(getBy(locatorType, TouchLocators.fetchLocatorFromDB(locatorType, locatorName)), processing);
+    }
+
+    private <T> WebElement handleSelfHealingLocatorInstanceOf(T locator, Boolean processing) {
+        WebElement element = null;
+        try {
+            if (locator instanceof WebElement) {
+                element = (WebElement) locator;
+            }
+            if (locator instanceof MobileBy) {
+                element = findMobileElement.getMobileElement((MobileBy) locator, processing);
+            } else if (locator instanceof ByAngular.BaseBy) {
+                element = ng.getNgElement((ByAngular.BaseBy) locator, processing);
+            } else if (locator instanceof By) {
+                element = findMyElements.getElement((By) locator, processing);
+            }
+        } catch (NoSuchElementException noSuchElementException) {
+            if (TouchLocators.locatorInUse.size() > 0) {
+                By newLocator = new HealLocators().performHealing();
+                return locator(newLocator, true);
+            }
+        }
+        return element;
+    }
+
+    private <T> List<Elements> handleSelfHealingLocatorsInstanceOf(T locator, Boolean processing) {
+        List<WebElement> elementList = null;
+        if (locator instanceof MobileBy) {
+            elementList = findMobileElement.getMobileElements((MobileBy) locator, processing);
+        } else if (locator instanceof ByAngular.BaseBy) {
+            elementList = ng.getNgElements((ByAngular.BaseBy) locator, processing);
+        } else if (locator instanceof By) {
+            elementList = findMyElements.getElements((By) locator, processing);
+        }
+        List<Elements> testBlazeElements = new ArrayList<>();
+
+        if (TouchLocators.locatorInUse.size() > 0 && elementList.size() == 0) {
+            var newlocator = (T) new HealLocators().performHealing();
+            return locators(newlocator, true);
+        } else if (elementList.size() > 0) {
+            for (WebElement element : elementList) {
+                testBlazeElements.add(new Elements(element));
+            }
+        }
+        return testBlazeElements;
+    }
+
 
     public static By getBy(String type, String expression) {
         By getBy = null;
@@ -201,5 +266,13 @@ public class ElementAPI implements Element {
                 break;
         }
         return getBy;
+    }
+
+    private void cleanHealerMap() {
+        try {
+            if (TouchLocators.locatorInUse.size() > 0) TouchLocators.locatorInUse.clear();
+        } catch (Exception e) {
+            // No implementation required
+        }
     }
 }

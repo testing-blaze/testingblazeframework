@@ -17,11 +17,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.testingblaze.http;
+package com.testingblaze.healing;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.testingblaze.controller.TestingBlazeGlobal;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import io.restassured.RestAssured;
@@ -37,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * @REI-Systems
  * @category Handles all Api calls
  */
-public final class RestfulWebServices {
+public final class internalHttp {
     private static final Gson gson = new Gson();
 
     public enum CallTypes {GET, POST, PATCH, DELETE, PUT}
@@ -55,8 +54,8 @@ public final class RestfulWebServices {
         Response response = null;
         // Print pre-request logs
         try {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Executing " + callTypes.name() + " Api");
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "End Point is " + endPoint);
+            //I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Executing " + callTypes.name() + " Api");
+            //I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "End Point is " + endPoint);
         } catch (Exception e) {
             // to handle reporting exception - avoid unnecessary exceptions
         }
@@ -166,10 +165,9 @@ public final class RestfulWebServices {
 
         // Print pre-request logs
         try {
-            if ((Boolean) TestingBlazeGlobal.getVariable("turnOffHealerLogs")) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Executing " + callType.name() + " Api");
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "End Point is " + endPoint);
-            }
+
+            //I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Executing " + callType.name() + " Api");
+            //I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "End Point is " + endPoint);
         } catch (Exception e) {
             // to handle reporting exception - avoid unnecessary exceptions
         }
@@ -197,7 +195,7 @@ public final class RestfulWebServices {
         }
         if (jsonElement != null) {
             try {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + jsonElement);
+                //I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + jsonElement);
             } catch (Exception e) {
                 // to handle reporting exception - avoid unnecessary exceptions
             }
@@ -205,7 +203,7 @@ public final class RestfulWebServices {
         }
         if (stringBody != null) {
             try {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
+                //I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
             } catch (Exception e) {
                 // to handle reporting exception - avoid unnecessary exceptions
             }
@@ -232,10 +230,10 @@ public final class RestfulWebServices {
                 break;
         }
         try {
-            reportsLogger(callType, response);
+            //reportsLogger(callType, response);
         } catch (Exception e) {
             // to handle reporting exception - avoid unnecessary exceptions
-            consoleLogger(callType, response);
+            //consoleLogger(callType, response);
         }
         return response;
     }
