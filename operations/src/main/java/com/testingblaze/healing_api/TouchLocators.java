@@ -42,7 +42,8 @@ public class TouchLocators {
     private static final Map<String, String> locatorRepository = new LinkedHashMap<>();
     public static Map<String, List> locatorInUse = new HashMap<>();
     private static Map<String, String> userCredentials = null;
-    protected static internalHttp httpCalls = new internalHttp();
+    protected static InternalHttp httpCalls = new InternalHttp();
+    protected static String endPointInitial = "http://10.98.16.10";
 
     /**
      * gets the locator and perform initial Touch document operatiosn
@@ -266,7 +267,7 @@ public class TouchLocators {
 
     private static String getEndPoint(String actionType, String endPointType, String locatorType, String locatorName) {
         var finalEndPoint = "";
-        var initTouchDocuments = "http://127.0.0.1:8000/apis/touch_locator/?";
+        var initTouchDocuments = endPointInitial+"/apis/touch_locator/?";
         switch (endPointType.toLowerCase()) {
             case "getlocator":
                 finalEndPoint = initTouchDocuments + "actionType=" + actionType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName=" + getCredentials().get("project");
