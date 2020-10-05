@@ -24,8 +24,8 @@ import com.testingblaze.actionsfactory.abstracts.Element;
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.elementfunctions.Mobile;
 import com.testingblaze.actionsfactory.elementfunctions.Ng;
-import com.testingblaze.healing.HealLocators;
-import com.testingblaze.healing.TouchLocators;
+import com.testingblaze.healing_api.HealLocators;
+import com.testingblaze.healing_api.TouchLocators;
 import com.testingblaze.objects.Elements;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
@@ -252,12 +252,17 @@ public class ElementAPI implements Element {
             case "by-id":
                 getBy = By.id(expression);
                 break;
+            case "by-css":
+                getBy = By.cssSelector(expression);
+                break;
             case "mobileby-xpath":
                 getBy = MobileBy.xpath(expression);
                 break;
             case "mobileby-id":
                 getBy = MobileBy.id(expression);
                 break;
+            case "mobileby-css":
+                getBy = MobileBy.cssSelector(expression);
             case "byangular.baseby-xpath":
                 getBy = ByAngular.BaseBy.xpath(expression);
                 break;

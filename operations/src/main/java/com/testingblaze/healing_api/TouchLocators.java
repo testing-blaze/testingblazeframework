@@ -17,7 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.testingblaze.healing;
+package com.testingblaze.healing_api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
