@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * @REI-Systems
  * @category Handles all Api calls
  */
-public final class internalHttp {
+public final class InternalHttp {
     private static final Gson gson = new Gson();
 
     public enum CallTypes {GET, POST, PATCH, DELETE, PUT}
