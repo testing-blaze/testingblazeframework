@@ -38,4 +38,8 @@ public final class TwoColumnSorting {
         return "Column 1: " + key + "| Column 2: " + value;
     }
 
+    public String getKey() {
+        return this.key;
+    }
+
 }

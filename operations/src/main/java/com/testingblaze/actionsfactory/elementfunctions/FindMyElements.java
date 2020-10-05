@@ -63,14 +63,14 @@ public final class FindMyElements {
             try {
                 return elementProcessing.forSingleElement(locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + locator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         } else {
             try {
                 return driver.findElement(locator);
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR,  "Element is not present or locator is not correct | " + locator);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element is not present or locator is not correct | " + locator);
                 throw e;
             }
         }

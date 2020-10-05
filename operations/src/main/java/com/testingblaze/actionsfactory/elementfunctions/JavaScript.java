@@ -114,6 +114,17 @@ public final class JavaScript {
     /**
      * scroll to a specific element location using java script
      */
+    public void scrollToMiddleViewOfElement(WebElement locator) {
+        String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
+                + "var elementTop = arguments[0].getBoundingClientRect().top;"
+                + "window.scrollBy(0, elementTop-(viewPortHeight/2));";
+
+        js.executeScript(scrollElementIntoMiddle, locator);
+    }
+
+    /**
+     * scroll to a specific element location using java script
+     */
     public void scrollpageToSpecificElement(WebElement locator) {
         js.executeScript("arguments[0].scrollIntoView(true);", locator);
     }
