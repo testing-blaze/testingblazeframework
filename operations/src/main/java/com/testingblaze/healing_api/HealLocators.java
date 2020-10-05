@@ -132,7 +132,7 @@ public class HealLocators {
 
     private String getEndPoint(String endPointType, String locatorType, String locatorName) {
         var finalEndPoint = "";
-        var initTouchDocuments = TouchLocators.endPointInitial+"/apis/locator_healing/?";
+        var initTouchDocuments = TouchLocators.getCredentials().get("connection")+"/apis/locator_healing/?";
         if ((endPointType.equalsIgnoreCase("getRecoveryLocators") && locatorType.equalsIgnoreCase("id")) || endPointType.equalsIgnoreCase("getAllChildLocators")) {
             finalEndPoint = initTouchDocuments + "actionType=" + endPointType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName="+TouchLocators.getCredentials().get("project");
         } else if (endPointType.equalsIgnoreCase("getRecoveryChildLocators") || (endPointType.equalsIgnoreCase("getRecoveryLocators") && locatorType.equalsIgnoreCase("xpath"))) {

@@ -43,7 +43,6 @@ public class TouchLocators {
     public static Map<String, List> locatorInUse = new HashMap<>();
     private static Map<String, String> userCredentials = null;
     protected static InternalHttp httpCalls = new InternalHttp();
-    protected static String endPointInitial = "http://10.98.16.10";
 
     /**
      * gets the locator and perform initial Touch document operatiosn
@@ -58,7 +57,7 @@ public class TouchLocators {
             var response = httpCalls.getCall(getEndPoint("fetchLocator", "getlocator", locatorType.split("-")[1], locatorName), getCredentials().get("user"), getCredentials().get("password"));
             String theLocator = response.getBody().jsonPath().get("theLocator");
             if(theLocator == null){
-                throw new TestingBlazeRunTimeException("Locator information is not valid");
+                throw new TestingBlazeRunTimeException("Locator or credentials information is not valid.check locators name or information in self-healing.properties");
             } else {
                 locatorRepository.put(locatorName, theLocator);
                 performTouchDocuments(response, locatorType, theLocator, locatorName, false);
@@ -175,6 +174,7 @@ public class TouchLocators {
                 userCredentials.put("user", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "user"));
                 userCredentials.put("password", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "password"));
                 userCredentials.put("project", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "project"));
+                userCredentials.put("connection",I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "connection"));
             } catch (Exception e) {
                 throw new TestingBlazeRunTimeException("There is a problem with self healing credentials");
             }
@@ -267,7 +267,7 @@ public class TouchLocators {
 
     private static String getEndPoint(String actionType, String endPointType, String locatorType, String locatorName) {
         var finalEndPoint = "";
-        var initTouchDocuments = endPointInitial+"/apis/touch_locator/?";
+        var initTouchDocuments = getCredentials().get("connection")+"/apis/touch_locator/?";
         switch (endPointType.toLowerCase()) {
             case "getlocator":
                 finalEndPoint = initTouchDocuments + "actionType=" + actionType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName=" + getCredentials().get("project");

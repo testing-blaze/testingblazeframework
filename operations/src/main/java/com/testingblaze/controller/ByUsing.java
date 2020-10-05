@@ -8,27 +8,27 @@ public class ByUsing extends MobileBy {
         super(selector, locatorString);
     }
 
-    public static String webXpathName(String xpath){
+    public static String healingWebXpathName(String xpath){
         return "By-xpath:"+xpath;
     }
 
-    public static String webIdName(String id){
+    public static String healingWebIdName(String id){
         return "By-id:"+id;
     }
 
-    public static String webCssName(String css){
+    public static String healingWebCssName(String css){
         return "By-css:"+css;
     }
 
-    public static String mobileXpathName(String xpath){
+    public static String healingMobileXpathName(String xpath){
         return "MobileBy-xpath:"+xpath;
     }
 
-    public static String mobileIdName(String id){
+    public static String healingMobileIdName(String id){
         return "MobileBy-id:"+id;
     }
 
-    public static String mobileCssName(String css){
+    public static String healingMobileCssName(String css){
         return "MobileBy-css:"+css;
     }
 
