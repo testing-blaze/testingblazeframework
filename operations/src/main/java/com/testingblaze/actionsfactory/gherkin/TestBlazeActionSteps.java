@@ -19,12 +19,14 @@
  */
 package com.testingblaze.actionsfactory.gherkin;
 
+import com.testingblaze.actionsfactory.api.ByUsing;
 import com.testingblaze.controller.ReportingLogsPlugin;
 import com.testingblaze.exception.TestingBlazeExceptionWithoutStackTrace;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.springframework.context.annotation.Description;
 
@@ -79,6 +81,50 @@ public final class TestBlazeActionSteps {
     @When("^I switch to tab number \"(\\d+)\"$")
     public void switchToTab(int tabNumber) {
         I.amPerforming().switchTo().windowHandler(tabNumber);
+    }
+
+    @Description("To be used with self healing only")
+    @When("I click {string}")
+    public void iClick(String locatorName) {
+        if (StringUtils.containsIgnoreCase(locatorName, "mobile")) {
+            if (StringUtils.containsIgnoreCase(locatorName, "xpath")) {
+                I.amPerforming().click().on(ByUsing.healingMobileXpathName(locatorName.split(":")[2]));
+            } else if (StringUtils.containsIgnoreCase(locatorName, "id")) {
+                I.amPerforming().click().on(ByUsing.healingMobileIdName(locatorName.split(":")[2]));
+            } else if (StringUtils.containsIgnoreCase(locatorName, "css")) {
+                I.amPerforming().click().on(ByUsing.healingMobileCssName(locatorName.split(":")[2]));
+            }
+        } else {
+            if (StringUtils.containsIgnoreCase(locatorName, "xpath")) {
+                I.amPerforming().click().on(ByUsing.healingXpathName(locatorName.split(":")[1]));
+            } else if (StringUtils.containsIgnoreCase(locatorName, "id")) {
+                I.amPerforming().click().on(ByUsing.healingIdName(locatorName.split(":")[1]));
+            } else if (StringUtils.containsIgnoreCase(locatorName, "css")) {
+                I.amPerforming().click().on(ByUsing.healingCssName(locatorName.split(":")[1]));
+            }
+        }
+    }
+
+    @Description("To be used with self healing only")
+    @When("I input {string} in {string}")
+    public void iInputIn(String text, String locatorName) {
+        if (StringUtils.containsIgnoreCase(locatorName, "mobile")) {
+            if (StringUtils.containsIgnoreCase(locatorName, "xpath")) {
+                I.amPerforming().textInput().in(ByUsing.healingMobileXpathName(locatorName.split(":")[2]), text);
+            } else if (StringUtils.containsIgnoreCase(locatorName, "id")) {
+                I.amPerforming().textInput().in(ByUsing.healingMobileIdName(locatorName.split(":")[2]), text);
+            } else if (StringUtils.containsIgnoreCase(locatorName, "css")) {
+                I.amPerforming().textInput().in(ByUsing.healingMobileCssName(locatorName.split(":")[2]), text);
+            }
+        } else {
+            if (StringUtils.containsIgnoreCase(locatorName, "xpath")) {
+                I.amPerforming().textInput().in(ByUsing.healingXpathName(locatorName.split(":")[1]), text);
+            } else if (StringUtils.containsIgnoreCase(locatorName, "id")) {
+                I.amPerforming().textInput().in(ByUsing.healingIdName(locatorName.split(":")[1]), text);
+            } else if (StringUtils.containsIgnoreCase(locatorName, "css")) {
+                I.amPerforming().textInput().in(ByUsing.healingCssName(locatorName.split(":")[1]), text);
+            }
+        }
     }
 
     @Description("perform assertions")
