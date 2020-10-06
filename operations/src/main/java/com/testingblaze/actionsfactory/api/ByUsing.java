@@ -1,4 +1,4 @@
-package com.testingblaze.controller;
+package com.testingblaze.actionsfactory.api;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileSelector;
@@ -8,15 +8,15 @@ public class ByUsing extends MobileBy {
         super(selector, locatorString);
     }
 
-    public static String healingWebXpathName(String xpath){
+    public static String healingXpathName(String xpath){
         return "By-xpath:"+xpath;
     }
 
-    public static String healingWebIdName(String id){
+    public static String healingIdName(String id){
         return "By-id:"+id;
     }
 
-    public static String healingWebCssName(String css){
+    public static String healingCssName(String css){
         return "By-css:"+css;
     }
 
