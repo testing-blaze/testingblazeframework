@@ -30,7 +30,7 @@ import java.net.URL;
 
 /**
  * @author nauman.shahid
- * @category Initialize Android
+ * Initialize Android
  */
 
 public final class AndroidManager implements qrYoTsOWwA {

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>testing.blaze</groupId>
+        <groupId>com.github.testing-blaze</groupId>
         <artifactId>blaze-epic</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -14,19 +14,18 @@
     <packaging>jar</packaging>
     <version>1.0.1</version>
     <name>Testing Blaze Core</name>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
+    <description>An Intelligent BDD Test Automation Framework</description>
+    <url>http://www.github.com/testing-blaze</url>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Nauman Shahid</name>
+            <email>write.nauman@gmail.com</email>
+        </developer>
+    </developers>
 </project>

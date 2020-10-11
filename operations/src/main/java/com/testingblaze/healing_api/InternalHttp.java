@@ -33,8 +33,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category Handles all Api calls
+ * Handles all Api calls
  */
 public final class InternalHttp {
     private static final Gson gson = new Gson();

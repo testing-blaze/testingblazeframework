@@ -24,7 +24,7 @@ package com.testingblaze.misclib;
  * the DOM to lower or upper case as we require
  *
  * @author nauman.shahid
- * @category Sanitize string
+ * Sanitize string
  */
 
 public final class Sanitize {

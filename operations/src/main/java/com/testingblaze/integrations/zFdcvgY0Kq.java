@@ -43,7 +43,7 @@ import java.util.Map;
 
 /**
  * The class is responsible for creating test run , adding all tests to runs, collect test results and post them to tfs, close runs
- * @parallel: Supports multi threading and multi jvm safe.
+ * Supports multi threading and multi jvm safe.
  */
 public class zFdcvgY0Kq {
     private volatile static String tfsUrl, pat, authType, apiVersion;
@@ -289,7 +289,7 @@ public class zFdcvgY0Kq {
     /**
      * main call to perform related posting and patching
      *
-     * @author: nauman.shahid
+     * @author nauman.shahid
      */
     public static void addTestResultToTfs() {
         System.out.println("-------------------- TFS Result Posting Started -----------------------");

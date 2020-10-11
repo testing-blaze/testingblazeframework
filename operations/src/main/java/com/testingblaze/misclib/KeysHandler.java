@@ -69,7 +69,6 @@ public final class KeysHandler {
          *
          * @param holdTimeSeconds
          * @author nauman.shahid
-         * @Unverified functionality yet to be tested
          */
         public KeyFunctions releaseKey(int holdTimeSeconds) {
             actions.pause(holdTimeSeconds * 1000).sendKeys(Keys.NULL).build().perform();
@@ -80,7 +79,6 @@ public final class KeysHandler {
          * release the already depressed key
          *
          * @author nauman.shahid
-         * @Unverified functionality yet to be tested
          */
         public KeyFunctions releaseKey() {
             actions.sendKeys(Keys.NULL).build().perform();

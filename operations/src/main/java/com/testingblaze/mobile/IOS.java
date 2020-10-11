@@ -28,8 +28,8 @@ import org.openqa.selenium.WebElement;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category Handles IOS specific special methods and IOS driver instance
+
+ * Handles IOS specific special methods and IOS driver instance
  */
 public final class IOS {
 

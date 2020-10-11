@@ -37,7 +37,7 @@ public class NJIc1dLxYv {
 
     /**
      * input on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -49,7 +49,7 @@ public class NJIc1dLxYv {
 
     /**
      * input on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -61,7 +61,7 @@ public class NJIc1dLxYv {
 
     /**
      * clear on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -73,7 +73,7 @@ public class NJIc1dLxYv {
 
     /**
      * clear on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.

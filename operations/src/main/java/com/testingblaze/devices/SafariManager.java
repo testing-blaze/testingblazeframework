@@ -31,6 +31,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author nauman.shahid
+ * Handle safari browser specific settings and create driver instance
+ */
+
 public final class SafariManager implements qrYoTsOWwA {
     RemoteWebDriver driver;
 

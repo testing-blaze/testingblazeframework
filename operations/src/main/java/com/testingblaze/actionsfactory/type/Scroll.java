@@ -206,7 +206,7 @@ public class Scroll {
     /**
      * Zoom in or out
      *
-     * @nauman.shahid
+     * @author nauman.shahid
      */
     public void toZoomInOut(int zoom) {
         javaScript.ZoomInOutJS(zoom);

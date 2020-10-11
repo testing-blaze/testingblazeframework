@@ -20,11 +20,7 @@
 package com.testingblaze.actionsfactory.type;
 
 import com.testingblaze.actionsfactory.abstracts.Element;
-import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
-import com.testingblaze.controller.DeviceBucket;
-import com.testingblaze.misclib.KeysHandler;
 import com.testingblaze.objects.InstanceRecording;
-import org.openqa.selenium.WebDriver;
 
 /**
  * get various functionalities for dates , urls , browser handling , navigations etc.
@@ -41,7 +37,7 @@ public final class Fetch {
     /**
      * get inner text on webPage , mobilePage , AngularPage
      *
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -55,7 +51,7 @@ public final class Fetch {
     /**
      * get inner text on webPage , mobilePage , AngularPage
      *
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -69,7 +65,7 @@ public final class Fetch {
     /**
      * get attribute value on webPage , mobilePage , AngularPage
      *
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -83,7 +79,7 @@ public final class Fetch {
     /**
      * get attribute value on webPage , mobilePage , AngularPage
      *
-     * @param locator    -> Mobile , Ng , By :
+     * @param locator    Mobile , Ng , By :
      *                   Mobile.
      *                   Angular.
      *                   By.
@@ -98,7 +94,7 @@ public final class Fetch {
     /**
      * get css property on webPage , mobilePage , AngularPage
      *
-     * @param locator  -> Mobile , Ng , By :
+     * @param locator  Mobile , Ng , By :
      *                 Mobile.
      *                 Angular.
      *                 By.
@@ -113,7 +109,7 @@ public final class Fetch {
     /**
      * get css property on webPage , mobilePage , AngularPage
      *
-     * @param locator    -> Mobile , Ng , By :
+     * @param locator    Mobile , Ng , By :
      *                   Mobile.
      *                   Angular.
      *                   By.

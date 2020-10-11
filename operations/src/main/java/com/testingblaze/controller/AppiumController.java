@@ -30,7 +30,7 @@ import java.net.ServerSocket;
 
 /**
  * @author nauman.shahid
- * @category Manages appium server initialization and ports management
+ * Manages appium server initialization and ports management
  */
 
 public final class AppiumController {
