@@ -25,8 +25,8 @@ import java.awt.event.KeyEvent;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category simulates hardware actions
+
+ * simulates hardware actions
  */
 
 public final class RobotActions {

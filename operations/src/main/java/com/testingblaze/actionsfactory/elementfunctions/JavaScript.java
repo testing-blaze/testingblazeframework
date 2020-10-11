@@ -33,8 +33,8 @@ import org.openqa.selenium.WebElement;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category javascript functions library
+
+ * javascript functions library
  */
 
 public final class JavaScript {

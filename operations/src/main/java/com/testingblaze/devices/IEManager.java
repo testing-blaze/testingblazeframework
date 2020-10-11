@@ -33,8 +33,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author nauman.shahid
- * @category Handle browser specific settings and create driver instance
- * @returns IE webdriver instance
+ * Handle IE browser specific settings and create driver instance
  */
 
 public final class IEManager implements qrYoTsOWwA {

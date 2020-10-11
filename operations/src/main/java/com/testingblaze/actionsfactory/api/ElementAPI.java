@@ -76,14 +76,14 @@ public class ElementAPI implements Element {
      * *********************** Important *********************
      * This method is currently expected to handle nested element for mobile and Ng as well
      *
-     * @param webElement
+     * @param parentElement
      * @param locator
      * @param <T>
      * @return
      */
 
     @Override
-    public <T> WebElement nestedElement(WebElement webElement, T locator) {
+    public <T> WebElement nestedElement(WebElement parentElement, T locator) {
         cleanHealerMap();
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Getting nested element located by: " + locator.toString());
         WebElement element = null;
@@ -91,17 +91,17 @@ public class ElementAPI implements Element {
             var locatorType = ((String) locator).split(":")[0];
             var locatorName = ((String) locator).split(":")[1];
             try {
-                element = findMyElements.getNestedElement(webElement, getBy(locatorType, TouchLocators.fetchLocatorFromDB(locatorType, locatorName)), true);
+                element = findMyElements.getNestedElement(parentElement, getBy(locatorType, TouchLocators.fetchLocatorFromDB(locatorType, locatorName)), true);
             } catch (NoSuchElementException noSuchElementException) {
                 try {
                     By newLocator = new HealLocators().performHealing();
-                    element = findMyElements.getNestedElement(webElement, newLocator, true);
+                    element = findMyElements.getNestedElement(parentElement, newLocator, true);
                 } catch (Exception e) {
 
                 }
             }
         } else if (locator instanceof By) {
-            element = findMyElements.getNestedElement(webElement, (By) locator, true);
+            element = findMyElements.getNestedElement(parentElement, (By) locator, true);
         }
         return element;
     }

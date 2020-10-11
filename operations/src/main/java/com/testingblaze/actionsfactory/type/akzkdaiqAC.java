@@ -35,11 +35,11 @@ public class akzkdaiqAC {
 
     /**
      * Only to grasp element list on webPage , mobilePage , AngularPage: Not allowed to use any function like click or send keys from here.
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
-     *                @return List<Elements></Elements> reference
+     *                @return List<Elements> reference
      * @author nauman.shahid
      */
     public <T> List<Elements> of(T locator) {
@@ -49,11 +49,11 @@ public class akzkdaiqAC {
     /**
      * Only to grasp element list on webPage , mobilePage , AngularPage: Not allowed to use any function like click or send keys from here.
      * @param processing true/false
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
-     *                @return List<Elements></Elements> reference
+     *                @return List<Elements>reference
      * @author nauman.shahid
      */
     public <T> List<Elements> of(T locator, Boolean processing) {
@@ -63,11 +63,11 @@ public class akzkdaiqAC {
     /**
      * Only to grasp element list on webPage , mobilePage , AngularPage: Not allowed to use any function like click or send keys from here.
      * @param element the main element
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
-     *                @return List<Elements></Elements> reference
+     *                @return List<Elements> reference
      * @author nauman.shahid
      */
     public <T> List<Elements> ofNested(WebElement element, T locator) {

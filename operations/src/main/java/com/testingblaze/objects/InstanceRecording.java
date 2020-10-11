@@ -41,7 +41,6 @@ public final class InstanceRecording {
      *
      * @param type
      * @param object
-     * @return
      */
     public static <T> void recordInstance(Class<T> type, T object) {
         instanceRecorder.put(Objects.requireNonNull(type), Objects.requireNonNull(object));
@@ -49,8 +48,6 @@ public final class InstanceRecording {
 
     /**
      * Flush the instance
-     *
-     * @return
      */
     public static <T> void flushInstance() {
         instanceRecorder.clear();

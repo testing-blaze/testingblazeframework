@@ -40,7 +40,7 @@ import java.util.List;
 
 /**
  * @author nauman.shahid
- * @category Manages different waits
+ * Manages different waits
  */
 
 public final class Waits {
@@ -60,7 +60,6 @@ public final class Waits {
      * @param locator        The locator of the element to look for
      * @param customWaitTime Optional. Time to wait for the element in seconds.
      *                       Defaults to the standard wait time (5 or -DwaitTime parameter if present)
-     * @return The element which was found on the page
      */
     public void ElementToBePresent(By locator, long customWaitTime) {
         iframeAnalyzer.setUpLocator(locator);
@@ -78,7 +77,6 @@ public final class Waits {
      * @param locator        The locator of the element to look for
      * @param customWaitTime Optional. Time to wait for the element in seconds.
      *                       Defaults to the standard wait time (5 or -DwaitTime parameter if present)
-     * @return The element which was found on the page
      */
     public void ElementToBeClickable(By locator, long customWaitTime) {
         iframeAnalyzer.setUpLocator(locator);
@@ -95,7 +93,6 @@ public final class Waits {
      * @param locator        The locator of the element to look for
      * @param customWaitTime Optional. Time to wait for the element in seconds.
      *                       Defaults to the standard wait time (5 or -DwaitTime parameter if present)
-     * @return The element which was found on the page
      */
     public void ElementToBeVisible(By locator, long customWaitTime) {
         iframeAnalyzer.setUpLocator(locator);
@@ -163,7 +160,6 @@ public final class Waits {
      * @param element        The element which should become clickable
      * @param customWaitTime Optional. Time to wait for the element in seconds.
      *                       Defaults to the standard wait time (5 or -DwaitTime parameter if present)
-     * @return The element which became clickable
      */
     public void WebElementToBeClickable(WebElement element, long customWaitTime) {
         waitFor(element, ExpectedConditions.elementToBeClickable(element), customWaitTime);
@@ -180,7 +176,6 @@ public final class Waits {
      * @param element        The element which should become visible
      * @param customWaitTime Optional. Time to wait for the element in seconds.
      *                       Defaults to the standard wait time (5 or -DwaitTime parameter if present)
-     * @return The element which became visible
      */
     public void WebElementToBeVisible(WebElement element, long customWaitTime) {
         waitFor(element, ExpectedConditions.visibilityOf(element), customWaitTime);

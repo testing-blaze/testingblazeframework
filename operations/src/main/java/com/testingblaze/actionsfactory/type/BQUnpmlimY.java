@@ -42,7 +42,7 @@ public class BQUnpmlimY {
 
     /**
      * click on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -54,7 +54,7 @@ public class BQUnpmlimY {
 
     /**
      * click on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.

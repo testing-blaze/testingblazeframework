@@ -49,8 +49,8 @@ import java.util.List;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category Handles mobile based libraries including Appium , Android and IOS
+
+ * Handles mobile based libraries including Appium , Android and IOS
  */
 public final class Mobile {
     private Android android;

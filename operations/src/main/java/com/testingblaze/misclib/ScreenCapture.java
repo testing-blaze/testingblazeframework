@@ -54,7 +54,7 @@ import static org.monte.media.VideoFormatKeys.*;
 
 /**
  * @author nauman.shahid
- * @category Handles taking screen shots
+ * Handles taking screen shots
  */
 
 public final class ScreenCapture {
@@ -123,7 +123,6 @@ public final class ScreenCapture {
      *
      * @param element   : Specific element whose screen shot is required
      * @param imageName : image name
-     * @throws IOException
      */
     public void takeElementScreenShot(WebElement element, String imageName) {
         File elementSS = element.getScreenshotAs(OutputType.FILE);
@@ -139,7 +138,6 @@ public final class ScreenCapture {
      * Take screen shot of the specific element and saves to /target/custom_screenshots
      *
      * @param element   : Specific element whose screen shot is required
-     * @throws IOException
      * @return
      */
     public File getlementScreenShot(WebElement element) {
@@ -187,7 +185,7 @@ public final class ScreenCapture {
                         QualityKey, 0.5f, KeyFrameIntervalKey, 15 * 60),
                 new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey,
                         Rational.valueOf(30)),
-                null, new File(System.getProperty("user.dir") + "/target/Automation-Report/test_videos/rei-bdd-test" + timeStamp
+                null, new File(System.getProperty("user.dir") + "/target/Automation-Report/test_videos/blaze-bdd-test" + timeStamp
                 + ".avi"));
     }
 

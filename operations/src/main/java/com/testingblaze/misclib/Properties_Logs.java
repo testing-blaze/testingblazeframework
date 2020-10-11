@@ -36,8 +36,8 @@ import java.util.Set;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category Properties file reader
+
+ * Properties file reader
  */
 
 public final class Properties_Logs {

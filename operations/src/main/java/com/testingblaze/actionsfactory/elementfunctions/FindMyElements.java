@@ -34,8 +34,8 @@ import java.util.List;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category Handles finding elements and returning
+
+ * Handles finding elements and returning
  */
 
 public final class FindMyElements {
@@ -131,12 +131,10 @@ public final class FindMyElements {
     }
 
     /**
-     * get a nested element
-     *
+     * get a nested element : No Pre-Processing
      * @param element
      * @param locator
-     * @return
-     * @warning No Pre-Processing
+     * @author nauman.shahid
      */
     public List<WebElement> getNestedElementList(WebElement element, By locator) {
         iframeAnalyzer.setUpLocator(locator);

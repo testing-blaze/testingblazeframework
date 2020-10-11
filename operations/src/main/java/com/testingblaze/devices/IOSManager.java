@@ -30,9 +30,7 @@ import java.net.URL;
 
 /**
  * Handles launching IOS Apps
- *
  * @author nauman.shahid
- * @category Implementation yet to be tested
  */
 
 public final class IOSManager implements qrYoTsOWwA {

@@ -37,7 +37,7 @@ public class DropDown {
     /**
      * select on webPage , mobilePage , AngularPage
      *
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -50,7 +50,7 @@ public class DropDown {
     /**
      * select on webPage , mobilePage , AngularPage
      *
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.

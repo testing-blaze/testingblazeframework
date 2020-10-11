@@ -25,7 +25,7 @@ import org.openqa.selenium.WebDriver;
  * Handles DI
  *
  * @author nauman.shahid
- * @category Interface for device instances
+ * Interface for device instances
  */
 
 public interface qrYoTsOWwA {

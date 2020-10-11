@@ -31,8 +31,8 @@ import org.openqa.selenium.WebElement;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category Handles Android specific special methods and android driver instance
+
+ * Handles Android specific special methods and android driver instance
  */
 public final class Android {
     private static final String UI_SCROLLABLE_SCROLL_INTO_VIEW = "new UiScrollable(new UiSelector()).scrollIntoView";

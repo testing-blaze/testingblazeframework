@@ -37,8 +37,8 @@ import java.util.NoSuchElementException;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category Handles different click options
+
+ * Handles different click options
  */
 
 public final class MouseActions {

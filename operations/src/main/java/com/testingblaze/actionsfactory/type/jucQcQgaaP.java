@@ -33,7 +33,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class jucQcQgaaP {
@@ -157,7 +156,7 @@ public class jucQcQgaaP {
 
     /**
      * upload on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -169,7 +168,7 @@ public class jucQcQgaaP {
 
     /**
      * upload on webPage , mobilePage , AngularPage
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.

@@ -34,8 +34,8 @@ import java.util.List;
 
 /**
  * @author nauman.shahid
- * @REI-Systems
- * @category checks for presence of certain elements like popup and text
+
+ * checks for presence of certain elements like popup and text
  */
 
 public final class Is {
@@ -202,26 +202,6 @@ public final class Is {
      */
     public Boolean isTableSorted(List<Elements> rows_table, String sorting) {
         return I.amPerforming().comparisonOf().sortAndCompareOneTableColumn(rows_table, sorting);
-    }
-
-    /**
-     * is android specific locator strategy
-     *
-     * @param locator: Mobile.
-     * @
-     */
-    public void onAndroidApp(String locator) {
-        // to be added
-    }
-
-    /**
-     * is IOS specific locator strategy
-     *
-     * @param locator: Mobile.
-     * @
-     */
-    public void onIosApp(String locator) {
-        // to be added
     }
 
 }

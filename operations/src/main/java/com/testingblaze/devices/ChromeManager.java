@@ -35,8 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author nauman.shahid
- * @category Handle browser specific settings and create driver instance
- * @returns chrome webdriver instance
+ * Handle chrome browser specific settings and create driver instance
  */
 
 public final class ChromeManager implements qrYoTsOWwA {

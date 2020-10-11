@@ -35,7 +35,7 @@ public class GmGEaSpros {
 
     /**
      * Only to grasp element on webPage , mobilePage , AngularPage: Not allowed to use any function like click or send keys from here.
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -48,7 +48,7 @@ public class GmGEaSpros {
 
     /**
      * Only to grasp element on webPage , mobilePage , AngularPage: Not allowed to use any function like click or send keys from here.
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -62,7 +62,7 @@ public class GmGEaSpros {
 
     /**
      * Only to grasp nested element on webPage , mobilePage , AngularPage: Not allowed to use any function like click or send keys from here.
-     * @param locator -> Mobile , Ng , By :
+     * @param locator Mobile , Ng , By :
      *                Mobile.
      *                Angular.
      *                By.
@@ -76,8 +76,8 @@ public class GmGEaSpros {
 
     /**
      * Only to grasp element list on webPage , mobilePage , AngularPage: Not allowed to use any function like click or send keys from here.
-     * Works for ->   Mobile , Ng , By :
-     *                @return List<Elements></Elements> reference
+     * Works for       Mobile , Ng , By :
+     *                @return list of elements
      * @author nauman.shahid
      */
     public akzkdaiqAC forListOfElements() {

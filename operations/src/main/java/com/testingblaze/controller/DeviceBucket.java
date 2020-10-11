@@ -32,7 +32,7 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * @author nauman.shahid
- * @category Handles pico container dependency for dependency injection
+ * Handles pico container dependency for dependency injection
  */
 
 
