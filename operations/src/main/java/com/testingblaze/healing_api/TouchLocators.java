@@ -21,7 +21,9 @@ package com.testingblaze.healing_api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.testingblaze.actionsfactory.abstracts.ElementProcessing;
 import com.testingblaze.actionsfactory.api.ElementAPI;
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestingBlazeRunTimeException;
@@ -43,6 +45,8 @@ public class TouchLocators {
     public static Map<String, List> locatorInUse = new HashMap<>();
     private static Map<String, String> userCredentials = null;
     protected static InternalHttp httpCalls = new InternalHttp();
+    protected static HGJGcYGHQk iframeAnalyzer = InstanceRecording.getInstance(HGJGcYGHQk.class);
+    protected static ElementProcessing elementProcessing = InstanceRecording.getInstance(ElementProcessing .class);
 
     /**
      * gets the locator and perform initial Touch document operatiosn
@@ -90,7 +94,8 @@ public class TouchLocators {
         } else {
             Boolean processingFlag = response.getBody().jsonPath().get("processingFlag");
             if (!processingFlag) {
-                I.amPerforming().waitFor().ElementToBePresent(ElementAPI.getBy(locatorType, theLocator));
+                iframeAnalyzer.setUpLocator(ElementAPI.getBy(locatorType, theLocator));
+                elementProcessing.forSingleElement(ElementAPI.getBy(locatorType, theLocator));
                 JsonObject attributePayload = new JsonObject();
                 attributePayload.addProperty("actionType", "createTheLocatorTree");
                 attributePayload.addProperty("locatorType", locatorType.split("-")[1]);
@@ -245,7 +250,8 @@ public class TouchLocators {
      * @author nauman.shahid
      */
     private static void createChildTrees(String actionType, String locatorType, String locatorName, String theLocator, List<String> listOfChildLocators) {
-        I.amPerforming().waitFor().ElementToBePresent(ElementAPI.getBy(locatorType, theLocator));
+        iframeAnalyzer.setUpLocator(ElementAPI.getBy(locatorType, theLocator));
+        elementProcessing.forSingleElement(ElementAPI.getBy(locatorType, theLocator));
         JsonObject corePayload = new JsonObject();
         JsonObject childAttributes = new JsonObject();
         JsonArray childArray = new JsonArray();
