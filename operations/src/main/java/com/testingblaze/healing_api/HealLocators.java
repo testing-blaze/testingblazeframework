@@ -94,7 +94,6 @@ public class HealLocators {
         List<TwoColumnSorting> listOfFinalSortedLocators = sortingLocators(listOfFinalLocators.stream().filter(locator -> getElement().findElements(By.xpath(locator)).size() > 0).
                 map(locator -> new TwoColumnSorting(locator, getElement().findElements(By.xpath(locator)).size())).collect(Collectors.toList()));
         By finalLocator = null;
-        Boolean isFound = false;
         for (int i = 0; i < listOfFinalSortedLocators.size(); i++) {
             if (getElement().findElement(By.xpath(listOfFinalSortedLocators.get(0).getKey())).isDisplayed()) {
                 finalLocator = ElementAPI.getBy((String) TouchLocators.locatorInUse.get("xpath").get(0), listOfFinalSortedLocators.get(0).getKey());
@@ -108,10 +107,12 @@ public class HealLocators {
 
     private By executeForID(List<String> listOfLocators) {
         By finalLocator = null;
+        Boolean isFound = false;
         List<TwoColumnSorting> listOfFinalLocators = sortingLocators(listOfLocators.stream().filter(locator -> getElement().findElements(By.xpath(locator)).size() > 0).
                 map(locator -> new TwoColumnSorting(locator, getElement().findElements(By.xpath(locator)).size())).collect(Collectors.toList()));
         for (int i = 0; i < listOfFinalLocators.size(); i++) {
             if (getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())).isDisplayed()) {
+                isFound = true;
                 JsonObject attributesMap = (JsonObject) TouchLocators.fetchLocatorDetails(getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())), false).get("attributes");
                 var id = attributesMap.get("id").getAsString();
                 finalLocator = ElementAPI.getBy((String) TouchLocators.locatorInUse.get("id").get(0), id);
@@ -119,6 +120,21 @@ public class HealLocators {
                 TouchLocators.performTouchDocuments(null, (String) TouchLocators.locatorInUse.get("id").get(0), id, (String) TouchLocators.locatorInUse.get("id").get(1), true);
                 break;
             }
+        }
+        if (isFound) {
+            for (int i = 0; i < listOfFinalLocators.size(); i++) {
+                TouchLocators.iframeAnalyzer.setUpLocator(By.xpath(listOfFinalLocators.get(0).getKey()));
+                TouchLocators.iframeAnalyzer.evaluatePossibleIFrameToSwitch();
+                if (getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())).isDisplayed()) {
+                    JsonObject attributesMap = (JsonObject) TouchLocators.fetchLocatorDetails(getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())), false).get("attributes");
+                    var id = attributesMap.get("id").getAsString();
+                    finalLocator = ElementAPI.getBy((String) TouchLocators.locatorInUse.get("id").get(0), id);
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "New Locator is " + finalLocator);
+                    TouchLocators.performTouchDocuments(null, (String) TouchLocators.locatorInUse.get("id").get(0), id, (String) TouchLocators.locatorInUse.get("id").get(1), true);
+                    break;
+                }
+            }
+
         }
         return finalLocator;
     }

@@ -54,8 +54,11 @@ public class HGJGcYGHQk {
             switchToDefaultContent();
         }
         if (!changeInLastSuccessInfo) {
-            if (StringUtils.containsIgnoreCase(lastSuccessInfo,"Default Content")) switchToDefaultContent();
-            else {
+            if (StringUtils.containsIgnoreCase(lastSuccessInfo, "Default Content")) {
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Switching to the last alive Active Content");
+                switchToDefaultContent();
+            } else {
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Switching to the last alive Frame");
                 switchToFrameId(lastSuccessInfo);
             }
         }
