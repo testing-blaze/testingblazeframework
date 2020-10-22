@@ -52,6 +52,8 @@ public class HGJGcYGHQk {
             manageSwitching();
         } else {
             switchToDefaultContent();
+            lastSuccessInfo = "Default Content";
+            changeInLastSuccessInfo = true;
         }
         if (!changeInLastSuccessInfo) {
             if (StringUtils.containsIgnoreCase(lastSuccessInfo, "Default Content")) {

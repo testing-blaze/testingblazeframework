@@ -253,21 +253,19 @@ public class TouchLocators {
         iframeAnalyzer.setUpLocator(ElementAPI.getBy(locatorType, theLocator));
         elementProcessing.forSingleElement(ElementAPI.getBy(locatorType, theLocator));
         JsonObject corePayload = new JsonObject();
-        JsonObject childAttributes = new JsonObject();
         JsonArray childArray = new JsonArray();
         corePayload.addProperty("actionType", actionType);
         corePayload.addProperty("locatorType", locatorType.split("-")[1]);
         corePayload.addProperty("theLocatorName", locatorName);
 
         for (int i = 0; i < listOfChildLocators.size(); i++) {
+            JsonObject childAttributes = new JsonObject();
             childAttributes.addProperty("sequence", i + 2);
             childAttributes.addProperty("theChildLocator", listOfChildLocators.get(i));
-            getInitialLocatorTree(childAttributes, theLocator, locatorType);
-            childArray.add(childAttributes);
+            childArray.add(getInitialLocatorTree(childAttributes, theLocator, locatorType));
         }
         corePayload.add("childLocators", childArray);
         httpCalls.postCall(corePayload, null, getEndPoint(null, "postLocatorTree", "none", "none"), getCredentials().get("user"), getCredentials().get("password"), null);
-
     }
 
 
