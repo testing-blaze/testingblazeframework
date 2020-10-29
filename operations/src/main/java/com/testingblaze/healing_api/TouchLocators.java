@@ -21,7 +21,9 @@ package com.testingblaze.healing_api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.testingblaze.actionsfactory.abstracts.ElementProcessing;
 import com.testingblaze.actionsfactory.api.ElementAPI;
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.actionsfactory.elementfunctions.JavaScript;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.exception.TestingBlazeRunTimeException;
@@ -43,6 +45,8 @@ public class TouchLocators {
     public static Map<String, List> locatorInUse = new HashMap<>();
     private static Map<String, String> userCredentials = null;
     protected static InternalHttp httpCalls = new InternalHttp();
+    protected static HGJGcYGHQk iframeAnalyzer = InstanceRecording.getInstance(HGJGcYGHQk.class);
+    protected static ElementProcessing elementProcessing = InstanceRecording.getInstance(ElementProcessing.class);
 
     /**
      * gets the locator and perform initial Touch document operatiosn
@@ -56,7 +60,7 @@ public class TouchLocators {
         if (!locatorRepository.containsKey(locatorName)) {
             var response = httpCalls.getCall(getEndPoint("fetchLocator", "getlocator", locatorType.split("-")[1], locatorName), getCredentials().get("user"), getCredentials().get("password"));
             String theLocator = response.getBody().jsonPath().get("theLocator");
-            if(theLocator == null){
+            if (theLocator == null) {
                 throw new TestingBlazeRunTimeException("Locator or credentials information is not valid.check locators name or information in self-healing.properties");
             } else {
                 locatorRepository.put(locatorName, theLocator);
@@ -90,11 +94,17 @@ public class TouchLocators {
         } else {
             Boolean processingFlag = response.getBody().jsonPath().get("processingFlag");
             if (!processingFlag) {
-                I.amPerforming().waitFor().ElementToBePresent(ElementAPI.getBy(locatorType, theLocator));
+                iframeAnalyzer.setUpLocator(ElementAPI.getBy(locatorType, theLocator));
+                elementProcessing.forSingleElement(ElementAPI.getBy(locatorType, theLocator));
                 JsonObject attributePayload = new JsonObject();
                 attributePayload.addProperty("actionType", "createTheLocatorTree");
                 attributePayload.addProperty("locatorType", locatorType.split("-")[1]);
                 attributePayload.addProperty("theLocatorName", locatorName);
+                if (!StringUtils.containsIgnoreCase(HGJGcYGHQk.lastSuccessInfo, "Default Content")) {
+                    attributePayload.addProperty("executionContext", HGJGcYGHQk.lastSuccessInfo);
+                } else {
+                    attributePayload.addProperty("executionContext", "Default Context");
+                }
                 httpCalls.postCall(getInitialLocatorTree(attributePayload, theLocator, locatorType), null, getEndPoint(null, "postLocatorTree", "none", "none"), getCredentials().get("user"), getCredentials().get("password"), null);
             }
         }
@@ -174,7 +184,7 @@ public class TouchLocators {
                 userCredentials.put("user", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "user"));
                 userCredentials.put("password", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "password"));
                 userCredentials.put("project", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "project"));
-                userCredentials.put("connection",I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "connection"));
+                userCredentials.put("connection", I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile("selfhealing.properties", "connection"));
             } catch (Exception e) {
                 throw new TestingBlazeRunTimeException("There is a problem with self healing credentials");
             }
@@ -215,7 +225,7 @@ public class TouchLocators {
             }
         } else if (StringUtils.containsIgnoreCase(locatorType, "xpath")) {
             if (getElement().findElements(By.xpath(theLocator)).size() > 0) {
-                var divParentLocatorTree = fetchLocatorDetails(getElement().findElement(By.xpath(theLocator+"//ancestor::div[1]")), false);
+                var divParentLocatorTree = fetchLocatorDetails(getElement().findElement(By.xpath(theLocator + "//ancestor::div[1]")), false);
                 if (!iParentLocatorTree.get("attributes").equals(divParentLocatorTree.get("attributes"))) {
                     attributePayload.addProperty("divParentFieldType", (String) divParentLocatorTree.get("fieldType"));
                     attributePayload.addProperty("divParentPosition", (long) divParentLocatorTree.get("position"));
@@ -245,29 +255,28 @@ public class TouchLocators {
      * @author nauman.shahid
      */
     private static void createChildTrees(String actionType, String locatorType, String locatorName, String theLocator, List<String> listOfChildLocators) {
-        I.amPerforming().waitFor().ElementToBePresent(ElementAPI.getBy(locatorType, theLocator));
+        iframeAnalyzer.setUpLocator(ElementAPI.getBy(locatorType, theLocator));
+        elementProcessing.forSingleElement(ElementAPI.getBy(locatorType, theLocator));
         JsonObject corePayload = new JsonObject();
-        JsonObject childAttributes = new JsonObject();
         JsonArray childArray = new JsonArray();
         corePayload.addProperty("actionType", actionType);
         corePayload.addProperty("locatorType", locatorType.split("-")[1]);
         corePayload.addProperty("theLocatorName", locatorName);
 
         for (int i = 0; i < listOfChildLocators.size(); i++) {
+            JsonObject childAttributes = new JsonObject();
             childAttributes.addProperty("sequence", i + 2);
             childAttributes.addProperty("theChildLocator", listOfChildLocators.get(i));
-            getInitialLocatorTree(childAttributes, theLocator, locatorType);
-            childArray.add(childAttributes);
+            childArray.add(getInitialLocatorTree(childAttributes, theLocator, locatorType));
         }
         corePayload.add("childLocators", childArray);
         httpCalls.postCall(corePayload, null, getEndPoint(null, "postLocatorTree", "none", "none"), getCredentials().get("user"), getCredentials().get("password"), null);
-
     }
 
 
     private static String getEndPoint(String actionType, String endPointType, String locatorType, String locatorName) {
         var finalEndPoint = "";
-        var initTouchDocuments = getCredentials().get("connection")+"/apis/touch_locator/?";
+        var initTouchDocuments = getCredentials().get("connection") + "/apis/touch_locator/?";
         switch (endPointType.toLowerCase()) {
             case "getlocator":
                 finalEndPoint = initTouchDocuments + "actionType=" + actionType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName=" + getCredentials().get("project");

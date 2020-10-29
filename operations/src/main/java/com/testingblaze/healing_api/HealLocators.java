@@ -39,17 +39,18 @@ public class HealLocators {
 
     /**
      * Controls the healing requests in case failed locator
+     *
      * @return healthy locator
      * @author nauman.shahid
      */
     public By performHealing() {
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,"------Self-Healing Activated--------");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "------Self-Healing Activated--------");
         By locator = null;
         if (TouchLocators.locatorInUse.containsKey("id"))
             locator = executeForID(getIdRecovery((String) TouchLocators.locatorInUse.get("id").get(1)));
         else if (TouchLocators.locatorInUse.containsKey("xpath"))
             locator = executeForXpath((String) TouchLocators.locatorInUse.get("xpath").get(1));
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,"------Self-Healing Completed--------");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "------Self-Healing Completed--------");
         return locator;
     }
 
@@ -61,7 +62,7 @@ public class HealLocators {
         JsonArray listOfDeadChildren = new JsonArray();
         for (var entrySet : initialMapOfChildLocatorsWithDbIds.entrySet()) {
             if (getElement().findElements(By.xpath((String) entrySet.getValue())).size() == 0) {
-                listOfDeadChildren.add((String)entrySet.getKey());
+                listOfDeadChildren.add((String) entrySet.getKey());
             } else if (getElement().findElements(By.xpath((String) entrySet.getValue())).size() > 0) {
                 if (!getElement().findElement(By.xpath((String) entrySet.getValue())).isDisplayed())
                     listOfDeadChildren.add((String) entrySet.getKey());
@@ -88,15 +89,15 @@ public class HealLocators {
         }
         dictOfSuccessfulSortedLocators.add("dictOfSuccessfulSortedLocators", dictOfAliveSortedChildCombinations);
         //fetching final recovery locators
-        List<String> listOfFinalLocators=TouchLocators.httpCalls.postCall(dictOfSuccessfulSortedLocators, null,getEndPoint("getRecoveryLocators","xpath", locatorName),TouchLocators.getCredentials().get("user"), TouchLocators.getCredentials().get("password"), null).jsonPath().getList("listOfRecoveryLocators");
+        List<String> listOfFinalLocators = TouchLocators.httpCalls.postCall(dictOfSuccessfulSortedLocators, null, getEndPoint("getRecoveryLocators", "xpath", locatorName), TouchLocators.getCredentials().get("user"), TouchLocators.getCredentials().get("password"), null).jsonPath().getList("listOfRecoveryLocators");
         // evaluating and sorting the alive xpath and saving it back to DB
         List<TwoColumnSorting> listOfFinalSortedLocators = sortingLocators(listOfFinalLocators.stream().filter(locator -> getElement().findElements(By.xpath(locator)).size() > 0).
                 map(locator -> new TwoColumnSorting(locator, getElement().findElements(By.xpath(locator)).size())).collect(Collectors.toList()));
         By finalLocator = null;
         for (int i = 0; i < listOfFinalSortedLocators.size(); i++) {
             if (getElement().findElement(By.xpath(listOfFinalSortedLocators.get(0).getKey())).isDisplayed()) {
-                finalLocator = ElementAPI.getBy((String)TouchLocators.locatorInUse.get("xpath").get(0),listOfFinalSortedLocators.get(0).getKey());
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,"New Locator is "+finalLocator);
+                finalLocator = ElementAPI.getBy((String) TouchLocators.locatorInUse.get("xpath").get(0), listOfFinalSortedLocators.get(0).getKey());
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "New Locator is " + finalLocator);
                 TouchLocators.performTouchDocuments(null, (String) TouchLocators.locatorInUse.get("xpath").get(0), listOfFinalSortedLocators.get(0).getKey(), (String) TouchLocators.locatorInUse.get("xpath").get(1), true);
                 break;
             }
@@ -106,17 +107,34 @@ public class HealLocators {
 
     private By executeForID(List<String> listOfLocators) {
         By finalLocator = null;
+        Boolean isFound = false;
         List<TwoColumnSorting> listOfFinalLocators = sortingLocators(listOfLocators.stream().filter(locator -> getElement().findElements(By.xpath(locator)).size() > 0).
                 map(locator -> new TwoColumnSorting(locator, getElement().findElements(By.xpath(locator)).size())).collect(Collectors.toList()));
         for (int i = 0; i < listOfFinalLocators.size(); i++) {
             if (getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())).isDisplayed()) {
+                isFound = true;
                 JsonObject attributesMap = (JsonObject) TouchLocators.fetchLocatorDetails(getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())), false).get("attributes");
                 var id = attributesMap.get("id").getAsString();
-                finalLocator = ElementAPI.getBy((String)TouchLocators.locatorInUse.get("id").get(0),id);
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT,"New Locator is "+finalLocator);
+                finalLocator = ElementAPI.getBy((String) TouchLocators.locatorInUse.get("id").get(0), id);
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "New Locator is " + finalLocator);
                 TouchLocators.performTouchDocuments(null, (String) TouchLocators.locatorInUse.get("id").get(0), id, (String) TouchLocators.locatorInUse.get("id").get(1), true);
                 break;
             }
+        }
+        if (isFound) {
+            for (int i = 0; i < listOfFinalLocators.size(); i++) {
+                TouchLocators.iframeAnalyzer.setUpLocator(By.xpath(listOfFinalLocators.get(0).getKey()));
+                TouchLocators.iframeAnalyzer.evaluatePossibleIFrameToSwitch();
+                if (getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())).isDisplayed()) {
+                    JsonObject attributesMap = (JsonObject) TouchLocators.fetchLocatorDetails(getElement().findElement(By.xpath(listOfFinalLocators.get(0).getKey())), false).get("attributes");
+                    var id = attributesMap.get("id").getAsString();
+                    finalLocator = ElementAPI.getBy((String) TouchLocators.locatorInUse.get("id").get(0), id);
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_IMPORTANT, "New Locator is " + finalLocator);
+                    TouchLocators.performTouchDocuments(null, (String) TouchLocators.locatorInUse.get("id").get(0), id, (String) TouchLocators.locatorInUse.get("id").get(1), true);
+                    break;
+                }
+            }
+
         }
         return finalLocator;
     }
@@ -132,11 +150,11 @@ public class HealLocators {
 
     private String getEndPoint(String endPointType, String locatorType, String locatorName) {
         var finalEndPoint = "";
-        var initTouchDocuments = TouchLocators.getCredentials().get("connection")+"/apis/locator_healing/?";
+        var initTouchDocuments = TouchLocators.getCredentials().get("connection") + "/apis/locator_healing/?";
         if ((endPointType.equalsIgnoreCase("getRecoveryLocators") && locatorType.equalsIgnoreCase("id")) || endPointType.equalsIgnoreCase("getAllChildLocators")) {
-            finalEndPoint = initTouchDocuments + "actionType=" + endPointType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName="+TouchLocators.getCredentials().get("project");
+            finalEndPoint = initTouchDocuments + "actionType=" + endPointType + "&locatorType=" + locatorType + "&locatorName=" + locatorName + "&projectName=" + TouchLocators.getCredentials().get("project");
         } else if (endPointType.equalsIgnoreCase("getRecoveryChildLocators") || (endPointType.equalsIgnoreCase("getRecoveryLocators") && locatorType.equalsIgnoreCase("xpath"))) {
-            finalEndPoint = initTouchDocuments + "projectName="+TouchLocators.getCredentials().get("project");
+            finalEndPoint = initTouchDocuments + "projectName=" + TouchLocators.getCredentials().get("project");
         }
         return finalEndPoint;
     }

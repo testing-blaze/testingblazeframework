@@ -278,7 +278,7 @@ public class HAbNpdpLKF implements ElementProcessing {
                 return driver.findElements(locator);
             } else if (driver.findElements(locator).size() == 0) {
                 iframeAnalyzer.evaluatePossibleIFrameToSwitch();
-                if (HGJGcYGHQk.setFlagForFrameSwitch) {
+                if (HGJGcYGHQk.isFrameSwitchStatusSuccess) {
                     I.amPerforming().waitFor().makeThreadSleep(200);
                     if (EnvironmentFactory.getSlowDownExecutionTime() > 0) {
                         I.amPerforming().waitFor().makeThreadSleep(1000 * EnvironmentFactory.getSlowDownExecutionTime());
@@ -289,7 +289,7 @@ public class HAbNpdpLKF implements ElementProcessing {
                     } catch (Exception e) {
                         // Handles unexpected exception for //body
                     }
-                    HGJGcYGHQk.setFlagForFrameSwitch = false;
+                    HGJGcYGHQk.isFrameSwitchStatusSuccess = false;
                 }
                 projectProcessingWrapper();
             }
