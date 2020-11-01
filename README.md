@@ -8,7 +8,7 @@
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 
 <!-- PROJECT Information -->
-## An Intelligent BDD Test Automation Framework [##### Power of Self Healing Tests]
+### An Intelligent BDD Test Automation Framework [Let's heal the tests]
 
 The Testing Blaze Automation Solution brings the universe of open source technologies embedded and architectured in the smartest and most innovative ways to make the automated testing experience easy , interactable and flakiless. 
 
