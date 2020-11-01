@@ -1,18 +1,19 @@
 <!-- Testing Blaze Automation Solution -->
 
 ![TBS logo](documentation/img/project_name.gif)
-###               An Intelligent BDD Test Automation Framework
+
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://repo1.maven.org/maven2/com/github/testing-blze/)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/testing-blaze/testingblaze/pulls)
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 
 <!-- PROJECT LOGO -->
-![Selenium compatible](documentation/img/selenium.png)
-    <a href="https://github.com/testing-blaze/testingblaze/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/testing-blaze/testingblaze/issues">Request Feature</a>
+## An Intelligent BDD Test Automation Framework 
+#### Power of Self Healing Tests
+The Testing Blaze Automation Solution brings the universe of open source technologies embedded and architectured in the smartest and most innovative ways to make the automated testing experience easy , interactable and cost effective. 
 
+The solution provides intelligent processing , automatic switching to contexts, parameterized integration with cucumber and various other out of box utilities to ensure maximum stability , fast track automation and less maintenance efforts. 
+    
 ---
 
 
