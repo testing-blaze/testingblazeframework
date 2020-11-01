@@ -8,9 +8,7 @@
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 
 <!-- PROJECT LOGO -->
-![Cucumber compatible](documentation/img/cucumber.jpg)
 ![Selenium compatible](documentation/img/selenium.png)
-![Cucumber compatible](documentation/img/appium.jpg)
     <a href="https://github.com/testing-blaze/testingblaze/issues">Report Bug</a>
     ·
     <a href="https://github.com/testing-blaze/testingblaze/issues">Request Feature</a>
