@@ -7,12 +7,12 @@
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/testing-blaze/testingblaze/pulls)
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 
-<!-- PROJECT LOGO -->
-## An Intelligent BDD Test Automation Framework 
-#### Power of Self Healing Tests
-The Testing Blaze Automation Solution brings the universe of open source technologies embedded and architectured in the smartest and most innovative ways to make the automated testing experience easy , interactable and cost effective. 
+<!-- PROJECT Information -->
+## An Intelligent BDD Test Automation Framework [##### Power of Self Healing Tests]
 
-The solution provides intelligent processing , automatic switching to contexts, parameterized integration with cucumber and various other out of box utilities to ensure maximum stability , fast track automation and less maintenance efforts. 
+The Testing Blaze Automation Solution brings the universe of open source technologies embedded and architectured in the smartest and most innovative ways to make the automated testing experience easy , interactable and flakiless. 
+
+The solution offers self healing of  tests, intelligent processing , automatic switching to contexts, parameterized integration with cucumber and various other out of box utilities to ensure maximum stability , fast track automation and less maintenance efforts. 
     
 ---
 
