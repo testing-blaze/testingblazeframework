@@ -27,14 +27,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class HGJGcYGHQk {
-    private final By IFRAME = By.xpath("//iframe[contains(@ng-sc,'/') or contains(@src,'/') or @src='']");
+    private final By IFRAME = By.xpath("//iframe[@src or @ng-src]");
     private By locator;
     private final DeviceBucket device;
-    //public static boolean setFlagForFrameSwitch = false;
     private String switchedFrameInfo = "No information available";
     public static String lastSuccessInfo = "Default Content";
     public static Boolean isFrameSwitchStatusSuccess = false;
-    private static int frameSwitchCount = 0;
+    public static int frameSwitchCount = 0;
 
 
     public HGJGcYGHQk() {
@@ -63,7 +62,7 @@ public class HGJGcYGHQk {
             if (device.getDriver().findElements(locator).size() > 0) {
                 lastSuccessInfo = switchedFrameInfo;
                 isFrameSwitchStatusSuccess = true;
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Successfully Switched to iframe with id '%s'", switchedFrameInfo));
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Auto-Switching to iframe with id '%s'", lastSuccessInfo));
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
                 manageInternalSwitching(switchedFrameInfo);
@@ -93,7 +92,7 @@ public class HGJGcYGHQk {
             if (device.getDriver().findElements(locator).size() > 0) {
                 lastSuccessInfo = switchedFrameInfo;
                 isFrameSwitchStatusSuccess = true;
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Successfully Switched to nested iframe with id '%s'", switchedFrameInfo));
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Auto-Switching to nested iframe with id '%s'", lastSuccessInfo));
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
                 manageInternalSwitching(mainIframe);
@@ -141,8 +140,8 @@ public class HGJGcYGHQk {
         }
     }
 
-    private String getFrameId(WebElement element, String attribute) {
-        String getAttribute = "";
+    public static String getFrameId(WebElement element, String attribute) {
+        String getAttribute = "No information available";
         try {
             getAttribute = element.getAttribute(attribute);
         } catch (Exception e) {

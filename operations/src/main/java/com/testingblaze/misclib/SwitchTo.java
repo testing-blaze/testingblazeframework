@@ -19,6 +19,7 @@
  */
 package com.testingblaze.misclib;
 
+import com.testingblaze.actionsfactory.api.HGJGcYGHQk;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.TestingBlazeGlobal;
 import com.testingblaze.objects.InstanceRecording;
@@ -41,18 +42,25 @@ public final class SwitchTo {
     /**
      * switch between different frame
      */
-    public WebDriver frame(By locator) {
-        WebElement frameElement = driver.findElement(locator);
+    public <T> void frame(T locator) {
+        if (locator instanceof By) {
+            driver.switchTo().frame((WebElement) driver.findElement((By) locator));
+            try {
+                HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount + 1;
+                HGJGcYGHQk.lastSuccessInfo = HGJGcYGHQk.getFrameId(driver.findElement((By) locator), "id");
+            } catch (Exception e) {
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe infomration");
+            }
+        } else if (locator instanceof WebElement) {
+            driver.switchTo().frame((WebElement) locator);
+            try {
+                HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount + 1;
+                HGJGcYGHQk.lastSuccessInfo = HGJGcYGHQk.getFrameId((WebElement) locator, "id");
+            } catch (Exception e) {
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe infomration");
+            }
+        }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "  Switched to new frame");
-        return driver.switchTo().frame(frameElement);
-    }
-
-    /**
-     * switch between different frame
-     */
-    public WebDriver frame(WebElement element) {
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, " Switched to new frame");
-        return driver.switchTo().frame(element);
     }
 
     /**
@@ -137,4 +145,5 @@ public final class SwitchTo {
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Switching to current active element context ");
         return driver.switchTo().activeElement();
     }
+
 }
