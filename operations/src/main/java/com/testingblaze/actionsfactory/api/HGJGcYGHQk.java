@@ -30,7 +30,6 @@ public class HGJGcYGHQk {
     private final By IFRAME = By.xpath("//iframe[contains(@ng-sc,'/') or contains(@src,'/') or @src='']");
     private By locator;
     private final DeviceBucket device;
-    //public static boolean setFlagForFrameSwitch = false;
     private String switchedFrameInfo = "No information available";
     public static String lastSuccessInfo = "Default Content";
     public static Boolean isFrameSwitchStatusSuccess = false;
