@@ -8,7 +8,7 @@
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 
 <!-- PROJECT Information -->
-### An Intelligent BDD Test Automation Framework [Let's heal the tests]    
+### An Intelligent BDD Test Automation Framework - 'Let the tests heal at own'  
 ---
 
 
