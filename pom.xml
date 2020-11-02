@@ -22,6 +22,12 @@
             <name>Nauman Shahid</name>
             <email>write.nauman@gmail.com</email>
         </developer>
+        <developer>
+            <name>Jitendra Pisal</name>
+        </developer>
+        <developer>
+            <name>John Philips</name>
+        </developer>
     </developers>
 
     <modules>
