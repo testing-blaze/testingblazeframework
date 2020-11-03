@@ -31,7 +31,7 @@ public class HGJGcYGHQk {
     private By locator;
     private final DeviceBucket device;
     private String switchedFrameInfo = "No information available";
-    public static String lastSuccessInfo = "Default Content";
+    public static String lastSuccessInfo = "Parent Frame";
     public static Boolean isFrameSwitchStatusSuccess = false;
     public static int frameSwitchCount = 0;
 
@@ -100,13 +100,6 @@ public class HGJGcYGHQk {
                 manageInternalSwitching(switchFrame);
             } else {
                 switchToParentFrame();
-                /*if (device.getDriver().findElements(locator).size() > 0) {
-                    frameSwitchCount = frameSwitchCount + 1;
-                    lastSuccessInfo = switchFrame;
-                    isFrameSwitchStatusSuccess = true;
-                    flag = true;
-                    break;
-                }*/
             }
         }
         if (!flag) {
@@ -144,13 +137,14 @@ public class HGJGcYGHQk {
         try {
             device.getDriver().switchTo().parentFrame();
             if (frameSwitchCount > 0) frameSwitchCount = frameSwitchCount - 1;
+            lastSuccessInfo = "Parent Frame";
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Parent Context Enabled");
         } catch (Exception e) {
         }
     }
 
     public static String getFrameId(WebElement element, String attribute) {
-        String getAttribute = "No information available";
+        String getAttribute = "No frame info";
         try {
             getAttribute = element.getAttribute(attribute);
         } catch (Exception e) {
