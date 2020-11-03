@@ -49,7 +49,7 @@ public final class SwitchTo {
                 HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount + 1;
                 HGJGcYGHQk.lastSuccessInfo = HGJGcYGHQk.getFrameId(driver.findElement((By) locator), "id");
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe infomration");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe information");
             }
         } else if (locator instanceof WebElement) {
             driver.switchTo().frame((WebElement) locator);
@@ -57,7 +57,7 @@ public final class SwitchTo {
                 HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount + 1;
                 HGJGcYGHQk.lastSuccessInfo = HGJGcYGHQk.getFrameId((WebElement) locator, "id");
             } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe infomration");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe information");
             }
         }
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "  Switched to new frame");
