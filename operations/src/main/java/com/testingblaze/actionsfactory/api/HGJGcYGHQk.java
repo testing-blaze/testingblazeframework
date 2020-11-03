@@ -31,7 +31,7 @@ public class HGJGcYGHQk {
     private By locator;
     private final DeviceBucket device;
     private String switchedFrameInfo = "No information available";
-    public static String lastSuccessInfo = "Default Content";
+    public static String lastSuccessInfo = "Parent Frame";
     public static Boolean isFrameSwitchStatusSuccess = false;
     public static int frameSwitchCount = 0;
 
@@ -65,7 +65,7 @@ public class HGJGcYGHQk {
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Auto-Switching to iframe with id '%s'", lastSuccessInfo));
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
-                manageInternalSwitching(switchedFrameInfo);
+                if (manageInternalSwitching(switchedFrameInfo)) break;
             } else {
                 switchToParentFrame();
             }
@@ -84,7 +84,8 @@ public class HGJGcYGHQk {
         frameSwitchCount = localFrameSwitchCount;
     }
 
-    private void manageInternalSwitching(String mainIframe) {
+    private Boolean manageInternalSwitching(String switchFrame) {
+        Boolean flag = false;
         for (WebElement iframes : device.getDriver().findElements(IFRAME)) {
             switchedFrameInfo = getFrameId(iframes, "id");
             switchToFrame(iframes);
@@ -92,19 +93,19 @@ public class HGJGcYGHQk {
             if (device.getDriver().findElements(locator).size() > 0) {
                 lastSuccessInfo = switchedFrameInfo;
                 isFrameSwitchStatusSuccess = true;
+                flag = true;
                 I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Auto-Switching to nested iframe with id '%s'", lastSuccessInfo));
                 break;
             } else if (device.getDriver().findElements(IFRAME).size() > 0) {
-                manageInternalSwitching(mainIframe);
+                manageInternalSwitching(switchFrame);
             } else {
-                switchToFrameId(mainIframe);
-                if (device.getDriver().findElements(locator).size() > 0) {
-                    lastSuccessInfo = mainIframe;
-                    isFrameSwitchStatusSuccess = true;
-                    break;
-                }
+                switchToParentFrame();
             }
         }
+        if (!flag) {
+            switchToParentFrame();
+        }
+        return flag;
     }
 
     /**
@@ -135,13 +136,15 @@ public class HGJGcYGHQk {
     private void switchToParentFrame() {
         try {
             device.getDriver().switchTo().parentFrame();
+            if (frameSwitchCount > 0) frameSwitchCount = frameSwitchCount - 1;
+            lastSuccessInfo = "Parent Frame";
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Parent Context Enabled");
         } catch (Exception e) {
         }
     }
 
     public static String getFrameId(WebElement element, String attribute) {
-        String getAttribute = "No information available";
+        String getAttribute = "No frame info";
         try {
             getAttribute = element.getAttribute(attribute);
         } catch (Exception e) {
