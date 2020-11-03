@@ -32,7 +32,7 @@ Self healing module which is built with
 <!-- GETTING STARTED -->
 ## Getting Started
 
-setting up the project is very simple and does not require any special configurations. You can simply clone a sample project and start working with it.
+Setting up the project is very simple and does not require any special configurations. You can simply clone a sample project and start working with it.
 
 ### Installation
 
@@ -41,7 +41,7 @@ setting up the project is very simple and does not require any special configura
 3. Appium Server (For mobile testing only)
 
 <!-- USAGE EXAMPLES -->
-## The project files
+## The Work Structure
 
 
 
