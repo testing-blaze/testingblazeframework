@@ -66,9 +66,11 @@ public final class SwitchTo {
     /**
      * switch back to parent frame
      */
-    public WebDriver parentFrame() {
+    public void parentFrame() {
+        driver.switchTo().parentFrame();
+        if (HGJGcYGHQk.frameSwitchCount > 0) HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount - 1;
+        HGJGcYGHQk.lastSuccessInfo = "Parent Frame";
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Switched to parent frame");
-        return driver.switchTo().parentFrame();
     }
 
     /**
