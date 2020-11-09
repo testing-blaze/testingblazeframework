@@ -34,7 +34,6 @@ import java.util.List;
 
 /**
  * @author nauman.shahid
-
  * Handles finding elements and returning
  */
 
@@ -132,6 +131,7 @@ public final class FindMyElements {
 
     /**
      * get a nested element : No Pre-Processing
+     *
      * @param element
      * @param locator
      * @author nauman.shahid
@@ -141,7 +141,7 @@ public final class FindMyElements {
         try {
             return element.findElements(locator);
         } catch (Exception e) {
-            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Element is not present or locator is not correct | " + locator);
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "List of Elementss is not present or locator is not correct | " + locator);
             throw e;
         }
     }

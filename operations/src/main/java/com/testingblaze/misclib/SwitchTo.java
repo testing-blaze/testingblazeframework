@@ -43,23 +43,21 @@ public final class SwitchTo {
      * switch between different frame
      */
     public <T> void frame(T locator) {
+        WebElement element = null;
         if (locator instanceof By) {
-            driver.switchTo().frame((WebElement) driver.findElement((By) locator));
-            try {
-                HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount + 1;
-                HGJGcYGHQk.lastSuccessInfo = HGJGcYGHQk.getFrameId(driver.findElement((By) locator), "id");
-            } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe information");
-            }
+            element = driver.findElement((By) locator);
         } else if (locator instanceof WebElement) {
-            driver.switchTo().frame((WebElement) locator);
-            try {
-                HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount + 1;
-                HGJGcYGHQk.lastSuccessInfo = HGJGcYGHQk.getFrameId((WebElement) locator, "id");
-            } catch (Exception e) {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe information");
-            }
+            element = (WebElement) locator;
         }
+        driver.switchTo().frame(element);
+
+        try {
+            HGJGcYGHQk.frameSwitchCount = HGJGcYGHQk.frameSwitchCount + 1;
+            HGJGcYGHQk.lastSuccessInfo = HGJGcYGHQk.getFrameId(driver.findElement((By) locator), "id");
+        } catch (Exception e) {
+            I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "Unable to add iframe information");
+        }
+
         I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "  Switched to new frame");
     }
 
