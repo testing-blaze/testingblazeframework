@@ -44,22 +44,21 @@ Setting up the project is very simple and does not require any special configura
 ## Key Features
 Intelligent Processing for Test Execution Stability & Agility
 
-	Element Processing: Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.
-	Auto Scrolling: Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.
-	Auto Frame/Iframe Switching In-out: If the element is present inside and iframe then the frames will be automatically switched in and out.
-	Highlighting of elements accessed by automation: The elements which are accessed will get highlighted (green for success, red for problem).
-	Auto Tabs Switching: If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.
-	Smart Switching to devices: Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.
-	Auto Retrying & Error Handling: The failures and errors are evaluated by the framework and it automatically shortlist certain failures which require retrying before the test finally fails. This feature smartly reduces the flakiness and ensure stable test execution.
-	AI based Self-Healing of Tests [Not Open Source] This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. 
+•	Element Processing: Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.
+•	Auto Scrolling: Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.
+•	Auto Frame/Iframe Switching In-out: If the element is present inside and iframe then the frames will be automatically switched in and out.
+•	Highlighting of elements accessed by automation: The elements which are accessed will get highlighted (green for success, red for problem).
+•	Auto Tabs Switching: If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.
+•	Smart Switching to devices: Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.
+•	AI based Self-Healing of Tests [Not Open Source] This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. 
 
 <!-- USAGE EXAMPLES -->
 ## Supports
 
-	Devices: Computers, Mobiles, Tablets, Cloud, Docker 
-	Execution Types: Parallel, Sequential, Browser UI, Browser headless
-	Application Types: Browser Based (Angular/HTML), Mobile App Based (Native/Hybrid)
-	Browsers: Chrome, Firefox, Edge, IE, Safari
+•	Devices: Computers, Mobiles, Tablets, Cloud, Docker 
+•	Execution Types: Parallel, Sequential, Browser UI, Browser headless
+•	Application Types: Browser Based (Angular/HTML), Mobile App Based (Native/Hybrid)
+•	Browsers: Chrome, Firefox, Edge, IE, Safari
 
 <!-- USAGE EXAMPLES -->
 ## How to use it ?
@@ -68,10 +67,10 @@ The framework offers a gherkin style of code writing which makes each line of co
 of code.
 
 All libraries can be accessed in any Java class using: I.amPerforming()
-	Reach out to your page object class and write I.amPerforming() 
-	Each library has relevant utilities inside it to access and use.
-	Each library method will show description of what it does.
-	The code is human readable.
+•	Reach out to your page object class and write I.amPerforming() 
+•	Each library has relevant utilities inside it to access and use.
+•	Each library method will show description of what it does.
+•	The code is human readable.
 #### How to click / text input?
 I.amPerforming().click().on(ByUsing.xpath("//"));
 I.amPerforming().textInput().in(ByUsing.xpath("//"),inputText);
@@ -123,23 +122,23 @@ For App:
 ->If you want to stop the container after every test then call a method stopDocker in @Before tag.
 
 ####	Other Options: 
-	Browser Mode: -DbrowserMode=incognito
-	Switch Environemnts: -Denv=qa 
-	Select OS: - -Dplatform=windows/mac -Dversion=10
-	Headless Mode: -Dheadless=true 
-	Parallel Execution: -Dthreads=10/AnyNumber
-	Increase Element Loading Time: -DwaitTime=20
-	Record Video:  -DrecordVideo=true
-	Enable Screen Shots for all: -DenableScreenShotsForAll=true
-	Run multiple tags =”@test1 or @test2”
-	Skip test/scenario: use @wip on scenario or feature file
-	Enable Complete page Screen Shot: -DenableFullScreenShot=true
-	Use Specific execution Driver =  -DdriverVersion=74
-	Use Specific execution Browser =  -DbrowserVersion=74
-	Slow Down Execution Speed = -DslowDownExecution = 1   (it will be considered 1 second)
-	Run a test tag multiple times = -DnumberOfTimesRunTag = 2
-	Post test results = -DpostTestResults = tfs/jira
-	Enable Screenshots for Soft Assertions failure: -DsoftAssertScreenshot=true
+•	Browser Mode: -DbrowserMode=incognito
+•	Switch Environemnts: -Denv=qa 
+•	Select OS: - -Dplatform=windows/mac -Dversion=10
+•	Headless Mode: -Dheadless=true 
+•	Parallel Execution: -Dthreads=10/AnyNumber
+•	Increase Element Loading Time: -DwaitTime=20
+•	Record Video:  -DrecordVideo=true
+•	Enable Screen Shots for all: -DenableScreenShotsForAll=true
+•	Run multiple tags =”@test1 or @test2”
+•	Skip test/scenario: use @wip on scenario or feature file
+•	Enable Complete page Screen Shot: -DenableFullScreenShot=true
+•	Use Specific execution Driver =  -DdriverVersion=74
+•	Use Specific execution Browser =  -DbrowserVersion=74
+•	Slow Down Execution Speed = -DslowDownExecution = 1   (it will be considered 1 second)
+•	Run a test tag multiple times = -DnumberOfTimesRunTag = 2
+•	Post test results = -DpostTestResults = tfs/jira
+•	Enable Screenshots for Soft Assertions failure: -DsoftAssertScreenshot=true
 
 ## Cucumber Dynamic Parameterization
 ####Saving and retrieving parameters from feature file
