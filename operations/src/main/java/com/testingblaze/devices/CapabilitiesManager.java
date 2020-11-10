@@ -31,7 +31,8 @@ public class CapabilitiesManager {
 
     public static ChromeOptions getChromeCapabilities() {
         ChromeOptions chromeOptions = new ChromeOptions();
-
+        if (null != System.getProperty("browserMode") && "incognito".equalsIgnoreCase(System.getProperty("browserMode")))
+            chromeOptions.addArguments("--incognito");
         chromeOptions.addArguments(
                 "disable-infobars", // disabling infobars
                 "--disable-extensions", // disabling extensions
@@ -50,7 +51,7 @@ public class CapabilitiesManager {
                 "profile.default_content_settings.popups", 0,
                 "download.prompt_for_download", "false",
                 "download.directory_upgrade", "true",
-                "download.default_directory", System.getProperty("user.dir") + File.separatorChar+"target"
+                "download.default_directory", System.getProperty("user.dir") + File.separatorChar + "target"
         ));
 
         if (EnvironmentFactory.isHeadless()) {
@@ -72,9 +73,11 @@ public class CapabilitiesManager {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
 
         FirefoxProfile profile = new FirefoxProfile();
+        if (null != System.getProperty("browserMode") && "private".equalsIgnoreCase(System.getProperty("browserMode")))
+            profile.setPreference("browser.privatebrowsing.autostart", true);
         profile.setAssumeUntrustedCertificateIssuer(true);
         profile.setPreference("browser.download.folderList", 2);
-        profile.setPreference("browser.download.dir", System.getProperty("user.dir") + File.pathSeparatorChar  + "target");
+        profile.setPreference("browser.download.dir", System.getProperty("user.dir") + File.pathSeparatorChar + "target");
         profile.setPreference("browser.download.manager.showWhenStarting", false);
         profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/plain,application/octet-stream,application/pdf,application/x-pdf,application/vnd.pdf,text/csv,application/java-archive,application/x-msexcel,application/excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,application/msword,application/xml,application/vnd.microsoft.portable-executable");
         profile.setPreference("browser.helperApps.alwaysAsk.force", false);
@@ -169,15 +172,15 @@ public class CapabilitiesManager {
 
     public static DesiredCapabilities getAndroidCapabilities() {
         DesiredCapabilities androidCapabilities = new DesiredCapabilities();
-        Properties loadConfigFile=new Properties();
+        Properties loadConfigFile = new Properties();
         String filePath = System.getProperty("user.dir") + File.separatorChar + "mobileapp" + File.separatorChar;
         try {
-            loadConfigFile.load(new FileReader(filePath+"appConfig.properties"));
+            loadConfigFile.load(new FileReader(filePath + "appConfig.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         if (EnvironmentFactory.getAppName() != null) {
-            androidCapabilities.setCapability(MobileCapabilityType.APP, filePath+ EnvironmentFactory.getAppName());
+            androidCapabilities.setCapability(MobileCapabilityType.APP, filePath + EnvironmentFactory.getAppName());
 
             try {
                 androidCapabilities.setCapability("appPackage", loadConfigFile.getProperty("appPackage"));
@@ -187,7 +190,7 @@ public class CapabilitiesManager {
             }
 
         } else {
-            if(!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())
+            if (!"default".equalsIgnoreCase(EnvironmentFactory.getBrowserVersion())
                     && !"default".equalsIgnoreCase(EnvironmentFactory.getDriverVersion())) {
                 WebDriverManager.chromedriver()
                         .browserVersion(EnvironmentFactory.getBrowserVersion())
@@ -219,7 +222,7 @@ public class CapabilitiesManager {
         DesiredCapabilities iosCapabilities = new DesiredCapabilities();
         if (EnvironmentFactory.getAppName() != null) {
             iosCapabilities.setCapability(MobileCapabilityType.APP,
-                    System.getProperty("user.dir") +File.separatorChar +"mobileapp" +File.separatorChar+ EnvironmentFactory.getAppName());
+                    System.getProperty("user.dir") + File.separatorChar + "mobileapp" + File.separatorChar + EnvironmentFactory.getAppName());
         } else {
             iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
         }
@@ -278,5 +281,5 @@ public class CapabilitiesManager {
         return platformName;
     }
 
-    private enum MobileDevice { ANDROID, IOS }
+    private enum MobileDevice {ANDROID, IOS}
 }

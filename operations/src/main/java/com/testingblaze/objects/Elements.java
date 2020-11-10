@@ -21,12 +21,14 @@ package com.testingblaze.objects;
 
 import com.testingblaze.actionsfactory.elementfunctions.FindMyElements;
 import com.testingblaze.actionsfactory.type.BQUnpmlimY;
-import com.testingblaze.actionsfactory.type.NJIc1dLxYv;
 import com.testingblaze.actionsfactory.type.Is;
+import com.testingblaze.actionsfactory.type.NJIc1dLxYv;
 import com.testingblaze.actionsfactory.type.Scroll;
 import com.testingblaze.register.I;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class Elements {
     private WebElement element;
@@ -89,5 +91,9 @@ public class Elements {
 
     public WebElement nestedElement(By locator) {
         return InstanceRecording.getInstance(FindMyElements.class).getNestedElement(this.element, locator, true);
+    }
+
+    public List<WebElement> nestedElements(By locator) {
+        return InstanceRecording.getInstance(FindMyElements.class).getNestedElementList(this.element, locator);
     }
 }

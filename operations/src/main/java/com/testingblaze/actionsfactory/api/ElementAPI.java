@@ -169,6 +169,7 @@ public class ElementAPI implements Element {
 
     private <T> List<Elements> handleLocatorsInstanceOf(T locator, Boolean processing) {
         List<WebElement> elementList = null;
+
         if (locator instanceof MobileBy) {
             elementList = findMobileElement.getMobileElements((MobileBy) locator, processing);
         } else if (locator instanceof ByAngular.BaseBy) {
