@@ -44,24 +44,24 @@ Setting up the project is very simple and does not require any special configura
 ## Key Features
 Intelligent Processing for Test Execution Stability & Agility
 
-####Element Processing: <br>
-Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.<br>
-####Auto Scrolling: <br>
-Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.<br>
-####Auto Frame/Iframe Switching In-out: <br>
-If the element is present inside and iframe then the frames will be automatically switched in and out.<br>
-####Highlighting of elements accessed by automation:<br>
-The elements which are accessed will get highlighted (green for success, red for problem).<br>
-####Auto Tabs Switching:<br>
-If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.<br>
-####Smart Switching to devices:<br>
-Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.<br>
-####-AI based Self-Healing of Tests [Authorization Required]: <br>
-This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. <br>
-####Auto Dependency Injection:<br>
-Everything is automatically managed by DI. No need to worry about object creation (see example here) <br>
-#####Build in cucumber Steps<br>
-#####Auto Runner Creation<br>
+#### Element Processing: <br>
+ Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.<br>
+#### Auto Scrolling: <br>
+ Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.<br>
+#### Auto Frame/Iframe Switching In-out: <br>
+ If the element is present inside and iframe then the frames will be automatically switched in and out.<br>
+#### Highlighting of elements accessed by automation:<br>
+ The elements which are accessed will get highlighted (green for success, red for problem).<br>
+#### Auto Tabs Switching:<br>
+ If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.<br>
+#### Smart Switching to devices:<br>
+ Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.<br>
+#### AI based Self-Healing of Tests [Authorization Required]: <br>
+ This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. <br>
+#### Auto Dependency Injection:<br>
+ Everything is automatically managed by DI. No need to worry about object creation (see example here) <br>
+##### uild in cucumber Steps<br>
+##### Auto Runner Creation<br>
 <!-- USAGE EXAMPLES -->
 ## Supports
 
