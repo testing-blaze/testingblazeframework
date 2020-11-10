@@ -44,14 +44,24 @@ Setting up the project is very simple and does not require any special configura
 ## Key Features
 Intelligent Processing for Test Execution Stability & Agility
 
-1-Element Processing: Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.<br>
-2-Auto Scrolling: Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.<br>
-3-Auto Frame/Iframe Switching In-out: If the element is present inside and iframe then the frames will be automatically switched in and out.<br>
-4-Highlighting of elements accessed by automation: The elements which are accessed will get highlighted (green for success, red for problem).<br>
-5-Auto Tabs Switching: If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.<br>
-6-Smart Switching to devices: Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.<br>
-7-AI based Self-Healing of Tests [Not Open Source] This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. 
-
+####Element Processing: <br>
+Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.<br>
+####Auto Scrolling: <br>
+Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.<br>
+####Auto Frame/Iframe Switching In-out: <br>
+If the element is present inside and iframe then the frames will be automatically switched in and out.<br>
+####Highlighting of elements accessed by automation:<br>
+The elements which are accessed will get highlighted (green for success, red for problem).<br>
+####Auto Tabs Switching:<br>
+If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.<br>
+####Smart Switching to devices:<br>
+Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.<br>
+####-AI based Self-Healing of Tests [Authorization Required]: <br>
+This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. <br>
+####Auto Dependency Injection:<br>
+Everything is automatically managed by DI. No need to worry about object creation (see example here) <br>
+#####Build in cucumber Steps<br>
+#####Auto Runner Creation<br>
 <!-- USAGE EXAMPLES -->
 ## Supports
 
@@ -82,6 +92,13 @@ I.amPerforming().textInput().in(ByUsing.xpath("//"),inputText);<br>
 #### Interact with selenium, appium abs self healing with single type "ByUsing":
 This type gives access to all locator types including selenium , android , ios and self healing.
 Example: ByUsing.xpath("//"")
+
+## Using Self healing feature:
+•	Get the credentials after authorization.<br>
+•	Login to the provided portal for locator management.<br>
+•	Use is in your code with ByUsing.healingXpathName(LocatorName).<br>
+•	If Dom will change, test will auto heal.<br>
+•	Example can be seen on this link.<br>
 
 ## Run Your Test:
 Open command line/Terminal/IDE. Reach to Project root and execute below as required
@@ -236,4 +253,4 @@ TestingBlazeGlobal.setVariable("highlightElements", "off");<br>
 
 _For more examples, please refer to the [Documentation](https://example.com)_<br>
 
-Project Link: [https://github.com/testing-blaze/testingblaze](https://github.com/testing-blaze/testingblaze)
+Project Link: [The Testing Blaze Automation Solution](https://github.com/testing-blaze/testingblazeframework)
