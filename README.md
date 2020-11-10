@@ -44,13 +44,13 @@ Setting up the project is very simple and does not require any special configura
 ## Key Features
 Intelligent Processing for Test Execution Stability & Agility
 
-•	Element Processing: Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.
-•	Auto Scrolling: Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.
-•	Auto Frame/Iframe Switching In-out: If the element is present inside and iframe then the frames will be automatically switched in and out.
-•	Highlighting of elements accessed by automation: The elements which are accessed will get highlighted (green for success, red for problem).
-•	Auto Tabs Switching: If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.
-•	Smart Switching to devices: Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.
-•	AI based Self-Healing of Tests [Not Open Source] This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. 
+1-Element Processing: Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.
+2-Auto Scrolling: Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.
+3-Auto Frame/Iframe Switching In-out: If the element is present inside and iframe then the frames will be automatically switched in and out.
+4-Highlighting of elements accessed by automation: The elements which are accessed will get highlighted (green for success, red for problem).
+5-Auto Tabs Switching: If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.
+6-Smart Switching to devices: Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.
+7-AI based Self-Healing of Tests [Not Open Source] This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber. 
 
 <!-- USAGE EXAMPLES -->
 ## Supports
@@ -66,11 +66,11 @@ Intelligent Processing for Test Execution Stability & Agility
 The framework offers a gherkin style of code writing which makes each line of code readable and it also provides access to all type of devices,libraries from a single line
 of code.
 
-All libraries can be accessed in any Java class using: I.amPerforming()
-•	Reach out to your page object class and write I.amPerforming() 
-•	Each library has relevant utilities inside it to access and use.
-•	Each library method will show description of what it does.
-•	The code is human readable.
+All libraries can be accessed in any Java class using: I.amPerforming() <br>
+•	Reach out to your page object class and write I.amPerforming() <br>
+•	Each library has relevant utilities inside it to access and use.<br>
+•	Each library method will show description of what it does.<br>
+•	The code is human readable.<br>
 #### How to click / text input?
 I.amPerforming().click().on(ByUsing.xpath("//"));
 I.amPerforming().textInput().in(ByUsing.xpath("//"),inputText);
