@@ -162,7 +162,7 @@ For App:<br>
 •	Enable Screenshots for Soft Assertions failure: -DsoftAssertScreenshot=true <br>
 
 ## Cucumber Dynamic Parameterization
-####Saving and retrieving parameters from feature file
+#### Saving and retrieving parameters from feature file
 
 Within any step in a feature file you may dynamically adjust the Strings passed to steps at run time.  To do so, you can use either of the following formats:<br>
 •	---Key:-:Value--- <br>
@@ -242,15 +242,15 @@ I see the text “Current Date (with time): 27/10/2020 12:34:12”<br>
 I see the text “Last of the Month: 10/31/20”<br>
 
 ## Misc
-Setting Global Variable and Accessing it:<br>
-TestingBlazeGlobal.setValue(variableName,Value );<br>
-TestingBlazeGlobal.getValue(variableName);<br>
-
-Turn off element highlighting feature for specific element:<br>
+#### Setting Global Variable and Accessing it:<br>
+TestingBlazeGlobal.setValue(variableName,Value );
+TestingBlazeGlobal.getValue(variableName);
+#### Turn off element highlighting feature for specific element:
 TestingBlazeGlobal.setVariable("highlightElements", "off");<br>
+#### Enabling wait for any Processing/In progress fading screen:
+TestingBlazeGlobal.setVariable("processingHoldOnScreen",ByUsing.xpath("Xpath of nav page"));
 
 ## Sample project
-
 _For more examples, please refer to the [Sample Project](https://github.com/testing-blaze/sample-project.git)<br>
 
 Project Link: [The Testing Blaze Automation Solution](https://github.com/testing-blaze/testingblazeframework)
