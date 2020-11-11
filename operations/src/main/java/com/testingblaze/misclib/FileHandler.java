@@ -34,6 +34,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
@@ -60,12 +62,14 @@ public final class FileHandler {
     private final ExcelReader excelReader;
     private final JsonReader jsonReader;
     private final AdobeReader adobeReader;
+    private final Docs docs;
     private final WebDriver driver;
 
     public FileHandler() {
         this.excelReader = new ExcelReader();
         this.jsonReader = new JsonReader();
         this.adobeReader = new AdobeReader();
+        this.docs = new Docs();
         this.driver = InstanceRecording.getInstance(DeviceBucket.class).getDriver();
     }
 
@@ -77,6 +81,16 @@ public final class FileHandler {
      */
     public ExcelReader forExcelAnd() {
         return this.excelReader;
+    }
+
+    /**
+     * perform various functions on Doc files
+     *
+     * @return
+     * @author nauman.shahid
+     */
+    public Docs forDocumentsAnd() {
+        return this.docs;
     }
 
     /**
@@ -132,13 +146,13 @@ public final class FileHandler {
     /**
      * rename any downloaded file with .tmp extension
      *
-     * @param file     directory path
-     * @param fileName new name of file
+     * @param file       directory path
+     * @param fileName   new name of file
      * @param toFileType new extension of file
      * @author nauman.shahid
      */
     public void toRenameDownloadedTmpFile(File file, String fileName, String toFileType) {
-        toRenameFileWithSpecificExtension(file,fileName,"tmp", toFileType);
+        toRenameFileWithSpecificExtension(file, fileName, "tmp", toFileType);
     }
 
     /**
@@ -152,16 +166,17 @@ public final class FileHandler {
 
     /**
      * rename a specific file with an extension
+     *
      * @param filePath
-     * @param fileName name of file without extension
+     * @param fileName     name of file without extension
      * @param fromFileType
      * @param toFileType
      * @author nauman.shahid
      */
-    public void toRenameFileWithSpecificExtension(File filePath, String fileName,String fromFileType, String toFileType) {
+    public void toRenameFileWithSpecificExtension(File filePath, String fileName, String fromFileType, String toFileType) {
         File[] directory = toGetCompleteFilesListOnLocalDirectory(filePath.getAbsolutePath());
         for (File files : directory) {
-            if (files.getName().endsWith("."+fromFileType)) {
+            if (files.getName().endsWith("." + fromFileType)) {
                 new File(files.getAbsolutePath())
                         .renameTo(new File(filePath.getAbsolutePath() + File.separatorChar + fileName + "." + toFileType));
                 break;
@@ -171,12 +186,13 @@ public final class FileHandler {
 
     /**
      * rename a specific file in a folder
+     *
      * @param filePath
      * @param fromFileName with extension
-     * @param toFileName  with extension
+     * @param toFileName   with extension
      * @author nauman.shahid
      */
-    public void toRenameFile(File filePath, String fromFileName,String toFileName) {
+    public void toRenameFile(File filePath, String fromFileName, String toFileName) {
         File[] directory = toGetCompleteFilesListOnLocalDirectory(filePath.getAbsolutePath());
         for (File files : directory) {
             if (files.getName().equalsIgnoreCase((fromFileName))) {
@@ -258,6 +274,7 @@ public final class FileHandler {
 
     /**
      * Delete any file in provide directory
+     *
      * @param fileNameWithExtensionAndPath
      * @author jitendra.pisal
      */
@@ -266,6 +283,76 @@ public final class FileHandler {
         file.delete();
     }
 
+    /**
+     * Handles all methods related to Doc files
+     *
+     * @author nauman.shahid
+     */
+    public final class Docs {
+
+        /**
+         * Enter Filename with extension and sheet name. Place file in resources folder
+         * of project.
+         *
+         * @param fileName
+         * @return String array of data
+         * @author nauman.shahid
+         */
+        public List<XWPFParagraph> readDocFile(String fileName) {
+            InputStream is = getClass().getResourceAsStream("/" + fileName);
+            XWPFDocument doc = null;
+            try {
+                doc = new XWPFDocument(is);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return doc.getParagraphs();
+        }
+
+        /**
+         * Enter Filename with extension and sheet name. Place file in resources folder
+         * of project.
+         *
+         * @param fileName
+         * @return String array of data
+         * @author nauman.shahid
+         */
+        public XWPFDocument getAllDocControls(String fileName) {
+            InputStream is = getClass().getResourceAsStream("/" + fileName);
+            XWPFDocument doc = null;
+            try {
+                doc = new XWPFDocument(is);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return doc;
+        }
+
+        /**
+         * Enter Filename with extension and sheet name.
+         * of project.
+         *
+         * @param fileName
+         * @param filePath
+         * @return String array of data
+         * @author nauman.shahid
+         */
+        public List<XWPFParagraph> readDocFile(String filePath, String fileName) {
+            InputStream is = null;
+            try {
+                is = new FileInputStream(filePath + "/" + fileName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            XWPFDocument doc = null;
+            try {
+                doc = new XWPFDocument(is);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return doc.getParagraphs();
+        }
+    }
 
     /**
      * Handles all methods related to excel files
@@ -293,7 +380,7 @@ public final class FileHandler {
                 InputStream is = getClass().getResourceAsStream("/" + fileName);
                 workbook = new XSSFWorkbook(is);
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
             return getDataFromSheet(sheetName);
         }
@@ -307,10 +394,10 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public String[][] readFromDownloadedFile(String fileName, String sheetName) {
-            File file = new File(System.getProperty("user.dir") +File.pathSeparatorChar + "target");
+            File file = new File(System.getProperty("user.dir") + File.pathSeparatorChar + "target");
             toRenameDownloadedTmpFile(file, fileName, "xlsx");
             return readExcelFile(fileName, sheetName,
-                    file.getAbsolutePath() + File.pathSeparatorChar  + fileName);
+                    file.getAbsolutePath() + File.pathSeparatorChar + fileName);
         }
 
         /**
@@ -560,10 +647,10 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public String readFromDownloadedFile(String fileName, int pageNumber) {
-            File file = new File(System.getProperty("user.dir") + File.pathSeparatorChar +"target");
+            File file = new File(System.getProperty("user.dir") + File.pathSeparatorChar + "target");
             toRenameDownloadedTmpFile(file, fileName, "pdf");
             return readFromAdobeFileOnLocalAtUserDirectory(
-                    file.getAbsolutePath() + File.pathSeparatorChar  + fileName, pageNumber);
+                    file.getAbsolutePath() + File.pathSeparatorChar + fileName, pageNumber);
         }
 
 
