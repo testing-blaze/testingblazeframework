@@ -60,7 +60,7 @@ Intelligent Processing for Test Execution Stability & Agility
  This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber.
 #### Auto Dependency Injection:
  Everything is automatically managed by DI. No need to worry about object creation (see example here)
-##### uild in cucumber Steps
+##### Build in cucumber Steps
 ##### Auto Runner Creation
 <!-- USAGE EXAMPLES -->
 ## Supports
@@ -251,6 +251,6 @@ TestingBlazeGlobal.setVariable("highlightElements", "off");<br>
 
 ## Sample project
 
-_For more examples, please refer to the [Documentation](https://example.com)_<br>
+_For more examples, please refer to the [Sample Project](https://github.com/testing-blaze/sample-project.git)<br>
 
 Project Link: [The Testing Blaze Automation Solution](https://github.com/testing-blaze/testingblazeframework)
