@@ -36,5 +36,8 @@ public class TestingBlazeGlobal {
     public static void setVariable(String key, Object value) {
         globalVariable.put(key, value);
     }
+    public static Boolean hasVariable(String key) {
+        return (globalVariable.containsKey(key));
+    }
 
 }

@@ -307,23 +307,25 @@ public class HAbNpdpLKF implements ElementProcessing {
     }
 
     private void projectProcessingWrapper() {
-        if (turnOnProcessingHoldOnScreen == null && processingHoldOnScreen == null) {
-            processingHoldOnScreen = (By) TestingBlazeGlobal.getVariable("processingHoldOnScreen");
-            turnOnProcessingHoldOnScreen = processingHoldOnScreen != null;
-        }
-        if (driver.findElements(processingHoldOnScreen).size() > 0) {
-            I.amPerforming().waitFor().makeThreadSleep(500);
-        } else return;
-        try {
-            if (turnOnProcessingHoldOnScreen && (driver.findElements(processingHoldOnScreen).get(0).getRect().getDimension().getWidth() > 0 || driver.findElement(processingHoldOnScreen).isEnabled())) {
-                long startTime = System.currentTimeMillis() / 1000;
-                I.amPerforming().waitFor().disappearForProcessingONLY(processingHoldOnScreen, 120);
-                I.amPerforming().waitFor().makeThreadSleep(400);
-                long endTime = (System.currentTimeMillis() / 1000) - startTime;
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Waited for hold on screen to fade away for %s seconds", endTime));
+        if (TestingBlazeGlobal.hasVariable("processingHoldOnScreen")) {
+            if (turnOnProcessingHoldOnScreen == null && processingHoldOnScreen == null) {
+                processingHoldOnScreen = (By) TestingBlazeGlobal.getVariable("processingHoldOnScreen");
+                turnOnProcessingHoldOnScreen = processingHoldOnScreen != null;
             }
-        } catch (Exception e) {
-            /* Ignore Exception */
+            if (driver.findElements(processingHoldOnScreen).size() > 0) {
+                I.amPerforming().waitFor().makeThreadSleep(500);
+            } else return;
+            try {
+                if (turnOnProcessingHoldOnScreen && (driver.findElements(processingHoldOnScreen).get(0).getRect().getDimension().getWidth() > 0 || driver.findElement(processingHoldOnScreen).isEnabled())) {
+                    long startTime = System.currentTimeMillis() / 1000;
+                    I.amPerforming().waitFor().disappearForProcessingONLY(processingHoldOnScreen, 120);
+                    I.amPerforming().waitFor().makeThreadSleep(400);
+                    long endTime = (System.currentTimeMillis() / 1000) - startTime;
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, String.format("Waited for hold on screen to fade away for %s seconds", endTime));
+                }
+            } catch (Exception e) {
+                /* Ignore Exception */
+            }
         }
     }
 
