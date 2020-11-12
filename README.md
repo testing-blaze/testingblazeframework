@@ -3,7 +3,7 @@
 ![TBS logo](documentation/img/project_name.gif)
 
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://repo1.maven.org/maven2/com/github/testing-blaze/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-core)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/testing-blaze/testingblaze/pulls)
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 
@@ -60,7 +60,7 @@ Intelligent Processing for Test Execution Stability & Agility
  This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber.
 #### Auto Dependency Injection:
  Everything is automatically managed by DI. No need to worry about object creation (see example here)
-##### Build in cucumber Steps
+##### Built in cucumber Steps
 ##### Auto Runner Creation
 <!-- USAGE EXAMPLES -->
 ## Supports
@@ -242,7 +242,7 @@ I see the text “Current Date (with time): 27/10/2020 12:34:12”<br>
 I see the text “Last of the Month: 10/31/20”<br>
 
 ## Misc
-#### Setting Global Variable and Accessing it:<br>
+#### Setting Global Variable and Accessing it:
 TestingBlazeGlobal.setValue(variableName,Value );
 TestingBlazeGlobal.getValue(variableName);
 #### Turn off element highlighting feature for specific element:
@@ -251,6 +251,6 @@ TestingBlazeGlobal.setVariable("highlightElements", "off");<br>
 TestingBlazeGlobal.setVariable("processingHoldOnScreen",ByUsing.xpath("Xpath of nav page"));
 
 ## Sample project
-_For more examples, please refer to the [Sample Project](https://github.com/testing-blaze/sample-project.git)<br>
+please refer to the [Sample Project](https://github.com/testing-blaze/sample-project.git)<br>
 
 Project Link: [The Testing Blaze Automation Solution](https://github.com/testing-blaze/testingblazeframework)
