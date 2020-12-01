@@ -7,7 +7,7 @@
     <groupId>com.github.testing-blaze</groupId>
     <artifactId>blaze-epic</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>Testing Blaze Epic</name>
     <description>Configuration Pom</description>
     <url>http://www.github.com/testing-blaze</url>
@@ -45,8 +45,6 @@
 
         <!-- Versions -->
         <java.version>11</java.version>
-        <test.blaze.version>1.0.5</test.blaze.version>
-        <saas.version>2.3.0</saas.version>
         <selenium.version>3.141.59</selenium.version>
         <selenium.server.version>4.0.0-alpha-2</selenium.server.version>
         <appium.version>7.3.0</appium.version>
@@ -227,10 +225,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.10.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.epam.reportportal/agent-java-cucumber5 -->
         <dependency>
             <groupId>com.epam.reportportal</groupId>
-            <artifactId>agent-java-cucumber4</artifactId>
-            <version>5.0.0-BETA-13</version>
+            <artifactId>agent-java-cucumber5</artifactId>
+            <version>5.0.1</version>
         </dependency>
     </dependencies>
     <repositories>
