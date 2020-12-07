@@ -256,6 +256,7 @@ please refer to the [Sample Project](https://github.com/testing-blaze/sample-pro
 Project Link: [The Testing Blaze Automation Solution](https://github.com/testing-blaze/testingblazeframework)
 
 ## Framework Libraries
+### All libraries can be simply accessed using I.amPerforming() in any java class.
 
 #### ActionsToGet: To get or fetch any information from a webpage
 I.amPerforming().actionToGet().attribute(T locator, String attribute);
