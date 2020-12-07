@@ -254,3 +254,281 @@ TestingBlazeGlobal.setVariable("processingHoldOnScreen",ByUsing.xpath("Xpath of 
 please refer to the [Sample Project](https://github.com/testing-blaze/sample-project.git)<br>
 
 Project Link: [The Testing Blaze Automation Solution](https://github.com/testing-blaze/testingblazeframework)
+
+## Framework Libraries
+### All libraries can be simply accessed using I.amPerforming() in any java class.
+
+#### ActionsToGet: To get or fetch any information from a webpage
+I.amPerforming().actionToGet().attribute(T locator, String attribute);
+I.amPerforming().actionToGet().attribute(T locator, String attribute, Boolean processing);
+I.amPerforming().actionToGet().text(T locator);
+I.amPerforming().actionToGet().text(T locator, Boolean processing);
+I.amPerforming().actionToGet().cssProperty(T locator, String property);
+I.amPerforming().actionToGet().cssProperty(T locator, String property, Boolean processing);
+
+#### checkToSee: To verify.
+I.amPerforming().checkToSee().isDisplayed(T locator);
+I.amPerforming().checkToSee().isDisplayed(T locator, Boolean processing);
+I.amPerforming().checkToSee().isEnabled(T locator);
+I.amPerforming().checkToSee().isEnabled(T locator, Boolean processing);
+I.amPerforming().checkToSee().isTableSorted(List<Elements> rows_table, String sorting);
+I.amPerforming().checkToSee().isElementDisplayed(T locator);
+I.amPerforming().checkToSee().isElementDisplayed(T locator, Boolean processing);
+I.amPerforming().checkToSee().isElementPresentQuick(T locator);
+I.amPerforming().checkToSee().isInteractable(WebElement element);
+I.amPerforming().checkToSee().isSelected(T locator);
+I.amPerforming().checkToSee().isSelected(T locator, Boolean processing);
+I.amPerforming().checkToSee().isStale(WebElement element);
+I.amPerforming().checkToSee().popupPresent();
+I.amPerforming().checkToSee().textPresent(String expectedText);
+
+
+#### Click: Performs click on webpage , mobile etc.
+I.amPerforming().click().on(T locator);
+I.amPerforming().click().on(T locator, Boolean processing);
+I.amPerforming().click().withJavaScript(T locator);
+I.amPerforming().click().withJavaScript(T locator, Boolean processing);
+I.amPerforming().click().withTapOnScreen();
+I.amPerforming().click().withMouse().at(int x, int y);
+I.amPerforming().click().withMouse().on(T locator);
+I.amPerforming().click().withMouse().on(T locator, Boolean processing);
+I.amPerforming().click().withMouse().doubleClickOn(T locator);
+I.amPerforming().click().withMouse().doubleClickOn(T locator, Boolean processing);
+I.amPerforming().click().withMouse().dragAndDrop(T source, T target);
+I.amPerforming().click().withMouse().dragAndDrop(T source, T target, Boolean processing);
+I.amPerforming().click().withMouse().dragAndDropInHtml5(T source, T target);
+I.amPerforming().click().withMouse().dragAndDropInHtml5(T source, T target, Boolean processing);
+I.amPerforming().click().withMouse().onAndHold(T locator, int holdTimeSeconds);
+I.amPerforming().click().withMouse().onAndHold(T locator, int holdTimeSeconds, Boolean processing);
+I.amPerforming().click().withMouse().rightClickOn(T context);
+I.amPerforming().click().withMouse().rightClickOn(T context, Boolean processing);
+
+#### browserOperationTo: Perform variouss browser related operations
+I.amPerforming().browserOperationsTo().closeBrowserOrTab();
+I.amPerforming().browserOperationsTo().getCurrentUrl();
+I.amPerforming().browserOperationsTo().getPageLoadStatus();
+I.amPerforming().browserOperationsTo().getJQueryStatus();
+I.amPerforming().browserOperationsTo().getPageSource();
+I.amPerforming().browserOperationsTo().getPageTitle();
+I.amPerforming().browserOperationsTo().getPageXOffSet();
+I.amPerforming().browserOperationsTo().getPageYOffSet();
+I.amPerforming().browserOperationsTo().navigateBack();
+I.amPerforming().browserOperationsTo().navigateForward();
+I.amPerforming().browserOperationsTo().navigateToUrl(String url);
+I.amPerforming().browserOperationsTo().refreshPage();
+
+#### comparisonOf:Compare images and tables etc.
+I.amPerforming().comparisonOf().image().isElementImage(WebElement element, String imageName);
+I.amPerforming().comparisonOf().image().isElementImage(WebElement element, String imageName, Integer tolerance);
+I.amPerforming().comparisonOf().image().isFullName(String imageName);
+I.amPerforming().comparisonOf().image().isFullName(String imageName, int tolerance);
+I.amPerforming().comparisonOf().image().isImageSame(String image1withFullFilePath, String image2withFullPath);
+I.amPerforming().comparisonOf().image().isImageSame(String image1withFullFilePath, String image2withFullPath, int tolerance);
+
+I.amPerforming().comparisonOf().sortAndCompareOneTableColumn();
+I.amPerforming().comparisonOf().sortAndCompareWebTableWithTwoColumns(Map<Integer, List<Elements>> twoColumnTable, String sortingOrder);
+
+#### dateOperationToGet:-
+I.amPerforming().dateOperationsToGet().currentDateInDesiredFormat(DateTimeFormatter formatter);
+I.amPerforming().dateOperationsToGet().currentDate();
+I.amPerforming().dateOperationsToGet().currentDateWithOffsetInDesiredFormat(int offset, DateTimeFormatter formatter);
+I.amPerforming().dateOperationsToGet().givenDateWithOffsetFromGivenDate(String date, int offset, DateTimeFormatter formatter);
+I.amPerforming().dateOperationsToGet().currentDateWithOffset(int offset);
+
+#### dropDownSelection:
+I.amPerforming().dropDownSelection().from(T locator);
+I.amPerforming().dropDownSelection().from(T locator, Boolean processing);
+
+#### propertiesFileOperationsTo:
+I.amPerforming().propertiesFileOperationsTo().generateLogs();
+I.amPerforming().propertiesFileOperationsTo().getValue(String key);
+I.amPerforming().propertiesFileOperationsTo().ReadPropertyFile(String fileName, String parameter);
+I.amPerforming().propertiesFileOperationsTo().getAllSavedKeys();
+I.amPerforming().propertiesFileOperationsTo().getCompleteEntrySetFromPropertyFile(File filePath, String fileName);
+I.amPerforming().propertiesFileOperationsTo().getSavedValuesMap();
+I.amPerforming().propertiesFileOperationsTo().loadCompleteEntrySetFromPropertiesFileToSaveValueMap(File filePath, String fileName);
+I.amPerforming().propertiesFileOperationsTo().setProperty(String key, String value);
+
+#### emailOperationsTo:
+I.amPerforming().emailOperationsTo().accessEmail(String username, String password, Emails.HostName server, Emails.MailClient mailClient, Emails.EmailFolder emailFolder);
+
+#### fileHandling: Read write files
+I.amPerforming().fileHandling().forAdobeReaderAnd();
+I.amPerforming().fileHandling().forDocumentsAnd();
+I.amPerforming().fileHandling().forExcelAnd();
+I.amPerforming().fileHandling().forJsonAnd();
+I.amPerforming().fileHandling().toCreateDirectory(String pathOfDirectoryName);
+I.amPerforming().fileHandling().toCreateFile(String pathWithFileName);
+I.amPerforming().fileHandling().toDeleteFile(String fileNameWithExtensionAndPath);
+I.amPerforming().fileHandling().toDownloadAnyFileUsingURL(String fileNameWithExtension);
+I.amPerforming().fileHandling().toGetCompleteFilesListOnLocalDirectory(String path);
+I.amPerforming().fileHandling().toReadAnyFile(String filePathWithFileName);
+I.amPerforming().fileHandling().toRenameDownloadedTmpFile(File file, String fileName, String toFileType);
+I.amPerforming().fileHandling().toRenameFileWithSpecificExtension(File filePath, String fileName, String fromFileType, String toFileType);
+I.amPerforming().fileHandling().toWriteInFile(String pathWithFileName, String dataToWrite);
+
+##### addOnsTo:
+I.amPerforming().addOnsTo().flashColor(WebElement element, String color, int blinkNumber);
+I.amPerforming().addOnsTo().getStringRandomNumber();
+I.amPerforming().addOnsTo().convertImageFileToBufferedImage(File fileName);
+I.amPerforming().addOnsTo().getJvmVariable(StringSelection variableName);
+I.amPerforming().addOnsTo().getKeyBoard();
+I.amPerforming().addOnsTo().getRandomNumber();
+I.amPerforming().addOnsTo().getResources(String fileNameWithExtension);
+I.amPerforming().addOnsTo().getRandomNumberInRange(T minimum, T maximum);
+I.amPerforming().addOnsTo().roundDouble(double value);
+I.amPerforming().addOnsTo().setJvmVariable(StringSelection variableName, String variable);
+I.amPerforming().addOnsTo().uploadFile(T locator, String input);
+
+#### cookies:
+I.amPerforming().cookiesOperationsTo().addCookie(Cookie cookie);
+I.amPerforming().cookiesOperationsTo().deleteAllCookies();
+I.amPerforming().cookiesOperationsTo().getAllCookies();
+I.amPerforming().cookiesOperationsTo().getCookie(String name);
+I.amPerforming().cookiesOperationsTo().deleteCookie(String name);
+
+#### conversionOf:
+I.amPerforming().conversionOf().imageToBase64String(String filePathToRead, String imageType);
+I.amPerforming().conversionOf().imageToByteArray(String filePathToRead, String imageType);
+I.amPerforming().conversionOf().imageToByteArray(String filePathToRead, String imageType);
+I.amPerforming().conversionOf().listOfListsToMapOfMaps(List<List<String>> tableToConvert);
+I.amPerforming().conversionOf().stringToBy(String byLocator);
+
+#### getElementReference:
+I.amPerforming().getElementReference().forListOfElements();
+I.amPerforming().getElementReference().of(T locator);
+I.amPerforming().getElementReference().of(T locator, Boolean processing);
+I.amPerforming().getElementReference().ofNested(WebElement element, T locator);
+
+#### mobileOperations:
+I.amPerforming().mobileOperations().androidBatteryInfo();
+I.amPerforming().mobileOperations().changeScreenOrientationToLandScape();
+I.amPerforming().mobileOperations().changeScreenOrientationToPortrait();
+I.amPerforming().mobileOperations().closeApp();
+I.amPerforming().mobileOperations().getContextHandlers();
+I.amPerforming().mobileOperations().getCurrentContext();
+I.amPerforming().mobileOperations().getDeviceTime();
+I.amPerforming().mobileOperations().androidBatteryInfo();
+I.amPerforming().mobileOperations().getScreenOrientation();
+I.amPerforming().mobileOperations().getScreenSource();
+I.amPerforming().mobileOperations().hideKeyboard();
+I.amPerforming().mobileOperations().installApp(String path);
+I.amPerforming().mobileOperations().isAppInstall(String bundleId);
+I.amPerforming().mobileOperations().openAndroidNotifications();
+I.amPerforming().mobileOperations().openApp();
+I.amPerforming().mobileOperations().runAppInBackGround(int seconds);
+I.amPerforming().mobileOperations().showKeyboard();
+I.amPerforming().mobileOperations().switchContext(String context);
+
+#### restHttp: For making API calls
+I.amPerforming().restHttp().DeleteCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue, String authToken);
+I.amPerforming().restHttp().getCall(String endPoint, String key, String keyValue);
+I.amPerforming().restHttp().patchCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue, String authToken);
+I.amPerforming().restHttp().postCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue, String authToken);
+I.amPerforming().restHttp().putCall(JsonElement jsonElement, String stringBody, String endPoint, String key, String keyValue, String authToken);
+I.amPerforming().restHttp().rawRequest(RestfulWebServices.CallTypes callTypes, RequestSpecification requestLoad, String endPoint);
+
+#### sanityOfXpathTo: To make Xpaths very smart
+I.amPerforming().sanityOfXpathTo().contains(String field, String value);
+I.amPerforming().sanityOfXpathTo().equals(String field, String value);
+I.amPerforming().sanityOfXpathTo().concat(String xpath1, String xpath2);
+I.amPerforming().sanityOfXpathTo().translate(String value);
+
+#### robotActionsTo:
+I.amPerforming().robotActionsTo().copy();
+I.amPerforming().robotActionsTo().getRobot();
+I.amPerforming().robotActionsTo().ctrl_Press();
+I.amPerforming().robotActionsTo().ctrl_Release();
+I.amPerforming().robotActionsTo().ctrl_Save();
+I.amPerforming().robotActionsTo().enter();
+I.amPerforming().robotActionsTo().escape();
+I.amPerforming().robotActionsTo().mouseClick(int x, int y);
+I.amPerforming().robotActionsTo().enter();
+
+#### scroll: Although framework auto scrolls but you still have scroll controls
+I.amPerforming().scroll().onGadgets();
+I.amPerforming().scroll().onPageDocument(String scrolltype, int xAxis, int Yaxis);
+I.amPerforming().scroll().onPageWindow(String scrolltype, int xAxis, int Yaxis);
+I.amPerforming().scroll().toMoveToElement(T locator);
+I.amPerforming().scroll().onPageToSpecificElement(T locator);
+I.amPerforming().scroll().toMoveToElement(T locator, Boolean processing);
+I.amPerforming().scroll().toDragAndDropByOffset(T locator, int xOffset, int yOffset, Boolean processing);
+I.amPerforming().scroll().toDragAndDropByOffset(T locator, int xOffset, int yOffset, Boolean processing);
+I.amPerforming().scroll().onPageDocument(String scrolltype, int xAxis, int Yaxis);
+I.amPerforming().scroll().onPageDocument(String scrolltype, int xAxis, int Yaxis);
+I.amPerforming().scroll().toElementCenter(T locator);
+I.amPerforming().scroll().toMoveSlider(T sliderLocator);
+I.amPerforming().scroll().toMoveSlider(T sliderLocator);
+I.amPerforming().scroll().toMoveSliderByOffset(T sliderLocator, int xOffset, int yOffset);
+I.amPerforming().scroll().toMoveSliderByOffset(T sliderLocator, int xOffset, int yOffset);
+I.amPerforming().scroll().toZoomInOut(int zoom);
+I.amPerforming().scroll().withKeyBoardToElement(T locatorScrollTo);
+I.amPerforming().scroll().withMouseToElement(T locatorScrollTo);
+I.amPerforming().scroll().withMouseToElementAndOffset(T locator, int xOffset, int yOffset);
+
+#### snapshot:
+I.amPerforming().snapShotTo().captureFullScreenShot();
+I.amPerforming().snapShotTo().captureScreen(String fileName);
+I.amPerforming().snapShotTo().captureScreenshot(String screenshotName);
+I.amPerforming().snapShotTo().getlementScreenShot(WebElement element);
+I.amPerforming().snapShotTo().getScreenshot();
+I.amPerforming().snapShotTo().takeElementScreenShot(WebElement element, String imageName);
+
+#### switchTo: Although framework auto switches to iframes and switch back but you can control
+I.amPerforming().switchTo().acceptAlert();
+I.amPerforming().switchTo().frame(T locator);
+I.amPerforming().switchTo().getWindowsHandlers();
+I.amPerforming().switchTo().activeContext();
+I.amPerforming().switchTo().defaultContent();
+I.amPerforming().switchTo().getAlertText();
+I.amPerforming().switchTo().parentFrame();
+I.amPerforming().switchTo().rejectAlert();
+I.amPerforming().switchTo().windowHandler(int handlerNumber);
+
+#### textInput:
+I.amPerforming().textInput().in(T locator, String input);
+I.amPerforming().textInput().in(T locator, String input, Boolean processing);
+I.amPerforming().textInput().toClear(T locator);
+I.amPerforming().textInput().toClear(T locator, Boolean processing);
+I.amPerforming().textInput().withJavaScript(T locator, String input);
+I.amPerforming().textInput().withJavaScript(T locator, String input, Boolean processing);
+
+#### updatingOfReportWith: Update report logs if needed
+I.amPerforming().updatingOfReportWith().write(LogLevel logLevel, String reportLog);
+I.amPerforming().updatingOfReportWith().newLine();
+I.amPerforming().updatingOfReportWith().write(LogLevel logLevel, ConsoleFormatter.ICON icon, String reportLog);
+I.amPerforming().updatingOfReportWith().write(LogLevel logLevel, ConsoleFormatter.COLOR color, ConsoleFormatter.ICON icon, String reportLog);
+
+#### waitFor:Although framework has smart builtin wait strategy but you can control waits
+I.amPerforming().waitFor().Alert();
+I.amPerforming().waitFor().Alert(long customWaitTime);
+I.amPerforming().waitFor().AttributeToContain(By locator, String attribute, String value, long customWaitTime);
+I.amPerforming().waitFor().AttributeToContain(By locator, String attribute, String value);
+I.amPerforming().waitFor().AttributeToEqual(By locator, String attribute, String value, long customWaitTime);
+I.amPerforming().waitFor().AttributeToEqual(By locator, String attribute, String value);
+I.amPerforming().waitFor().disappearForProcessingONLY(By locator, long customWaitTime);
+I.amPerforming().waitFor().ElementListToBePresent(By locator);
+I.amPerforming().waitFor().ElementListToBePresent(By locator, long customWaitTime);
+I.amPerforming().waitFor().ElementToBeClickable(By locator, long customWaitTime);
+I.amPerforming().waitFor().ElementToBeClickable(By locator);
+I.amPerforming().waitFor().ElementToBePresent(By locator);
+I.amPerforming().waitFor().ElementToBePresent(By locator, long customWaitTime);
+I.amPerforming().waitFor().AttributeToEqual(By locator, String attribute, String value);
+I.amPerforming().waitFor().AttributeToEqual(By locator, String attribute, String value, long customWaitTime);
+I.amPerforming().waitFor().AttributeToContain(By locator, String attribute, String value, long customWaitTime);
+I.amPerforming().waitFor().AttributeToContain(By locator, String attribute, String value);
+I.amPerforming().waitFor().ElementToBeSelected(By locator);
+I.amPerforming().waitFor().ElementToBeSelected(By locator, long customWaitTime);
+I.amPerforming().waitFor().WebElementListToDisappear(List<WebElement> elements);
+I.amPerforming().waitFor().WebElementListToDisappear(List<WebElement> elements, long customWaitTime);
+I.amPerforming().waitFor().WebElementToBeClickable(WebElement element);
+I.amPerforming().waitFor().WebElementToBeClickable(WebElement element, long customWaitTime);
+I.amPerforming().waitFor().WebElementToBeSelected(WebElement element);
+I.amPerforming().waitFor().WebElementToBeSelected(WebElement element, long customWaitTime);
+I.amPerforming().waitFor().WebElementToBeVisible(WebElement element);
+I.amPerforming().waitFor().WebElementToBeVisible(WebElement element, long customWaitTime);
+I.amPerforming().waitFor().getCurrentTimeInSecs();
+I.amPerforming().waitFor().getWaitTime();
+I.amPerforming().waitFor().makeThreadSleep(int threadSleep);
+I.amPerforming().waitFor().TextToContain(By locator, String text);
+I.amPerforming().waitFor().TextToContain(By locator, String text, long customWaitTime);
