@@ -7,7 +7,7 @@
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-core)
 <br>
-#####parent [![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-epic.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-epic)
+##### Parent-[![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-epic.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-epic)
 
 <!-- PROJECT Information -->
 ### An Intelligent BDD Test Automation Framework - 'Let the tests heal at own'  
