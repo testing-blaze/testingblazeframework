@@ -164,7 +164,7 @@ public final class TestSetupController {
      */
     private void runBrowser() {
         device.setupController();
-        device.getDriver().get(EnvironmentFactory.getEnvironmentUrl().toUpperCase());
+        device.getDriver().get(EnvironmentFactory.getEnvironmentUrl());
     }
 
     /**
