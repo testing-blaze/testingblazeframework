@@ -2,12 +2,11 @@
 
 ![TBS logo](documentation/img/project_name.gif)
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-core)
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/testing-blaze/testingblaze/pulls)
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-core)
-<br>
-##### Parent-[![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-epic.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-epic)
+[![Maven Central Parent](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-epic.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-epic)
 
 <!-- PROJECT Information -->
 ### An Intelligent BDD Test Automation Framework - 'Let the tests heal at own'  
