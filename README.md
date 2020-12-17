@@ -3,7 +3,8 @@
 ![TBS logo](documentation/img/project_name.gif)
 
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-core)
+[![Maven Central Core](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-core)
+[![Maven Central Parent](https://img.shields.io/maven-central/v/com.github.testing-blaze/blaze-core.svg)](https://mvnrepository.com/artifact/com.github.testing-blaze/blaze-epic)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/testing-blaze/testingblaze/pulls)
 [![GitHub issues open](https://img.shields.io/github/issues/network-tools/shconfparser.svg)](https://github.com/testing-blaze/testingblaze/issues)
 
@@ -256,7 +257,7 @@ please refer to the [Sample Project](https://github.com/testing-blaze/sample-pro
 Project Link: [The Testing Blaze Automation Solution](https://github.com/testing-blaze/testingblazeframework)
 
 ## Framework Libraries
-### All libraries can be simply accessed using I.amPerforming() in any java class.
+#### All libraries can be simply accessed using I.amPerforming() in any java class.s
 
 #### ActionsToGet: To get or fetch any information from a webpage
 I.amPerforming().actionToGet().attribute(T locator, String attribute);
