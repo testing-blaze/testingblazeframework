@@ -33,6 +33,7 @@ public class CapabilitiesManager {
         ChromeOptions chromeOptions = new ChromeOptions();
         if (null != System.getProperty("browserMode") && "incognito".equalsIgnoreCase(System.getProperty("browserMode")))
             chromeOptions.addArguments("--incognito");
+
         chromeOptions.addArguments(
                 "disable-infobars", // disabling infobars
                 "--disable-extensions", // disabling extensions
@@ -47,7 +48,9 @@ public class CapabilitiesManager {
             chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
         }
 
-        chromeOptions.setExperimentalOption("prefs", Map.of(
+        chromeOptions.setExperimentalOption("prefs", Map.of("network.cookie.cookieBehavior", 0,
+                "profile.default_content_setting_values.cookies", 1,
+                "profile.block_third_party_cookies", false,
                 "profile.default_content_settings.popups", 0,
                 "download.prompt_for_download", "false",
                 "download.directory_upgrade", "true",

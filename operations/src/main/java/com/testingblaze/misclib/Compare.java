@@ -20,13 +20,10 @@
 package com.testingblaze.misclib;
 
 import com.testingblaze.actionsfactory.type.jucQcQgaaP;
-import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.objects.Elements;
-import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.objects.TwoColumnSorting;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.util.Assert;
 import ru.yandex.qatools.ashot.comparison.ImageDiff;
@@ -44,7 +41,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Compare {
-    private Image image;
+    private final Image image;
 
     public Compare() {
         this.image = new Image();
@@ -78,7 +75,7 @@ public final class Compare {
             originalTwoColumnList.add(new TwoColumnSorting(rows_table1.get(i).getText(), Integer.parseInt(rows_table2.get(i).getText())));
         }
 
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,"Below is the original table received from web");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Below is the original table received from web");
         originalTwoColumnList.forEach(myList -> I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, myList.getPair()));
 
         Comparator<TwoColumnSorting> customComparison = Comparator.comparingInt(sort -> sort.value);
@@ -86,7 +83,7 @@ public final class Compare {
                 : "Descending".equalsIgnoreCase(sortingOrder) ? originalTwoColumnList.stream().sorted(customComparison.reversed()).collect(Collectors.toList())
                 : originalTwoColumnList;
 
-        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO,"Below is the sorted table by Test Blaze");
+        I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Below is the sorted table by Test Blaze");
         runtimeSortedList.forEach(myList -> I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, myList.getPair()));
 
         return runtimeSortedList.equals(originalTwoColumnList);
@@ -142,7 +139,10 @@ public final class Compare {
          * @throws IOException
          */
         public boolean isElementImage(WebElement element, String imageName, Integer tolerance) throws IOException {
-            return compareTwoImages(ImageIO.read(new jucQcQgaaP().getResources(imageName)), new jucQcQgaaP().convertImageFileToBufferedImage(I.amPerforming().snapShotTo().getlementScreenShot(element)), tolerance);
+            var getImageFromResources = ImageIO.read(new jucQcQgaaP().getResources(imageName));
+            var getSnapshot=I.amPerforming().snapShotTo().getlementScreenShot(element);
+            var convertedBufferedImage = new jucQcQgaaP().convertImageFileToBufferedImage(getSnapshot);
+            return compareTwoImages(getImageFromResources, convertedBufferedImage, tolerance);
         }
 
         /**
@@ -192,9 +192,8 @@ public final class Compare {
         }
 
         /**
-         *
-         * @param image1 The first image to compare
-         * @param image2 The second image to compare
+         * @param image1    The first image to compare
+         * @param image2    The second image to compare
          * @param tolerance How many points may be different between the two images before the
          *                  images are considered "different", as a percentage.
          *                  (i.e. 20 means they can differ in at most 20% of their points)
