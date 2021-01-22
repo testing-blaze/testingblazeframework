@@ -29,9 +29,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
@@ -157,6 +154,15 @@ public final class MouseActions {
      */
     public void moveMouseToSpecificLocation(WebElement elementScrollTo) {
         actions.moveToElement(elementScrollTo).build().perform();
+    }
+
+    /**
+     * move to desired location on web page
+     *
+     * @author nauman.shahid
+     */
+    public void moveMouseToSpecificLocationSlowly(WebElement elementScrollTo) {
+        actions.moveToElement(elementScrollTo).pause(Duration.ofSeconds(5)).build().perform();
     }
 
     /**
