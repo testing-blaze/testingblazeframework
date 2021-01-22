@@ -195,6 +195,24 @@ public class Scroll {
     }
 
     /**
+     * move to desired element on web page using mouse action
+     *
+     * @author nauman.shahid
+     */
+    public <T> void withMouseSlowlyToElement(T locatorScrollTo) {
+        withMouseSlowlyToElement(locatorScrollTo, true);
+    }
+
+    /**
+     * move to desired element on web page using mouse action
+     *
+     * @author nauman.shahid
+     */
+    public <T> void withMouseSlowlyToElement(T locatorScrollTo,Boolean processing) {
+        actions.moveMouseToSpecificLocationSlowly(elementApi.locator(locatorScrollTo, processing));
+    }
+
+    /**
      * move element to desired location on web page and off set using mouse action
      *
      * @author nauman.shahid

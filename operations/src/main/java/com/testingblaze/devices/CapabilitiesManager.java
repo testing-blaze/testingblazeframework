@@ -48,7 +48,7 @@ public class CapabilitiesManager {
             chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
         }
 
-        chromeOptions.setExperimentalOption("prefs", Map.of("network.cookie.cookieBehavior", 0,
+        chromeOptions.setExperimentalOption("prefs", Map.of(
                 "profile.default_content_setting_values.cookies", 1,
                 "profile.block_third_party_cookies", false,
                 "profile.default_content_settings.popups", 0,
@@ -76,8 +76,10 @@ public class CapabilitiesManager {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
 
         FirefoxProfile profile = new FirefoxProfile();
-        if (null != System.getProperty("browserMode") && "private".equalsIgnoreCase(System.getProperty("browserMode")))
+        profile.setPreference("network.cookie.cookieBehavior", 0);
+        if (null != System.getProperty("browserMode") && "private".equalsIgnoreCase(System.getProperty("browserMode"))) {
             profile.setPreference("browser.privatebrowsing.autostart", true);
+        }
         profile.setAssumeUntrustedCertificateIssuer(true);
         profile.setPreference("browser.download.folderList", 2);
         profile.setPreference("browser.download.dir", System.getProperty("user.dir") + File.pathSeparatorChar + "target");
@@ -90,7 +92,7 @@ public class CapabilitiesManager {
         profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
         profile.setPreference("browser.download.manager.showAlertOnComplete", false);
         profile.setPreference("browser.download.manager.closeWhenDone", true);
-        profile.setPreference("pdfjs.disabled", true);
+       profile.setPreference("pdfjs.disabled", true);
         firefoxOptions.setProfile(profile);
 
         if ("local".equalsIgnoreCase(EnvironmentFactory.getHub())) {
