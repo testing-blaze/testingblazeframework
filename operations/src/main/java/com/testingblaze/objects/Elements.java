@@ -96,4 +96,8 @@ public class Elements {
     public List<WebElement> nestedElements(By locator) {
         return InstanceRecording.getInstance(FindMyElements.class).getNestedElementList(this.element, locator);
     }
+
+    public WebElement getElementReference(){
+        return element;
+    }
 }
