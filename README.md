@@ -143,6 +143,25 @@ For App:<br>
 -DappName=appname<br>
 ->If you want to stop the container after every test then call a method stopDocker in @Before tag.<br>
 
+6- On Zalenium Docker Hub: [Run your test cases on Zalenium Hub]<br>
+Pull the selenium docker image : 
+```shell script
+docker pull elgalu/selenium
+```
+Pull the Zalenium Image : 
+```shell script
+docker pull dosel/zalenium
+```
+After downloading above images, run zalenium using following command
+```shell script
+docker run --rm -ti --name zalenium -p 4444:4444 \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      -v /tmp/videos:/home/seluser/videos \
+      --privileged dosel/zalenium start
+```
+Standard Command +<br>
+-Dhub=http:localhost:4444/
+
 ####	Other Options: 
 •	Browser Mode: -DbrowserMode=incognito<br>
 •	Switch Environemnts: -Denv=qa <br>
