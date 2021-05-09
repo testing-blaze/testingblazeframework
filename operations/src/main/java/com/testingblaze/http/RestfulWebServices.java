@@ -19,8 +19,7 @@
  */
 package com.testingblaze.http;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.*;
 import com.testingblaze.controller.TestingBlazeGlobal;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
@@ -29,7 +28,10 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.commons.lang.StringUtils;
+import org.testng.Assert;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -254,5 +256,90 @@ public final class RestfulWebServices {
         System.out.println("2 - Response time: " + response.timeIn(TimeUnit.SECONDS) + " sec");
         if (System.getProperty("postTestResults") == null)
             System.out.println("3 - Response body: " + response.body().asString());
+    }
+
+    /**
+     *  This method can validate any sort of response.
+     * @param expectedResponse pass response in JsonObject(gson)
+     * @param actualResponse pass actual response in JsonObject(gson)
+     * @param dontCheckTheseKeys add Set of keywords that should not be part of validation...
+     *                           e.g
+     *                           {
+     *                              "name":{
+     *                                  "firstname":"jitu",
+     *                                  "lastname":"pisal
+     *                              }
+     *                           }
+     *   if we don't want to validate "lastname" then add it in the Set<String>
+     */
+    private void validateJsonResponse(JsonObject expectedResponse, JsonObject actualResponse, Set<String> dontCheckTheseKeys) {
+        for (String key : actualResponse.keySet()) {
+            if (actualResponse.get(key) instanceof JsonObject) {
+                JsonObject expectedChildResponseObject = expectedResponse.getAsJsonObject(key);
+                JsonObject childResponseObject = actualResponse.getAsJsonObject(key);
+                validateJsonResponse(expectedChildResponseObject, childResponseObject, dontCheckTheseKeys);
+            } else if (actualResponse.get(key) instanceof JsonArray) {
+                JsonArray childResponseArray = actualResponse.getAsJsonArray(key);
+                JsonArray expectedChildResponseArray = expectedResponse.getAsJsonArray(key);
+                for (int i = 0; i < childResponseArray.size(); i++) {
+                    if (childResponseArray.get(i) instanceof JsonObject) {
+                        validateJsonResponse((JsonObject) expectedChildResponseArray.get(i), (JsonObject) childResponseArray.get(i), dontCheckTheseKeys);
+                    } else {
+                        if (!dontCheckTheseKeys.contains(key)) {
+                            if (actualResponse.get(String.valueOf(childResponseArray.get(i))) == null) {
+                                Assert.assertEqualsNoOrder(new Gson().fromJson(actualResponse.get(key), String[].class),
+                                        new Gson().fromJson(expectedResponse.get(key), String[].class));
+                            } else {
+                                Assert.assertEquals(childResponseArray.get(i),
+                                        expectedChildResponseArray.get(i),
+                                        "Failed while validating the profile response" +
+                                                actualResponse.get(key.toString()));
+                            }
+                        }
+                    }
+                }
+            } else if (!dontCheckTheseKeys.contains(key)) {
+                Assert.assertEquals(actualResponse.get(key).toString(), expectedResponse.get(key).toString(),
+                        "Failed while validating the profile response" + actualResponse.get(key.toString()));
+            }
+        }
+    }
+
+    /**
+     * Converts String json response to JsonObject(gson)
+     * @param string json response
+     * @return JsonObject
+     */
+    private static JsonObject getJSONObject(String string) {
+        JsonParser parser = new JsonParser();
+        return parser.parse(string).getAsJsonObject();
+    }
+
+    /**
+     *  This method can validate any sort of response.
+     * @param expectedResponseInString pass response in String
+     * @param actualResponseInString pass actual response in String
+     * @param dontCheckTheseKeys add Set of keywords that should not be part of validation...
+     *                           e.g
+     *                           {
+     *                              "name":{
+     *                                  "firstname":"jitu",
+     *                                  "lastname":"pisal
+     *                              }
+     *                           }
+     *   if we don't want to validate "lastname" then add it in the Set<String>
+     */
+    public void validateJsonResponse(String expectedResponseInString, String actualResponseInString, Set<String> dontCheckTheseKeys){
+        validateJsonResponse(getJSONObject(expectedResponseInString), getJSONObject(actualResponseInString), dontCheckTheseKeys);
+    }
+
+    /**
+     *  This method can validate any sort of response.
+     * @param expectedResponseInString pass response in String
+     * @param actualResponseInString pass actual response in String
+     */
+    public void validateJsonResponse(String expectedResponseInString, String actualResponseInString){
+        validateJsonResponse(getJSONObject(expectedResponseInString), getJSONObject(actualResponseInString),
+                new HashSet<>());
     }
 }
