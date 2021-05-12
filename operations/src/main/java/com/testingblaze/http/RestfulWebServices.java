@@ -292,7 +292,7 @@ public final class RestfulWebServices {
                             } else {
                                 Assert.assertEquals(childResponseArray.get(i),
                                         expectedChildResponseArray.get(i),
-                                        "Failed while validating the profile response" +
+                                        "Failed while validating the response" +
                                                 actualResponse.get(key.toString()));
                             }
                         }
@@ -300,7 +300,7 @@ public final class RestfulWebServices {
                 }
             } else if (!dontCheckTheseKeys.contains(key)) {
                 Assert.assertEquals(actualResponse.get(key).toString(), expectedResponse.get(key).toString(),
-                        "Failed while validating the profile response" + actualResponse.get(key.toString()));
+                        "Failed while validating the response" + actualResponse.get(key.toString()));
             }
         }
     }
