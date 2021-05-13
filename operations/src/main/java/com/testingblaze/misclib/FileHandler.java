@@ -587,6 +587,15 @@ public final class FileHandler {
         }
 
         /**
+         * get jsonObject of string json
+         * @param jsonInString
+         * @return
+         */
+        public JsonObject getJsonObject(String jsonInString){
+            return jsonParser.parse(jsonInString).getAsJsonObject();
+        }
+
+        /**
          * get object array
          *
          * @param fileName

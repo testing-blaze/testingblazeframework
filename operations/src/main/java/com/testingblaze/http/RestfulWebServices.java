@@ -151,6 +151,36 @@ public final class RestfulWebServices {
     }
 
     /**
+     *  This method can validate any sort of response.
+     * @param expectedResponseInString pass response in String
+     * @param actualResponseInString pass actual response in String
+     * @param dontCheckTheseKeys add Set of keywords that should not be part of validation...
+     *                           e.g
+     *                           {
+     *                              "name":{
+     *                                  "firstname":"jitu",
+     *                                  "lastname":"pisal
+     *                              }
+     *                           }
+     *   if we don't want to validate "lastname" then add it in the Set<String>
+     */
+    public void validateJsonResponse(String expectedResponseInString, String actualResponseInString, Set<String> dontCheckTheseKeys){
+        validateJsonResponse(I.amPerforming().fileHandling().forJsonAnd().getJsonObject(expectedResponseInString),
+                I.amPerforming().fileHandling().forJsonAnd().getJsonObject(actualResponseInString), dontCheckTheseKeys);
+    }
+
+    /**
+     *  This method can validate any sort of response.
+     * @param expectedResponseInString pass response in String
+     * @param actualResponseInString pass actual response in String
+     */
+    public void validateJsonResponse(String expectedResponseInString, String actualResponseInString){
+        validateJsonResponse(I.amPerforming().fileHandling().forJsonAnd().getJsonObject(expectedResponseInString),
+                I.amPerforming().fileHandling().forJsonAnd().getJsonObject(actualResponseInString),
+                new HashSet<>());
+    }
+
+    /**
      * Combines the different request methods, since they had a lot of duplicated code.
      *
      * @param callType
@@ -303,43 +333,5 @@ public final class RestfulWebServices {
                         "Failed while validating the response" + actualResponse.get(key.toString()));
             }
         }
-    }
-
-    /**
-     * Converts String json response to JsonObject(gson)
-     * @param string json response
-     * @return JsonObject
-     */
-    private static JsonObject getJSONObject(String string) {
-        JsonParser parser = new JsonParser();
-        return parser.parse(string).getAsJsonObject();
-    }
-
-    /**
-     *  This method can validate any sort of response.
-     * @param expectedResponseInString pass response in String
-     * @param actualResponseInString pass actual response in String
-     * @param dontCheckTheseKeys add Set of keywords that should not be part of validation...
-     *                           e.g
-     *                           {
-     *                              "name":{
-     *                                  "firstname":"jitu",
-     *                                  "lastname":"pisal
-     *                              }
-     *                           }
-     *   if we don't want to validate "lastname" then add it in the Set<String>
-     */
-    public void validateJsonResponse(String expectedResponseInString, String actualResponseInString, Set<String> dontCheckTheseKeys){
-        validateJsonResponse(getJSONObject(expectedResponseInString), getJSONObject(actualResponseInString), dontCheckTheseKeys);
-    }
-
-    /**
-     *  This method can validate any sort of response.
-     * @param expectedResponseInString pass response in String
-     * @param actualResponseInString pass actual response in String
-     */
-    public void validateJsonResponse(String expectedResponseInString, String actualResponseInString){
-        validateJsonResponse(getJSONObject(expectedResponseInString), getJSONObject(actualResponseInString),
-                new HashSet<>());
     }
 }
