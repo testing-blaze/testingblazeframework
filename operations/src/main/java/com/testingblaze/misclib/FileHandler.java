@@ -28,6 +28,9 @@ import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -292,6 +295,24 @@ public final class FileHandler {
     public final class Docs {
 
         /**
+         * return content of docx file in string format.
+         * @param fileName
+         * @return
+         */
+        private String getContentFromDocxFile(String fileName){
+            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+            HWPFDocument doc = null;
+            WordExtractor wordExtractor = null;
+            try {
+                doc = new HWPFDocument(is);
+                wordExtractor = new WordExtractor(doc);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return wordExtractor.getText();
+        }
+
+        /**
          * Enter Filename with extension and sheet name. Place file in resources folder
          * of project.
          *
@@ -325,6 +346,8 @@ public final class FileHandler {
                 wordExtractor = new XWPFWordExtractor(doc);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (OLE2NotOfficeXmlFileException oel){
+                return getContentFromDocxFile(fileName);
             }
             return wordExtractor.getText();
         }
