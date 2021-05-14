@@ -612,6 +612,7 @@ public final class FileHandler {
          * @return
          */
         public JsonObject getJsonObject(String jsonInString){
+            getJsonParserInstance();
             return jsonParser.parse(jsonInString).getAsJsonObject();
         }
 
