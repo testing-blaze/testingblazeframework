@@ -288,6 +288,16 @@ public final class FileHandler {
     }
 
     /**
+     * get the input stream of file
+     * @param fileName Name of the file Or path of the file
+     * @return InputStream
+     * @author jitendra.pisal
+     */
+    public InputStream getResourceAsStream(String fileName){
+        return getClass().getClassLoader().getResourceAsStream(fileName);
+    }
+
+    /**
      * Handles all methods related to Doc files
      *
      * @author nauman.shahid
@@ -300,7 +310,7 @@ public final class FileHandler {
          * @return
          */
         private String getContentFromDocxFile(String fileName){
-            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+            InputStream is = getResourceAsStream(fileName);
             HWPFDocument doc = null;
             WordExtractor wordExtractor = null;
             try {
@@ -321,7 +331,7 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public List<XWPFParagraph> readDocFile(String fileName) {
-            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+            InputStream is = getResourceAsStream(fileName);
             XWPFDocument doc = null;
             try {
                 doc = new XWPFDocument(is);
@@ -338,7 +348,7 @@ public final class FileHandler {
          * @author jitendra.pisal
          */
         public String getContentFromDocFile(String fileName){
-            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+            InputStream is = getResourceAsStream(fileName);
             XWPFDocument doc = null;
             XWPFWordExtractor wordExtractor = null;
             try {
@@ -361,7 +371,7 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public XWPFDocument getAllDocControls(String fileName) {
-            InputStream is = getClass().getResourceAsStream("/" + fileName);
+            InputStream is = getResourceAsStream(fileName);
             XWPFDocument doc = null;
             try {
                 doc = new XWPFDocument(is);
