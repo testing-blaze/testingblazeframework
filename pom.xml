@@ -249,6 +249,13 @@
             <artifactId>google-api-services-sheets</artifactId>
             <version>v4-rev612-1.25.0</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+        </dependency>
     </dependencies>
 
     <repositories>

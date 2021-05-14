@@ -34,6 +34,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.openqa.selenium.JavascriptExecutor;
@@ -299,7 +300,7 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public List<XWPFParagraph> readDocFile(String fileName) {
-            InputStream is = getClass().getResourceAsStream("/" + fileName);
+            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
             XWPFDocument doc = null;
             try {
                 doc = new XWPFDocument(is);
@@ -307,6 +308,25 @@ public final class FileHandler {
                 e.printStackTrace();
             }
             return doc.getParagraphs();
+        }
+
+        /**
+         * This method returns the content from docx file in string format.
+         * @param fileName
+         * @return content in docx file.
+         * @author jitendra.pisal
+         */
+        public String getContentFromDocFile(String fileName){
+            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+            XWPFDocument doc = null;
+            XWPFWordExtractor wordExtractor = null;
+            try {
+                doc = new XWPFDocument(is);
+                wordExtractor = new XWPFWordExtractor(doc);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return wordExtractor.getText();
         }
 
         /**
@@ -584,6 +604,16 @@ public final class FileHandler {
             JsonObject theObject = rootElement.getAsJsonObject();
             JsonObject childObject = theObject.getAsJsonObject(firstChildObject).getAsJsonObject(secondChildObject);
             return childObject.getAsJsonArray(arrayName).getAsJsonObject().get(key).toString();
+        }
+
+        /**
+         * get jsonObject of string json
+         * @param jsonInString
+         * @return
+         */
+        public JsonObject getJsonObject(String jsonInString){
+            getJsonParserInstance();
+            return jsonParser.parse(jsonInString).getAsJsonObject();
         }
 
         /**
