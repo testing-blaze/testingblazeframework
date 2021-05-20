@@ -28,6 +28,9 @@ import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -285,11 +288,39 @@ public final class FileHandler {
     }
 
     /**
+     * get the input stream of file
+     * @param fileName Name of the file Or path of the file
+     * @return InputStream
+     * @author jitendra.pisal
+     */
+    public InputStream getResourceAsStream(String fileName){
+        return getClass().getClassLoader().getResourceAsStream(fileName);
+    }
+
+    /**
      * Handles all methods related to Doc files
      *
      * @author nauman.shahid
      */
     public final class Docs {
+
+        /**
+         * return content of docx file in string format.
+         * @param fileName
+         * @return
+         */
+        private String getContentFromDocxFile(String fileName){
+            InputStream is = getResourceAsStream(fileName);
+            HWPFDocument doc = null;
+            WordExtractor wordExtractor = null;
+            try {
+                doc = new HWPFDocument(is);
+                wordExtractor = new WordExtractor(doc);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return wordExtractor.getText();
+        }
 
         /**
          * Enter Filename with extension and sheet name. Place file in resources folder
@@ -300,7 +331,7 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public List<XWPFParagraph> readDocFile(String fileName) {
-            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+            InputStream is = getResourceAsStream(fileName);
             XWPFDocument doc = null;
             try {
                 doc = new XWPFDocument(is);
@@ -317,7 +348,7 @@ public final class FileHandler {
          * @author jitendra.pisal
          */
         public String getContentFromDocFile(String fileName){
-            InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
+            InputStream is = getResourceAsStream(fileName);
             XWPFDocument doc = null;
             XWPFWordExtractor wordExtractor = null;
             try {
@@ -325,6 +356,8 @@ public final class FileHandler {
                 wordExtractor = new XWPFWordExtractor(doc);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (OLE2NotOfficeXmlFileException oel){
+                return getContentFromDocxFile(fileName);
             }
             return wordExtractor.getText();
         }
@@ -338,7 +371,7 @@ public final class FileHandler {
          * @author nauman.shahid
          */
         public XWPFDocument getAllDocControls(String fileName) {
-            InputStream is = getClass().getResourceAsStream("/" + fileName);
+            InputStream is = getResourceAsStream(fileName);
             XWPFDocument doc = null;
             try {
                 doc = new XWPFDocument(is);
