@@ -28,21 +28,30 @@ import com.testingblaze.controller.TestSetupController;
 import com.testingblaze.exception.TestingBlazeExceptionWithoutStackTrace;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.report.LogLevel;
+import com.testingblaze.report.ReportAnalyzer;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import org.junit.jupiter.api.AfterAll;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
 
 public final class toquzjGnQQTBR {
-    private TestSetupController registerSetup;
+    private final TestSetupController registerSetup;
+    private ReportAnalyzer reportAnalyzer;
+    private static Boolean analyzeReportsJvmFlag = false;
 
     public toquzjGnQQTBR(DeviceBucket device, Avrb8aYEmH coreLib, TestSetupController registerSetup) {
         this.registerSetup = registerSetup;
         InstanceRecording.recordInstance(Avrb8aYEmH.class, coreLib);
         InstanceRecording.recordInstance(DeviceBucket.class, device);
+        if (!analyzeReportsJvmFlag) {
+            triggerMandatoryClosureJobs();
+            analyzeReportsJvmFlag = true;
+        }
+
     }
 
     @Before(order = 0)
@@ -53,7 +62,6 @@ public final class toquzjGnQQTBR {
 
     @After(order = 0)
     public void unRegisterSetup() throws IOException {
-
         registerSetup.theEnd();
     }
 
@@ -67,6 +75,37 @@ public final class toquzjGnQQTBR {
         } else {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "No soft assertions failed in the scenario.");
         }
+    }
+
+    @AfterAll
+    public void performReportAnalysis() {
+        if (reportAnalyzer == null) {
+            reportAnalyzer = new ReportAnalyzer();
+        }
+        reportAnalyzer.executeAnalysis();
+        System.out.println("Analysis Completed. Report generated");
+
+    }
+
+    /**
+     * executes second half of execution where result posting is performed
+     *
+     * @@author nauman.shahid
+     */
+    private void triggerMandatoryClosureJobs() {
+        Thread performClosureActivities = new Thread(() -> {
+            if (reportAnalyzer == null) {
+                reportAnalyzer = new ReportAnalyzer();
+            }
+            try {
+                System.out.println("Report Analysis Started ....");
+                reportAnalyzer.executeAnalysis();
+                System.out.println("Report Analysis Completed.");
+            } catch (Exception e) {
+                System.out.println("Report Analysis Failed");
+            }
+        });
+        Runtime.getRuntime().addShutdownHook(performClosureActivities);
     }
 
 }
