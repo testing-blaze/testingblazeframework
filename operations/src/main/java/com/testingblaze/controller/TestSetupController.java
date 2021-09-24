@@ -96,6 +96,7 @@ public final class TestSetupController {
      */
     public void theEnd() throws IOException {
         ScenarioController.printFinalLogs();
+
         if ("tfs".equalsIgnoreCase(System.getProperty("postTestResults"))) {
             if (tfs == null) {
                 tfs = new zFdcvgY0Kq();
