@@ -32,7 +32,6 @@ import com.testingblaze.report.ReportAnalyzer;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import org.junit.jupiter.api.AfterAll;
 
 import java.awt.*;
 import java.io.IOException;
@@ -75,16 +74,6 @@ public final class toquzjGnQQTBR {
         } else {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "No soft assertions failed in the scenario.");
         }
-    }
-
-    @AfterAll
-    public void performReportAnalysis() {
-        if (reportAnalyzer == null) {
-            reportAnalyzer = new ReportAnalyzer();
-        }
-        reportAnalyzer.executeAnalysis();
-        System.out.println("Analysis Completed. Report generated");
-
     }
 
     /**

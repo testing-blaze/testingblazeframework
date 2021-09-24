@@ -7,7 +7,7 @@
     <groupId>com.github.testing-blaze</groupId>
     <artifactId>blaze-epic</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>Testing Blaze Epic</name>
     <description>Configuration Pom</description>
     <url>http://www.github.com/testing-blaze</url>
@@ -230,12 +230,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.10.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.epam.reportportal/agent-java-cucumber5 -->
-        <dependency>
-            <groupId>com.epam.reportportal</groupId>
-            <artifactId>agent-java-cucumber5</artifactId>
-            <version>5.0.1</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
         <dependency>
             <groupId>com.google.api-client</groupId>
@@ -262,17 +256,6 @@
             <version>7.4.0</version>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-epam-reportportal</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/epam/reportportal</url>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>
