@@ -143,7 +143,7 @@ public class ReportAnalyzer {
             }
 
         }
-        System.out.println("main taable has  "+mainTableContainer.values());
+
         Files.write(Paths.get(pathAnalysis + "/analysis.html"), createMainHtmlPage(mainTableContainer));
         Files.write(Paths.get(pathFiles + "/bugs_details.html"), createBugDetailsHtmlPage(mainTableContainer));
         Files.write(Paths.get(pathFiles + "/updating_details.html"), createUpdatingDetailsHtmlPage(mainTableContainer));
