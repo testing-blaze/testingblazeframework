@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class ReportAnalyzer {
     private static final JsonParser parser = new JsonParser();
     private static List<TestStatusDetails> testStatusDetails;
-    private static String projectPath = System.getProperty("user.dir");
+    private static String defaultProjectPath = System.getProperty("user.dir");
     private static String mainHTMLHeader = "<html>\n" +
             "  <head>\n" +
             "    <title>Test Automation Analysis</title>\n";
@@ -41,8 +41,8 @@ public class ReportAnalyzer {
         reportConfigWriteUp();
     }
     public void reportConfigWriteUp() {
-        Path pathAnalysis = Paths.get(projectPath + "/target/ReportAnalysis");
-        Path pathFiles = Paths.get(projectPath + "/target/ReportAnalysis/Files");
+        Path pathAnalysis = Paths.get(defaultProjectPath + "/target/ReportAnalysis");
+        Path pathFiles = Paths.get(defaultProjectPath + "/target/ReportAnalysis/Files");
 
         try {
             if (Files.notExists(pathAnalysis))
@@ -69,7 +69,7 @@ public class ReportAnalyzer {
         Set<String> files = new HashSet();
         String tagName = "None";
         int assignedNumber = 0;
-        String directoryName = projectPath + "/target/cucumber-report";
+        String directoryName = getReportSourcePath();
         List<String> newFiles = Arrays.stream(Objects.requireNonNull(new File(directoryName).list())).collect(Collectors.toList());
 
         for (String fileName : newFiles) {
@@ -116,19 +116,23 @@ public class ReportAnalyzer {
                                 } else {
                                     testStatusDetails.add(new TestStatusDetails("Bug", stepName, "None"));
                                 }
-                            } else if (StringUtils.containsIgnoreCase(result, "failed")) {
+
+                            }else if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "passed")) {
                                 if (tagsHolder.size() > tag) {
-                                    testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, tagsHolder.get(tag)));
+                                    testStatusDetails.add(new TestStatusDetails("Passed", stepName, tagsHolder.get(tag)));
                                 } else {
-                                    testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
+                                    testStatusDetails.add(new TestStatusDetails("Passed", stepName, "None"));
                                 }
-                            }
+                            }else if(StringUtils.containsIgnoreCase(result, "failed"))  {
+                                    if (tagsHolder.size() > tag) {
+                                        testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, tagsHolder.get(tag)));
+                                    } else {
+                                        testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
+                                    }
+                                }
                             tag++;
                         }
-                        tag = 0;
-                        if (testStatusDetails.size() == 0) {
-                            testStatusDetails.add(new TestStatusDetails("Passed", "Passed", "None"));
-                        }
+
                     }
                 }
                 if (reportData.containsKey(tagName))
@@ -262,20 +266,17 @@ public class ReportAnalyzer {
                     if (obj.getStatus().contains("Passed")) {
                         pass++;
                         tPass++;
-                        break;
                     } else if (obj.getStatus().contains("Bug")) {
                         bug++;
                         tBug++;
-                        break;
                     } else if (obj.getStatus().contains("UI Change")) {
                         updating++;
                         tUpdating++;
-                        break;
                     }
                 }
 
             }
-            float health = (pass * 100) / testCount;
+            float health = (pass * 100) / (pass+bug+updating);
             tableContent += "<tr>" +
                     "<td>" + key + "</td >" +
                     "<td >" + pass + "</td >" +
@@ -484,5 +485,10 @@ public class ReportAnalyzer {
         }
     }
 
-
+    private static String getReportSourcePath(){
+        if(EnvironmentFactory.getReportAnalysisPath() != null) return EnvironmentFactory.getReportAnalysisPath();
+        else {
+            return System.getProperty("user.dir")+"/target/cucumber-report";
+        }
+    }
 }
