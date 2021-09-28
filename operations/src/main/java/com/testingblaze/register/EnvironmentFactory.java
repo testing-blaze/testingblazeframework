@@ -217,4 +217,15 @@ public final class EnvironmentFactory {
         }
         return scenarioTag;
     }
+
+    private static String reportAnalysisPath;
+    public static String getReportAnalysisPath() {
+        return reportAnalysisPath;
+    }
+
+    public static void setReportAnalysisPath(String reportAnalysisPath) {
+        EnvironmentFactory.reportAnalysisPath = reportAnalysisPath;
+    }
+
+
 }
