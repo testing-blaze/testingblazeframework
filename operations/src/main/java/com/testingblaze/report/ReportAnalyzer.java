@@ -111,6 +111,7 @@ public class ReportAnalyzer {
                             var stepName = step.getAsJsonObject().get("name").getAsString();
                             var result = step.getAsJsonObject().get("result").getAsJsonObject().get("status").getAsString();
                             if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "failed")) {
+                                tag++;
                                 if (tagsHolder.size() > tag) {
                                     testStatusDetails.add(new TestStatusDetails("Bug", stepName, tagsHolder.get(tag)));
                                 } else {
@@ -118,19 +119,16 @@ public class ReportAnalyzer {
                                 }
 
                             }else if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "passed")) {
+                                tag++;
                                 if (tagsHolder.size() > tag) {
                                     testStatusDetails.add(new TestStatusDetails("Passed", stepName, tagsHolder.get(tag)));
                                 } else {
                                     testStatusDetails.add(new TestStatusDetails("Passed", stepName, "None"));
                                 }
                             }else if(StringUtils.containsIgnoreCase(result, "failed"))  {
-                                    if (tagsHolder.size() > tag) {
-                                        testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, tagsHolder.get(tag)));
-                                    } else {
                                         testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
-                                    }
                                 }
-                            tag++;
+
                         }
 
                     }
