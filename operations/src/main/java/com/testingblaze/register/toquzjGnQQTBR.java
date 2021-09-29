@@ -20,6 +20,8 @@
 package com.testingblaze.register;
 
 
+import com.sun.tools.attach.VirtualMachine;
+import com.sun.tools.attach.VirtualMachineDescriptor;
 import com.testingblaze.controller.Avrb8aYEmH;
 import com.testingblaze.controller.DeviceBucket;
 import com.testingblaze.controller.ReportingLogsPlugin;
@@ -41,12 +43,14 @@ public final class toquzjGnQQTBR {
     private final TestSetupController registerSetup;
     private ReportAnalyzer reportAnalyzer;
     private static Boolean analyzeReportsJvmFlag = false;
+    private static int vmSize=0;
 
     public toquzjGnQQTBR(DeviceBucket device, Avrb8aYEmH coreLib, TestSetupController registerSetup) {
         this.registerSetup = registerSetup;
         InstanceRecording.recordInstance(Avrb8aYEmH.class, coreLib);
         InstanceRecording.recordInstance(DeviceBucket.class, device);
         if (!analyzeReportsJvmFlag) {
+            vmSize = VirtualMachine.list().size();
             triggerMandatoryClosureJobs();
             analyzeReportsJvmFlag = true;
         }
@@ -83,6 +87,14 @@ public final class toquzjGnQQTBR {
      */
     private void triggerMandatoryClosureJobs() {
         Thread performClosureActivities = new Thread(() -> {
+            int testJvvmCount = 0;
+            for(VirtualMachineDescriptor listOfProcess:VirtualMachine.list()) {
+                if(listOfProcess.toString().contains("jvmRun") && listOfProcess.toString().contains("jvmRun")) {
+                    testJvvmCount++;
+                    if(testJvvmCount > 1) break;
+                }
+            }
+            if(testJvvmCount == 1) {
             if (reportAnalyzer == null) {
                 reportAnalyzer = new ReportAnalyzer();
             }
@@ -93,7 +105,7 @@ public final class toquzjGnQQTBR {
             } catch (Exception e) {
                 System.out.println("Report Analysis Failed");
             }
-        });
+        }});
         Runtime.getRuntime().addShutdownHook(performClosureActivities);
     }
 
