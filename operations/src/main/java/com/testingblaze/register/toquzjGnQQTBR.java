@@ -43,14 +43,12 @@ public final class toquzjGnQQTBR {
     private final TestSetupController registerSetup;
     private ReportAnalyzer reportAnalyzer;
     private static Boolean analyzeReportsJvmFlag = false;
-    private static int vmSize=0;
 
     public toquzjGnQQTBR(DeviceBucket device, Avrb8aYEmH coreLib, TestSetupController registerSetup) {
         this.registerSetup = registerSetup;
         InstanceRecording.recordInstance(Avrb8aYEmH.class, coreLib);
         InstanceRecording.recordInstance(DeviceBucket.class, device);
         if (!analyzeReportsJvmFlag) {
-            vmSize = VirtualMachine.list().size();
             triggerMandatoryClosureJobs();
             analyzeReportsJvmFlag = true;
         }
@@ -81,7 +79,7 @@ public final class toquzjGnQQTBR {
     }
 
     /**
-     * executes second half of execution where result posting is performed
+     * handles report consolidation according to thread count
      *
      * @@author nauman.shahid
      */
