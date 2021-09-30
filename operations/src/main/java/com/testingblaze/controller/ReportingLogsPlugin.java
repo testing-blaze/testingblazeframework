@@ -142,8 +142,12 @@ public class ReportingLogsPlugin implements ConcurrentEventListener {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_ERROR, "The following soft assertions failed during the step:\n" + String.join("\n", getErrorsFromPreviousStep()));
 
             if ("true".equalsIgnoreCase(System.getProperty("softAssertScreenshot"))) {
-                ScenarioController.getScenario().embed(((TakesScreenshot) InstanceRecording.getInstance(DeviceBucket.class).getDriver()).getScreenshotAs(OutputType.BYTES), "image/png");
-            }
+                try {
+                    ScenarioController.getScenario().embed(((TakesScreenshot) InstanceRecording.getInstance(DeviceBucket.class).getDriver()).getScreenshotAs(OutputType.BYTES), "image/png", ScenarioController.getScenario().getSourceTagNames().toString());
+                } catch (Exception e) {
+
+                }
+                }
         }
     }
 

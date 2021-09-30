@@ -61,6 +61,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
 
 public final class FileHandler {
     private final ExcelReader excelReader;
@@ -289,11 +291,12 @@ public final class FileHandler {
 
     /**
      * get the input stream of file
+     *
      * @param fileName Name of the file Or path of the file
      * @return InputStream
      * @author jitendra.pisal
      */
-    public InputStream getResourceAsStream(String fileName){
+    public InputStream getResourceAsStream(String fileName) {
         return getClass().getClassLoader().getResourceAsStream(fileName);
     }
 
@@ -306,10 +309,11 @@ public final class FileHandler {
 
         /**
          * return content of docx file in string format.
+         *
          * @param fileName
          * @return
          */
-        private String getContentFromDocxFile(String fileName){
+        private String getContentFromDocxFile(String fileName) {
             InputStream is = getResourceAsStream(fileName);
             HWPFDocument doc = null;
             WordExtractor wordExtractor = null;
@@ -343,11 +347,12 @@ public final class FileHandler {
 
         /**
          * This method returns the content from docx file in string format.
+         *
          * @param fileName
          * @return content in docx file.
          * @author jitendra.pisal
          */
-        public String getContentFromDocFile(String fileName){
+        public String getContentFromDocFile(String fileName) {
             InputStream is = getResourceAsStream(fileName);
             XWPFDocument doc = null;
             XWPFWordExtractor wordExtractor = null;
@@ -356,7 +361,7 @@ public final class FileHandler {
                 wordExtractor = new XWPFWordExtractor(doc);
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (OLE2NotOfficeXmlFileException oel){
+            } catch (OLE2NotOfficeXmlFileException oel) {
                 return getContentFromDocxFile(fileName);
             }
             return wordExtractor.getText();
@@ -414,10 +419,45 @@ public final class FileHandler {
      */
     public final class ExcelReader {
 
-        public XSSFWorkbook workbook;
-        public XSSFSheet sheet;
-        public XSSFRow row;
-        public XSSFCell cell;
+        private XSSFWorkbook workbook;
+        private XSSFSheet sheet;
+        private XSSFRow row;
+
+        /**
+         * Create a new Excel file and write data to it.
+         * @param fileName
+         * @param sheetName
+         * @param filePath path where you want to create new file
+         * @param rowData A treemap with row number and data set -Example Data::rowData.put("1", new Object[] { "132", "Gopal","2nd year" });
+         * @throws IOException
+         */
+        public void writeExcelFile(String fileName, String sheetName, String filePath, TreeMap<String, Object[]> rowData) throws IOException {
+            InputStream is = new FileInputStream(filePath + "/" + fileName);
+            workbook = new XSSFWorkbook(is);
+            sheet = workbook.createSheet(sheetName);
+
+            Set<String> keyid = rowData.keySet();
+
+            int rowid = 0;
+
+            // writing the data into the sheets...
+
+            for (String key : keyid) {
+
+                row = sheet.createRow(rowid++);
+                Object[] objectArr = rowData.get(key);
+                int cellid = 0;
+
+                for (Object obj : objectArr) {
+                    Cell cell = row.createCell(cellid++);
+                    cell.setCellValue((String) obj);
+                }
+            }
+            FileOutputStream out = new FileOutputStream(filePath + "/" + fileName);
+
+            workbook.write(out);
+            out.close();
+        }
 
         /**
          * Enter Filename with extension and sheet name. Place file in resources folder
@@ -496,7 +536,6 @@ public final class FileHandler {
 
             } catch (Exception e) {
                 //Console log Exception in reading Xlxs file" + e.getMessage());
-                e.printStackTrace();
             }
             return dataSets;
         }
@@ -641,10 +680,11 @@ public final class FileHandler {
 
         /**
          * get jsonObject of string json
+         *
          * @param jsonInString
          * @return
          */
-        public JsonObject getJsonObject(String jsonInString){
+        public JsonObject getJsonObject(String jsonInString) {
             getJsonParserInstance();
             return jsonParser.parse(jsonInString).getAsJsonObject();
         }
@@ -851,7 +891,7 @@ public final class FileHandler {
 
             try {
                 // Contacting the URL
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Connecting to " + url1.toString() + " ... ");
+                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Connecting to " + url1 + " ... ");
                 URLConnection urlConn = url1.openConnection();
 
                 // Checking whether the URL contains a PDF
