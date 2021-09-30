@@ -218,13 +218,18 @@ public final class EnvironmentFactory {
         return scenarioTag;
     }
 
-    private static String reportAnalysisPath;
-    public static String getReportAnalysisPath() {
-        return reportAnalysisPath;
+    private static String reportAnalysisDataPath;
+    private static String reportAnalysisGeneration;
+    public static String getReportAnalysisDataPath() {
+        return reportAnalysisDataPath;
+    }
+    public static String getReportAnalysisGenerationPath() {
+        return reportAnalysisGeneration;
     }
 
-    public static void setReportAnalysisPath(String reportAnalysisPath) {
-        EnvironmentFactory.reportAnalysisPath = reportAnalysisPath;
+    public static void setReportAnalysisPath(String dataPath,String reportAnalysisGenerationPath) {
+        reportAnalysisDataPath = dataPath;
+        reportAnalysisGeneration = reportAnalysisGenerationPath;
     }
 
 
