@@ -112,8 +112,7 @@ public final class ReportController {
         }
 
         toReport += reportLog + "</pre>";
-
-        ScenarioController.getScenario().log(convertConsoleColorToHtmlTags(toReport));
+            ScenarioController.getScenario().write(convertConsoleColorToHtmlTags(toReport));
     }
 
     /**
