@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 public class ReportAnalyzer {
     private static final JsonParser parser = new JsonParser();
     private static List<TestStatusDetails> testStatusDetails;
-    private static String defaultProjectPath = System.getProperty("user.dir");
     private static String mainHTMLHeader = "<html>\n" +
             "  <head>\n" +
             "    <title>Test Automation Analysis</title>\n";
@@ -41,24 +40,27 @@ public class ReportAnalyzer {
         reportConfigWriteUp();
     }
     public void reportConfigWriteUp() {
-        Path pathAnalysis = Paths.get(defaultProjectPath + "/target/ReportAnalysis");
-        Path pathFiles = Paths.get(defaultProjectPath + "/target/ReportAnalysis/Files");
-
+        Path pathAnalysis = Paths.get(getReportGenerationPath()+ "/ReportAnalysis");
+        Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
         try {
-            if (Files.notExists(pathAnalysis))
+            if(Files.notExists(pathAnalysis)) {
                 Files.createDirectories(pathAnalysis);
-            Files.createDirectories(pathFiles);
+                Files.createDirectories(pathFiles);
+            } else {
+                System.out.println("Report Analysis folder already exist. Consider removing it");
+            }
 
+            if (Files.list(pathFiles).noneMatch(file -> file.startsWith("styles.css"))) {
+                Files.createFile(Paths.get(pathFiles + "/styles.css"));
+                Files.write(Paths.get(pathFiles + "/styles.css"), cssAnalyzerHtml());
+            }
             if (Files.list(pathAnalysis).noneMatch(file -> file.startsWith("analysis"))) {
                 Files.createFile(Paths.get(pathAnalysis + "/analysis.html"));
                 Files.createFile(Paths.get(pathFiles + "/updating_details.html"));
                 Files.createFile(Paths.get(pathFiles + "/bugs_details.html"));
                 compileReport(pathAnalysis, pathFiles);
             }
-            if (Files.list(pathFiles).noneMatch(file -> file.startsWith("styles.css"))) {
-                Files.createFile(Paths.get(pathFiles + "/styles.css"));
-                Files.write(Paths.get(pathFiles + "/styles.css"), cssAnalyzerHtml());
-            }
+
         } catch (IOException e) {
         }
     }
@@ -484,9 +486,16 @@ public class ReportAnalyzer {
     }
 
     private static String getReportSourcePath(){
-        if(EnvironmentFactory.getReportAnalysisPath() != null) return EnvironmentFactory.getReportAnalysisPath();
+        if(EnvironmentFactory.getReportAnalysisDataPath() != null) return EnvironmentFactory.getReportAnalysisDataPath();
         else {
             return System.getProperty("user.dir")+"/target/cucumber-report";
+        }
+    }
+
+    private static String getReportGenerationPath(){
+        if(EnvironmentFactory.getReportAnalysisGenerationPath() != null) return EnvironmentFactory.getReportAnalysisGenerationPath();
+        else {
+            return System.getProperty("user.dir")+"/target";
         }
     }
 }

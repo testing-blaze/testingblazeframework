@@ -84,7 +84,7 @@ public final class toquzjGnQQTBR {
      * @@author nauman.shahid
      */
     private void triggerMandatoryClosureJobs() {
-        Thread performClosureActivities = new Thread(() -> {
+        Thread performReportAnalysisActivities = new Thread(() -> {
             int testJvvmCount = 0;
             for(VirtualMachineDescriptor listOfProcess:VirtualMachine.list()) {
                 if(listOfProcess.toString().contains("jvmRun") && listOfProcess.toString().contains("jvmRun")) {
@@ -104,7 +104,7 @@ public final class toquzjGnQQTBR {
                 System.out.println("Report Analysis Failed");
             }
         }});
-        Runtime.getRuntime().addShutdownHook(performClosureActivities);
+        Runtime.getRuntime().addShutdownHook(performReportAnalysisActivities);
     }
 
 }
