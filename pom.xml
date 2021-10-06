@@ -53,7 +53,7 @@
         <report.version>2.7.0</report.version>
         <testng.version>6.14.3</testng.version>
         <junit.version>5.8.1</junit.version>
-        <junit.surefire.version>3.0.0-M3</junit.surefire.version>
+        <junit.surefire.version>3.0.0-M5</junit.surefire.version>
         <assertj.version>3.11.1</assertj.version>
         <webdrivermanager.version>4.0.0</webdrivermanager.version>
         <rest-assured.version>4.1.1</rest-assured.version>
