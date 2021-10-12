@@ -45,8 +45,8 @@ import static com.testingblaze.misclib.ConsoleFormatter.setTextColor;
  * @author nauman.shahid
  */
 public final class TestSetupController {
-    private DeviceBucket device;
-    private int retryCount = 0;
+    private final DeviceBucket device;
+    private final int retryCount = 0;
     public static UsersController usersController;
     private zFdcvgY0Kq tfs;
 
@@ -81,7 +81,11 @@ public final class TestSetupController {
             DockerController.startDocker();
         }
         if ("android".equalsIgnoreCase(EnvironmentFactory.getDevice()) || "ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
-            runMobileApp();
+            if (System.getProperty("appName")==null) {
+                runBrowser();
+            } else {
+                runMobileApp();
+            }
         } else {
             runBrowser();
         }
@@ -139,11 +143,11 @@ public final class TestSetupController {
     private void captureScreenshot() {
         try {
             if (System.getProperty("enableFullScreenShot") != null && "true".equalsIgnoreCase(System.getProperty("enableFullScreenShot"))) {
-                ScenarioController.getScenario().embed((I.amPerforming().conversionOf().imageToByteArray(I.amPerforming().snapShotTo().captureFullScreenShot(), "PNG")), "image/png",ScenarioController.getScenario().getSourceTagNames().toString());
+                ScenarioController.getScenario().embed((I.amPerforming().conversionOf().imageToByteArray(I.amPerforming().snapShotTo().captureFullScreenShot(), "PNG")), "image/png", ScenarioController.getScenario().getSourceTagNames().toString());
             } else {
-                ScenarioController.getScenario().embed(((TakesScreenshot) device.getDriver()).getScreenshotAs(OutputType.BYTES), "image/png",ScenarioController.getScenario().getSourceTagNames().toString());
+                ScenarioController.getScenario().embed(((TakesScreenshot) device.getDriver()).getScreenshotAs(OutputType.BYTES), "image/png", ScenarioController.getScenario().getSourceTagNames().toString());
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             // Handles exception if thrown for any reason
         }
     }
@@ -164,6 +168,7 @@ public final class TestSetupController {
      * @author nauman.shahid
      */
     private void runBrowser() {
+
         device.setupController();
         device.getDriver().get(EnvironmentFactory.getEnvironmentUrl());
     }
