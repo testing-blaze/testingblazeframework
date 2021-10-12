@@ -231,7 +231,7 @@ public class CapabilitiesManager {
             iosCapabilities.setCapability(MobileCapabilityType.APP,
                     System.getProperty("user.dir") + File.separatorChar + "mobileapp" + File.separatorChar + EnvironmentFactory.getAppName());
         } else {
-            iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
+            iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
         }
 
         setMobileCapabilities(MobileDevice.IOS, iosCapabilities);

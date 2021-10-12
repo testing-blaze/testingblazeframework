@@ -127,7 +127,7 @@ Standard Command + <br>
 -DdeviceName= Samsung / Iphone 11 (Mobile Name)
 -Dversion= 11.0/9.0 (Android or IOS Versions)
 For Browser:<br>
--Ddevice=android/Ios (Chrome is only Supported Brwoser)<br>
+-Ddevice=android/Ios (Default: Chrome / safari)<br>
 For App:<br>
 -Ddevice=android<br>
 -DappName=appname<br>
