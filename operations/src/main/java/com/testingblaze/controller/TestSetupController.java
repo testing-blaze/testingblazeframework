@@ -81,6 +81,7 @@ public final class TestSetupController {
             DockerController.startDocker();
         }
         if ("android".equalsIgnoreCase(EnvironmentFactory.getDevice()) || "ios".equalsIgnoreCase(EnvironmentFactory.getDevice())) {
+            AppiumController.startServer();
             if (System.getProperty("appName")==null) {
                 runBrowser();
             } else {
@@ -168,7 +169,6 @@ public final class TestSetupController {
      * @author nauman.shahid
      */
     private void runBrowser() {
-
         device.setupController();
         device.getDriver().get(EnvironmentFactory.getEnvironmentUrl());
     }
@@ -177,7 +177,6 @@ public final class TestSetupController {
      * @author nauman.shahid
      */
     private void runMobileApp() {
-        AppiumController.startServer();
         device.setupController();
     }
 
