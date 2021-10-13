@@ -184,7 +184,7 @@ public class CapabilitiesManager {
         try {
             loadConfigFile.load(new FileReader(filePath + "appConfig.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         if (EnvironmentFactory.getAppName() != null) {
             androidCapabilities.setCapability(MobileCapabilityType.APP, filePath + EnvironmentFactory.getAppName());
@@ -193,7 +193,7 @@ public class CapabilitiesManager {
                 androidCapabilities.setCapability("appPackage", loadConfigFile.getProperty("appPackage"));
                 androidCapabilities.setCapability("appActivity", loadConfigFile.getProperty("appActivity"));
             } catch (NullPointerException e) {
-                e.printStackTrace();
+
             }
 
         } else {
@@ -231,7 +231,7 @@ public class CapabilitiesManager {
             iosCapabilities.setCapability(MobileCapabilityType.APP,
                     System.getProperty("user.dir") + File.separatorChar + "mobileapp" + File.separatorChar + EnvironmentFactory.getAppName());
         } else {
-            iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
+            iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
         }
 
         setMobileCapabilities(MobileDevice.IOS, iosCapabilities);
@@ -253,8 +253,8 @@ public class CapabilitiesManager {
 
     private static void setMobileCapabilities(MobileDevice device, MutableCapabilities mobileCapabilties) {
         mobileCapabilties.setCapability(MobileCapabilityType.PLATFORM_NAME, device == MobileDevice.ANDROID ? "ANDROID" : "IOS");
-        mobileCapabilties.setCapability(MobileCapabilityType.DEVICE_NAME, device == MobileDevice.ANDROID ? "Samsung" : "iPhone 8 Plus");
-        mobileCapabilties.setCapability(MobileCapabilityType.PLATFORM_VERSION, device == MobileDevice.ANDROID ? "8.0" : "11.4");
+        mobileCapabilties.setCapability(MobileCapabilityType.DEVICE_NAME, device == MobileDevice.ANDROID ? getAndroidDeviceName() : getIOSDeviceName());
+        mobileCapabilties.setCapability(MobileCapabilityType.PLATFORM_VERSION, device == MobileDevice.ANDROID ? getAndroidVersion(): getIOSVersion());
         mobileCapabilties.setCapability(MobileCapabilityType.AUTOMATION_NAME, device == MobileDevice.ANDROID ? "uiautomator2" : "XCUITest");
 
         mobileCapabilties.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "60");
@@ -266,6 +266,33 @@ public class CapabilitiesManager {
         mobileCapabilties.setCapability(MobileCapabilityType.ELEMENT_SCROLL_BEHAVIOR, true);
     }
 
+    private  static String getAndroidVersion(){
+        if(System.getProperty("version") != null) {
+            return System.getProperty("version");
+        } else return "8.0";
+    }
+
+    private static String getIOSVersion(){
+        if(System.getProperty("version") != null) {
+            return System.getProperty("version");
+        } else {
+            return "11.4";
+        }
+    }
+
+    private  static String getAndroidDeviceName(){
+        if(System.getProperty("deviceName") != null) {
+            return System.getProperty("deviceName");
+        } else return "Samsung";
+    }
+
+    private static String getIOSDeviceName(){
+        if(System.getProperty("deviceName") != null) {
+            return System.getProperty("deviceName");
+        } else {
+            return "iPhone 8 Plus";
+        }
+    }
 
     private static String getPlatformName() {
         String platformName = null;
