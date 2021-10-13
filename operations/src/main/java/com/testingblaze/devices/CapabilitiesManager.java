@@ -231,7 +231,7 @@ public class CapabilitiesManager {
             iosCapabilities.setCapability(MobileCapabilityType.APP,
                     System.getProperty("user.dir") + File.separatorChar + "mobileapp" + File.separatorChar + EnvironmentFactory.getAppName());
         } else {
-            iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
+            iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
         }
 
         setMobileCapabilities(MobileDevice.IOS, iosCapabilities);
@@ -267,27 +267,31 @@ public class CapabilitiesManager {
     }
 
     private  static String getAndroidVersion(){
-        if(!"null".equals(System.getProperty("version"))) {
+        if(System.getProperty("version") != null) {
             return System.getProperty("version");
         } else return "8.0";
     }
 
     private static String getIOSVersion(){
-        if(!"null".equals(System.getProperty("version"))) {
+        if(System.getProperty("version") != null) {
             return System.getProperty("version");
-        } else return "11.4";
+        } else {
+            return "11.4";
+        }
     }
 
     private  static String getAndroidDeviceName(){
-        if(!"null".equals(System.getProperty("deviceName"))) {
+        if(System.getProperty("deviceName") != null) {
             return System.getProperty("deviceName");
         } else return "Samsung";
     }
 
     private static String getIOSDeviceName(){
-        if(!"null".equals(System.getProperty("deviceName"))) {
+        if(System.getProperty("deviceName") != null) {
             return System.getProperty("deviceName");
-        } else return "iPhone 8 Plus";
+        } else {
+            return "iPhone 8 Plus";
+        }
     }
 
     private static String getPlatformName() {

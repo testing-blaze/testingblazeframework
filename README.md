@@ -124,8 +124,8 @@ Choose Browser:<br>
 4-	On Mobile: [Appium Server will be started and stopped automatically] <br>
 Standard Command + <br>
 -Dhub=http://IP_For_Appium:Port 		[http://0.0.00:4723]<br>
--DdeviceName= Samsung / Iphone 11 (Mobile Name)
--Dversion= 11.0/9.0 (Android or IOS Versions)
+-DdeviceName= Samsung / Iphone 11 (Mobile Name) Default:Samsun/iPhone 8 Plus
+-Dversion= 11.0/9.0 (Android or IOS Versions) Default:8.0/11.4
 For Browser:<br>
 -Ddevice=android/Ios (Default: Chrome / safari)<br>
 For App:<br>
