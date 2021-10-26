@@ -30,20 +30,21 @@ import java.util.stream.Collectors;
 public class ReportAnalyzer {
     private static final JsonParser parser = new JsonParser();
     private static List<TestStatusDetails> testStatusDetails;
-    private static String mainHTMLHeader = "<html>\n" +
+    private static final String mainHTMLHeader = "<html>\n" +
             "  <head>\n" +
             "    <title>Test Automation Analysis</title>\n";
 
-    private static String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    private static final String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 
-    public void executeAnalysis(){
+    public void executeAnalysis() {
         reportConfigWriteUp();
     }
+
     public void reportConfigWriteUp() {
-        Path pathAnalysis = Paths.get(getReportGenerationPath()+ "/ReportAnalysis");
+        Path pathAnalysis = Paths.get(getReportGenerationPath() + "/ReportAnalysis");
         Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
         try {
-            if(Files.notExists(pathAnalysis)) {
+            if (Files.notExists(pathAnalysis)) {
                 Files.createDirectories(pathAnalysis);
                 Files.createDirectories(pathFiles);
             } else {
@@ -75,12 +76,12 @@ public class ReportAnalyzer {
         List<String> newFiles = Arrays.stream(Objects.requireNonNull(new File(directoryName).list())).collect(Collectors.toList());
 
         for (String fileName : newFiles) {
-            if(!fileName.equalsIgnoreCase(".DS_Store"))
+            if (!fileName.equalsIgnoreCase(".DS_Store"))
                 files.add(fileName.split("_")[0]);
         }
         for (String specificFileName : files) {
             List<String> specificFiles = Arrays.stream(Objects.requireNonNull(new File(directoryName).list()))
-                    .filter(el -> el.startsWith(specificFileName)).collect(Collectors.toList());
+                    .filter(el -> el.split("_")[0].equalsIgnoreCase(specificFileName)).collect(Collectors.toList());
 
             Map<String, List<TestStatusDetails>> reportData = new TreeMap<>();
             for (String fileName : specificFiles) {
@@ -120,23 +121,23 @@ public class ReportAnalyzer {
                                 }
                                 tag++;
 
-                            }else if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "passed")) {
+                            } else if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "passed")) {
                                 if (tagsHolder.size() > tag) {
                                     testStatusDetails.add(new TestStatusDetails("Passed", stepName, tagsHolder.get(tag)));
                                 } else {
                                     testStatusDetails.add(new TestStatusDetails("Passed", stepName, "None"));
                                 }
                                 tag++;
-                            }else if(StringUtils.containsIgnoreCase(result, "failed"))  {
-                                    testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
-                                }
+                            } else if (StringUtils.containsIgnoreCase(result, "failed")) {
+                                testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
+                            }
 
                         }
 
                     }
                 }
                 if (reportData.containsKey(tagName))
-                    tagName = tagName + "-Dup-" + assignedNumber;
+                    tagName = tagName + "-Ex-" + assignedNumber;
                 reportData.put(tagName, testStatusDetails);
                 tagName = "No Tag" + assignedNumber;
             }
@@ -276,7 +277,7 @@ public class ReportAnalyzer {
                 }
 
             }
-            float health = (pass * 100) / (pass+bug+updating);
+            float health = (pass * 100) / (pass + bug + updating);
             tableContent += "<tr>" +
                     "<td>" + key + "</td >" +
                     "<td >" + pass + "</td >" +
@@ -431,7 +432,7 @@ public class ReportAnalyzer {
     }
 
     private String projectInfoHeader() {
-        return "<h4>Project:" + getProjectName()+ " ||  Run:" + getRunType() + "  || Date:" + date + " || Env:" + getEnvironment() + "</h4>";
+        return "<h4>Project:" + getProjectName() + " ||  Run:" + getRunType() + "  || Date:" + date + " || Env:" + getEnvironment() + "</h4>";
     }
 
     private String chart(String pass, String bugs, String updating) {
@@ -464,7 +465,7 @@ public class ReportAnalyzer {
     private String getEnvironment() {
         try {
             return EnvironmentFactory.getEnvironmentUrl();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return "No Information";
         }
     }
@@ -472,7 +473,7 @@ public class ReportAnalyzer {
     private String getRunType() {
         try {
             return EnvironmentFactory.getScenarioTag();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return "No Information";
         }
     }
@@ -480,22 +481,24 @@ public class ReportAnalyzer {
     private String getProjectName() {
         try {
             return EnvironmentFactory.getProjectName();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return "No Information";
         }
     }
 
-    private static String getReportSourcePath(){
-        if(EnvironmentFactory.getReportAnalysisDataPath() != null) return EnvironmentFactory.getReportAnalysisDataPath();
+    private static String getReportSourcePath() {
+        if (EnvironmentFactory.getReportAnalysisDataPath() != null)
+            return EnvironmentFactory.getReportAnalysisDataPath();
         else {
-            return System.getProperty("user.dir")+"/target/cucumber-report";
+            return System.getProperty("user.dir") + "/target/cucumber-report";
         }
     }
 
-    private static String getReportGenerationPath(){
-        if(EnvironmentFactory.getReportAnalysisGenerationPath() != null) return EnvironmentFactory.getReportAnalysisGenerationPath();
+    private static String getReportGenerationPath() {
+        if (EnvironmentFactory.getReportAnalysisGenerationPath() != null)
+            return EnvironmentFactory.getReportAnalysisGenerationPath();
         else {
-            return System.getProperty("user.dir")+"/target";
+            return System.getProperty("user.dir") + "/target";
         }
     }
 }

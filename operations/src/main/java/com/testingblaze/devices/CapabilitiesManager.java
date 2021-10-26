@@ -2,6 +2,8 @@ package com.testingblaze.devices;
 
 
 import com.testingblaze.register.EnvironmentFactory;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.MutableCapabilities;
@@ -166,7 +168,8 @@ public class CapabilitiesManager {
 
     public static SafariOptions getSafariCapabilities() {
         SafariOptions safariOptions = new SafariOptions();
-
+        safariOptions.setCapability(MobileCapabilityType.ACCEPT_INSECURE_CERTS, true);
+        safariOptions.setCapability("safariAllowPopups", true);
         safariOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
         safariOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 
@@ -218,6 +221,7 @@ public class CapabilitiesManager {
             androidCapabilities.setCapability("chromedriverExecutable", WebDriverManager.chromedriver().getBinaryPath());
             androidCapabilities.setCapability("w3c", false);
             androidCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
+            androidCapabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
         }
 
         setMobileCapabilities(MobileDevice.ANDROID, androidCapabilities);
@@ -227,11 +231,20 @@ public class CapabilitiesManager {
 
     public static DesiredCapabilities getIosCapabilities() {
         DesiredCapabilities iosCapabilities = new DesiredCapabilities();
+        iosCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+        iosCapabilities.setCapability(IOSMobileCapabilityType.SAFARI_ALLOW_POPUPS, true);
+        iosCapabilities.setCapability(MobileCapabilityType.ACCEPT_INSECURE_CERTS, true);
+        iosCapabilities.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
+        iosCapabilities.setCapability("safariOpenLinksInBackground", true);
+        iosCapabilities.setCapability("fullContextList", true);
+        iosCapabilities.setCapability(IOSMobileCapabilityType.AUTO_ACCEPT_ALERTS,true);
         if (EnvironmentFactory.getAppName() != null) {
             iosCapabilities.setCapability(MobileCapabilityType.APP,
                     System.getProperty("user.dir") + File.separatorChar + "mobileapp" + File.separatorChar + EnvironmentFactory.getAppName());
         } else {
             iosCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Safari");
+            iosCapabilities.setCapability(IOSMobileCapabilityType.NATIVE_WEB_TAP,true);
+            iosCapabilities.setCapability("unicodeKeyboard",true);
         }
 
         setMobileCapabilities(MobileDevice.IOS, iosCapabilities);
@@ -260,10 +273,10 @@ public class CapabilitiesManager {
         mobileCapabilties.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "60");
         mobileCapabilties.setCapability("locationServicesAuthorized", true);
         mobileCapabilties.setCapability("autoAcceptAlerts", true);
-
         mobileCapabilties.setCapability(MobileCapabilityType.ACCEPT_INSECURE_CERTS, true);
         mobileCapabilties.setCapability(MobileCapabilityType.ACCEPT_SSL_CERTS, true);
         mobileCapabilties.setCapability(MobileCapabilityType.ELEMENT_SCROLL_BEHAVIOR, true);
+        mobileCapabilties.setCapability(MobileCapabilityType.AUTO_WEBVIEW, true);
     }
 
     private  static String getAndroidVersion(){
