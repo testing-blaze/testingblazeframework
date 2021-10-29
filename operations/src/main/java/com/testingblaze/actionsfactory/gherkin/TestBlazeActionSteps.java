@@ -26,9 +26,9 @@ import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import jdk.jfr.Description;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
-import org.springframework.context.annotation.Description;
 
 import javax.swing.*;
 import java.awt.*;
