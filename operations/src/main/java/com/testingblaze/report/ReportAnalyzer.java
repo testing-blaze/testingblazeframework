@@ -285,7 +285,7 @@ public class ReportAnalyzer {
             updating = 0;
         }
         int totalFail=tBug+tUpdating;
-        float totalHealth = (tPass * 100) / (tPass + tBug + updating);
+        float totalHealth = (tPass * 100) / (tPass + tBug + tUpdating);
         String htmlHead = getMainPageHeaderContent() +
                 chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating))+"</head>";
         String body = "<body>" +
