@@ -168,7 +168,6 @@ public class CapabilitiesManager {
 
     public static SafariOptions getSafariCapabilities() {
         SafariOptions safariOptions = new SafariOptions();
-        safariOptions.setCapability(MobileCapabilityType.ACCEPT_INSECURE_CERTS, true);
         safariOptions.setCapability("safariAllowPopups", true);
         safariOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
         safariOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);

@@ -2,9 +2,11 @@ package com.testingblaze.report;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.testingblaze.objects.TestStatusDetails;
 import com.testingblaze.register.EnvironmentFactory;
+import io.cucumber.core.gherkin.vintage.internal.gherkin.deps.com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 
 public class ReportAnalyzer {
     private static final JsonParser parser = new JsonParser();
+    Path pathAnalysis = Paths.get(getReportGenerationPath() + "/ReportAnalysis");
+    Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
     private static List<TestStatusDetails> testStatusDetails;
     private static final String mainHTMLHeader = "<html>\n" +
             "  <head>\n" +
@@ -36,13 +40,21 @@ public class ReportAnalyzer {
 
     private static final String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 
-    public void executeAnalysis() {
+    public void executeAnalysis() throws IOException {
         reportConfigWriteUp();
+        Files.write(Paths.get(pathAnalysis + "/analysis.html"), createMainHtmlPage(compileReport()));
+        Files.write(Paths.get(pathFiles + "/bugs_details.html"), createBugDetailsHtmlPage(compileReport()));
+        Files.write(Paths.get(pathFiles + "/updating_details.html"), createUpdatingDetailsHtmlPage(compileReport()));
+    }
+
+    public JsonElement getReportJson() throws IOException {
+        JsonObject dataSet = new JsonObject();
+        String data = new Gson().toJson(compileReport());
+        dataSet.addProperty("reportData", data);
+        return dataSet;
     }
 
     public void reportConfigWriteUp() {
-        Path pathAnalysis = Paths.get(getReportGenerationPath() + "/ReportAnalysis");
-        Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
         try {
             if (Files.notExists(pathAnalysis)) {
                 Files.createDirectories(pathAnalysis);
@@ -59,7 +71,6 @@ public class ReportAnalyzer {
                 Files.createFile(Paths.get(pathAnalysis + "/analysis.html"));
                 Files.createFile(Paths.get(pathFiles + "/updating_details.html"));
                 Files.createFile(Paths.get(pathFiles + "/bugs_details.html"));
-                compileReport(pathAnalysis, pathFiles);
             }
 
         } catch (IOException e) {
@@ -67,7 +78,7 @@ public class ReportAnalyzer {
     }
 
 
-    public void compileReport(Path pathAnalysis, Path pathFiles) throws IOException {
+    public Map<String, Map<String, List<TestStatusDetails>>> compileReport() throws IOException {
         Map<String, Map<String, List<TestStatusDetails>>> mainTableContainer = new TreeMap<>();
         Set<String> files = new HashSet();
         String tagName = "None";
@@ -149,10 +160,7 @@ public class ReportAnalyzer {
             }
 
         }
-
-        Files.write(Paths.get(pathAnalysis + "/analysis.html"), createMainHtmlPage(mainTableContainer));
-        Files.write(Paths.get(pathFiles + "/bugs_details.html"), createBugDetailsHtmlPage(mainTableContainer));
-        Files.write(Paths.get(pathFiles + "/updating_details.html"), createUpdatingDetailsHtmlPage(mainTableContainer));
+        return mainTableContainer;
     }
 
     public List<String> createUpdatingDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
