@@ -2,9 +2,11 @@ package com.testingblaze.report;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.testingblaze.objects.TestStatusDetails;
 import com.testingblaze.register.EnvironmentFactory;
+import io.cucumber.core.gherkin.vintage.internal.gherkin.deps.com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -29,21 +31,32 @@ import java.util.stream.Collectors;
 
 public class ReportAnalyzer {
     private static final JsonParser parser = new JsonParser();
+    Path pathAnalysis = Paths.get(getReportGenerationPath() + "/ReportAnalysis");
+    Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
     private static List<TestStatusDetails> testStatusDetails;
-    private static String mainHTMLHeader = "<html>\n" +
+    private static final String mainHTMLHeader = "<html>\n" +
             "  <head>\n" +
             "    <title>Test Automation Analysis</title>\n";
 
-    private static String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    private static final String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 
-    public void executeAnalysis(){
+    public void executeAnalysis() throws IOException {
         reportConfigWriteUp();
+        Files.write(Paths.get(pathAnalysis + "/analysis.html"), createMainHtmlPage(compileReport()));
+        Files.write(Paths.get(pathFiles + "/bugs_details.html"), createBugDetailsHtmlPage(compileReport()));
+        Files.write(Paths.get(pathFiles + "/updating_details.html"), createUpdatingDetailsHtmlPage(compileReport()));
     }
+
+    public JsonElement getReportJson() throws IOException {
+        JsonObject dataSet = new JsonObject();
+        String data = new Gson().toJson(compileReport());
+        dataSet.addProperty("reportData", data);
+        return dataSet;
+    }
+
     public void reportConfigWriteUp() {
-        Path pathAnalysis = Paths.get(getReportGenerationPath()+ "/ReportAnalysis");
-        Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
         try {
-            if(Files.notExists(pathAnalysis)) {
+            if (Files.notExists(pathAnalysis)) {
                 Files.createDirectories(pathAnalysis);
                 Files.createDirectories(pathFiles);
             } else {
@@ -58,7 +71,6 @@ public class ReportAnalyzer {
                 Files.createFile(Paths.get(pathAnalysis + "/analysis.html"));
                 Files.createFile(Paths.get(pathFiles + "/updating_details.html"));
                 Files.createFile(Paths.get(pathFiles + "/bugs_details.html"));
-                compileReport(pathAnalysis, pathFiles);
             }
 
         } catch (IOException e) {
@@ -66,7 +78,7 @@ public class ReportAnalyzer {
     }
 
 
-    public void compileReport(Path pathAnalysis, Path pathFiles) throws IOException {
+    public Map<String, Map<String, List<TestStatusDetails>>> compileReport() throws IOException {
         Map<String, Map<String, List<TestStatusDetails>>> mainTableContainer = new TreeMap<>();
         Set<String> files = new HashSet();
         String tagName = "None";
@@ -75,12 +87,12 @@ public class ReportAnalyzer {
         List<String> newFiles = Arrays.stream(Objects.requireNonNull(new File(directoryName).list())).collect(Collectors.toList());
 
         for (String fileName : newFiles) {
-            if(!fileName.equalsIgnoreCase(".DS_Store"))
+            if (!fileName.equalsIgnoreCase(".DS_Store"))
                 files.add(fileName.split("_")[0]);
         }
         for (String specificFileName : files) {
             List<String> specificFiles = Arrays.stream(Objects.requireNonNull(new File(directoryName).list()))
-                    .filter(el -> el.startsWith(specificFileName)).collect(Collectors.toList());
+                    .filter(el -> el.split("_")[0].equalsIgnoreCase(specificFileName)).collect(Collectors.toList());
 
             Map<String, List<TestStatusDetails>> reportData = new TreeMap<>();
             for (String fileName : specificFiles) {
@@ -95,10 +107,10 @@ public class ReportAnalyzer {
                     for (JsonElement element : object.getAsJsonObject().get("elements").getAsJsonArray()) {
                         Boolean parentTag = true;
                         JsonArray fetchTAG = element.getAsJsonObject().get("tags").getAsJsonArray();
+
                         List<String> tagsHolder = new ArrayList<>();
                         for (JsonElement testTag : fetchTAG) {
                             String data = testTag.getAsJsonObject().get("name").getAsString();
-
                             if (parentTag && data.matches("[^a-zA-Z]+")) {
                                 tagName = data;
                                 tagsHolder.add(data);
@@ -112,6 +124,7 @@ public class ReportAnalyzer {
                             var keyword = step.getAsJsonObject().get("keyword").getAsString();
                             var stepName = step.getAsJsonObject().get("name").getAsString();
                             var result = step.getAsJsonObject().get("result").getAsJsonObject().get("status").getAsString();
+
                             if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "failed")) {
                                 if (tagsHolder.size() > tag) {
                                     testStatusDetails.add(new TestStatusDetails("Bug", stepName, tagsHolder.get(tag)));
@@ -120,23 +133,23 @@ public class ReportAnalyzer {
                                 }
                                 tag++;
 
-                            }else if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "passed")) {
+                            } else if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "passed")) {
                                 if (tagsHolder.size() > tag) {
                                     testStatusDetails.add(new TestStatusDetails("Passed", stepName, tagsHolder.get(tag)));
                                 } else {
                                     testStatusDetails.add(new TestStatusDetails("Passed", stepName, "None"));
                                 }
                                 tag++;
-                            }else if(StringUtils.containsIgnoreCase(result, "failed"))  {
-                                    testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
-                                }
+                            } else if (StringUtils.containsIgnoreCase(result, "failed")) {
+                                testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
+                            }
 
                         }
 
                     }
                 }
                 if (reportData.containsKey(tagName))
-                    tagName = tagName + "-Dup-" + assignedNumber;
+                    tagName = tagName + "-Ex-" + assignedNumber;
                 reportData.put(tagName, testStatusDetails);
                 tagName = "No Tag" + assignedNumber;
             }
@@ -147,16 +160,12 @@ public class ReportAnalyzer {
             }
 
         }
-
-        Files.write(Paths.get(pathAnalysis + "/analysis.html"), createMainHtmlPage(mainTableContainer));
-        Files.write(Paths.get(pathFiles + "/bugs_details.html"), createBugDetailsHtmlPage(mainTableContainer));
-        Files.write(Paths.get(pathFiles + "/updating_details.html"), createUpdatingDetailsHtmlPage(mainTableContainer));
+        return mainTableContainer;
     }
 
     public List<String> createUpdatingDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
-        String htmlHeader = mainHTMLHeader + "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" />\n" +
-                "<a href=\"../analysis.html\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\">Home</a> </head>";
-        String tableHeader = "<h2>Automated Test Analysis</h2>" +
+        String htmlHeader = getUpdatingPageHeaderContent()+"</head><body>";
+        String tableHeader =
                 "<h4 style=\"background-color:yellow;text-align: center;\">Test Updating / Blockers (TFS Test Tags) </h4>" +
 
                 "<div class=\"table-wrapper\">" +
@@ -190,18 +199,16 @@ public class ReportAnalyzer {
         }
         tableContent += "<tbody>" +
                 "</table>" +
-                "</div>";
+                "</div>"+
+                "</body>";
 
         return List.of(htmlHeader, tableHeader, tableContent);
     }
 
 
     public List<String> createBugDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
-        String htmlHeader = mainHTMLHeader +
-                "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" />\n" +
-                "<a href=\"../analysis.html\" type=\"button\" class=\"btn btn-primary btn-lg btn-block\">Home</a> </head>";
-        String tableHeader = "<h2>Automated Test Analysis</h2>" +
-                "<h4 style=\"background-color:Red;text-align: center;\">Bugs (TFS Test Tags) </h4>" +
+        String htmlHeader = getBugPageHeaderContent()+"</head><body>";
+        String tableHeader = "<h4 style=\"background-color:Pink;text-align: center;\">Bugs (TFS Test Tags) </h4>" +
                 "<div class=\"table-wrapper\">" +
                 projectInfoHeader() +
                 "<table class=\"fl-table\">" +
@@ -233,7 +240,8 @@ public class ReportAnalyzer {
         }
         tableContent += "<tbody>" +
                 "</table>" +
-                "</div>";
+                "</div>"+
+                "</body>";
 
         return List.of(htmlHeader, tableHeader, tableContent);
     }
@@ -243,11 +251,8 @@ public class ReportAnalyzer {
         int pass = 0, bug = 0, updating = 0;
         int tPass = 0, tBug = 0, tUpdating = 0;
 
-        String tableHeader = "<h2>Automated Test Analysis 1.0</h2>" +
-                "<div class=\"table-wrapper\">" +
-                projectInfoHeader() +
+        String tableHeader = "<div class=\"table-wrapper\">" +
                 "<table class=\"fl-table\">" +
-
                 "<thead>" +
                 "<tr>" +
                 "<th>Module</th>" +
@@ -260,7 +265,6 @@ public class ReportAnalyzer {
         String tableContent = "<tbody>";
 
         for (String key : mainTableData.keySet()) {
-            int testCount = mainTableData.get(key).size();
             for (String key2 : mainTableData.get(key).keySet()) {
                 for (TestStatusDetails obj : mainTableData.get(key).get(key2)) {
                     if (obj.getStatus().contains("Passed")) {
@@ -276,7 +280,7 @@ public class ReportAnalyzer {
                 }
 
             }
-            float health = (pass * 100) / (pass+bug+updating);
+            float health = (pass * 100) / (pass + bug + updating);
             tableContent += "<tr>" +
                     "<td>" + key + "</td >" +
                     "<td >" + pass + "</td >" +
@@ -288,19 +292,26 @@ public class ReportAnalyzer {
             bug = 0;
             updating = 0;
         }
-        String htmlHead = mainHTMLHeader +
-                "<link rel=\"stylesheet\" type=\"text/css\" href=\"Files/styles.css\" />\n" +
-                chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating)) +
-                "<a href=\"Files/bugs_details.html\" class=\"button\"><button style=\"background-color:#FF5733;float: right;\">Bugs</button></a>" +
-                "<a href=\"Files/updating_details.html\" class=\"button\"><button style=\"background-color:yellow;float: right;\">Updates|Blockers</button></a> </head>";
+        int totalFail=tBug+tUpdating;
+        float totalHealth = (tPass * 100) / (tPass + tBug + tUpdating);
+        String htmlHead = getMainPageHeaderContent() +
+                chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating))+"</head>";
         String body = "<body>" +
-                "<div id=\"chartContainer\" style=\"height: 300px; max-width: 920px; margin: 0px auto;\"></div>" +
-                "</body>";
+                "<div class=\"container\">\n" +
+                "  <h6 style=\"color:black\"></h6>\n" +
+                projectInfoHeader() +
+                "<button type=\"button\" class=\"btn btn-success\">PASSED <span class=\"badge\">"+tPass+"</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-danger\">FAILED <span class=\"badge\">"+totalFail+"</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-info\">HEALTH <span class=\"badge\">"+totalHealth+"%</span></button>\n" +
+                "</div>"+
+                "<div id=\"chartContainer\" style=\"height: 300px; max-width: 920px; margin: 0px auto;\"></div>";
+
         tableContent += "<tbody>" +
                 "</table>" +
-                "</div>";
+                "</div>"+
+                "</body>";
 
-        return List.of(htmlHead, tableHeader, body, tableContent);
+        return List.of(htmlHead, body,tableHeader, tableContent);
     }
 
     public List<String> cssAnalyzerHtml() {
@@ -431,7 +442,7 @@ public class ReportAnalyzer {
     }
 
     private String projectInfoHeader() {
-        return "<h4>Project:" + getProjectName()+ " ||  Run:" + getRunType() + "  || Date:" + date + " || Env:" + getEnvironment() + "</h4>";
+        return "<h6 style=\"color:black\">Project:" + getProjectName() + " ||  Run:" + getRunType() + "  || Date:" + date + " || Env:" + getEnvironment() + "</h6>";
     }
 
     private String chart(String pass, String bugs, String updating) {
@@ -460,11 +471,86 @@ public class ReportAnalyzer {
                 "} </script>";
     }
 
+    private String getMainPageHeaderContent() {
+        return "<html>\n" +
+                "  <head>\n" +
+                "    <title>Test Automation Analysis</title>\n" +
+                "<link rel=\"stylesheet\" type=\"text/css\" href=\"Files/styles.css\" />\n" +
+                " <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"> \n" +
+                "\n" +
+                " <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n" +
+                "  <a class=\"navbar-brand\" href=\"#\">Automated Test Analysis Dashboard 1.0</a>\n" +
+                "  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n" +
+                "    <span class=\"navbar-toggler-icon\"></span>\n" +
+                "  </button>\n" +
+                "  <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n" +
+                "    <ul class=\"navbar-nav\">\n" +
+                "      <li class=\"nav-item\">\n" +
+                "        <a class=\"nav-link\" style=\"color:white\" href=\"Files/bugs_details.html\">Bug Details</a>\n" +
+                "      </li>\n" +
+                "      <li class=\"nav-item\">\n" +
+                "        <a class=\"nav-link\" style=\"color:white\" href=\"Files/updating_details.html\">Blockers/Update Details</a>\n" +
+                "      </li>\n" +
+                "    </ul>\n" +
+                "  </div>\n" +
+                "</nav>" ;
+    }
+
+    private String getBugPageHeaderContent() {
+        return "<html>\n" +
+                "  <head>\n" +
+                "    <title>Test Automation Analysis</title>\n" +
+                "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" />\n" +
+                " <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"> \n" +
+                "\n" +
+                " <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n" +
+                "  <a class=\"navbar-brand\" href=\"../analysis.html\">Automated Test Analysis Dashboard 1.0</a>\n" +
+                "  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n" +
+                "    <span class=\"navbar-toggler-icon\"></span>\n" +
+                "  </button>\n" +
+                "  <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n" +
+                "    <ul class=\"navbar-nav\">\n" +
+                "      <li class=\"nav-item\">\n" +
+                "        <a class=\"nav-link\" style=\"color:white\" href=\"#\">Bug Details</a>\n" +
+                "      </li>\n" +
+                "      <li class=\"nav-item\">\n" +
+                "        <a class=\"nav-link\" style=\"color:white\" href=\"../Files/updating_details.html\">Blockers/Update Details</a>\n" +
+                "      </li>\n" +
+                "    </ul>\n" +
+                "  </div>\n" +
+                "</nav>" ;
+    }
+
+    private String getUpdatingPageHeaderContent() {
+        return "<html>\n" +
+                "  <head>\n" +
+                "    <title>Test Automation Analysis</title>\n" +
+                "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" />\n" +
+                " <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\"> \n" +
+                "\n" +
+                " <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n" +
+                "  <a class=\"navbar-brand\" href=\"../analysis.html\">Automated Test Analysis Dashboard 1.0</a>\n" +
+                "  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n" +
+                "    <span class=\"navbar-toggler-icon\"></span>\n" +
+                "  </button>\n" +
+                "  <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n" +
+                "    <ul class=\"navbar-nav\">\n" +
+                "      <li class=\"nav-item\">\n" +
+                "        <a class=\"nav-link\" style=\"color:white\" href=\"../Files/bugs_details.html\">Bug Details</a>\n" +
+                "      </li>\n" +
+                "      <li class=\"nav-item\">\n" +
+                "        <a class=\"nav-link\" style=\"color:white\" href=\"#\">Blockers/Update Details</a>\n" +
+                "      </li>\n" +
+                "    </ul>\n" +
+                "  </div>\n" +
+                "</nav>" ;
+    }
+
 
     private String getEnvironment() {
         try {
-            return EnvironmentFactory.getEnvironmentUrl();
-        } catch(Exception e) {
+            return EnvironmentFactory.getEnvironmentName();
+        } catch (Exception e) {
             return "No Information";
         }
     }
@@ -472,7 +558,7 @@ public class ReportAnalyzer {
     private String getRunType() {
         try {
             return EnvironmentFactory.getScenarioTag();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return "No Information";
         }
     }
@@ -480,22 +566,24 @@ public class ReportAnalyzer {
     private String getProjectName() {
         try {
             return EnvironmentFactory.getProjectName();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return "No Information";
         }
     }
 
-    private static String getReportSourcePath(){
-        if(EnvironmentFactory.getReportAnalysisDataPath() != null) return EnvironmentFactory.getReportAnalysisDataPath();
+    private static String getReportSourcePath() {
+        if (EnvironmentFactory.getReportAnalysisDataPath() != null)
+            return EnvironmentFactory.getReportAnalysisDataPath();
         else {
-            return System.getProperty("user.dir")+"/target/cucumber-report";
+            return System.getProperty("user.dir") + "/target/cucumber-report";
         }
     }
 
-    private static String getReportGenerationPath(){
-        if(EnvironmentFactory.getReportAnalysisGenerationPath() != null) return EnvironmentFactory.getReportAnalysisGenerationPath();
+    private static String getReportGenerationPath() {
+        if (EnvironmentFactory.getReportAnalysisGenerationPath() != null)
+            return EnvironmentFactory.getReportAnalysisGenerationPath();
         else {
-            return System.getProperty("user.dir")+"/target";
+            return System.getProperty("user.dir") + "/target";
         }
     }
 }

@@ -25,7 +25,7 @@ import com.testingblaze.objects.TwoColumnSorting;
 import com.testingblaze.register.I;
 import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.WebElement;
-import org.springframework.util.Assert;
+import org.testng.Assert;
 import ru.yandex.qatools.ashot.comparison.ImageDiff;
 import ru.yandex.qatools.ashot.comparison.ImageDiffer;
 
@@ -200,7 +200,7 @@ public final class Compare {
          * @return
          */
         private boolean compareTwoImages(BufferedImage image1, BufferedImage image2, int tolerance) {
-            Assert.isTrue(tolerance >= 0 && tolerance <= 100, "The tolerance for comparing images must be a percentage between 0 and 100.");
+            Assert.assertTrue(tolerance >= 0 && tolerance <= 100, "The tolerance for comparing images must be a percentage between 0 and 100.");
             ImageDiff diff = new ImageDiffer().makeDiff(image1, image2)
                     .withDiffSizeTrigger((int) ((image1.getHeight() * (image1.getWidth()) * (tolerance / 100.00))));
             return !diff.hasDiff();

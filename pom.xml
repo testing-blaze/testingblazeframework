@@ -47,7 +47,7 @@
         <java.version>11</java.version>
         <selenium.version>3.141.59</selenium.version>
         <selenium.server.version>4.0.0-alpha-2</selenium.server.version>
-        <appium.version>7.3.0</appium.version>
+        <appium.version>7.6.0</appium.version>
         <cucumber.version>5.4.2</cucumber.version>
         <cucable.version>1.7.0</cucable.version>
         <report.version>2.7.0</report.version>
