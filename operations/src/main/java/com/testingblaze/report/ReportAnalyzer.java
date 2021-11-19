@@ -30,7 +30,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class ReportAnalyzer {
-    private static final JsonParser parser = new JsonParser();
+    private static JsonParser parser = new JsonParser();
     Path pathAnalysis = Paths.get(getReportGenerationPath() + "/ReportAnalysis");
     Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
     private static List<TestStatusDetails> testStatusDetails;
@@ -90,6 +90,7 @@ public class ReportAnalyzer {
             if (!fileName.equalsIgnoreCase(".DS_Store"))
                 files.add(fileName.split("_")[0]);
         }
+        int i =1;
         for (String specificFileName : files) {
             List<String> specificFiles = Arrays.stream(Objects.requireNonNull(new File(directoryName).list()))
                     .filter(el -> el.split("_")[0].equalsIgnoreCase(specificFileName)).collect(Collectors.toList());
@@ -98,8 +99,10 @@ public class ReportAnalyzer {
             for (String fileName : specificFiles) {
                 assignedNumber++;
                 String fileLocation = directoryName + "/" + fileName;
-
+               System.out.println("FileName    "+i+fileName);
+               i++;
                 JsonArray objects = parser.parse(new InputStreamReader(new FileInputStream(fileLocation), StandardCharsets.UTF_8)).getAsJsonArray();
+
                 testStatusDetails = new ArrayList<>();
 
                 for (JsonElement object : objects) {
