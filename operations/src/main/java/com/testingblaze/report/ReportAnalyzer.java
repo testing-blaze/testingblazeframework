@@ -99,9 +99,13 @@ public class ReportAnalyzer {
             for (String fileName : specificFiles) {
                 assignedNumber++;
                 String fileLocation = directoryName + "/" + fileName;
-               System.out.println("FileName    "+i+fileName);
-               i++;
-                JsonArray objects = parser.parse(new InputStreamReader(new FileInputStream(fileLocation), StandardCharsets.UTF_8)).getAsJsonArray();
+                JsonArray objects=null;
+                try {
+                    objects = parser.parse(new InputStreamReader(new FileInputStream(fileLocation), StandardCharsets.UTF_8)).getAsJsonArray();
+                } catch(Exception e) {
+                    System.out.println("There was a problem in the report file "+fileName);
+                    continue;
+                }
 
                 testStatusDetails = new ArrayList<>();
 
