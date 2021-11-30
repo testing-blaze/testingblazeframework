@@ -30,7 +30,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class ReportAnalyzer {
-    private static JsonParser parser = new JsonParser();
+    private static final JsonParser parser = new JsonParser();
     Path pathAnalysis = Paths.get(getReportGenerationPath() + "/ReportAnalysis");
     Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
     private static List<TestStatusDetails> testStatusDetails;
@@ -90,7 +90,7 @@ public class ReportAnalyzer {
             if (!fileName.equalsIgnoreCase(".DS_Store"))
                 files.add(fileName.split("_")[0]);
         }
-        int i =1;
+        int i = 1;
         for (String specificFileName : files) {
             List<String> specificFiles = Arrays.stream(Objects.requireNonNull(new File(directoryName).list()))
                     .filter(el -> el.split("_")[0].equalsIgnoreCase(specificFileName)).collect(Collectors.toList());
@@ -99,11 +99,11 @@ public class ReportAnalyzer {
             for (String fileName : specificFiles) {
                 assignedNumber++;
                 String fileLocation = directoryName + "/" + fileName;
-                JsonArray objects=null;
+                JsonArray objects = null;
                 try {
                     objects = parser.parse(new InputStreamReader(new FileInputStream(fileLocation), StandardCharsets.UTF_8)).getAsJsonArray();
-                } catch(Exception e) {
-                    System.out.println("There was a problem in the report file "+fileName);
+                } catch (Exception e) {
+                    System.out.println("There was a problem in the report file " + fileName);
                     continue;
                 }
 
@@ -171,21 +171,21 @@ public class ReportAnalyzer {
     }
 
     public List<String> createUpdatingDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
-        String htmlHeader = getUpdatingPageHeaderContent()+"</head><body>";
+        String htmlHeader = getUpdatingPageHeaderContent() + "</head><body>";
         String tableHeader =
                 "<h4 style=\"background-color:yellow;text-align: center;\">Test Updating / Blockers (TFS Test Tags) </h4>" +
 
-                "<div class=\"table-wrapper\">" +
-                projectInfoHeader() +
-                "<table class=\"fl-table\">" +
-                "<thead>" +
-                "<tr>" +
-                "<th>Feature</th>" +
-                "<th>Main Tag</th>" +
-                "<th>Related Tag</th>" +
-                "<th>Update Point</th>" +
-                "</tr>" +
-                "</thead>";
+                        "<div class=\"table-wrapper\">" +
+                        projectInfoHeader() +
+                        "<table class=\"fl-table\">" +
+                        "<thead>" +
+                        "<tr>" +
+                        "<th>Feature</th>" +
+                        "<th>Main Tag</th>" +
+                        "<th>Related Tag</th>" +
+                        "<th>Update Point</th>" +
+                        "</tr>" +
+                        "</thead>";
         String tableContent = "<tbody>";
 
         for (String key : mainTableData.keySet()) {
@@ -206,7 +206,7 @@ public class ReportAnalyzer {
         }
         tableContent += "<tbody>" +
                 "</table>" +
-                "</div>"+
+                "</div>" +
                 "</body>";
 
         return List.of(htmlHeader, tableHeader, tableContent);
@@ -214,7 +214,7 @@ public class ReportAnalyzer {
 
 
     public List<String> createBugDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
-        String htmlHeader = getBugPageHeaderContent()+"</head><body>";
+        String htmlHeader = getBugPageHeaderContent() + "</head><body>";
         String tableHeader = "<h4 style=\"background-color:Pink;text-align: center;\">Bugs (TFS Test Tags) </h4>" +
                 "<div class=\"table-wrapper\">" +
                 projectInfoHeader() +
@@ -247,7 +247,7 @@ public class ReportAnalyzer {
         }
         tableContent += "<tbody>" +
                 "</table>" +
-                "</div>"+
+                "</div>" +
                 "</body>";
 
         return List.of(htmlHeader, tableHeader, tableContent);
@@ -287,7 +287,9 @@ public class ReportAnalyzer {
                 }
 
             }
-            float health = (pass * 100) / (pass + bug + updating);
+            float health = 0;
+            if (pass + bug + updating > 0)
+                health = (pass * 100) / (pass + bug + updating);
             tableContent += "<tr>" +
                     "<td>" + key + "</td >" +
                     "<td >" + pass + "</td >" +
@@ -299,26 +301,28 @@ public class ReportAnalyzer {
             bug = 0;
             updating = 0;
         }
-        int totalFail=tBug+tUpdating;
-        float totalHealth = (tPass * 100) / (tPass + tBug + tUpdating);
+        int totalFail = tBug + tUpdating;
+        float totalHealth = 0;
+        if (tPass + tBug + tUpdating > 0)
+            totalHealth = (tPass * 100) / (tPass + tBug + tUpdating);
         String htmlHead = getMainPageHeaderContent() +
-                chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating))+"</head>";
+                chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating)) + "</head>";
         String body = "<body>" +
                 "<div class=\"container\">\n" +
                 "  <h6 style=\"color:black\"></h6>\n" +
                 projectInfoHeader() +
-                "<button type=\"button\" class=\"btn btn-success\">PASSED <span class=\"badge\">"+tPass+"</span></button>\n" +
-                "<button type=\"button\" class=\"btn btn-danger\">FAILED <span class=\"badge\">"+totalFail+"</span></button>\n" +
-                "<button type=\"button\" class=\"btn btn-info\">HEALTH <span class=\"badge\">"+totalHealth+"%</span></button>\n" +
-                "</div>"+
+                "<button type=\"button\" class=\"btn btn-success\">PASSED <span class=\"badge\">" + tPass + "</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-danger\">FAILED <span class=\"badge\">" + totalFail + "</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-info\">HEALTH <span class=\"badge\">" + totalHealth + "%</span></button>\n" +
+                "</div>" +
                 "<div id=\"chartContainer\" style=\"height: 300px; max-width: 920px; margin: 0px auto;\"></div>";
 
         tableContent += "<tbody>" +
                 "</table>" +
-                "</div>"+
+                "</div>" +
                 "</body>";
 
-        return List.of(htmlHead, body,tableHeader, tableContent);
+        return List.of(htmlHead, body, tableHeader, tableContent);
     }
 
     public List<String> cssAnalyzerHtml() {
@@ -500,7 +504,7 @@ public class ReportAnalyzer {
                 "      </li>\n" +
                 "    </ul>\n" +
                 "  </div>\n" +
-                "</nav>" ;
+                "</nav>";
     }
 
     private String getBugPageHeaderContent() {
@@ -525,7 +529,7 @@ public class ReportAnalyzer {
                 "      </li>\n" +
                 "    </ul>\n" +
                 "  </div>\n" +
-                "</nav>" ;
+                "</nav>";
     }
 
     private String getUpdatingPageHeaderContent() {
@@ -550,7 +554,7 @@ public class ReportAnalyzer {
                 "      </li>\n" +
                 "    </ul>\n" +
                 "  </div>\n" +
-                "</nav>" ;
+                "</nav>";
     }
 
 
