@@ -28,6 +28,7 @@ import com.testingblaze.controller.ReportingLogsPlugin;
 import com.testingblaze.controller.ScenarioController;
 import com.testingblaze.controller.TestSetupController;
 import com.testingblaze.exception.TestingBlazeExceptionWithoutStackTrace;
+import com.testingblaze.http.RestfulWebServices;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.report.LogLevel;
 import com.testingblaze.report.ReportAnalyzer;
@@ -37,6 +38,9 @@ import io.cucumber.java.Scenario;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 import java.util.logging.Level;
 
 public final class toquzjGnQQTBR {
@@ -86,25 +90,52 @@ public final class toquzjGnQQTBR {
     private void triggerMandatoryClosureJobs() {
         Thread performReportAnalysisActivities = new Thread(() -> {
             int testJvvmCount = 0;
-            for(VirtualMachineDescriptor listOfProcess:VirtualMachine.list()) {
-                if(listOfProcess.toString().contains("jvmRun") && listOfProcess.toString().contains("jvmRun")) {
+            for (VirtualMachineDescriptor listOfProcess : VirtualMachine.list()) {
+                if (listOfProcess.toString().contains("jvmRun") && listOfProcess.toString().contains("jvmRun")) {
                     testJvvmCount++;
-                    if(testJvvmCount > 1) break;
+                    if (testJvvmCount > 1) break;
                 }
             }
-            if(testJvvmCount == 1) {
-            if (reportAnalyzer == null) {
-                reportAnalyzer = new ReportAnalyzer();
+            if (testJvvmCount == 1) {
+                if (reportAnalyzer == null) {
+                    reportAnalyzer = new ReportAnalyzer();
+                }
+                try {
+                    System.out.println("Report Analysis Started ....");
+                    reportAnalyzer.executeAnalysis();
+                    publishReportAnalytics();
+                    System.out.println("Report Analysis Completed.");
+                } catch (Exception e) {
+                    System.out.println("Report Analysis Failed");
+                }
+                try {
+                    publishReportAnalytics();
+                } catch (Exception e) {
+                    System.out.println("Report Publishing Failed");
+                    e.printStackTrace();
+                }
             }
-            try {
-                System.out.println("Report Analysis Started ....");
-                reportAnalyzer.executeAnalysis();
-                System.out.println("Report Analysis Completed.");
-            } catch (Exception e) {
-                System.out.println("Report Analysis Failed");
-            }
-        }});
+        });
         Runtime.getRuntime().addShutdownHook(performReportAnalysisActivities);
+    }
+
+    private void publishReportAnalytics() throws IOException {
+        if (System.getProperty("publishReport") != null && System.getProperty("publishReport").equalsIgnoreCase("yes")) {
+            System.out.println("Report Publishing Started ....");
+            getPropertiesAccess().load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.template"), StandardCharsets.UTF_8));
+            RestfulWebServices restfulWebServices=new RestfulWebServices();
+            restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, getPropertiesAccess().getProperty("endPoint"), null, null, null);
+            System.out.println("Report Publishing Completed.");
+        }
+    }
+
+    Properties OR;
+
+    private Properties getPropertiesAccess() {
+        if (OR == null) {
+            OR = new Properties();
+        }
+        return OR;
     }
 
 }

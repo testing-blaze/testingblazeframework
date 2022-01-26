@@ -181,6 +181,8 @@ Standard Command +<br>
 •	Slow Down Execution Speed = -DslowDownExecution = 1   (it will be considered 1 second) <br>
 •	Run a test tag multiple times = -DnumberOfTimesRunTag = 2 <br>
 •	Post test results = -DpostTestResults = tfs/jira <br>
+•	Publish Analytics Report on Server = -DpublishReport = yes/no <br>
+•	Set Custom Execution Date = -DsetExecutionDate = tfs/jira <br>
 •	Enable Screenshots for Soft Assertions failure: -DsoftAssertScreenshot=true <br>
 
 ## Cucumber Dynamic Parameterization
