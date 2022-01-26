@@ -25,6 +25,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 /**
@@ -33,6 +35,7 @@ import java.util.Arrays;
  * @author nauman.shahid
  */
 public final class EnvironmentFactory {
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
     private static String projectName;
 
     public static String getProjectName() {
@@ -230,6 +233,14 @@ public final class EnvironmentFactory {
     public static void setReportAnalysisPath(String dataPath,String reportAnalysisGenerationPath) {
         reportAnalysisDataPath = dataPath;
         reportAnalysisGeneration = reportAnalysisGenerationPath;
+    }
+
+    public static String executionDate;
+    public static String getExecutionDate() {
+        if (executionDate == null) {
+            executionDate = System.getProperty("setExecutionDate") != null ? System.getProperty("setExecutionDate"): I.amPerforming().dateOperationsToGet().currentDateInDesiredFormat(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        }
+        return executionDate;
     }
 
 

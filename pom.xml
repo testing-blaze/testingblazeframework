@@ -7,7 +7,7 @@
     <groupId>com.github.testing-blaze</groupId>
     <artifactId>blaze-epic</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <name>Testing Blaze Epic</name>
     <description>Configuration Pom</description>
     <url>http://www.github.com/testing-blaze</url>

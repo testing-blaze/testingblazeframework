@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -47,11 +48,27 @@ public class ReportAnalyzer {
         Files.write(Paths.get(pathFiles + "/updating_details.html"), createUpdatingDetailsHtmlPage(compileReport()));
     }
 
-    public JsonElement getReportJson() throws IOException {
+    public JsonObject getReportJson() throws IOException {
         JsonObject dataSet = new JsonObject();
         String data = new Gson().toJson(compileReport());
-        dataSet.addProperty("reportData", data);
+        JsonParser parser = new JsonParser();
+        JsonElement jsonReportData = parser.parse(data);
+        getPropertiesAccess().load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.template"), StandardCharsets.UTF_8));
+        dataSet.addProperty("projectId", getPropertiesAccess().getProperty("projectId"));
+        dataSet.addProperty("projectName",getPropertiesAccess().getProperty("projectName"));
+        String executionDate = System.getProperty("setExecutionDate") != null ? System.getProperty("setExecutionDate") : date;
+        dataSet.addProperty("date", executionDate);
+        String envName= System.getProperty("env") != null ? System.getProperty("env") : "No Information";
+        dataSet.addProperty("envName",envName);
+        dataSet.add("reportData",jsonReportData);
         return dataSet;
+    }
+    Properties OR;
+    private Properties getPropertiesAccess(){
+        if(OR==null){
+            OR = new Properties();
+        }
+        return OR;
     }
 
     public void reportConfigWriteUp() {
