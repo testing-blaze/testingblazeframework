@@ -121,21 +121,15 @@ public final class toquzjGnQQTBR {
 
     private void publishReportAnalytics() throws IOException {
         if (System.getProperty("publishReport") != null && System.getProperty("publishReport").equalsIgnoreCase("yes")) {
+            Properties OR = new Properties();
             System.out.println("Report Publishing Started ....");
-            getPropertiesAccess().load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.template"), StandardCharsets.UTF_8));
+            OR.load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
             RestfulWebServices restfulWebServices=new RestfulWebServices();
-            restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, getPropertiesAccess().getProperty("endPoint"), null, null, null);
+            String endPoint = OR.getProperty("endPoint");
+            restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, endPoint, null, null, null);
             System.out.println("Report Publishing Completed.");
         }
     }
 
-    Properties OR;
-
-    private Properties getPropertiesAccess() {
-        if (OR == null) {
-            OR = new Properties();
-        }
-        return OR;
-    }
 
 }
