@@ -53,7 +53,7 @@ public class ReportAnalyzer {
         String data = new Gson().toJson(compileReport());
         JsonParser parser = new JsonParser();
         JsonElement jsonReportData = parser.parse(data);
-        getPropertiesAccess().load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.template"), StandardCharsets.UTF_8));
+        getPropertiesAccess().load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
         dataSet.addProperty("projectId", getPropertiesAccess().getProperty("projectId"));
         dataSet.addProperty("projectName",getPropertiesAccess().getProperty("projectName"));
         String executionDate = System.getProperty("setExecutionDate") != null ? System.getProperty("setExecutionDate") : date;

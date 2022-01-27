@@ -11,7 +11,7 @@
 
     <artifactId>blaze-core</artifactId>
     <packaging>jar</packaging>
-    <version>1.3.2</version>
+    <version>1.3.4</version>
     <name>Testing Blaze Core</name>
     <description>An Intelligent BDD Test Automation Framework</description>
     <url>http://www.github.com/testing-blaze</url>

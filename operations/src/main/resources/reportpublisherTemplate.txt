@@ -1,0 +1,3 @@
+endPoint=http://saas-reportportal.reisystems.com/report_data/save
+projectId=155340
+projectName=NFWF
