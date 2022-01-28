@@ -103,7 +103,6 @@ public final class toquzjGnQQTBR {
                 try {
                     System.out.println("Report Analysis Started ....");
                     reportAnalyzer.executeAnalysis();
-                    publishReportAnalytics();
                     System.out.println("Report Analysis Completed.");
                 } catch (Exception e) {
                     System.out.println("Report Analysis Failed");
