@@ -164,7 +164,14 @@ public class ReportAnalyzer {
                                     testStatusDetails.add(new TestStatusDetails("Passed", stepName, "None"));
                                 }
                                 tag++;
-                            } else if (StringUtils.containsIgnoreCase(result, "failed")) {
+                            } else if (StringUtils.containsIgnoreCase(keyword, "Then") && StringUtils.containsIgnoreCase(result, "skipped")) {
+                            if (tagsHolder.size() > tag) {
+                                testStatusDetails.add(new TestStatusDetails("Skipped", stepName, tagsHolder.get(tag)));
+                            } else {
+                                testStatusDetails.add(new TestStatusDetails("Skipped", stepName, "None"));
+                            }
+                            tag++;
+                        } else if (StringUtils.containsIgnoreCase(result, "failed")) {
                                 testStatusDetails.add(new TestStatusDetails("UI Change or Blocker", stepName, "None"));
                             }
 
@@ -272,8 +279,8 @@ public class ReportAnalyzer {
 
 
     public List<String> createMainHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
-        int pass = 0, bug = 0, updating = 0;
-        int tPass = 0, tBug = 0, tUpdating = 0;
+        int pass = 0, bug = 0, updating =0, skipped = 0;
+        int tPass = 0, tBug = 0, tUpdating = 0, tSkipped=0;
 
         String tableHeader = "<div class=\"table-wrapper\">" +
                 "<table class=\"fl-table\">" +
@@ -300,6 +307,9 @@ public class ReportAnalyzer {
                     } else if (obj.getStatus().contains("UI Change")) {
                         updating++;
                         tUpdating++;
+                    } else if (obj.getStatus().contains("Skipped")) {
+                        skipped++;
+                        tSkipped++;
                     }
                 }
 
@@ -318,7 +328,7 @@ public class ReportAnalyzer {
             bug = 0;
             updating = 0;
         }
-        int totalFail = tBug + tUpdating;
+
         float totalHealth = 0;
         if (tPass + tBug + tUpdating > 0)
             totalHealth = (tPass * 100) / (tPass + tBug + tUpdating);
@@ -329,7 +339,8 @@ public class ReportAnalyzer {
                 "  <h6 style=\"color:black\"></h6>\n" +
                 projectInfoHeader() +
                 "<button type=\"button\" class=\"btn btn-success\">PASSED <span class=\"badge\">" + tPass + "</span></button>\n" +
-                "<button type=\"button\" class=\"btn btn-danger\">FAILED <span class=\"badge\">" + totalFail + "</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-danger\">FAILED <span class=\"badge\">" + tBug + "</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-warning\">Skipped <span class=\"badge\">" + tSkipped + "</span></button>\n" +
                 "<button type=\"button\" class=\"btn btn-info\">HEALTH <span class=\"badge\">" + totalHealth + "%</span></button>\n" +
                 "</div>" +
                 "<div id=\"chartContainer\" style=\"height: 300px; max-width: 920px; margin: 0px auto;\"></div>";
