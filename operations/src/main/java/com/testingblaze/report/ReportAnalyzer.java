@@ -341,9 +341,10 @@ public class ReportAnalyzer {
                 "  <h6 style=\"color:black\"></h6>\n" +
                 projectInfoHeader() +
                 "<button type=\"button\" class=\"btn btn-success\">PASSED <span class=\"badge\">" + tPass + "</span></button>\n" +
-                "<button type=\"button\" class=\"btn btn-danger\">FAILED <span class=\"badge\">" + tBug + "</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-danger\">D-Bugs <span class=\"badge\">" + tBug + "</span></button>\n" +
                 "<button type=\"button\" class=\"btn btn-warning\">Skipped <span class=\"badge\">" + tSkipped + "</span></button>\n" +
                 "<button type=\"button\" class=\"btn btn-info\">HEALTH <span class=\"badge\">" + totalHealth + "%</span></button>\n" +
+                "<p style=\"font-style: italic;font-size:11px;\">D-Bugs: Detected Bugs By Automated Analysis. To Be Reproduced. </p>\n"+
                 "</div>" +
                 "<div id=\"chartContainer\" style=\"height: 300px; max-width: 920px; margin: 0px auto;\"></div>";
 
