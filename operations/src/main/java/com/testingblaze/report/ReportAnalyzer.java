@@ -290,6 +290,7 @@ public class ReportAnalyzer {
                 "<th>Passed</th>" +
                 "<th>Bugs</th>" +
                 "<th>Blocker/Updating</th>" +
+                "<th>Skipped Tests</th>" +
                 "<th>Health</th>" +
                 "</tr>" +
                 "</thead>";
@@ -316,12 +317,13 @@ public class ReportAnalyzer {
             }
             float health = 0;
             if (pass + bug + updating > 0)
-                health = (pass * 100) / (pass + bug + updating);
+                health = (pass * 100) / (pass + bug + skipped);
             tableContent += "<tr>" +
                     "<td>" + key + "</td >" +
                     "<td >" + pass + "</td >" +
                     "<td >" + bug + "</td >" +
                     "<td >" + updating + "</td >" +
+                    "<td >" + skipped + "</td >" +
                     "<td >" + health + "</td >" +
                     "</tr >";
             pass = 0;
@@ -331,17 +333,18 @@ public class ReportAnalyzer {
 
         float totalHealth = 0;
         if (tPass + tBug + tUpdating > 0)
-            totalHealth = (tPass * 100) / (tPass + tBug + tUpdating);
+            totalHealth = (tPass * 100) / (tPass + tBug + tSkipped);
         String htmlHead = getMainPageHeaderContent() +
-                chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating)) + "</head>";
+                chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating),String.valueOf(tSkipped)) + "</head>";
         String body = "<body>" +
                 "<div class=\"container\">\n" +
                 "  <h6 style=\"color:black\"></h6>\n" +
                 projectInfoHeader() +
                 "<button type=\"button\" class=\"btn btn-success\">PASSED <span class=\"badge\">" + tPass + "</span></button>\n" +
-                "<button type=\"button\" class=\"btn btn-danger\">FAILED <span class=\"badge\">" + tBug + "</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-danger\">D-Bugs <span class=\"badge\">" + tBug + "</span></button>\n" +
                 "<button type=\"button\" class=\"btn btn-warning\">Skipped <span class=\"badge\">" + tSkipped + "</span></button>\n" +
                 "<button type=\"button\" class=\"btn btn-info\">HEALTH <span class=\"badge\">" + totalHealth + "%</span></button>\n" +
+                "<p style=\"font-style: italic;font-size:11px;\">D-Bugs: Detected Bugs By Automated Analysis. To Be Reproduced. </p>\n"+
                 "</div>" +
                 "<div id=\"chartContainer\" style=\"height: 300px; max-width: 920px; margin: 0px auto;\"></div>";
 
@@ -484,7 +487,7 @@ public class ReportAnalyzer {
         return "<h6 style=\"color:black\">Project:" + getProjectName() + " ||  Run:" + getRunType() + "  || Date:" + date + " || Env:" + getEnvironment() + "</h6>";
     }
 
-    private String chart(String pass, String bugs, String updating) {
+    private String chart(String pass, String bugs, String updating,String skipped) {
 
         return " <script src=\"https://canvasjs.com/assets/script/canvasjs.min.js\"></script>" +
                 "<script type=\"text/javascript\">" +
@@ -501,6 +504,7 @@ public class ReportAnalyzer {
                 "dataPoints: [" +
                 "{ label: \"Pass\",  y:" + pass + " }," +
                 "{ label: \"Bugs\",  y:" + bugs + " }," +
+                "{ label: \"Skipped\",  y:" + skipped + " }," +
                 "{ label: \"Updating\",  y:" + updating + " }" +
                 "]" +
                 "}" +
