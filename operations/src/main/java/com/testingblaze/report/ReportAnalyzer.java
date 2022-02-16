@@ -330,6 +330,7 @@ public class ReportAnalyzer {
             pass = 0;
             bug = 0;
             updating = 0;
+            skipped = 0;
         }
 
         float totalHealth = 0;
