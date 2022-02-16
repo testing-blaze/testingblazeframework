@@ -284,6 +284,7 @@ public class ReportAnalyzer {
 
         String tableHeader = "<div class=\"table-wrapper\">" +
                 "<table class=\"fl-table\">" +
+                "<p style=\"font-style: italic;font-size:11px;\">[Detected Bugs]: Bugs Detected By Automated Analysis. To Be Reproduced. [Skipped Tests]: Tests Skipped Due To Blocker/Updating.</p>\n"+
                 "<thead>" +
                 "<tr>" +
                 "<th>Module</th>" +
@@ -317,7 +318,7 @@ public class ReportAnalyzer {
             }
             float health = 0;
             if (pass + bug + updating > 0)
-                health = (pass * 100) / (pass + bug + skipped);
+                health = (pass * 100) / (pass + bug + updating);
             tableContent += "<tr>" +
                     "<td>" + key + "</td >" +
                     "<td >" + pass + "</td >" +
@@ -329,11 +330,13 @@ public class ReportAnalyzer {
             pass = 0;
             bug = 0;
             updating = 0;
+            skipped = 0;
         }
 
         float totalHealth = 0;
+        int totalFailed=tBug + tUpdating;
         if (tPass + tBug + tUpdating > 0)
-            totalHealth = (tPass * 100) / (tPass + tBug + tSkipped);
+            totalHealth = (tPass * 100) / (tPass + totalFailed);
         String htmlHead = getMainPageHeaderContent() +
                 chart(String.valueOf(tPass), String.valueOf(tBug), String.valueOf(tUpdating),String.valueOf(tSkipped)) + "</head>";
         String body = "<body>" +
@@ -341,10 +344,10 @@ public class ReportAnalyzer {
                 "  <h6 style=\"color:black\"></h6>\n" +
                 projectInfoHeader() +
                 "<button type=\"button\" class=\"btn btn-success\">PASSED <span class=\"badge\">" + tPass + "</span></button>\n" +
-                "<button type=\"button\" class=\"btn btn-danger\">D-Bugs <span class=\"badge\">" + tBug + "</span></button>\n" +
+                "<button type=\"button\" class=\"btn btn-danger\">Failed <span class=\"badge\">" + totalFailed + "</span></button>\n" +
                 "<button type=\"button\" class=\"btn btn-warning\">Skipped <span class=\"badge\">" + tSkipped + "</span></button>\n" +
                 "<button type=\"button\" class=\"btn btn-info\">HEALTH <span class=\"badge\">" + totalHealth + "%</span></button>\n" +
-                "<p style=\"font-style: italic;font-size:11px;\">D-Bugs: Detected Bugs By Automated Analysis. To Be Reproduced. </p>\n"+
+                "<p style=\"font-style: italic;font-size:11px;\">**Health: Calculated Based On Total Executed Tests Only.</p>\n"+
                 "</div>" +
                 "<div id=\"chartContainer\" style=\"height: 300px; max-width: 920px; margin: 0px auto;\"></div>";
 
