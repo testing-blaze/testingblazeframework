@@ -58,6 +58,7 @@ public class ReportAnalyzer {
         dataSet.addProperty("projectName",getPropertiesAccess().getProperty("projectName"));
         String executionDate = System.getProperty("setExecutionDate") != null ? System.getProperty("setExecutionDate") : date;
         dataSet.addProperty("date", executionDate);
+        dataSet.addProperty("totalTestsCount",getTotalTestCount());
         String envName= System.getProperty("env") != null ? System.getProperty("env") : "No Information";
         dataSet.addProperty("envName",envName);
         dataSet.add("reportData",jsonReportData);
@@ -631,5 +632,19 @@ public class ReportAnalyzer {
         else {
             return System.getProperty("user.dir") + "/target";
         }
+    }
+
+    private String getTotalTestCount() throws IOException {
+        long testCount = 0;
+        try {
+            List<Path> featurePath = Files.walk(Paths.get(System.getProperty("user.dir") + "/src/test/resources/features")).filter(fileType -> fileType.getFileName().toString().contains(".feature")).map(filePaths -> filePaths.toAbsolutePath()).collect(Collectors.toList());
+
+            for (Path featureFiles : featurePath) {
+                testCount = testCount + Files.readAllLines(featureFiles).stream().map(trimLines -> trimLines.trim()).filter(ff -> ff.startsWith("Then I")).count();
+            }
+        } catch (Exception e){
+
+        }
+        return String.valueOf(testCount);
     }
 }
