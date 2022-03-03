@@ -44,9 +44,15 @@ public final class KeysHandler {
      *
      * @param key
      * @author nauman.shahid
+     * @modifier aashish.pardeshi
      */
     public KeyFunctions keyPress(Keys key) {
-        actions.keyDown(key).build().perform();
+        String keyName = key.name();
+        if (keyName.equals("SHIFT") || keyName.equals("ALT") || keyName.equals("CONTROL")) {
+            actions.keyDown(key).build().perform();
+        } else {
+            actions.sendKeys(key).build().perform();
+        }
         return keyFunctions;
     }
 
