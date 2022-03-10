@@ -35,7 +35,7 @@ import java.awt.*;
 
 public final class TestBlazeActionSteps {
 
-    @When("^I pause execution$")
+    @When("^I halt execution$")
     public void pauseExecution() throws Throwable {
         Toolkit.getDefaultToolkit().beep();
         Thread.sleep(1000);
