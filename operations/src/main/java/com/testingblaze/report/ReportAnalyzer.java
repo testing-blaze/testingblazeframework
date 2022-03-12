@@ -28,6 +28,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ReportAnalyzer {
@@ -38,6 +39,7 @@ public class ReportAnalyzer {
     private static final String mainHTMLHeader = "<html>\n" +
             "  <head>\n" +
             "    <title>Test Automation Analysis</title>\n";
+    private static final Pattern scenarioTagPattern= Pattern.compile("^[0-9]{3}");
 
     private static final String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 
@@ -136,11 +138,11 @@ public class ReportAnalyzer {
                         List<String> tagsHolder = new ArrayList<>();
                         for (JsonElement testTag : fetchTAG) {
                             String data = testTag.getAsJsonObject().get("name").getAsString();
-                            if (parentTag && data.matches("[^a-zA-Z]+")) {
+                            if (parentTag && scenarioTagPattern.matcher(data.substring(1)).find()) {
                                 tagName = data;
                                 tagsHolder.add(data);
                                 parentTag = false;
-                            } else if (data.matches("[^a-zA-Z]+")) {
+                            } else if (scenarioTagPattern.matcher(data.substring(1)).find()) {
                                 tagsHolder.add(data);
                             }
                         }
