@@ -45,8 +45,8 @@ public final class Cookies {
         driver.manage().addCookie(cookie);
     }
 
-    public void getCookie(String name) {
-        driver.manage().getCookieNamed(name);
+    public Cookie getCookie(String name) {
+        return driver.manage().getCookieNamed(name);
     }
 
     public Set<Cookie> getAllCookies() {
