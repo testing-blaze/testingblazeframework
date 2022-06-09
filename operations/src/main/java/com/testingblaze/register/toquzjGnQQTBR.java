@@ -22,11 +22,7 @@ package com.testingblaze.register;
 
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
-import com.testingblaze.controller.Avrb8aYEmH;
-import com.testingblaze.controller.DeviceBucket;
-import com.testingblaze.controller.ReportingLogsPlugin;
-import com.testingblaze.controller.ScenarioController;
-import com.testingblaze.controller.TestSetupController;
+import com.testingblaze.controller.*;
 import com.testingblaze.exception.TestingBlazeExceptionWithoutStackTrace;
 import com.testingblaze.http.RestfulWebServices;
 import com.testingblaze.objects.InstanceRecording;
@@ -35,6 +31,7 @@ import com.testingblaze.report.ReportAnalyzer;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import io.restassured.response.Response;
 
 import java.awt.*;
 import java.io.IOException;
@@ -96,7 +93,8 @@ public final class toquzjGnQQTBR {
                     if (testJvvmCount > 1) break;
                 }
             }
-            if (testJvvmCount == 1) {
+            int threadCount = System.getProperty("threads") == null ? 0 : Integer.parseInt(System.getProperty("threads"));
+            if (threadCount < 2 || testJvvmCount == 1) {
                 if (reportAnalyzer == null) {
                     reportAnalyzer = new ReportAnalyzer();
                 }
@@ -105,12 +103,12 @@ public final class toquzjGnQQTBR {
                     reportAnalyzer.executeAnalysis();
                     System.out.println("Report Analysis Completed.");
                 } catch (Exception e) {
-                    System.out.println("Report Analysis Failed");
+                    System.out.println("!.!.!.! Report Analysis Failed ?.?.?.?");
                 }
                 try {
                     publishReportAnalytics();
                 } catch (Exception e) {
-                    System.out.println("Report Publishing Failed");
+                    System.out.println("!.!.!.! Report Publishing Failed ?.?.?.?");
                     e.printStackTrace();
                 }
             }
@@ -121,12 +119,13 @@ public final class toquzjGnQQTBR {
     private void publishReportAnalytics() throws IOException {
         if (System.getProperty("publishReport") != null && System.getProperty("publishReport").equalsIgnoreCase("yes")) {
             Properties OR = new Properties();
-            System.out.println("Report Publishing Started ....");
+            System.out.println("********* - Report Publishing Started ....");
             OR.load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
-            RestfulWebServices restfulWebServices=new RestfulWebServices();
+            RestfulWebServices restfulWebServices = new RestfulWebServices();
             String endPoint = OR.getProperty("endPoint");
-            restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, endPoint, null, null, null);
-            System.out.println("Report Publishing Completed.");
+            Response response = restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, endPoint, null, null, null);
+            System.out.println("Report Publishing Status: "+response.statusLine());
+            System.out.println(".... Report Publishing Completed - *********");
         }
     }
 
