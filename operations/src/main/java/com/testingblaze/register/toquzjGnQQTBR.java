@@ -31,7 +31,6 @@ import com.testingblaze.report.ReportAnalyzer;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import io.restassured.response.Response;
 
 import java.awt.*;
 import java.io.IOException;
@@ -101,11 +100,13 @@ public final class toquzjGnQQTBR {
                 try {
                     System.out.println("Report Analysis Started ....");
                     reportAnalyzer.executeAnalysis();
+                    Thread.sleep(5000);
                     System.out.println("Report Analysis Completed.");
                 } catch (Exception e) {
                     System.out.println("!.!.!.! Report Analysis Failed ?.?.?.?");
                 }
                 try {
+                    Thread.sleep(2000);
                     publishReportAnalytics();
                 } catch (Exception e) {
                     System.out.println("!.!.!.! Report Publishing Failed ?.?.?.?");
@@ -122,9 +123,15 @@ public final class toquzjGnQQTBR {
             System.out.println("********* - Report Publishing Started ....");
             OR.load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
             RestfulWebServices restfulWebServices = new RestfulWebServices();
+            restfulWebServices.isJvmHookOn = true;
             String endPoint = OR.getProperty("endPoint");
-            Response response = restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, endPoint, null, null, null);
-            System.out.println("Report Publishing Status: "+response.statusLine());
+            restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, endPoint, null, null, null);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            restfulWebServices.isJvmHookOn=false;
             System.out.println(".... Report Publishing Completed - *********");
         }
     }

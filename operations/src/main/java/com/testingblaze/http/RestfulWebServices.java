@@ -41,6 +41,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class RestfulWebServices {
     private static final Gson gson = new Gson();
+    public boolean isJvmHookOn=false;
 
     public enum CallTypes {GET, POST, PATCH, DELETE, PUT}
 
@@ -228,18 +229,22 @@ public final class RestfulWebServices {
             request.auth().oauth2(authToken);
         }
         if (jsonElement != null) {
-            try {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + jsonElement);
-            } catch (Exception e) {
-                // to handle reporting exception - avoid unnecessary exceptions
+            if(!isJvmHookOn) {
+                try {
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + jsonElement);
+                } catch (Exception e) {
+                    // to handle reporting exception - avoid unnecessary exceptions
+                }
             }
             request.body(gson.toJson(jsonElement));
         }
         if (stringBody != null) {
-            try {
-                I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
-            } catch (Exception e) {
-                // to handle reporting exception - avoid unnecessary exceptions
+            if(!isJvmHookOn) {
+                try {
+                    I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "Json is " + stringBody);
+                } catch (Exception e) {
+                    // to handle reporting exception - avoid unnecessary exceptions
+                }
             }
             request.body(stringBody);
         }
