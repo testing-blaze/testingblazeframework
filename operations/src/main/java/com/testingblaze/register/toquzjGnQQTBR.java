@@ -41,13 +41,14 @@ import java.util.logging.Level;
 
 public final class toquzjGnQQTBR {
     private final TestSetupController registerSetup;
-    private ReportAnalyzer reportAnalyzer;
     private static Boolean analyzeReportsJvmFlag = false;
+    protected Thread aliveThread;
 
     public toquzjGnQQTBR(DeviceBucket device, Avrb8aYEmH coreLib, TestSetupController registerSetup) {
         this.registerSetup = registerSetup;
         InstanceRecording.recordInstance(Avrb8aYEmH.class, coreLib);
         InstanceRecording.recordInstance(DeviceBucket.class, device);
+        aliveThread = Thread.currentThread();
         if (!analyzeReportsJvmFlag) {
             triggerMandatoryClosureJobs();
             analyzeReportsJvmFlag = true;
@@ -85,6 +86,13 @@ public final class toquzjGnQQTBR {
      */
     private void triggerMandatoryClosureJobs() {
         Thread performReportAnalysisActivities = new Thread(() -> {
+            try {
+                System.out.println("AT Joining Hook Started");
+                aliveThread.join(5000);
+                System.out.println("AT Joining Hook Complete");
+            } catch (Exception e) {
+                System.out.println("AT Joining Hook Failed");
+            }
             int testJvvmCount = 0;
             for (VirtualMachineDescriptor listOfProcess : VirtualMachine.list()) {
                 if (listOfProcess.toString().contains("jvmRun") && listOfProcess.toString().contains("jvmRun")) {
@@ -94,44 +102,38 @@ public final class toquzjGnQQTBR {
             }
             int threadCount = System.getProperty("threads") == null ? 0 : Integer.parseInt(System.getProperty("threads"));
             if (threadCount < 2 || testJvvmCount == 1) {
-                if (reportAnalyzer == null) {
-                    reportAnalyzer = new ReportAnalyzer();
-                }
                 try {
-                    System.out.println("Report Analysis Started ....");
-                    reportAnalyzer.executeAnalysis();
-                    Thread.sleep(5000);
-                    System.out.println("Report Analysis Completed.");
-                } catch (Exception e) {
-                    System.out.println("!.!.!.! Report Analysis Failed ?.?.?.?");
-                }
-                try {
-                    Thread.sleep(2000);
                     publishReportAnalytics();
                 } catch (Exception e) {
                     System.out.println("!.!.!.! Report Publishing Failed ?.?.?.?");
                     e.printStackTrace();
                 }
+                try {
+                    System.out.println("Report Analysis Started ....");
+                    new ReportAnalyzer().executeAnalysis();
+                    System.out.println("Report Analysis Completed.");
+                } catch (Exception e) {
+                    System.out.println("!.!.!.! Report Analysis Failed ?.?.?.?");
+                }
+
             }
+
         });
+        performReportAnalysisActivities.setDaemon(true);
         Runtime.getRuntime().addShutdownHook(performReportAnalysisActivities);
+
     }
 
     private void publishReportAnalytics() throws IOException {
         if (System.getProperty("publishReport") != null && System.getProperty("publishReport").equalsIgnoreCase("yes")) {
             Properties OR = new Properties();
-            System.out.println("********* - Report Publishing Started ....");
+            System.out.println("********* - Report Publishing Started ....!");
             OR.load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
             RestfulWebServices restfulWebServices = new RestfulWebServices();
             restfulWebServices.isJvmHookOn = true;
             String endPoint = OR.getProperty("endPoint");
-            restfulWebServices.postCall(reportAnalyzer.getReportJson(), null, endPoint, null, null, null);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            restfulWebServices.isJvmHookOn=false;
+            restfulWebServices.postCall(new ReportAnalyzer().getReportJson(), null, endPoint, null, null, null);
+            restfulWebServices.isJvmHookOn = false;
             System.out.println(".... Report Publishing Completed - *********");
         }
     }
