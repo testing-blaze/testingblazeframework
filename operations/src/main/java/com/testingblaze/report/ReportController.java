@@ -77,7 +77,6 @@ public final class ReportController {
         }
     }
 
-
     /**
      * Writes a given log to the console.
      */

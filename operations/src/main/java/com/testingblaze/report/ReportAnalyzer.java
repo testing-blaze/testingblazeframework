@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.testingblaze.http.RestfulWebServices;
 import com.testingblaze.objects.TestStatusDetails;
 import com.testingblaze.register.EnvironmentFactory;
 import io.cucumber.core.gherkin.vintage.internal.gherkin.deps.com.google.gson.Gson;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 
 public class ReportAnalyzer {
     private static final JsonParser parser = new JsonParser();
+    public static Boolean isReportPublished=false;
     Path pathAnalysis = Paths.get(getReportGenerationPath() + "/ReportAnalysis");
     Path pathFiles = Paths.get(getReportGenerationPath() + "/ReportAnalysis/Files");
     private static List<TestStatusDetails> testStatusDetails;
@@ -48,6 +50,21 @@ public class ReportAnalyzer {
         Files.write(Paths.get(pathAnalysis + "/analysis.html"), createMainHtmlPage(compileReport()));
         Files.write(Paths.get(pathFiles + "/bugs_details.html"), createBugDetailsHtmlPage(compileReport()));
         Files.write(Paths.get(pathFiles + "/updating_details.html"), createUpdatingDetailsHtmlPage(compileReport()));
+    }
+
+    public void publishReportAnalytics() throws IOException {
+        if(isReportPublished) return;
+        if (System.getProperty("publishReport") != null && System.getProperty("publishReport").equalsIgnoreCase("yes")) {
+            Properties OR = new Properties();
+            System.out.println("********* - Report Publishing Started ....!");
+            OR.load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
+            RestfulWebServices restfulWebServices = new RestfulWebServices();
+            restfulWebServices.isJvmHookOn = true;
+            String endPoint = OR.getProperty("endPoint");
+            restfulWebServices.postCall(new ReportAnalyzer().getReportJson(), null, endPoint, null, null, null);
+            restfulWebServices.isJvmHookOn = false;
+            System.out.println(".... Report Publishing Completed - *********");
+        }
     }
 
     public JsonObject getReportJson() throws IOException {
@@ -74,7 +91,7 @@ public class ReportAnalyzer {
         return OR;
     }
 
-    public void reportConfigWriteUp() {
+    private void reportConfigWriteUp() {
         try {
             if (Files.notExists(pathAnalysis)) {
                 Files.createDirectories(pathAnalysis);
@@ -98,7 +115,7 @@ public class ReportAnalyzer {
     }
 
 
-    public Map<String, Map<String, List<TestStatusDetails>>> compileReport() throws IOException {
+    private Map<String, Map<String, List<TestStatusDetails>>> compileReport() throws IOException {
         Map<String, Map<String, List<TestStatusDetails>>> mainTableContainer = new TreeMap<>();
         Set<String> files = new HashSet();
         String tagName = "None";
@@ -197,7 +214,7 @@ public class ReportAnalyzer {
         return mainTableContainer;
     }
 
-    public List<String> createUpdatingDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
+    private List<String> createUpdatingDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
         String htmlHeader = getUpdatingPageHeaderContent() + "</head><body>";
         String tableHeader =
                 "<h4 style=\"background-color:yellow;text-align: center;\">Test Updating / Blockers (TFS Test Tags) </h4>" +
@@ -240,7 +257,7 @@ public class ReportAnalyzer {
     }
 
 
-    public List<String> createBugDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
+    private List<String> createBugDetailsHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
         String htmlHeader = getBugPageHeaderContent() + "</head><body>";
         String tableHeader = "<h4 style=\"background-color:Pink;text-align: center;\">Bugs (TFS Test Tags) </h4>" +
                 "<div class=\"table-wrapper\">" +
@@ -281,7 +298,7 @@ public class ReportAnalyzer {
     }
 
 
-    public List<String> createMainHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
+    private List<String> createMainHtmlPage(Map<String, Map<String, List<TestStatusDetails>>> mainTableData) {
         int pass = 0, bug = 0, updating =0, skipped = 0;
         int tPass = 0, tBug = 0, tUpdating = 0, tSkipped=0;
 
@@ -362,7 +379,7 @@ public class ReportAnalyzer {
         return List.of(htmlHead, body, tableHeader, tableContent);
     }
 
-    public List<String> cssAnalyzerHtml() {
+    private List<String> cssAnalyzerHtml() {
         return List.of("*{",
                 "box-sizing: border-box;",
                 "-webkit-box-sizing: border-box;",
