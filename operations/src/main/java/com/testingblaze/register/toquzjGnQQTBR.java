@@ -24,7 +24,6 @@ import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import com.testingblaze.controller.*;
 import com.testingblaze.exception.TestingBlazeExceptionWithoutStackTrace;
-import com.testingblaze.http.RestfulWebServices;
 import com.testingblaze.objects.InstanceRecording;
 import com.testingblaze.report.LogLevel;
 import com.testingblaze.report.ReportAnalyzer;
@@ -34,9 +33,6 @@ import io.cucumber.java.Scenario;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 import java.util.logging.Level;
 
 public final class toquzjGnQQTBR {
@@ -86,13 +82,6 @@ public final class toquzjGnQQTBR {
      */
     private void triggerMandatoryClosureJobs() {
         Thread performReportAnalysisActivities = new Thread(() -> {
-            try {
-                System.out.println("AT Joining Hook Started");
-                aliveThread.join(5000);
-                System.out.println("AT Joining Hook Complete");
-            } catch (Exception e) {
-                System.out.println("AT Joining Hook Failed");
-            }
             int testJvvmCount = 0;
             for (VirtualMachineDescriptor listOfProcess : VirtualMachine.list()) {
                 if (listOfProcess.toString().contains("jvmRun") && listOfProcess.toString().contains("jvmRun")) {
@@ -103,7 +92,7 @@ public final class toquzjGnQQTBR {
             int threadCount = System.getProperty("threads") == null ? 0 : Integer.parseInt(System.getProperty("threads"));
             if (threadCount < 2 || testJvvmCount == 1) {
                 try {
-                    publishReportAnalytics();
+                    new ReportAnalyzer().publishReportAnalytics();
                 } catch (Exception e) {
                     System.out.println("!.!.!.! Report Publishing Failed ?.?.?.?");
                     e.printStackTrace();
@@ -117,26 +106,19 @@ public final class toquzjGnQQTBR {
                 }
 
             }
-
         });
-        performReportAnalysisActivities.setDaemon(true);
+        try {
+            System.out.println("AT Joining Hook Started");
+            aliveThread.join(15000);
+            System.out.println("AT Joining Hook Complete");
+        } catch (Exception e) {
+            System.out.println("AT Joining Hook Failed");
+        }
         Runtime.getRuntime().addShutdownHook(performReportAnalysisActivities);
 
     }
 
-    private void publishReportAnalytics() throws IOException {
-        if (System.getProperty("publishReport") != null && System.getProperty("publishReport").equalsIgnoreCase("yes")) {
-            Properties OR = new Properties();
-            System.out.println("********* - Report Publishing Started ....!");
-            OR.load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
-            RestfulWebServices restfulWebServices = new RestfulWebServices();
-            restfulWebServices.isJvmHookOn = true;
-            String endPoint = OR.getProperty("endPoint");
-            restfulWebServices.postCall(new ReportAnalyzer().getReportJson(), null, endPoint, null, null, null);
-            restfulWebServices.isJvmHookOn = false;
-            System.out.println(".... Report Publishing Completed - *********");
-        }
-    }
+
 
 
 }
