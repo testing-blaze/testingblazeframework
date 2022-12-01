@@ -30,6 +30,7 @@ import com.testingblaze.report.LogLevel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -79,13 +80,25 @@ public class HealLocators {
         dictOfSuccessfulSortedLocators.addProperty("locatorType", "xpath");
         dictOfSuccessfulSortedLocators.addProperty("theLocatorName", locatorName);
         Map<Object, List<String>> dictOfPossibleChildCombinations = TouchLocators.httpCalls.postCall(preRecoveryInformation, null, getEndPoint("getRecoveryChildLocators", "xpath", locatorName), TouchLocators.getCredentials().get("user"), TouchLocators.getCredentials().get("password"), null).jsonPath().getMap("listOfChildRecoveryLocators");
+        List<TwoColumnSorting> parkedListOfChildLocatorsWithSize= new ArrayList<>();
         for (var keySet : dictOfPossibleChildCombinations.keySet()) {
-            List<TwoColumnSorting> listOfSortedChildLocators = sortingLocators(dictOfPossibleChildCombinations.get(keySet).stream().filter(locator -> getElement().findElements(By.xpath(locator)).size() > 0).
-                    map(locator -> new TwoColumnSorting(locator, getElement().findElements(By.xpath(locator)).size())).collect(Collectors.toList()));
-            JsonArray listOfFinalSortedChildLocators = new JsonArray();
-            listOfSortedChildLocators.stream().forEach(locator -> listOfFinalSortedChildLocators.add(locator.getKey()));
+                    for(String locator:dictOfPossibleChildCombinations.get(keySet)) {
+                        try {
+                            var locatorSize = getElement().findElements(By.xpath(locator)).size();
+                            if (locatorSize > 0) {
+                                parkedListOfChildLocatorsWithSize.add(new TwoColumnSorting(locator, locatorSize));
+                            }
+                        } catch (Exception e) {
+                            // handling unexpected or invalid locator formats. Shall be fixed in LMS_Healing side
+                        }
+                    }
+                List<TwoColumnSorting> listOfSortedChildLocators = sortingLocators(parkedListOfChildLocatorsWithSize);
 
-            dictOfAliveSortedChildCombinations.add((String) keySet, listOfFinalSortedChildLocators);
+                JsonArray listOfFinalSortedChildLocators = new JsonArray();
+                listOfSortedChildLocators.stream().forEach(locator -> listOfFinalSortedChildLocators.add(locator.getKey()));
+
+                dictOfAliveSortedChildCombinations.add((String) keySet, listOfFinalSortedChildLocators);
+
         }
         dictOfSuccessfulSortedLocators.add("dictOfSuccessfulSortedLocators", dictOfAliveSortedChildCombinations);
         //fetching final recovery locators
