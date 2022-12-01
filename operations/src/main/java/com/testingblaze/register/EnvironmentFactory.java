@@ -26,6 +26,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -88,6 +89,10 @@ public final class EnvironmentFactory {
     }
 
     private static String environmentName;
+
+    public static void setEnvironmentName(String envName) {
+        environmentName = envName;
+    }
 
     public static String getEnvironmentName() {
         if (environmentName == null) {
@@ -236,9 +241,12 @@ public final class EnvironmentFactory {
     }
 
     public static String executionDate;
+    public static void setExecutionDate(String exeDate) {
+        executionDate = exeDate;
+    }
     public static String getExecutionDate() {
         if (executionDate == null) {
-            executionDate = System.getProperty("setExecutionDate") != null ? System.getProperty("setExecutionDate"): I.amPerforming().dateOperationsToGet().currentDateInDesiredFormat(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+            executionDate = System.getProperty("setExecutionDate") != null ? System.getProperty("setExecutionDate"): LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));;
         }
         return executionDate;
     }

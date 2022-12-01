@@ -184,7 +184,7 @@ public final class FileHandler {
         for (File files : directory) {
             if (files.getName().endsWith("." + fromFileType)) {
                 new File(files.getAbsolutePath())
-                        .renameTo(new File(filePath.getAbsolutePath() + File.separatorChar + fileName + "." + toFileType));
+                        .renameTo(new File(filePath.getAbsolutePath() + File.separator + fileName + "." + toFileType));
                 break;
             }
         }
@@ -884,7 +884,7 @@ public final class FileHandler {
             Random random = new Random(500);
             String newFileName = "newPdfFile" + random + ".pdf";
             URL url1 = new URL(url);
-            File file = new File(System.getProperty("user.dir") + File.separatorChar + "target", newFileName);
+            File file = new File(System.getProperty("user.dir") + File.separator + "target", newFileName);
             byte[] ba1 = new byte[1024];
             int baLength;
             FileOutputStream fos1 = new FileOutputStream(file);
