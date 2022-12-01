@@ -49,6 +49,9 @@ public class ScenarioController {
     public static int getExecutedScenarioCount() {
         return executedScenarioCount;
     }
+    public static int getTotalScenarioCount() {
+        return totalNumberOfScenarios;
+    }
 
     static void printInitialLogs() {
         System.out.println("--------------------------------------------------------------------------------");

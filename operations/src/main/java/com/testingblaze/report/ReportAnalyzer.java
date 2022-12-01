@@ -75,11 +75,9 @@ public class ReportAnalyzer {
         getPropertiesAccess().load(new InputStreamReader(getClass().getResourceAsStream("/report_publisher.properties"), StandardCharsets.UTF_8));
         dataSet.addProperty("projectId", getPropertiesAccess().getProperty("projectId"));
         dataSet.addProperty("projectName",getPropertiesAccess().getProperty("projectName"));
-        String executionDate = System.getProperty("setExecutionDate") != null ? System.getProperty("setExecutionDate") : date;
-        dataSet.addProperty("date", executionDate);
+        dataSet.addProperty("date", EnvironmentFactory.getExecutionDate());
         dataSet.addProperty("totalTestsCount",getTotalTestCount());
-        String envName= System.getProperty("env") != null ? System.getProperty("env") : "No Information";
-        dataSet.addProperty("envName",envName);
+        dataSet.addProperty("envName",EnvironmentFactory.getEnvironmentName());
         dataSet.add("reportData",jsonReportData);
         return dataSet;
     }

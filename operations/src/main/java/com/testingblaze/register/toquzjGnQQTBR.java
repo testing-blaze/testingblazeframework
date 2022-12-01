@@ -37,19 +37,13 @@ import java.util.logging.Level;
 
 public final class toquzjGnQQTBR {
     private final TestSetupController registerSetup;
-    private static Boolean analyzeReportsJvmFlag = false;
     protected Thread aliveThread;
+    private final int threadCount = System.getProperty("threads") == null ? 0 : Integer.parseInt(System.getProperty("threads"));
 
     public toquzjGnQQTBR(DeviceBucket device, Avrb8aYEmH coreLib, TestSetupController registerSetup) {
         this.registerSetup = registerSetup;
         InstanceRecording.recordInstance(Avrb8aYEmH.class, coreLib);
         InstanceRecording.recordInstance(DeviceBucket.class, device);
-        aliveThread = Thread.currentThread();
-        if (!analyzeReportsJvmFlag) {
-            triggerMandatoryClosureJobs();
-            analyzeReportsJvmFlag = true;
-        }
-
     }
 
     @Before(order = 0)
@@ -60,7 +54,36 @@ public final class toquzjGnQQTBR {
 
     @After(order = 0)
     public void unRegisterSetup() throws IOException {
+        performClosureJobs();
         registerSetup.theEnd();
+    }
+
+    /**
+     * perform After All jobs.
+     *
+     * @author nauman.shahid
+     */
+    private synchronized void performClosureJobs() {
+        int scenarioCountClosure = ScenarioController.getTotalScenarioCount() - ScenarioController.getExecutedScenarioCount();
+
+        if (threadCount < 2) {
+            if (scenarioCountClosure == 0) {
+                triggerReportAnalyticsGeneration();
+            }
+        }
+
+        if (threadCount > 1) {
+            int testJvmCount = 0;
+            for (VirtualMachineDescriptor listOfProcess : VirtualMachine.list()) {
+                if (listOfProcess.toString().contains("jvmRun")) {
+                    testJvmCount++;
+                    if (testJvmCount > 1) break;
+                }
+            }
+            if (testJvmCount == 1) {
+                triggerReportAnalyticsGeneration();
+            }
+        }
     }
 
     @After(order = 5)
@@ -74,6 +97,29 @@ public final class toquzjGnQQTBR {
             I.amPerforming().updatingOfReportWith().write(LogLevel.TEST_BLAZE_INFO, "No soft assertions failed in the scenario.");
         }
     }
+
+    /**
+     * handles report consolidation according to thread count
+     *
+     * @@author nauman.shahid
+     */
+    private void triggerReportAnalyticsGeneration() {
+        try {
+            new ReportAnalyzer().publishReportAnalytics();
+        } catch (Exception e) {
+            System.out.println("!.!.!.! Report Publishing Failed ?.?.?.?");
+            e.printStackTrace();
+        }
+        try {
+            System.out.println("Report Analysis Started ....");
+            new ReportAnalyzer().executeAnalysis();
+            System.out.println("Report Analysis Completed.");
+        } catch (Exception e) {
+            System.out.println("!.!.!.! Report Analysis Failed ?.?.?.?");
+        }
+
+    }
+
 
     /**
      * handles report consolidation according to thread count
@@ -117,8 +163,6 @@ public final class toquzjGnQQTBR {
         Runtime.getRuntime().addShutdownHook(performReportAnalysisActivities);
 
     }
-
-
 
 
 }
