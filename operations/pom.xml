@@ -33,6 +33,9 @@
         <developer>
             <name>John Philips</name>
         </developer>
+        <developer>
+            <name>Aashish Pardeshi</name>
+        </developer>
     </developers>
     <build>
         <plugins>
