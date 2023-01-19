@@ -27,7 +27,7 @@ The key features are:
 * #### Live Reporting Portal Integration (Provides execution summary and categorise failuers into bugs and maintenance)
 * #### Detailed Automation Report (Generated with each execution and contains all logs and screenshots)
 * #### Built In Gherkins And Cucumber Integrated Parameterization 
-* #### Tests written for a computer browser can also be execute on a mobile device browser without any change to tests (Same DOM only).
+* #### Tests written for a computer browser can also be executed on a mobile device browser without any change to tests (Same DOM only).
 
 
 ### Built With
@@ -547,3 +547,5 @@ I.amPerforming().waitFor().getWaitTime();
 I.amPerforming().waitFor().makeThreadSleep(int threadSleep);
 I.amPerforming().waitFor().TextToContain(By locator, String text);
 I.amPerforming().waitFor().TextToContain(By locator, String text, long customWaitTime);
+
+## Become a Contributor by Forking the project today.
