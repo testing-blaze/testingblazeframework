@@ -61,6 +61,8 @@ Setting up the project is very simple and does not require any special configura
 2. Maven
 3. Appium Server (For mobile testing only)
 
+##### After your installations, simply copy the parent and dependency of framework from maven central to your POM. See sample project from below link.
+
 ## How to use it ?
 
 The framework offers a gherkin style of code writing which makes each line of code readable and it also provides access to all type of devices,libraries from a single line
