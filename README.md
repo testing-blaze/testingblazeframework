@@ -99,7 +99,7 @@ Standard Command + <br>
 Choose Browser:<br>
 -Ddevice=chrome/firefox/ie/safari
 
-2-	On Jenkins:<br>
+2-	On Jenkins/Any Engine:<br>
 Standard Command + <br>
 Choose Browser:<br>
 -Ddevice=chrome/firefox/ie/safari
