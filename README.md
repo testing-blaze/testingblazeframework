@@ -547,3 +547,5 @@ I.amPerforming().waitFor().getWaitTime();
 I.amPerforming().waitFor().makeThreadSleep(int threadSleep);
 I.amPerforming().waitFor().TextToContain(By locator, String text);
 I.amPerforming().waitFor().TextToContain(By locator, String text, long customWaitTime);
+
+## Become a Contributor by Forking the project today.
