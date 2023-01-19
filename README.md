@@ -15,9 +15,19 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-The Testing Blaze Automation Solution brings the universe of open source technologies embedded and architectured in the smartest and most innovative ways to make the automated testing experience easy , interactable and flakiless. 
+The Testing Blaze Automation Solution brings the universe of open source technologies embedded and architectured in an innovative way to make the automated testing experience easy , interactable and flakiless. 
 
-The solution offers self healing of  tests, intelligent processing , automatic switching to contexts, parameterized integration with cucumber and various other out of box utilities to ensure maximum stability , fast track automation and less maintenance efforts. 
+The key features are: 
+* #### Self Healing of Tests (To Recover from Attribute changes) - Requires a Hosting Server on Premises/Cloud
+* #### Dependency Injection Controlled Architecture. No worries to manage object instances
+* #### Automatic Runner files generation during execution. No hastle to maintane Runners
+* #### Intelligent Element Processing (To Handle Dynamic loading of Applications)
+* #### Automatic Switching to Contexts/IFrames/Tabs ,  Auto Scrolling , Highlighting Element under Action
+* #### Plug And Play Framework (Just use framework dependency to start writing tests in your project)
+* #### Live Reporting Portal Integration (Provides execution summary and categorise failuers into bugs and maintenance)
+* #### Detailed Automation Report (Generated with each execution and contains all logs and screenshots)
+* #### Built In Gherkins And Cucumber Integrated Parameterization 
+* #### Tests written for a computer browser can also be execute on a mobile device browser without any change to tests (Same DOM only).
 
 
 ### Built With
@@ -30,6 +40,16 @@ Self healing module which is built with
 * [Python](https://www.python.org/)
 * [Django](https://www.djangoproject.com/)
 
+
+<!-- USAGE EXAMPLES -->
+## Supports
+
+•	Devices: Computers, Mobiles, Tablets, Cloud, Docker <br>
+•	Execution Types: Parallel, Sequential, Browser UI, Browser headless<br>
+•	Application Types: Browser Based (Angular/HTML), Mobile App Based (Native/Hybrid)<br>
+•	Browsers: Chrome, Firefox, Edge, IE, Safari<br>
+<!-- USAGE EXAMPLES -->
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -41,37 +61,8 @@ Setting up the project is very simple and does not require any special configura
 2. Maven
 3. Appium Server (For mobile testing only)
 
-<!-- Details -->
-## Key Features
-Intelligent Processing for Test Execution Stability & Agility
+##### After your installations, simply copy the parent and dependency of framework from maven central to your POM. See sample project from below link.
 
-#### Element Processing:
- Every element is received by the framework, and it is evaluated, analyzed and ensured to be properly loaded on the page before any further action is performed. This helps in better stability for all type of applications.
-#### Auto Scrolling: 
- Any element which is ready to receive but isn’t in the viewport is automatically scrolled and brought in middle of the page.<br>
-#### Auto Frame/Iframe Switching In-out:
- If the element is present inside and iframe then the frames will be automatically switched in and out.
-#### Highlighting of elements accessed by automation:
- The elements which are accessed will get highlighted (green for success, red for problem).
-#### Auto Tabs Switching:
- If a click action results in opening of any new tab, then the context automatically gets switched to the new tab.
-#### Smart Switching to devices:
- Tests written for a computer browser can also be execute on a mobile device browser without any change to tests.
-#### AI based Self-Healing of Tests [Authorization Required]: 
- This utility will enable automatic updating of the tests after evaluating the changes to the DOM. This helps in reducing the maintainability of the test’s suite. Integration of this feature with testing blaze will give it a unique edge where we can have a self-healing mechanism working with open source technology set like selenium and cucumber.
-#### Auto Dependency Injection:
- Everything is automatically managed by DI. No need to worry about object creation (see example here)
-##### Built in cucumber Steps
-##### Auto Runner Creation
-<!-- USAGE EXAMPLES -->
-## Supports
-
-•	Devices: Computers, Mobiles, Tablets, Cloud, Docker <br>
-•	Execution Types: Parallel, Sequential, Browser UI, Browser headless<br>
-•	Application Types: Browser Based (Angular/HTML), Mobile App Based (Native/Hybrid)<br>
-•	Browsers: Chrome, Firefox, Edge, IE, Safari<br>
-
-<!-- USAGE EXAMPLES -->
 ## How to use it ?
 
 The framework offers a gherkin style of code writing which makes each line of code readable and it also provides access to all type of devices,libraries from a single line
@@ -110,7 +101,7 @@ Standard Command + <br>
 Choose Browser:<br>
 -Ddevice=chrome/firefox/ie/safari
 
-2-	On Jenkins:<br>
+2-	On Jenkins/Any Engine:<br>
 Standard Command + <br>
 Choose Browser:<br>
 -Ddevice=chrome/firefox/ie/safari
