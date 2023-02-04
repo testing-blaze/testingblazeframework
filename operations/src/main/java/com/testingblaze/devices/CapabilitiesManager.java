@@ -52,6 +52,20 @@ public class CapabilitiesManager {
             chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
         }
 
+        if (null != System.getProperty("mobileEmulator") && "true".equalsIgnoreCase(System.getProperty("mobileEmulator"))){
+            Map<String, Object> deviceMetrics = new HashMap<>();
+            Map<String, Object> mobileEmulation = new HashMap<>();
+            if (null != System.getProperty("customMobileEmulator") && "true".equalsIgnoreCase(System.getProperty("customMobileEmulator"))) {
+                deviceMetrics.put("width", System.getProperty("width") == null ? 1078 : Integer.parseInt(System.getProperty("width")));
+                deviceMetrics.put("height", System.getProperty("height") == null ? 924 : Integer.parseInt(System.getProperty("height")));
+                deviceMetrics.put("pixelRatio", System.getProperty("pixelRatio") == null ? 1.0 : System.getProperty("pixelRatio"));
+                mobileEmulation.put("deviceMetrics", deviceMetrics);
+            } else {
+                mobileEmulation.put("deviceName",System.getProperty("deviceName") == null ? "Pixel 5" : System.getProperty("deviceName"));
+            }
+            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        }
+
         chromeOptions.setExperimentalOption("prefs", Map.of(
                 "profile.cookie_controls_mode", 0,
                 "profile.block_third_party_cookies", false,
