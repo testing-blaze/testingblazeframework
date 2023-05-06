@@ -53,7 +53,7 @@ public class CapabilitiesManager {
             chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
         }
 
-        if (null != System.getProperty("mobileEmulator") && "true".equalsIgnoreCase(System.getProperty("mobileEmulator"))){
+        if (null != System.getProperty("browserMode") && "mobile".equalsIgnoreCase(System.getProperty("browserMode"))){
             Map<String, Object> deviceMetrics = new HashMap<>();
             Map<String, Object> mobileEmulation = new HashMap<>();
             if (null != System.getProperty("customMobileEmulator") && "true".equalsIgnoreCase(System.getProperty("customMobileEmulator"))) {
