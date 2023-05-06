@@ -25,6 +25,7 @@ import org.openqa.selenium.safari.SafariOptions;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -50,6 +51,20 @@ public class CapabilitiesManager {
             logPrefs.enable(LogType.BROWSER, Level.ALL);
             logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
             chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        }
+
+        if (null != System.getProperty("browserMode") && "mobile".equalsIgnoreCase(System.getProperty("browserMode"))){
+            Map<String, Object> deviceMetrics = new HashMap<>();
+            Map<String, Object> mobileEmulation = new HashMap<>();
+            if (null != System.getProperty("customMobileEmulator") && "true".equalsIgnoreCase(System.getProperty("customMobileEmulator"))) {
+                deviceMetrics.put("width", System.getProperty("width") == null ? 1078 : Integer.parseInt(System.getProperty("width")));
+                deviceMetrics.put("height", System.getProperty("height") == null ? 924 : Integer.parseInt(System.getProperty("height")));
+                deviceMetrics.put("pixelRatio", System.getProperty("pixelRatio") == null ? 1.0 : System.getProperty("pixelRatio"));
+                mobileEmulation.put("deviceMetrics", deviceMetrics);
+            } else {
+                mobileEmulation.put("deviceName",System.getProperty("deviceName") == null ? "Pixel 5" : System.getProperty("deviceName"));
+            }
+            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         }
 
         chromeOptions.setExperimentalOption("prefs", Map.of(

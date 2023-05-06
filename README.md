@@ -155,6 +155,22 @@ docker run --rm -ti --name zalenium -p 4444:4444 \
 Standard Command +<br>
 -Dhub=http:localhost:4444/
 
+#### 7. On Browser in mobile view :
+To run the test cases in chrome browser with mobile view, we can use following command.
+```
+mvn clean verify -Dtags="@yourTagToRun" -DbrowserMode=mobile
+```
+Run test case in custom configuration of a particular mobile emulator in browser
+```
+mvn clean verify -Dtags="@test" -browserMode=mobile -DcustomMobileEmulator=true -Dwidth=300 -Dheight=900
+```
+Run test case in particular emulator's default configuration such as iPad mini and so on.
+```
+mvn clean verify -Dtags="@test" -DbrowserMode=mobile -DdeviceName="iPad Mini"
+```
+There are multiple devices available to load any page in mobile view. You can find it in Developer tool of chrome browser.
+Go to Developer tool -> Select toggle device toolbar(small mobile like icon) -> Under dimentions, you will find different emulators available. 
+
 ####	Other Options: 
 •	Browser Mode: -DbrowserMode=incognito<br>
 •	Switch Environemnts: -Denv=qa <br>
